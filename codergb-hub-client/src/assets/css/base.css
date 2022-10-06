@@ -1,0 +1,43 @@
+html{
+  font-size:2.083333333333vw;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Roboto","Arial",sans-serif;
+}
+ul,li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+}
+.text-nowrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+::-webkit-scrollbar{
+  width: 10px;
+}
+.ant-layout-header{
+  background-color: #fff;
+  padding: 0 16px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.ant-layout-sider {
+  background-color:#fff;
+}
+.ant-layout-content{
+  padding: 16px;
+}
+input,textarea,button{
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
