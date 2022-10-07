@@ -39,11 +39,16 @@ const Header:FC=():ReactElement=>{
       replace:false
     })
   }
+  const homeRouter=()=>{
+    navigate("/home",{
+      replace:false
+    })
+  }
   return (
       <HeaderWrapper>
         <LeftContent>
           <Fold/>
-          <div className="logo-outer">
+          <div className="logo-outer" onClick={e=>homeRouter()}>
             <img src={logo} alt={'logo'}/>
           </div>
         </LeftContent>
