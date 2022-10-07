@@ -1,5 +1,6 @@
 import {Navigate, RouteObject} from "react-router-dom";
 import {lazy,Suspense} from "react";
+import StudioChildrenRoute from "./studio/index"
 import Home from "../views/home";
 const LoginRoute = lazy(()=>import('../views/login/index'));
 const HomeRoute = lazy(()=>import("../views/home/index"));
@@ -14,6 +15,9 @@ const RecommendRoute = lazy(()=>import("../views/recommend/index"));
 const ShortsRoute = lazy(()=>import("../views/shorts/index"));
 const SubscriptionsRoute = lazy(()=>import("../views/subscriptions/index"));
 const ThumbRoute = lazy(()=>import("../views/thumb/index"));
+
+//工作室
+const StudioRoute = lazy(()=>import("../views/profile/index"));
 
 const routes:RouteObject[]=[
   {
@@ -117,6 +121,16 @@ const routes:RouteObject[]=[
         )
       }
     ]
+  },
+  //工作室
+  {
+    path:"/studio",
+    element:(
+        <Suspense>
+          <StudioRoute/>
+        </Suspense>
+    ),
+    children:StudioChildrenRoute
   }
 ]
 export {

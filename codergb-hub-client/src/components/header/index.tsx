@@ -1,10 +1,11 @@
 import React, {memo, FC, ReactElement, useState} from "react";
-import { Modal } from 'antd';
-import {MenuUnfoldOutlined,
+import { useNavigate } from "react-router-dom";
+import {Map} from "immutable";
+import {Dropdown, Modal} from 'antd';
+import {
   SearchOutlined,
-  VideoCameraOutlined
-  ,MailOutlined,
-  UserOutlined} from '@ant-design/icons';
+  VideoCameraOutlined,
+  MailOutlined} from '@ant-design/icons';
 import {
   HeaderWrapper,
   LeftContent,
@@ -14,8 +15,16 @@ import {
 import logo from "../../assets/img/logo.png"
 import UploadVideo from "./childCpn/uploadVideo";
 import Fold from "../../assets/html/fold";
+import UserIcon from "../../assets/html/user/userIcon";
+import {useSelector} from "react-redux";
+import {ILogin} from "../../types/login/ILogin";
+import Profile from "./childCpn/profile";
 const Header:FC=():ReactElement=>{
   const [isModalOpen,setIsModelOpen] = useState<boolean>(false);
+  const loginState = useSelector<Map<string,ILogin>,ILogin>(state=>{
+    return state.getIn(['loginReducer','login']) as ILogin;
+  })
+  const navigate = useNavigate();
   const showDialogHandle=()=>{
     setIsModelOpen(true);
   }
@@ -24,6 +33,11 @@ const Header:FC=():ReactElement=>{
   }
   const handleCancel=()=>{
     setIsModelOpen(false);
+  }
+  const login=()=>{
+    navigate("/login",{
+      replace:false
+    })
   }
   return (
       <HeaderWrapper>
@@ -58,7 +72,22 @@ const Header:FC=():ReactElement=>{
             </Modal>
           </div>
           <div className="user">
-            <UserOutlined />
+            {
+              loginState && loginState.loginType===0 && <div className="logout" onClick={e=>login()}>
+                <UserIcon/>
+                <span className="label">登录</span>
+              </div>
+            }
+            {
+              loginState && loginState.loginType === 1 && <Dropdown overlayClassName={'profile-drop-style'} trigger={['click']} overlay={<Profile/>}>
+                <div className="login-status">
+                  {
+                    loginState && loginState.userMsg && loginState.userMsg.avatarUrl &&
+                    <img src={loginState.userMsg.avatarUrl} alt="avatar"/>
+                  }
+              </div>
+              </Dropdown>
+            }
           </div>
         </RightContent>
       </HeaderWrapper>

@@ -17,6 +17,12 @@ export function changeUserDetail(userDetail:IUserDetail){
     userDetail:userDetail
   }
 }
+export function changeLoginType(loginType:number){
+  return {
+    type:"changeLoginType",
+    loginType:loginType
+  }
+}
 export function loginAction(userName:string,password:string,navigate:NavigateFunction){
   return async(dispatch:any)=>{
     try{
@@ -24,7 +30,9 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
       if(data.status===200){
         await dispatch(changeUserMsg(data.data));
         await dispatch(changeUserDetailAction(data.data.userId));
+        await dispatch(changeLoginType(1));
         localCache.setCache("userMsg",data.data);
+        localCache.setCache("loginType",1)
         navigate("/Home",{
           replace:true,
         })

@@ -8,7 +8,8 @@ const defaultState = Map<ILogin>({
       avatarUrl:"",
       token:""
     },
-    userDetail:{}
+    userDetail:{},
+    loginType:0
   }
 })
 const reducer=(state=defaultState,action:any)=>{

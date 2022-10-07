@@ -63,7 +63,76 @@ const profileMenu=[
     path:'/home/thumb'
   }
 ]
+const studioMenu=[
+  {
+    name:"信息中心",
+    path:'/studio/message',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"内容",
+    shadowIcon:"",
+    path:'/studio/content',
+    icon:""
+  },
+  {
+    name:"播放列表",
+    path:'/studio/playlist',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"数据分析",
+    path:'/studio/dataAnalyze',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"评论",
+    path:'/studio/comment',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"字幕",
+    path:'/studio/subtitle',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"版权",
+    path:'/studio/copyright',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"创收",
+    path:'/studio/income',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"自定义",
+    path:'/studio/customize',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"音频库",
+    path:'/studio/audioLib',
+    shadowIcon:"",
+    icon:""
+  },
+  {
+    name:"设置",
+    path:'/studio/setting',
+    shadowIcon:"",
+    icon:""
+  }
+]
 export {
   mainMenu,
-  profileMenu
+  profileMenu,
+  studioMenu
 }

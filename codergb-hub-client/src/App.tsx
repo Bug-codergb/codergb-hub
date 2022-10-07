@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import { BrowserRouter,useRoutes } from "react-router-dom";
 import {routes} from "./router";
 import store from "./store"
+import  "./store/actionCreators"
 function App() {
   function RouteElement(){
     return useRoutes(routes);

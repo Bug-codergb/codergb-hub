@@ -17,7 +17,7 @@ const Home:FC=():ReactElement=>{
             </Header>
             <Layout>
               <Sider>
-                <NavList/>
+                <NavList isHome={true}/>
               </Sider>
               <Content>
                 <Outlet/>

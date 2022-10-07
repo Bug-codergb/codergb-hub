@@ -53,7 +53,7 @@ export const RightContent = styled.div`
   align-items: center;
   justify-content: space-between;
   .tip{
-    padding: 0 ${40/40}rem;
+    padding: 0 ${46/40}rem;
   }
   .upload,.tip,.user{
     display: flex;
@@ -63,4 +63,42 @@ export const RightContent = styled.div`
       height: ${30/40}rem;
     }
   }
+  .user{
+    background-color:#fff;
+    padding: 0 ${30/40}rem 0 0;
+    .logout{
+      display: flex;
+      align-items: center;
+      border: 1px solid #065fd4;
+      padding: 0 ${10/40}rem;
+      height: ${48/40}rem;
+      border-radius: 2px;
+      cursor: pointer;
+      svg{
+        color: #065fd4;
+      }
+      .label{
+        font-size: ${20/40}rem;
+        margin: 0 0 0 ${15/40}rem;
+        color:#065fd4 ;
+      }
+    }
+    .login-status{
+      width: ${50/40}rem;
+      height: ${50/40}rem;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      img{
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+      }
+    }
+    
+  }
+  
 `
