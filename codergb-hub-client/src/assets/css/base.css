@@ -31,9 +31,13 @@ a{
 }
 .ant-layout-sider {
   background-color:#fff;
+  border-right: 1px solid #e5e5e5;
 }
 .ant-layout-content{
   padding: 16px;
+}
+.ant-tabs-tab{
+ padding: 6px 0;
 }
 input,textarea,button{
   outline: none;

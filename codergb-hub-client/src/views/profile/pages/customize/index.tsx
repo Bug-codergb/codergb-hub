@@ -1,9 +1,40 @@
 import React,{memo,FC,ReactElement} from "react";
-const Customize:FC=()=>{
+import { Tabs } from 'antd';
+import Basic from "./childCpn/basic";
+import Brand from "./childCpn/brand";
+import Layout from "./childCpn/layout";
+import {
+  CustomizeWrapper
+} from "./style";
+const Customize:FC=():ReactElement=>{
+  const onChange=()=>{
+
+  }
   return (
-      <div>
-        自定义
-      </div>
+      <CustomizeWrapper>
+        <div className="title-tip">频道自定义</div>
+        <Tabs
+            defaultActiveKey="1"
+            onChange={onChange}
+            items={[
+              {
+                label: `布局`,
+                key: '1',
+                children: <Layout/>,
+              },
+              {
+                label: `品牌`,
+                key: '2',
+                children: <Brand/>,
+              },
+              {
+                label: `基本信息`,
+                key: '3',
+                children: <Basic/>,
+              },
+            ]}
+        />
+      </CustomizeWrapper>
   )
 }
 export default memo(Customize);
