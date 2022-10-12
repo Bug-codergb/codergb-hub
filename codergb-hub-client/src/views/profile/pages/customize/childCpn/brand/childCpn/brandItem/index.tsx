@@ -7,9 +7,13 @@ interface IProps{
   label:string,
   img:ReactElement,
   desc:string,
+  uploadHandle:()=>void
 }
 const BrandItem:FC<IProps>=(props):ReactElement=>{
-  const {title,label,img,desc} = props;
+  const {title,label,img,desc,uploadHandle} = props;
+  const uploadClick=()=>{
+    uploadHandle();
+  }
   return (
       <BrandItemWrapper>
         <div className="title">{title}</div>
@@ -20,7 +24,7 @@ const BrandItem:FC<IProps>=(props):ReactElement=>{
           </div>
           <div className="right-content">
             <p className="desc">{desc}</p>
-            <div className="upload">上传</div>
+            <div className="upload" onClick={e=>uploadClick()}>上传</div>
           </div>
         </div>
       </BrandItemWrapper>
