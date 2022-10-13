@@ -1,10 +1,11 @@
-import React, {memo, FC, ReactElement, useState} from "react";
+import React, {memo, FC, ReactElement, useState,useRef} from "react";
 import { Button, Modal } from 'antd';
 import { BrandWrapper } from "./style";
 import BrandItem from "./childCpn/brandItem";
 import AvatarUpload from "./childCpn/avatarUpload";
 const Brand:FC=():ReactElement=>{
   const [isAvatarModalOpen,setIsAvatarModalOpen] = useState<boolean>(false);
+  const avatarUpload = useRef<any>(null);
   const uploadAvatar = () =>{
     setIsAvatarModalOpen(true);
   }
@@ -12,8 +13,11 @@ const Brand:FC=():ReactElement=>{
 
   }
   //频道头像
-  const handleAvatarOk=()=>{
-    setIsAvatarModalOpen(false);
+  const handleAvatarOk=async ()=>{
+    //setIsAvatarModalOpen(false);
+    const file = await avatarUpload.current.getCropperFile();
+    let url = URL.createObjectURL(file);
+    window.open(url)
   }
   const handleAvatarCancel=()=>{
     setIsAvatarModalOpen(false);
@@ -36,10 +40,13 @@ const Brand:FC=():ReactElement=>{
                    uploadHandle={()=>uploadCover()}/>
           <Modal title="自定义图片"
                  open={isAvatarModalOpen}
+                 destroyOnClose={true}
                  onOk={handleAvatarOk}
-                 width={'60%'}
+                 width={'65%'}
                  onCancel={handleAvatarCancel}>
-            <AvatarUpload/>
+            <AvatarUpload
+                //@ts-ignore
+                ref={avatarUpload}/>
           </Modal>
       </BrandWrapper>
   )

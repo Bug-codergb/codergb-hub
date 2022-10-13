@@ -1,48 +1,79 @@
-import React, {memo, FC, ReactElement, useState, useEffect,useRef} from "react";
+import React, {memo, FC, ReactElement, useState, useEffect,useRef , useImperativeHandle,forwardRef} from "react";
 import Cropper from 'cropperjs';
 import {
   CustomizeUploadWrapper
 } from "./style";
-import "../../assets/css/cropper.css";
 interface IProps{
-  file:File | null
+  file:File | null,
+  imgWidth:number,
+  scale:number,
+  aspectRatio:number,
+  isCircle:boolean,
 }
-const CustomizeUpload:FC<IProps>=(props):ReactElement=>{
-  const {file } = props;
+const CustomizeUpload:FC<IProps>= forwardRef((props,propsRef):ReactElement=>{
+  const {file,scale,imgWidth,aspectRatio,isCircle } = props;
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgURL,setImgURL]=useState<string>("");
   const [cropper,setCropper] = useState<Cropper>();
   useEffect(()=>{
     if(file){
-      let url = URL.createObjectURL(file);
-      setImgURL(url);
       if(imgRef && imgRef.current){
+        console.log(cropper)
+        let url = URL.createObjectURL(file);
         let cropperContainer = new Cropper(imgRef.current, {
           ready: function () {
-            console.log("11")
+            console.log("ready")
           },
           dragMode:'move',
-          aspectRatio: 1,
+          aspectRatio: aspectRatio,
           viewMode: 1,
           background: false,
           zoomable: false,
           preview: ".small",
         });
-        console.log(cropperContainer)
+        setCropper(cropperContainer);
+        cropperContainer.replace(url)
       }
     }
-  },[file,imgRef,imgRef.current])
+  },[]);
+  const getCropperFile = async () =>{
+    return new Promise((resolve,reject)=>{
+      if(cropper){
+        let canvasFile = cropper.getCroppedCanvas({
+          imageSmoothingQuality: 'high',
+          width:imgWidth*40,
+          imageSmoothingEnabled: false,
+          fillColor: '#fff',
+        });
+        canvasFile.toBlob((blob:Blob|null)=>{
+          if(blob && file){
+            const cropperFile = new File([blob],file.name,{
+              type:file.type
+            })
+            resolve(cropperFile);
+          }else{
+            resolve(null);
+          }
+        })
+      }else {
+        reject(new Error("cropper 不存在"));
+      }
+    })
+  }
+  useImperativeHandle(propsRef,()=>{
+    return {
+      getCropperFile:getCropperFile
+    }
+  })
   return (
-      <CustomizeUploadWrapper>
+      <CustomizeUploadWrapper scale={scale} imgWidth={imgWidth} isCircle={isCircle}>
         <div className="container">
-          <div>
-            <img ref={imgRef} className="cropper-img" src={imgURL}/>
-          </div>
+          <img ref={imgRef} className="cropper-img" src={imgURL}/>
         </div>
         <div className="preview">
           <div className="small"></div>
         </div>
       </CustomizeUploadWrapper>
   )
-}
+})
 export default memo(CustomizeUpload)
