@@ -4,7 +4,11 @@ const { setImgPrev } = require("../utils/setImgPrev");
 const { deleteFileReq } = require("../utils/deleteFile")
 const { APP_HOST,APP_PORT } = require("../app/config");
 const { uploadHandle } = require("../utils/uploadHandle")
-const { createChannelService,getChannelMsgService } = require("../service/channel.service");
+const {
+  createChannelService,
+  getChannelMsgService,
+  uploadAvatarService
+} = require("../service/channel.service");
 class ChannelController{
   async createChannel(ctx,next){
     try{
@@ -23,12 +27,12 @@ class ChannelController{
   async uploadAvatar(ctx,next){
     try{
       if(ctx.req.file && Object.keys(ctx.req.file)){
-        const { id } = ctx.params;
-        const result = await uploadHandle(ctx,"/channel/avatar","channel",
-                                  'avatarUrl','id',id,
-                  ['avatarMimetype','avatarDest','avatarFilename','avatarSize','avatarOriginalname']);
+        const { mimetype,destination,filename,originalname, size } = ctx.req.file;
+        const id = new Date().getTime();
+        const picUrl=`${APP_HOST}:${APP_PORT}/image/${id}`;
+        const result = await uploadAvatarService(ctx,id,picUrl,originalname,mimetype,destination,filename,size);
         if(result){
-          setResponse(ctx,"头像上传成功",200);
+          setResponse(ctx,"头像上传成功成功",200,{});
         }
       }else{
         setResponse(ctx,"上传文件不能为空",400);
@@ -37,36 +41,7 @@ class ChannelController{
       setResponse(ctx,e.message,500);
     }
   }
-  //获取频道头像
-  async getAvatar(ctx,next){
-    try{
-      const {id} = ctx.params;
-      const result = await getChannelMsgService(id);
-      if(result && result.length!==0){
-        const info = result[0];
-        await setImgPrev(ctx,`${info.avatarDest}/${info.avatarFilename}`,info.avatarMimetype);
-      }
-    }catch (e) {
-      setResponse(ctx,e.message,500)
-    }
-  }
-  //删除频道头像
-  async deleteAvatar(ctx,next){
-   try{
-     const { id } = ctx.params;
-     await deleteFileReq(ctx,next,id,getChannelMsgService,'avatarDest','avatarFilename');
-   } catch (e) {
-     setResponse(ctx,e.message,500)
-   }
-  }
-  //更新频道头像
-  async updateAvatar(ctx,next){
-    try{
-      await new ChannelController().uploadAvatar(ctx,next);
-    }catch (e) {
-      setResponse(ctx,e.message,500)
-    }
-  }
+
 }
 
 module.exports = new ChannelController();

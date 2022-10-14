@@ -11,9 +11,5 @@ const {
 } = require("../controller/channel.controller")
 channelRouter.post("/",authVerify,createChannel);
 //上传频道头像
-channelRouter.post("/avatar/upload/:id",authVerify,channelAvatarUpload,uploadAvatar);
-//获取频道头像
-channelRouter.get("/avatar/:id",getAvatar);
-//更换频道头像
-channelRouter.post("/avatar/update/:id",authVerify,deleteAvatar,channelAvatarUpload,updateAvatar);
+channelRouter.post("/avatar/upload",authVerify,channelAvatarUpload,uploadAvatar);
 module.exports = channelRouter

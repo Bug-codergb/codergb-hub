@@ -41,7 +41,7 @@ const AvatarUpload:FC= forwardRef((props,propsRef):ReactElement=>{
             isShowCropper && <CustomizeUpload file={file}
                                               imgWidth={5}
                                               scale={1}
-                                              aspectRatio={9/16}
+                                              aspectRatio={1}
                                               isCircle={false}
                 //@ts-ignore
                                               ref={uploadRef}/>

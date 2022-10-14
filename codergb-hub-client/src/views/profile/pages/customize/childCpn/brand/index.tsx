@@ -3,6 +3,7 @@ import { Button, Modal } from 'antd';
 import { BrandWrapper } from "./style";
 import BrandItem from "./childCpn/brandItem";
 import AvatarUpload from "./childCpn/avatarUpload";
+import { uploadAvatar as uploadAvatarReq } from "../../../../../../network/channel/index";
 const Brand:FC=():ReactElement=>{
   const [isAvatarModalOpen,setIsAvatarModalOpen] = useState<boolean>(false);
   const avatarUpload = useRef<any>(null);
@@ -16,8 +17,10 @@ const Brand:FC=():ReactElement=>{
   const handleAvatarOk=async ()=>{
     //setIsAvatarModalOpen(false);
     const file = await avatarUpload.current.getCropperFile();
-    let url = URL.createObjectURL(file);
-    window.open(url)
+    let formData = new FormData();
+    formData.append("avatar",file);
+    const result = await uploadAvatarReq(formData);
+    console.log(result)
   }
   const handleAvatarCancel=()=>{
     setIsAvatarModalOpen(false);
