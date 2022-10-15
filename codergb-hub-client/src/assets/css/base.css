@@ -50,3 +50,8 @@ input,textarea,button{
   border-radius: 4px;
   overflow: hidden;
 }
+.ant-input-textarea,.ant-input-textarea-show-count{
+}
+.ant-input{
+  border-radius: 6px;
+}

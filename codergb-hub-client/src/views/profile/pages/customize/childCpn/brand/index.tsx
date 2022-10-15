@@ -1,11 +1,12 @@
 import React, {memo, FC, ReactElement, useState,useRef} from "react";
-import { Button, Modal } from 'antd';
+import { Progress , Modal } from 'antd';
 import { BrandWrapper } from "./style";
 import BrandItem from "./childCpn/brandItem";
 import AvatarUpload from "./childCpn/avatarUpload";
 import { uploadAvatar as uploadAvatarReq } from "../../../../../../network/channel/index";
 const Brand:FC=():ReactElement=>{
   const [isAvatarModalOpen,setIsAvatarModalOpen] = useState<boolean>(false);
+  const [progress,setProgress]=useState<number>(0);
   const avatarUpload = useRef<any>(null);
   const uploadAvatar = () =>{
     setIsAvatarModalOpen(true);
@@ -15,12 +16,15 @@ const Brand:FC=():ReactElement=>{
   }
   //频道头像
   const handleAvatarOk=async ()=>{
-    //setIsAvatarModalOpen(false);
     const file = await avatarUpload.current.getCropperFile();
     let formData = new FormData();
     formData.append("avatar",file);
-    const result = await uploadAvatarReq(formData);
-    console.log(result)
+    const result = await uploadAvatarReq(formData,(progress:any)=>{
+      setProgress(progress.loaded/progress.total*100);
+    });
+    if(result.status===200){
+      setIsAvatarModalOpen(false);
+    }
   }
   const handleAvatarCancel=()=>{
     setIsAvatarModalOpen(false);
@@ -50,6 +54,7 @@ const Brand:FC=():ReactElement=>{
             <AvatarUpload
                 //@ts-ignore
                 ref={avatarUpload}/>
+            <Progress percent={parseFloat(progress.toFixed(1))} />
           </Modal>
       </BrandWrapper>
   )

@@ -31,7 +31,7 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
   try{
     fn(uploadedSize);
     if(uploadedSize>total) {
-      await mergeVideo(dest,HASH);
+      await mergeVideo(dest,HASH,name,type,total);
       return;
     }
     let end = index*chunkSize + chunkSize;

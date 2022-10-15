@@ -10,12 +10,15 @@ export function uploadVideo<T=IResponseType<any>>(formData:FormData):Promise<T>{
   })
 }
 //视频合并
-export function mergeVideo<T=IResponseType<any>>(path:string,hash:string):Promise<T>{
+export function mergeVideo<T=IResponseType<any>>(path:string,hash:string,name:string,type:string,total:number):Promise<T>{
   return gbRequest.post<T>({
     url:"/video/merge",
     data:{
       dest:path,
-      hash
+      hash,
+      originalname:name,
+      type,
+      total
     },
   })
 }

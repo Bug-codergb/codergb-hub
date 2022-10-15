@@ -1,8 +1,5 @@
 import styled from "styled-components";
 export const UploadVideoWrapper=styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   .upload{
     display: flex;
     align-items: center;
@@ -10,7 +7,7 @@ export const UploadVideoWrapper=styled.div`
     flex-direction: column-reverse;
     position: relative;
     padding: ${40/40}rem;
-    width: 90%;
+    width: 100%;
     .file-inp{
       position: absolute;
       left: 50%;

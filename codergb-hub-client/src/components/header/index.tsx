@@ -71,7 +71,7 @@ const Header:FC=():ReactElement=>{
                    okText={"确定"}
                    open={isModalOpen}
                    onOk={handleOk}
-                   width={'60%'}
+                   width={'70%'}
                    onCancel={handleCancel}>
               <UploadVideo/>
             </Modal>
