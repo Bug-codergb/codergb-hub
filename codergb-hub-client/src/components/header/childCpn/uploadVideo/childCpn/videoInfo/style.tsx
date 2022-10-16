@@ -39,6 +39,30 @@ export const LeftContent = styled.div`
     padding-bottom: 8px;
     color: #606060;
   }
+  .abbreviation-upload{
+    width: ${280/40}rem;
+    height: ${130/40}rem;
+    background-color: #eeeeee;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+    &>span{
+      svg{
+        display: inline-block;
+        width: ${40/40}rem;
+        height: ${40/40}rem;
+        font-size: ${30/40}rem;
+        color: #cc0101;
+      }
+    }
+  }
 `
 export const RightContent = styled.div`
   width: 38%;

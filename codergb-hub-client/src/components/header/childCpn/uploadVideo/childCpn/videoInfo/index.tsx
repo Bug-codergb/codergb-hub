@@ -1,10 +1,13 @@
-import React,{memo,FC} from "react";
-import { Input,Select  } from 'antd';
+import React, {memo, FC, ChangeEvent, useState, useRef} from "react";
+import {CloudUploadOutlined} from "@ant-design/icons"
+import { Input,Select,Modal  } from 'antd';
 import {
   VideoInfoWrapper,
   LeftContent,
   RightContent
 } from "./style";
+import {useDispatch} from "react-redux";
+import CustomizeUpload from "../../../../../customizeUpload";
 const { TextArea } = Input;
 const { Option } = Select;
 interface IProps{
@@ -13,6 +16,22 @@ interface IProps{
 }
 const VideoInfo:FC<IProps>=(props)=>{
   const { videoURL,videoName } = props;
+  const [ isModalOpen,setIsModalOpen ] = useState<boolean>(false);
+  const [file,setFile] = useState<File | null>(null);
+
+  const uploadRef = useRef<any>(null);
+  const abbreviationHandle=(e:ChangeEvent<HTMLInputElement>)=>{
+    if(e.currentTarget.files){
+      setFile(e.currentTarget.files[0])
+      setIsModalOpen(true);
+    }
+  }
+  const handleOk=async ()=>{
+    console.log(await uploadRef.current.getCropperFile())
+  }
+  const handleCancel=()=>{
+
+  }
   return (
       <VideoInfoWrapper>
         <LeftContent>
@@ -21,8 +40,24 @@ const VideoInfo:FC<IProps>=(props)=>{
           <TextArea rows={4} placeholder="向观众介绍您的视频" maxLength={500} showCount />
           <p className="abbreviation">缩略图</p>
           <p className="desc">请上传一张可展示您视频内容的图片。好的缩略图能脱颖而出，吸引观看者的眼球</p>
-          <div className="abbreviation">
-            <input type="file"/>
+          <div className="abbreviation-upload">
+            <input type="file" onChange={(e)=>abbreviationHandle(e)}/>
+            <CloudUploadOutlined/>
+            <Modal title="缩略图上传"
+                cancelText={"取消"}
+                okText={"确定"}
+                open={isModalOpen}
+                onOk={handleOk}
+                width={'70%'}
+                onCancel={handleCancel}>
+              <CustomizeUpload file={file}
+                               imgWidth={7}
+                               scale={2.15}
+                               aspectRatio={2.15}
+                               isCircle={false}
+                  //@ts-ignore
+                               ref={uploadRef}/>
+            </Modal>
           </div>
           <p className="abbreviation">播放列表</p>
           <p className="desc">

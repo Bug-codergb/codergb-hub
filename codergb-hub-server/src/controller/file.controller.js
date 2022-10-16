@@ -1,8 +1,13 @@
 const path =require("path");
 const fs = require("fs");
+const {
+  APP_HOST,
+  APP_PORT,
+} = require("../app/config");
 const { setResponse } = require("../utils/setResponse");
 const {
-  getImagePrevService
+  getImagePrevService,
+  uploadService
 } = require("../service/file.service");
 class FileController{
   //获取图片预览
@@ -19,6 +24,24 @@ class FileController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
+    }
+  }
+  //图片上传
+  async upload(ctx,next){
+    try{
+      if(ctx.req.file && Object.keys(ctx.req.file)){
+        const { mimetype,destination,filename,originalname, size } = ctx.req.file;
+        const id = new Date().getTime();
+        const picUrl=`${APP_HOST}:${APP_PORT}/image/${id}`;
+        const result = await uploadService(ctx,id,picUrl,originalname,mimetype,destination,filename,size);
+        if(result){
+          setResponse(ctx,"上传成功",200,{});
+        }
+      }else{
+        setResponse(ctx,"上传文件不能为空",400);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500);
     }
   }
 }

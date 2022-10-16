@@ -75,11 +75,13 @@ function chunkHandle(path,uploadName,method){
 const userAvatarUpload = uploadHandle("./upload/user/avatar",'avatar','single');
 //频道头像上传
 const channelAvatarUpload = uploadHandle("./upload/channel/avatar",'avatar','single');
-
+//文件图片上传
+const imageUpload = uploadHandle("./upload/image","file","single");
 //视频上传
 const videoUpload= chunkHandle("./upload_temp/video",'video','single');
 module.exports={
   userAvatarUpload,
   channelAvatarUpload,
-  videoUpload
+  videoUpload,
+  imageUpload
 }
