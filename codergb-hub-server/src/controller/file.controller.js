@@ -5,9 +5,12 @@ const {
   APP_PORT,
 } = require("../app/config");
 const { setResponse } = require("../utils/setResponse");
+const { deleteFile } = require("../utils/deleteFile")
 const {
   getImagePrevService,
-  uploadService
+  uploadService,
+  getFileService,
+  deleteImageService
 } = require("../service/file.service");
 class FileController{
   //获取图片预览
@@ -35,13 +38,33 @@ class FileController{
         const picUrl=`${APP_HOST}:${APP_PORT}/image/${id}`;
         const result = await uploadService(ctx,id,picUrl,originalname,mimetype,destination,filename,size);
         if(result){
-          setResponse(ctx,"上传成功",200,{});
+          setResponse(ctx,"上传成功",200,{
+            picUrl:picUrl,
+            id:id
+          });
         }
       }else{
         setResponse(ctx,"上传文件不能为空",400);
       }
     }catch (e) {
       setResponse(ctx,e.message,500);
+    }
+  }
+  //删除上传文件
+  async deleteImage(ctx,next){
+    try {
+      const {id} = ctx.params;
+      const result = await getFileService(ctx,id);
+      console.log(result);
+      if(result){
+        const {dest,filename} = result[0];
+        const filePath = path.resolve(__dirname,"../../",`${dest}/${filename}`);
+        await deleteImageService(ctx,id);
+        deleteFile(filePath);
+        setResponse(ctx,"success",200,{});
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
     }
   }
 }

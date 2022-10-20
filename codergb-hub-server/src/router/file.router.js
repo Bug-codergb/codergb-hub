@@ -6,8 +6,10 @@ const {
 const { imageUpload } = require("../middleware/file.middleware");
 const {
   getImagePrev,
-  upload
+  upload,
+  deleteImage
 } = require("../controller/file.controller");
 fileRouter.get("/image/:id",getImagePrev);
-fileRouter.post("/image/upload",imageUpload,upload)
+fileRouter.post("/image/upload",authVerify,imageUpload,upload);
+fileRouter.post("/image/delete/:id",authVerify,deleteImage);
 module.exports = fileRouter;

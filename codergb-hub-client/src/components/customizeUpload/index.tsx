@@ -35,7 +35,7 @@ const CustomizeUpload:FC<IProps>= forwardRef((props,propsRef):ReactElement=>{
         cropperContainer.replace(url)
       }
     }
-  },[]);
+  },[file]);
   const getCropperFile = async () =>{
     return new Promise((resolve,reject)=>{
       if(cropper){

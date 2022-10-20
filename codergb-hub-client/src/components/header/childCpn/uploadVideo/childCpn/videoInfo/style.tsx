@@ -34,14 +34,38 @@ export const LeftContent = styled.div`
     font-family: "Roboto","Noto",sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
-    font-size: 13px;
+    font-size: ${18/40}rem;
     line-height: ${20/40}rem;
     padding-bottom: 8px;
     color: #606060;
   }
+  .abbreviation-upload-outer{
+    display: flex;
+    align-items: center;
+    .delete-abb{
+      width: ${130/40}rem;
+      height: ${130/40}rem;
+      background-color: rgba(238, 238, 238,.7);
+      border-left:1px solid #f2f2f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover{
+        background-color: #e3e3e3; 
+      }
+      &>span{
+        svg{
+          font-size:${40/40}rem;
+          color: #cc0101;
+          cursor: pointer;
+        }
+      }
+    }
+  }
   .abbreviation-upload{
     width: ${280/40}rem;
     height: ${130/40}rem;
+    margin: ${15/40}rem 0;
     background-color: #eeeeee;
     position: relative;
     display: flex;
@@ -53,6 +77,9 @@ export const LeftContent = styled.div`
       height: 100%;
       opacity: 0;
     }
+    &>img{
+      width: 100%;
+    }
     &>span{
       svg{
         display: inline-block;
@@ -62,6 +89,9 @@ export const LeftContent = styled.div`
         color: #cc0101;
       }
     }
+  }
+  .playlist{
+    width: ${300/40}rem;
   }
 `
 export const RightContent = styled.div`

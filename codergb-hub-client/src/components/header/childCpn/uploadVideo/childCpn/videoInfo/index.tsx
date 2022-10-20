@@ -1,5 +1,5 @@
-import React, {memo, FC, ChangeEvent, useState, useRef} from "react";
-import {CloudUploadOutlined} from "@ant-design/icons"
+import React, {memo, FC, ChangeEvent, useState, useRef, useEffect} from "react";
+import {CloudUploadOutlined,RocketOutlined} from "@ant-design/icons"
 import { Input,Select,Modal  } from 'antd';
 import {
   VideoInfoWrapper,
@@ -8,6 +8,12 @@ import {
 } from "./style";
 import {useDispatch} from "react-redux";
 import CustomizeUpload from "../../../../../customizeUpload";
+import {deleteImage, uploadImage} from "../../../../../../network/image";
+import {IResponseType} from "../../../../../../types/responseType";
+import {IImage} from "../../../../../../types/upload/image";
+import {IPlaylist} from "../../../../../../types/playlist/IPlaylist";
+import {getAllPlaylist} from "../../../../../../network/playlist";
+import {IPage} from "../../../../../../types/IPage";
 const { TextArea } = Input;
 const { Option } = Select;
 interface IProps{
@@ -19,7 +25,22 @@ const VideoInfo:FC<IProps>=(props)=>{
   const [ isModalOpen,setIsModalOpen ] = useState<boolean>(false);
   const [file,setFile] = useState<File | null>(null);
 
+  const [isShowAbbreviation,setIsShowAbbreviation] = useState<boolean>(true);
+  const [imgURL,setImgURL] = useState<string>("");
+  const [imgID,setImgID]=useState<string>("");
+
+  //播放列表
+  const [playlist,setPlaylist]=useState<IPlaylist[]>([]);
   const uploadRef = useRef<any>(null);
+
+  useEffect(()=>{
+    getAllPlaylist<IResponseType<IPage<IPlaylist[]>>>(0,10).then(data=>{
+      if(data.status===200){
+        setPlaylist(data.data.list);
+      }
+    })
+  },[])
+
   const abbreviationHandle=(e:ChangeEvent<HTMLInputElement>)=>{
     if(e.currentTarget.files){
       setFile(e.currentTarget.files[0])
@@ -27,10 +48,29 @@ const VideoInfo:FC<IProps>=(props)=>{
     }
   }
   const handleOk=async ()=>{
-    console.log(await uploadRef.current.getCropperFile())
+    const file = await uploadRef.current.getCropperFile();
+    let formData = new FormData();
+    formData.append("file",file);
+    const result = await uploadImage<IResponseType<IImage>>(formData)
+    if(result.status===200){
+      setImgURL(result.data.picUrl);
+      setImgID(result.data.id);
+      setIsShowAbbreviation(false);
+      setIsModalOpen(false);
+    }else{
+
+    }
   }
   const handleCancel=()=>{
 
+  }
+  //删除缩略图
+  const deleteAbb=async ()=>{
+    const result = await deleteImage(imgID);
+    if(result.status===200){
+      setImgURL("");
+      setIsShowAbbreviation(true);
+    }
   }
   return (
       <VideoInfoWrapper>
@@ -40,24 +80,42 @@ const VideoInfo:FC<IProps>=(props)=>{
           <TextArea rows={4} placeholder="向观众介绍您的视频" maxLength={500} showCount />
           <p className="abbreviation">缩略图</p>
           <p className="desc">请上传一张可展示您视频内容的图片。好的缩略图能脱颖而出，吸引观看者的眼球</p>
-          <div className="abbreviation-upload">
-            <input type="file" onChange={(e)=>abbreviationHandle(e)}/>
-            <CloudUploadOutlined/>
-            <Modal title="缩略图上传"
-                cancelText={"取消"}
-                okText={"确定"}
-                open={isModalOpen}
-                onOk={handleOk}
-                width={'70%'}
-                onCancel={handleCancel}>
-              <CustomizeUpload file={file}
-                               imgWidth={7}
-                               scale={2.15}
-                               aspectRatio={2.15}
-                               isCircle={false}
-                  //@ts-ignore
-                               ref={uploadRef}/>
-            </Modal>
+          <div className="abbreviation-upload-outer">
+            <div className="abbreviation-upload">
+              {
+                isShowAbbreviation &&<input type="file" onChange={(e)=>abbreviationHandle(e)}/>
+              }
+              {
+                isShowAbbreviation && <CloudUploadOutlined/>
+              }
+              {
+                (!isShowAbbreviation) && <img src={imgURL} alt="缩略图"/>
+              }
+              <Modal title="缩略图上传"
+                     cancelText={"取消"}
+                     okText={"确定"}
+                     open={isModalOpen}
+                     destroyOnClose={true}
+                     onOk={handleOk}
+                     width={'70%'}
+                     onCancel={handleCancel}>
+                {
+                  isModalOpen && <CustomizeUpload file={file}
+                                   imgWidth={7}
+                                   scale={2.15}
+                                   aspectRatio={2.15}
+                                   isCircle={false}
+                      //@ts-ignore
+                                   ref={uploadRef}/>
+                }
+              </Modal>
+            </div>
+            {/*删除缩略图*/}
+            {
+              (!isShowAbbreviation)&&<div className="delete-abb" title={'删除缩略图'} onClick={e=>deleteAbb()}>
+                <RocketOutlined />
+              </div>
+            }
           </div>
           <p className="abbreviation">播放列表</p>
           <p className="desc">
@@ -65,11 +123,16 @@ const VideoInfo:FC<IProps>=(props)=>{
           </p>
           <Select
               showSearch
-              placeholder="Select a person"
+              placeholder="请选择播放列表"
+              className="playlist"
               optionFilterProp="children">
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            {
+              playlist && playlist.length!==0 && playlist.map((item,index)=>{
+                return (
+                    <Option key={item.id} value={item.id}>{item.name}</Option>
+                )
+              })
+            }
           </Select>
           <p className="abbreviation">标签</p>
           <p className="desc">

@@ -26,7 +26,7 @@ class PlaylistService{
       const count = await new PlaylistService().getPlaylistCount(ctx);
       return {
         count:count[0].count,
-        playlist:result[0],
+        list:result[0],
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
