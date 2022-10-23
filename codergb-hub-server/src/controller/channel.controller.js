@@ -32,6 +32,7 @@ class ChannelController{
         const picUrl=`${APP_HOST}:${APP_PORT}/image/${id}`;
         const result = await uploadAvatarService(ctx,id,picUrl,originalname,mimetype,destination,filename,size);
         if(result){
+          console.log(result)
           setResponse(ctx,"头像上传成功成功",200,{});
         }
       }else{
