@@ -31,8 +31,8 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
   try{
     fn(uploadedSize);
     if(uploadedSize>total) {
-      await mergeVideo(dest,HASH,name,type,total);
-      return;
+      const res = await mergeVideo(dest,HASH,name,type,total);
+      return res;
     }
     let end = index*chunkSize + chunkSize;
     if(end > total-1){
@@ -54,7 +54,8 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
     formData.append("video",fileBlob);
     const result = await uploadVideo(formData);
     if(result.status === 200){
-       chunkHandle(HASH,index+1,file,name,total,type,result.data.uploadedSize,result.data.dest,fn);
+       const res:any = await chunkHandle(HASH,index+1,file,name,total,type,result.data.uploadedSize,result.data.dest,fn);
+       return res;
     }
   }catch (e) {
     console.log(e)
@@ -64,7 +65,7 @@ async function shardUtils(file:File,fn:(size:number)=>void){
   const { name,size,type } = file;
   let index = 0
   const fileData:any = await getFileHash(file);
-  await chunkHandle(fileData.HASH,index,file,name,size,type,0,"",fn);
+  return await chunkHandle(fileData.HASH,index,file,name,size,type,0,"",fn);
 }
 export {
   shardUtils

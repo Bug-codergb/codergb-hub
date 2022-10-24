@@ -21,9 +21,10 @@ const UploadVideo:FC=()=>{
       setFile(file);
       setPercent(0);
       setIsShowUpload(false);
-      await shardUtils(file,(e)=>{
+      const result = await shardUtils(file,(e)=>{
         setPercent(e/file.size*100);
       });
+      console.log(result);
     }
   }
   return (

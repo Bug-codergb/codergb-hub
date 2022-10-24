@@ -26,7 +26,7 @@ class TagService{
       const result = await connection.execute(sql,[offset,limit]);
       const count = await new TagService().getTagCountService(ctx);
       return {
-        tag:result[0],
+        list:result[0],
         count:count[0].count
       }
     }catch (e) {

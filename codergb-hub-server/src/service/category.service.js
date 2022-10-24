@@ -27,7 +27,7 @@ class CategoryService{
       const count = await new CategoryService().getCateCount(ctx);
       return {
         count:count[0].count,
-        category:result[0],
+        list:result[0],
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})

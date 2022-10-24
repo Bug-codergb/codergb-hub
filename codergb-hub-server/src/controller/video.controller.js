@@ -31,6 +31,7 @@ class VideoController{
       const {dest="",hash="",originalname,type,total} = ctx.request.body;
       console.log(dest,hash,originalname,type,total);
       if(!isEmpty(ctx,dest,"目的路径不能为空") && !isEmpty(ctx,hash,"文件HASH值不能为空")){
+        const id = new Date().getTime();
         const result = await mergeVideo(ctx,dest,path.resolve(__dirname,"../../","./upload/video"),hash);
         if(result){
           const suffix = originalname.substring(originalname.lastIndexOf("."));
@@ -41,7 +42,6 @@ class VideoController{
             await deleteFile(sourcePath);
             const vioPath = videoPath.replace("./upload","");
             const vioUrl = `${APP_HOST}:${APP_PORT}${vioPath}${hash}.m3u8`;
-            const id = new Date().getTime();
             const result = await uploadVideoService(ctx,id,videoPath,`${hash}.m3u8`,originalname,vioUrl);
           }
         }

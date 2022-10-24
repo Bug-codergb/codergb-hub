@@ -14,6 +14,10 @@ import {IImage} from "../../../../../../types/upload/image";
 import {IPlaylist} from "../../../../../../types/playlist/IPlaylist";
 import {getAllPlaylist} from "../../../../../../network/playlist";
 import {IPage} from "../../../../../../types/IPage";
+import {ITag} from "../../../../../../types/tag/ITag";
+import {getAllTag} from "../../../../../../network/tag";
+import {ICate} from "../../../../../../types/category/ICate";
+import {getAllCate} from "../../../../../../network/category";
 const { TextArea } = Input;
 const { Option } = Select;
 interface IProps{
@@ -32,6 +36,14 @@ const VideoInfo:FC<IProps>=(props)=>{
   //播放列表
   const [playlist,setPlaylist]=useState<IPlaylist[]>([]);
   const uploadRef = useRef<any>(null);
+  //标签
+  const [tag,setTag]=useState<ITag[]>([]);
+  //分类
+  const [cate,setCate]=useState<ICate[]>([]);
+
+  //创建视频时传的参数
+  const [title,setTitle] = useState<string>("");
+  const [desc,setDesc] = useState<string>("");
 
   useEffect(()=>{
     getAllPlaylist<IResponseType<IPage<IPlaylist[]>>>(0,10).then(data=>{
@@ -40,7 +52,20 @@ const VideoInfo:FC<IProps>=(props)=>{
       }
     })
   },[])
-
+  useEffect(()=>{
+    getAllTag<IResponseType<IPage<ITag[]>>>(0,50).then(data=>{
+      if(data.status===200){
+        setTag(data.data.list);
+      }
+    })
+  },[]);
+  useEffect(()=>{
+    getAllCate<IResponseType<IPage<ICate[]>>>(0,50).then(data=>{
+      if(data.status===200){
+        setCate(data.data.list);
+      }
+    })
+  },[])
   const abbreviationHandle=(e:ChangeEvent<HTMLInputElement>)=>{
     if(e.currentTarget.files){
       setFile(e.currentTarget.files[0])
@@ -71,6 +96,18 @@ const VideoInfo:FC<IProps>=(props)=>{
       setImgURL("");
       setIsShowAbbreviation(true);
     }
+  }
+  //选择播放列表
+  const selectPlaylistHandle=(e:string)=>{
+    console.log(e)
+  }
+  //选择标签
+  const selectTagHandle=(e:string[])=>{
+    console.log(e);
+  }
+  //选择分类
+  const selectCateHandle=(e:string)=>{
+   console.log(e)
   }
   return (
       <VideoInfoWrapper>
@@ -125,7 +162,8 @@ const VideoInfo:FC<IProps>=(props)=>{
               showSearch
               placeholder="请选择播放列表"
               className="playlist"
-              optionFilterProp="children">
+              optionFilterProp="children"
+              onChange={(e)=>selectPlaylistHandle(e)}>
             {
               playlist && playlist.length!==0 && playlist.map((item,index)=>{
                 return (
@@ -138,17 +176,38 @@ const VideoInfo:FC<IProps>=(props)=>{
           <p className="desc">
             标签可以帮助观看者找到您的视频
           </p>
+          <Select
+              showSearch
+              placeholder="请选择标签"
+              className="playlist"
+              optionFilterProp="children"
+              mode="multiple"
+              onChange={(e)=>selectTagHandle(e)}>
+            {
+              tag && tag.length!==0 && tag.map((item,index)=>{
+                return (
+                    <Option key={item.id} value={item.id}>{item.name}</Option>
+                )
+              })
+            }
+          </Select>
           <p className="abbreviation">类别</p>
           <p className="desc">
             将您的视频添加到某个类别中，方便观看者找到它
           </p>
           <Select
               showSearch
-              placeholder="Select a person"
-              optionFilterProp="children">
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+              placeholder="请选择分类"
+              className="playlist"
+              optionFilterProp="children"
+              onChange={(e)=>selectCateHandle(e)}>
+            {
+              cate && cate.length!==0 && cate.map((item,index)=>{
+                return (
+                    <Option key={item.id} value={item.id}>{item.name}</Option>
+                )
+              })
+            }
           </Select>
         </LeftContent>
         <RightContent>
