@@ -1,4 +1,4 @@
-import React, {memo, FC, ChangeEvent, useState, useRef, useEffect} from "react";
+import React, {memo, FC, ChangeEvent, useState, useRef, useEffect, useImperativeHandle, forwardRef} from "react";
 import {CloudUploadOutlined,RocketOutlined} from "@ant-design/icons"
 import { Input,Select,Modal  } from 'antd';
 import {
@@ -6,7 +6,7 @@ import {
   LeftContent,
   RightContent
 } from "./style";
-import {useDispatch} from "react-redux";
+
 import CustomizeUpload from "../../../../../customizeUpload";
 import {deleteImage, uploadImage} from "../../../../../../network/image";
 import {IResponseType} from "../../../../../../types/responseType";
@@ -24,7 +24,7 @@ interface IProps{
   videoURL:string,
   videoName:string
 }
-const VideoInfo:FC<IProps>=(props)=>{
+const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
   const { videoURL,videoName } = props;
   const [ isModalOpen,setIsModalOpen ] = useState<boolean>(false);
   const [file,setFile] = useState<File | null>(null);
@@ -44,7 +44,20 @@ const VideoInfo:FC<IProps>=(props)=>{
   //创建视频时传的参数
   const [title,setTitle] = useState<string>("");
   const [desc,setDesc] = useState<string>("");
+  const [playlistParam,setPlaylistParam] = useState<string>("");
+  const [tagParam,setTagParam] =useState<string[]>([]);
+  const [cateParam,setCateParam] = useState<string>("");
 
+  useImperativeHandle(propsRef,()=>{
+    return {
+      imgId:imgID,
+      title:title,
+      desc:desc,
+      playlist:playlistParam,
+      tag:tagParam,
+      cate:cateParam
+    }
+  });
   useEffect(()=>{
     getAllPlaylist<IResponseType<IPage<IPlaylist[]>>>(0,10).then(data=>{
       if(data.status===200){
@@ -99,22 +112,38 @@ const VideoInfo:FC<IProps>=(props)=>{
   }
   //选择播放列表
   const selectPlaylistHandle=(e:string)=>{
-    console.log(e)
+    setPlaylistParam(e);
   }
   //选择标签
   const selectTagHandle=(e:string[])=>{
-    console.log(e);
+    setTagParam(e);
   }
   //选择分类
   const selectCateHandle=(e:string)=>{
-   console.log(e)
+    setCateParam(e);
+  }
+  //视频title
+  const titleChangeHandle=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+    setTitle(e.currentTarget.value);
+  }
+  //视频内容
+  const contentChangeHandle=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+    setDesc(e.currentTarget.value);
   }
   return (
       <VideoInfoWrapper>
         <LeftContent>
           <p className="title-tip">详细信息</p>
-          <TextArea rows={4} placeholder="请输入标题" maxLength={100} showCount />
-          <TextArea rows={4} placeholder="向观众介绍您的视频" maxLength={500} showCount />
+          <TextArea rows={4}
+                    placeholder="请输入标题"
+                    maxLength={100}
+                    showCount
+                    onChange={(e)=>titleChangeHandle(e)}/>
+          <TextArea rows={4}
+                    placeholder="向观众介绍您的视频"
+                    maxLength={500}
+                    showCount
+                    onChange={e=>contentChangeHandle(e)}/>
           <p className="abbreviation">缩略图</p>
           <p className="desc">请上传一张可展示您视频内容的图片。好的缩略图能脱颖而出，吸引观看者的眼球</p>
           <div className="abbreviation-upload-outer">
@@ -138,12 +167,12 @@ const VideoInfo:FC<IProps>=(props)=>{
                      onCancel={handleCancel}>
                 {
                   isModalOpen && <CustomizeUpload file={file}
-                                   imgWidth={7}
-                                   scale={2.15}
-                                   aspectRatio={2.15}
-                                   isCircle={false}
+                                                  imgWidth={7}
+                                                  scale={2.15}
+                                                  aspectRatio={2.15}
+                                                  isCircle={false}
                       //@ts-ignore
-                                   ref={uploadRef}/>
+                                                  ref={uploadRef}/>
                 }
               </Modal>
             </div>
@@ -219,5 +248,5 @@ const VideoInfo:FC<IProps>=(props)=>{
         </RightContent>
       </VideoInfoWrapper>
   )
-}
+})
 export default memo(VideoInfo)

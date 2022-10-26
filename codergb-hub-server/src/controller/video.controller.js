@@ -7,7 +7,8 @@ const { deleteFile } = require("../utils/deleteFile");
 const { videoPath } = require("../constant/uploadPath");
 const { APP_PORT,APP_HOST } = require("../app/config")
 const {
-  uploadVideoService
+  uploadVideoService,
+  createVideoService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -28,29 +29,69 @@ class VideoController{
   //视频合并
   async mergeVideo(ctx,next){
     try{
-      const {dest="",hash="",originalname,type,total} = ctx.request.body;
-      console.log(dest,hash,originalname,type,total);
+      const {dest="",hash="",originalname,type,total} = ctx.query;
       if(!isEmpty(ctx,dest,"目的路径不能为空") && !isEmpty(ctx,hash,"文件HASH值不能为空")){
         const id = new Date().getTime();
         const result = await mergeVideo(ctx,dest,path.resolve(__dirname,"../../","./upload/video"),hash);
         if(result){
           const suffix = originalname.substring(originalname.lastIndexOf("."));
           const sourcePath = path.resolve(__dirname,"../../",`./upload/video/${hash}${suffix}`);
-          const destPath = path.resolve(__dirname,"../../",`./upload/video/`)
-          const result = await videoToM3u8(sourcePath, destPath, hash);
+          const destPath   = path.resolve(__dirname,"../../",`./upload/video/`)
+          const result = await videoToM3u8(sourcePath, destPath, hash,(progress)=>{
+            let res={
+              isProgress:true,
+              percent:progress.percent
+            }
+            ctx.websocket.send(JSON.stringify(res));
+          });
           if(result){
             await deleteFile(sourcePath);
             const vioPath = videoPath.replace("./upload","");
             const vioUrl = `${APP_HOST}:${APP_PORT}${vioPath}${hash}.m3u8`;
             const result = await uploadVideoService(ctx,id,videoPath,`${hash}.m3u8`,originalname,vioUrl);
+            let res={
+              id:id,
+              isProgress:false,
+              percent:100
+            }
+            ctx.websocket.send(JSON.stringify(res));
+            ctx.websocket.close();
           }
         }
-        setResponse(ctx,"文件上传成功",200,{
+        /*setResponse(ctx,"文件上传成功",200,{
           id:id
-        })
+        })*/
       }
     }catch (e) {
       setResponse(ctx,e.message,500);
+    }
+  }
+  //视频创建
+  async createVideo(ctx,next){
+    try{
+      const {
+        videoId,
+        title,
+        desc,
+        imgId,
+        playlistId,
+        tagIds,
+        cateId
+      } = ctx.request.body;
+      if(!isEmpty(ctx,videoId,"请选择文件")&&
+         !isEmpty(ctx,title,"视频标题不能为空")&&
+         !isEmpty(ctx,desc,"视频简介不能为空")&&
+         !isEmpty(ctx,imgId,"视频封面不能为空")&&
+         !isEmpty(ctx,playlistId,"请选择视频播放列表")&&
+         !isEmpty(ctx,tagIds,"视频标签不能为空")&&
+         !isEmpty(ctx,cateId,"视频分类不能为空")){
+        const result = await createVideoService(ctx,videoId, title, desc, imgId, playlistId, tagIds, cateId);
+        if(result){
+          setResponse(ctx,"success",200,{});
+        }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
     }
   }
 }

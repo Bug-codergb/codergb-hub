@@ -1,4 +1,4 @@
-import React, {memo, FC, ReactElement, useState} from "react";
+import React, {memo, FC, ReactElement, useState,useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import {Map} from "immutable";
 import {Dropdown, Modal} from 'antd';
@@ -19,17 +19,35 @@ import UserIcon from "../../assets/html/user/userIcon";
 import {useSelector} from "react-redux";
 import {ILogin} from "../../types/login/ILogin";
 import Profile from "./childCpn/profile";
+import {createVideo} from "../../network/video";
 const Header:FC=():ReactElement=>{
   const [isModalOpen,setIsModelOpen] = useState<boolean>(false);
   const loginState = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin;
   })
   const navigate = useNavigate();
+  const videoRef = useRef<any>(null);
   const showDialogHandle=()=>{
     setIsModelOpen(true);
   }
-  const handleOk=()=>{
-    setIsModelOpen(false);
+  const handleOk=async ()=>{
+    console.log(videoRef.current);
+    if(videoRef.current && videoRef.current.videoId && videoRef.current.imgId){
+      const {
+        videoId,
+        title,
+        desc,
+        playlist,
+        tag,
+        cate,
+        imgId
+      }=videoRef.current;
+      const result = await createVideo(videoId, title, desc,imgId, playlist, tag, cate,);
+      if(result.status==200){
+        console.log(result.data);
+      }
+    }
+    //setIsModelOpen(false);
   }
   const handleCancel=()=>{
     setIsModelOpen(false);
@@ -75,7 +93,9 @@ const Header:FC=():ReactElement=>{
                    width={'70%'}
                    onCancel={handleCancel}>
               {
-                isModalOpen && <UploadVideo/>
+                isModalOpen && <UploadVideo
+                    // @ts-ignore
+                    ref={videoRef}/>
               }
             </Modal>
           </div>

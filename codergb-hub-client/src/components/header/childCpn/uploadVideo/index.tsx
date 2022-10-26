@@ -1,4 +1,4 @@
-import React, {memo, FC, ChangeEvent, useState} from "react";
+import React, {memo, FC, ChangeEvent, useState, forwardRef, useRef, useImperativeHandle} from "react";
 import {CloudUploadOutlined} from "@ant-design/icons"
 import { Progress } from "antd"
 import {
@@ -6,12 +6,26 @@ import {
 } from "./style"
 import {shardUtils} from "../../../../utils/shard";
 import VideoInfo from "./childCpn/videoInfo";
-const UploadVideo:FC=()=>{
+const UploadVideo:FC=forwardRef((props,propsRef)=>{
   const [file,setFile] = useState<File>();
   const [videoURL,setVideoURL]=useState<string>("");
   const [videoName,setVideoName]=useState<string>("");
+  const [videoId,setVideoId]=useState<string>("");
   const [percent,setPercent] = useState<number>(0);
   const [isShowUpload,setIsShowUpload]=useState<boolean>(true);
+
+  const videoInfoRef = useRef<any>(null);
+  useImperativeHandle(propsRef,()=>{
+    return {
+      videoId:videoId,
+      title:videoInfoRef.current?.title,
+      desc:videoInfoRef.current?.desc,
+      playlist:videoInfoRef.current?.playlist,
+      tag:videoInfoRef.current?.tag,
+      cate:videoInfoRef.current?.cate,
+      imgId:videoInfoRef.current?.imgId,
+    }
+  })
   const fileChangeHandle=async (e:ChangeEvent<HTMLInputElement>)=>{
     if(e.currentTarget.files && e.currentTarget.files.length!==0){
       const file = e.currentTarget.files[0];
@@ -23,8 +37,12 @@ const UploadVideo:FC=()=>{
       setIsShowUpload(false);
       const result = await shardUtils(file,(e)=>{
         setPercent(e/file.size*100);
+      },(e)=>{
+        setPercent(e);
       });
-      console.log(result);
+      if(result.status ===200){
+        setVideoId(result.data.id);
+      }
     }
   }
   return (
@@ -38,12 +56,15 @@ const UploadVideo:FC=()=>{
           </div>
         }
         {
-          (!isShowUpload) && <VideoInfo videoURL={videoURL} videoName={videoName}/>
+          (!isShowUpload) && <VideoInfo videoURL={videoURL}
+                                        videoName={videoName}
+              // @ts-ignore
+                                        ref={videoInfoRef}  />
         }
         {
           (!isShowUpload) && <Progress percent={parseFloat(percent.toFixed(2))}/>
         }
       </UploadVideoWrapper>
   )
-}
+})
 export default memo(UploadVideo)

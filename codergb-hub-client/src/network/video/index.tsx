@@ -22,3 +22,26 @@ export function mergeVideo<T=IResponseType<any>>(path:string,hash:string,name:st
     },
   })
 }
+//创建video
+export function createVideo<T=IResponseType<any>>(
+    videoId:string,
+    title:string,
+    desc:string,
+    imgId:string,
+    playlistId:string,
+    tagIds:string[],
+    cateId:string
+){
+  return gbRequest.post<T>({
+    url:"/video/create",
+    data:{
+      videoId,
+      title,
+      desc,
+      imgId,
+      playlistId,
+      tagIds,
+      cateId
+    }
+  })
+}
