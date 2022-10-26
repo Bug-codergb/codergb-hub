@@ -1,6 +1,6 @@
 import React, {memo, FC, ChangeEvent, useState, forwardRef, useRef, useImperativeHandle} from "react";
 import {CloudUploadOutlined} from "@ant-design/icons"
-import { Progress } from "antd"
+import { Progress,Spin  } from "antd"
 import {
   UploadVideoWrapper
 } from "./style"
@@ -13,7 +13,7 @@ const UploadVideo:FC=forwardRef((props,propsRef)=>{
   const [videoId,setVideoId]=useState<string>("");
   const [percent,setPercent] = useState<number>(0);
   const [isShowUpload,setIsShowUpload]=useState<boolean>(true);
-
+  const [isShowLoading,setIsShowLoading] = useState<boolean>(false);
   const videoInfoRef = useRef<any>(null);
   useImperativeHandle(propsRef,()=>{
     return {
@@ -39,9 +39,13 @@ const UploadVideo:FC=forwardRef((props,propsRef)=>{
         setPercent(e/file.size*100);
       },(e)=>{
         setPercent(e);
+        if(!isShowLoading){
+          setIsShowLoading(true);
+        }
       });
       if(result.status ===200){
         setVideoId(result.data.id);
+        setIsShowLoading(false);
       }
     }
   }
@@ -63,6 +67,12 @@ const UploadVideo:FC=forwardRef((props,propsRef)=>{
         }
         {
           (!isShowUpload) && <Progress percent={parseFloat(percent.toFixed(2))}/>
+        }
+        {
+          (isShowLoading) &&<div className="video-upload-loading">
+            <Spin className="video-upload-loading-icon"/>
+            <div className="label">视频处理中...</div>
+          </div>
         }
       </UploadVideoWrapper>
   )

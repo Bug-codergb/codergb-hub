@@ -23,6 +23,7 @@ class VideoController{
       }
       setResponse(ctx,"上传成功",200,data);
     }catch (e) {
+      console.log(e);
       setResponse(ctx,e.message,500,{})
     }
   }
@@ -63,6 +64,7 @@ class VideoController{
         })*/
       }
     }catch (e) {
+      console.log(e)
       setResponse(ctx,e.message,500);
     }
   }

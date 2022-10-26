@@ -36,4 +36,19 @@ export const UploadVideoWrapper=styled.div`
       margin: ${30/40}rem 0;
     }
   }
+  .video-upload-loading{
+    display: flex;
+    align-items: center;
+    .video-upload-loading-icon{
+      display: flex;
+      align-items: center;
+      span{
+        font-size: ${26/40}rem;
+      }
+    }
+    .label{
+      font-size: ${14/40}rem;
+      margin: 0 0 0 20px;
+    }
+  }
 `

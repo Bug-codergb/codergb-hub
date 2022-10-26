@@ -52,7 +52,9 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
         console.log("socket 关闭");
         return {
           status:200,
-          id:videoId
+          data:{
+            id:videoId
+          }
         };
       }
       //const res = await mergeVideo(dest,HASH,name,type,total);

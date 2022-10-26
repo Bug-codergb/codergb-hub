@@ -12,7 +12,6 @@ function videoToM3u8(sourcePath,destPath,videoName,progressHandle){
           if(err){
             reject(new Error("目的路径不存在"))
           }else{
-            console.log(sourcePath)
             ffmpeg(sourcePath).videoCodec('libx264').format('hls')
               .outputOption('-hls_list_size 0')
               .outputOption('-hls_time 30')
