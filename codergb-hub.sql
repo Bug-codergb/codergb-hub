@@ -11,11 +11,63 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 26/10/2022 21:43:48
+ Date: 29/10/2022 17:06:52
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for block
+-- ----------------------------
+DROP TABLE IF EXISTS `block`;
+CREATE TABLE `block`  (
+  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `name`(`name` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of block
+-- ----------------------------
+INSERT INTO `block` VALUES ('1667028360697', '上传的视频', '每当有视频上传后，此板块就会有显示', '2022-10-29 15:26:00', '2022-10-29 15:26:00');
+INSERT INTO `block` VALUES ('1667028411493', '热门上传视频', '每当有视频上传后，此板块就会有显示', '2022-10-29 15:26:51', '2022-10-29 15:26:51');
+INSERT INTO `block` VALUES ('1667028433872', '短视频', '每当有短视频上传后，此板块就会有显示', '2022-10-29 15:27:13', '2022-10-29 15:27:13');
+INSERT INTO `block` VALUES ('1667028473518', '正在直播', '此板块会在直播期间显示', '2022-10-29 15:27:53', '2022-10-29 15:27:53');
+INSERT INTO `block` VALUES ('1667028537659', '过往的直播归档的视频', '此板块会在已归档的直播视频时显示', '2022-10-29 15:28:57', '2022-10-29 15:28:57');
+INSERT INTO `block` VALUES ('1667028570849', '即将开始的直播', '此板块会在已安排的直播时显示', '2022-10-29 15:29:30', '2022-10-29 15:29:30');
+INSERT INTO `block` VALUES ('1667028637618', '单个播放列表', '', '2022-10-29 15:30:37', '2022-10-29 15:30:37');
+INSERT INTO `block` VALUES ('1667028662350', '创建的播放列表', '', '2022-10-29 15:31:02', '2022-10-29 15:31:02');
+INSERT INTO `block` VALUES ('1667028677380', '多个播放列表', '', '2022-10-29 15:31:17', '2022-10-29 15:31:17');
+INSERT INTO `block` VALUES ('1667028710453', '订阅的频道', '显示您订阅的频道', '2022-10-29 15:31:50', '2022-10-29 15:31:50');
+INSERT INTO `block` VALUES ('1667028720735', '精选频道', '', '2022-10-29 15:32:00', '2022-10-29 15:32:00');
+
+-- ----------------------------
+-- Table structure for block_content
+-- ----------------------------
+DROP TABLE IF EXISTS `block_content`;
+CREATE TABLE `block_content`  (
+  `blockId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `cId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `pId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `vId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  INDEX `blockId`(`blockId` ASC) USING BTREE,
+  INDEX `cId`(`cId` ASC) USING BTREE,
+  INDEX `pId`(`pId` ASC) USING BTREE,
+  INDEX `vId`(`vId` ASC) USING BTREE,
+  CONSTRAINT `block_content_ibfk_1` FOREIGN KEY (`blockId`) REFERENCES `block` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `block_content_ibfk_2` FOREIGN KEY (`cId`) REFERENCES `channel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `block_content_ibfk_3` FOREIGN KEY (`pId`) REFERENCES `playlist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `block_content_ibfk_4` FOREIGN KEY (`vId`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of block_content
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for category
@@ -55,22 +107,10 @@ CREATE TABLE `channel`  (
   `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `name` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `alias` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `avatarUrl` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `coverUrl` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `official` int NULL DEFAULT NULL,
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `avatarOriginalname` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `avatarMimetype` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `avatarDest` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `avatarFilename` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `avatarSize` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `coverOriginalname` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `coverMimetype` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `coverDest` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `coverFilename` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `coverSize` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -101,6 +141,28 @@ CREATE TABLE `file`  (
 -- ----------------------------
 INSERT INTO `file` VALUES ('1666790859971', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-26 21:28:07', '2022-10-26 21:28:07');
 INSERT INTO `file` VALUES ('1666791734545', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-26 21:42:40', '2022-10-26 21:42:40');
+INSERT INTO `file` VALUES ('1667023542614', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:06:14', '2022-10-29 14:06:14');
+INSERT INTO `file` VALUES ('1667023685936', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:08:53', '2022-10-29 14:08:53');
+INSERT INTO `file` VALUES ('1667023686049', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:08:53', '2022-10-29 14:08:53');
+INSERT INTO `file` VALUES ('1667024668525', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:24:55', '2022-10-29 14:24:55');
+INSERT INTO `file` VALUES ('1667024765143', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:26:30', '2022-10-29 14:26:30');
+INSERT INTO `file` VALUES ('1667024822558', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:27:29', '2022-10-29 14:27:29');
+INSERT INTO `file` VALUES ('1667024870795', 'http://localhost:8888/image/1667024870795', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667024870794.webp', 60818, '2022-10-29 14:27:50', '2022-10-29 14:27:50');
+INSERT INTO `file` VALUES ('1667024992365', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:30:17', '2022-10-29 14:30:17');
+INSERT INTO `file` VALUES ('1667025217881', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:34:05', '2022-10-29 14:34:05');
+INSERT INTO `file` VALUES ('1667025253186', 'http://localhost:8888/image/1667025253186', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1667025253185.webp', 85045, '2022-10-29 14:34:13', '2022-10-29 14:34:13');
+INSERT INTO `file` VALUES ('1667025331313', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:36:00', '2022-10-29 14:36:00');
+INSERT INTO `file` VALUES ('1667025405471', 'http://localhost:8888/image/1667025405471', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1667025405470.webp', 91238, '2022-10-29 14:36:45', '2022-10-29 14:36:45');
+INSERT INTO `file` VALUES ('1667025437810', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:37:44', '2022-10-29 14:37:44');
+INSERT INTO `file` VALUES ('1667025526311', 'http://localhost:8888/image/1667025526311', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667025526310.jpg', 54608, '2022-10-29 14:38:46', '2022-10-29 14:38:46');
+INSERT INTO `file` VALUES ('1667025595036', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:40:23', '2022-10-29 14:40:23');
+INSERT INTO `file` VALUES ('1667025630509', 'http://localhost:8888/image/1667025630509', NULL, 'f15887af9.jpg', 'image/jpeg', './upload/image', '1667025630508.jpg', 60415, '2022-10-29 14:40:30', '2022-10-29 14:40:30');
+INSERT INTO `file` VALUES ('1667025672236', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:41:38', '2022-10-29 14:41:38');
+INSERT INTO `file` VALUES ('1667025761829', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:43:07', '2022-10-29 14:43:07');
+INSERT INTO `file` VALUES ('1667025820281', 'http://localhost:8888/image/1667025820281', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667025820280.webp', 61024, '2022-10-29 14:43:40', '2022-10-29 14:43:40');
+INSERT INTO `file` VALUES ('1667025883960', 'http://localhost:8888/image/1667025883960', NULL, 'f15887af9.jpg', 'image/jpeg', './upload/image', '1667025883958.jpg', 69656, '2022-10-29 14:44:43', '2022-10-29 14:44:43');
+INSERT INTO `file` VALUES ('1667025873221', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-10-29 14:44:59', '2022-10-29 14:44:59');
+INSERT INTO `file` VALUES ('1667025964681', 'http://localhost:8888/image/1667025964681', NULL, '1.jpg', 'image/jpeg', './upload/channel/avatar', '1667025964680.jpg', 96402, '2022-10-29 14:46:04', '2022-10-29 14:46:04');
 
 -- ----------------------------
 -- Table structure for playlist
@@ -144,6 +206,9 @@ CREATE TABLE `playlist_video`  (
 -- Records of playlist_video
 -- ----------------------------
 INSERT INTO `playlist_video` VALUES ('1665824604596', '1666787134290', '2022-10-26 20:25:34', '2022-10-26 20:25:34');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667025790639', '2022-10-29 14:43:10', '2022-10-29 14:43:10');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667025822769', '2022-10-29 14:43:42', '2022-10-29 14:43:42');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667025901576', '2022-10-29 14:45:01', '2022-10-29 14:45:01');
 
 -- ----------------------------
 -- Table structure for tag
@@ -190,8 +255,14 @@ CREATE TABLE `tag_video`  (
 -- ----------------------------
 -- Records of tag_video
 -- ----------------------------
+INSERT INTO `tag_video` VALUES ('1665897040416', '1667025901576', '2022-10-29 14:45:01', '2022-10-29 14:45:01');
+INSERT INTO `tag_video` VALUES ('1665897046778', '1667025901576', '2022-10-29 14:45:01', '2022-10-29 14:45:01');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1666787134290', '2022-10-26 20:25:34', '2022-10-26 20:25:34');
 INSERT INTO `tag_video` VALUES ('1665897058346', '1666787134290', '2022-10-26 20:25:34', '2022-10-26 20:25:34');
+INSERT INTO `tag_video` VALUES ('1665897058346', '1667025790639', '2022-10-29 14:43:10', '2022-10-29 14:43:10');
+INSERT INTO `tag_video` VALUES ('1665897058346', '1667025822769', '2022-10-29 14:43:42', '2022-10-29 14:43:42');
+INSERT INTO `tag_video` VALUES ('1665897062762', '1667025790639', '2022-10-29 14:43:10', '2022-10-29 14:43:10');
+INSERT INTO `tag_video` VALUES ('1665897062762', '1667025822769', '2022-10-29 14:43:42', '2022-10-29 14:43:42');
 
 -- ----------------------------
 -- Table structure for user
@@ -219,6 +290,25 @@ CREATE TABLE `user`  (
 INSERT INTO `user` VALUES ('1664789923657', '叶子', '123', 'http://localhost:8888/user/avatar/1664789923657', '2022-10-03 17:38:43', '2022-10-04 15:41:22', 'th.gif', 'image/gif', './upload/user/avatar', '1664869281991.gif', '1235062');
 
 -- ----------------------------
+-- Table structure for user_block
+-- ----------------------------
+DROP TABLE IF EXISTS `user_block`;
+CREATE TABLE `user_block`  (
+  `userId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `blockId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`userId`, `blockId`) USING BTREE,
+  INDEX `blockId`(`blockId` ASC) USING BTREE,
+  CONSTRAINT `user_block_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_block_ibfk_2` FOREIGN KEY (`blockId`) REFERENCES `block` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_block
+-- ----------------------------
+INSERT INTO `user_block` VALUES ('1664789923657', '1667028360697');
+INSERT INTO `user_block` VALUES ('1664789923657', '1667028570849');
+
+-- ----------------------------
 -- Table structure for video
 -- ----------------------------
 DROP TABLE IF EXISTS `video`;
@@ -238,6 +328,9 @@ CREATE TABLE `video`  (
 -- Records of video
 -- ----------------------------
 INSERT INTO `video` VALUES ('1666787134290', '343', '2232', '1665897712689', '2022-10-26 20:25:34', '2022-10-26 20:25:34');
+INSERT INTO `video` VALUES ('1667025790639', '如4如 ', '3 ', '1665897715639', '2022-10-29 14:43:10', '2022-10-29 14:43:10');
+INSERT INTO `video` VALUES ('1667025822769', '如4如 ', '3 ', '1665897715639', '2022-10-29 14:43:42', '2022-10-29 14:43:42');
+INSERT INTO `video` VALUES ('1667025901576', '肥肉皮肤加热', '服务服务', '1665897715639', '2022-10-29 14:45:01', '2022-10-29 14:45:01');
 
 -- ----------------------------
 -- Table structure for video_file
@@ -254,5 +347,11 @@ CREATE TABLE `video_file`  (
 -- ----------------------------
 INSERT INTO `video_file` VALUES ('1666787134290', '1666787111642', 'cover');
 INSERT INTO `video_file` VALUES ('1666787134290', '1666787101271', 'source');
+INSERT INTO `video_file` VALUES ('1667025790639', '1667025786695', 'cover');
+INSERT INTO `video_file` VALUES ('1667025790639', '1667025761829', 'source');
+INSERT INTO `video_file` VALUES ('1667025822769', '1667025786695', 'cover');
+INSERT INTO `video_file` VALUES ('1667025822769', '1667025761829', 'source');
+INSERT INTO `video_file` VALUES ('1667025901576', '1667025883960', 'cover');
+INSERT INTO `video_file` VALUES ('1667025901576', '1667025873221', 'source');
 
 SET FOREIGN_KEY_CHECKS = 1;

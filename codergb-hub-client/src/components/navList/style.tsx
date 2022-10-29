@@ -20,7 +20,7 @@ export const NavListWrapper= styled.div`
     .label{
       font-family: "YouTube Sans","Roboto","Arial",sans-serif;
       font-weight: 600;
-      font-size: 15px;
+      font-size: ${20/40}rem; 
       white-space: nowrap;
       margin: ${15/40}rem;
     }
@@ -69,7 +69,7 @@ export const NavListWrapper= styled.div`
       .nav-name{
         font-family: "YouTube Sans","Roboto","Arial",sans-serif;
         font-weight: 600;
-        font-size: 15px;
+        font-size: ${20/40}rem;
         color: #616161;
       }
       &.active{
