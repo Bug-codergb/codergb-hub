@@ -39,6 +39,7 @@ export const UploadVideoWrapper=styled.div`
   .video-upload-loading{
     display: flex;
     align-items: center;
+    margin: 10px 0 0 0;
     .video-upload-loading-icon{
       display: flex;
       align-items: center;

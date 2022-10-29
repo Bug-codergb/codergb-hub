@@ -33,6 +33,7 @@ class CategoryService{
       setResponse(ctx,e.message,500,{})
     }
   }
+
 }
 
 module.exports = new CategoryService();

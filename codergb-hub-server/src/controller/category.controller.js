@@ -2,7 +2,7 @@ const { setResponse } = require("../utils/setResponse");
 const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
-  getAllCateService
+  getAllCateService,
 } = require("../service/category.service");
 class CategoryController{
   async create(ctx,next){

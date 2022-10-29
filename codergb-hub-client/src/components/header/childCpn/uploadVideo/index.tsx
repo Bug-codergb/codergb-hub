@@ -45,6 +45,7 @@ const UploadVideo:FC=forwardRef((props,propsRef)=>{
       });
       if(result.status ===200){
         setVideoId(result.data.id);
+        setPercent(100);
         setIsShowLoading(false);
       }
     }

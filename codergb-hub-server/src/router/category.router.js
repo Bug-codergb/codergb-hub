@@ -5,8 +5,9 @@ const {
 } = require("../middleware/login.middleware");
 const {
   create,
-  getAllCate
+  getAllCate,
 } = require("../controller/category.controller");
 cateRouter.post("/",authVerify,create);
 cateRouter.get("/all",authVerify,getAllCate)
+
 module.exports = cateRouter;

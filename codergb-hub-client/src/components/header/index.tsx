@@ -45,6 +45,7 @@ const Header:FC=():ReactElement=>{
       const result = await createVideo(videoId, title, desc,imgId, playlist, tag, cate,);
       if(result.status==200){
         console.log(result.data);
+        setIsModelOpen(false);
       }
     }
     //setIsModelOpen(false);

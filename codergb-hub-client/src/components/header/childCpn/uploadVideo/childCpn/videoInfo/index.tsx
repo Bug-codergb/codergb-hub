@@ -124,6 +124,7 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
   }
   //视频title
   const titleChangeHandle=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+    console.log(e.currentTarget.value)
     setTitle(e.currentTarget.value);
   }
   //视频内容

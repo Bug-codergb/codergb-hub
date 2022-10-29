@@ -5,6 +5,7 @@ import {
   LayoutWrapper
 } from "./style"
 import VideoSearch from "./childCpn/videoSearch";
+import BlockPage from "./childCpn/block";
 const Layout:FC=()=>{
   const [isModalOpen,setIsModalOpen] = useState<boolean>(false);
   const showModalHandle=()=>{
@@ -44,6 +45,7 @@ const Layout:FC=()=>{
                onCancel={handleCancel}>
           <VideoSearch/>
         </Modal>
+        <BlockPage/>
       </LayoutWrapper>
   )
 }

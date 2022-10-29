@@ -1,6 +1,7 @@
 import {mergeVideo, uploadVideo} from "../network/video";
 import {WEBSOCKET_HOST_NAME} from "../constant/host";
 import SparkMD5 from 'spark-md5';
+import {getSocketMsg, socketClose, socketOpen} from "../network/websocket/mergeVideo";
 const chunkSize = 1024 * 1000;
 async function getFileHash(file:File){
   return new Promise((resolve,reject)=>{
@@ -35,11 +36,10 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
       let videoId="";
       let params =`?dest=${dest}&hash=${HASH}&originalname=${name}&type=${type}&total=${total}`;
       let websocket = new WebSocket(`${WEBSOCKET_HOST_NAME}/video/merge${params}`);
-      websocket.onopen=function (){
-        console.log("socket 建立成功");
-        websocket.send("open");
-      }
-      websocket.onmessage=function(e){
+      await socketOpen(websocket);
+      videoId = await getSocketMsg(websocket,handle);
+      return await socketClose(websocket,videoId);
+      /*websocket.onmessage=function(e){
         let res = JSON.parse(e.data);
         let percent = res.percent? res.percent : 0;
         if(res.isProgress===false){
@@ -56,7 +56,7 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
             id:videoId
           }
         };
-      }
+      }*/
       //const res = await mergeVideo(dest,HASH,name,type,total);
     }
     let end = index*chunkSize + chunkSize;
