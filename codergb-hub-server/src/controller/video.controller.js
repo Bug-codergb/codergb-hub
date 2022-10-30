@@ -8,7 +8,8 @@ const { videoPath } = require("../constant/uploadPath");
 const { APP_PORT,APP_HOST } = require("../app/config")
 const {
   uploadVideoService,
-  createVideoService
+  createVideoService,
+  allVideoService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -71,6 +72,7 @@ class VideoController{
   //视频创建
   async createVideo(ctx,next){
     try{
+      const {userId} = ctx.user;
       const {
         videoId,
         title,
@@ -87,10 +89,22 @@ class VideoController{
          !isEmpty(ctx,playlistId,"请选择视频播放列表")&&
          !isEmpty(ctx,tagIds,"视频标签不能为空")&&
          !isEmpty(ctx,cateId,"视频分类不能为空")){
-        const result = await createVideoService(ctx,videoId, title, desc, imgId, playlistId, tagIds, cateId);
+        const result = await createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId);
         if(result){
           setResponse(ctx,"success",200,{});
         }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  //获取所有video
+  async allVideo(ctx,next){
+    try{
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await allVideoService(ctx,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

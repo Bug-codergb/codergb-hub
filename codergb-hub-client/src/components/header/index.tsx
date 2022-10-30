@@ -90,6 +90,7 @@ const Header:FC=():ReactElement=>{
                    okText={"确定"}
                    open={isModalOpen}
                    onOk={handleOk}
+                   maskClosable={false}
                    destroyOnClose={true}
                    width={'70%'}
                    onCancel={handleCancel}>

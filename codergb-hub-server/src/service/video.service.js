@@ -11,11 +11,11 @@ class VideoService{
     }
   }
   //创建视频
-  async createVideoService(ctx,videoId, title, desc, imgId, playlistId, tagIds, cateId){
+  async createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId){
     try{
       const id = new Date().getTime();
-      const videoSql = `insert into video(id,name,description,cateId) values(?,?,?,?)`;
-      const result = await connection.execute(videoSql,[id,title,desc,cateId]);
+      const videoSql = `insert into video(id,userId,name,description,cateId) values(?,?,?,?,?)`;
+      const result = await connection.execute(videoSql,[id,userId,title,desc,cateId]);
       await new VideoService().createVideoFileService(ctx,id,imgId,"cover");
       await new VideoService().createVideoFileService(ctx,id,videoId,"source");
       await new VideoService().createVideoPlaylistService(ctx,id,playlistId);
@@ -54,6 +54,53 @@ class VideoService{
         result = await connection.execute(sql,[item,vId]);
       }
       return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async allVideoCountService(ctx){
+    try{
+      const sql=`
+      select count(DISTINCT(v.id)) as count
+          from video as v
+          LEFT JOIN category as c on c.id = v.cateId
+          LEFT JOIN video_file as vf on vf.videoId = v.id
+          LEFT JOIN file as f on f.id = vf.fileId
+          LEFT JOIN tag_video as tv on tv.vId = v.id
+          LEFT JOIN tag on tag.id = tv.tId
+          where vf.mark="cover"
+          ORDER BY v.createTime desc`;
+      const result = await connection.execute(sql);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async allVideoService(ctx,offset,limit){
+    try{
+      const sql=`
+      select DISTINCT(v.id),v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,JSON_OBJECT(
+         'id',c.id,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
+			 ) as category,f.picUrl,JSON_ARRAYAGG(JSON_OBJECT(
+			   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
+			 )) as tag,(select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
+                        from user as u where u.userId=v.userId) as user
+      from video as v
+      LEFT JOIN category as c on c.id = v.cateId
+      LEFT JOIN video_file as vf on vf.videoId = v.id
+      LEFT JOIN file as f on f.id = vf.fileId
+      LEFT JOIN tag_video as tv on tv.vId = v.id
+      LEFT JOIN tag on tag.id = tv.tId
+      where vf.mark="cover"
+      GROUP BY v.id
+      ORDER BY v.createTime desc
+      limit ?,?`;
+      const result = await connection.execute(sql,[offset,limit]);
+      const count = await new VideoService().allVideoCountService(ctx);
+      return {
+        count:count[0].count,
+        list:result[0]
+      }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }

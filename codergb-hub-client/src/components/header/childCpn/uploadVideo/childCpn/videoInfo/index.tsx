@@ -44,9 +44,9 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
   //创建视频时传的参数
   const [title,setTitle] = useState<string>("");
   const [desc,setDesc] = useState<string>("");
-  const [playlistParam,setPlaylistParam] = useState<string>("");
+  const [playlistParam,setPlaylistParam] = useState<string>("2");
   const [tagParam,setTagParam] =useState<string[]>([]);
-  const [cateParam,setCateParam] = useState<string>("");
+  const [cateParam,setCateParam] = useState<string>("1");
 
   useImperativeHandle(propsRef,()=>{
     return {
