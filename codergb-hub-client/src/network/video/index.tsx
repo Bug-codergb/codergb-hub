@@ -55,3 +55,9 @@ export function getAllVideo<T=IResponseType<any>>(offset:number,limit:number){
     }
   })
 }
+//获取视频URL
+export function getVideoURL<T=IResponseType<any>>(id:string){
+  return gbRequest.get<T>({
+    url:`/video/url/${id}`,
+  })
+}

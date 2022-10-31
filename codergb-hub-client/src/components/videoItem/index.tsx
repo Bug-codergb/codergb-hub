@@ -12,14 +12,22 @@ interface IProps{
   state:string,
   createTime:string,
   itemWidth:number,
-  scale:number
+  scale:number,
+  video?:ReactElement,
+  isShowVideo?:boolean,
+  isShowImg?:boolean
 }
 const VideoItem:FC<IProps>=(props):ReactElement=>{
-  const {user,img,dt,playCount,state,createTime,itemWidth,scale} = props;
+  const {user,img,dt,playCount,state,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
   return (
       <VideoItemWrapper itemWidth={itemWidth} scale={scale}>
         {
-          img
+          (!isShowVideo) && img
+        }
+        {
+          isShowVideo && <div className="video-container">
+            {video}
+          </div>
         }
         <div className="msg-info">
           <div className="left-container">

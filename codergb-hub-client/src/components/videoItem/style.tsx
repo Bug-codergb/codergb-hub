@@ -7,6 +7,14 @@ export const VideoItemWrapper:any = styled.div`
     width: 100%;
     border-radius: ${8/40}rem ${8/40}rem 0 0;
   }
+  .video-container{
+    border-radius: ${8/40}rem ${8/40}rem 0 0;
+    overflow: hidden;
+    width: 100%;
+    &>video{
+      width: 100%;
+    } 
+  }
   .msg-info{
     display: flex;
     align-items: flex-start;

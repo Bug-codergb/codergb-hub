@@ -1,6 +1,9 @@
 import {Navigate, RouteObject} from "react-router-dom";
 import {lazy,Suspense} from "react";
-import StudioChildrenRoute from "./studio/index"
+import StudioChildrenRoute from "./studio/index";
+import {
+  videoDetailRoute
+} from "./detail/index";
 import Home from "../views/home";
 const LoginRoute = lazy(()=>import('../views/login/index'));
 const HomeRoute = lazy(()=>import("../views/home/index"));
@@ -131,7 +134,9 @@ const routes:RouteObject[]=[
         </Suspense>
     ),
     children:StudioChildrenRoute
-  }
+  },
+  //详情页
+  videoDetailRoute,
 ]
 export {
   routes

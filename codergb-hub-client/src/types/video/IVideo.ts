@@ -3,6 +3,7 @@ import {ITag} from "../tag/ITag";
 import {IUserMsg} from "../user/IUserMsg";
 
 interface IVideo{
+  isShow:false,
   key:string,
   id:string,
   name:string,
