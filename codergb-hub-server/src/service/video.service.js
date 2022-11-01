@@ -105,5 +105,19 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  //获取视频URL
+  async getVideoURLService(ctx,id){
+    try{
+      const sql=`select distinct(v.id),v.name,f.vioUrl
+                 from video as v
+                 INNER JOIN video_file as vf on v.id = vf.videoId
+                 INNER JOIN file as f on f.id=vf.fileId
+                 where v.id=? AND vf.mark = "source" and vioUrl is not null`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 module.exports  = new VideoService();

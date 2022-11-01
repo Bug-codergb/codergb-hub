@@ -5,6 +5,7 @@ import { ProfileWrapper } from "./style"
 import {useSelector} from "react-redux";
 import {ILogin} from "../../../../types/login/ILogin";
 import {profileMenu} from "../../../../constant/profileMenu";
+import UserIcon from "../../../../assets/html/user/userIcon";
 
 const Profile:FC=()=>{
   const navigate = useNavigate();
@@ -23,6 +24,12 @@ const Profile:FC=()=>{
             login.loginType===1 && login.userMsg.avatarUrl &&
             <div className="avatar-container">
               <img className="avatar" src={login.userMsg.avatarUrl} alt={'avatar'}/>
+            </div>
+          }
+          {
+            login.loginType===1 && (!login.userMsg.avatarUrl) &&
+            <div className="avatar-container">
+              <UserIcon/>
             </div>
           }
           <span className="user-name">{login.userMsg.userName}</span>

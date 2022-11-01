@@ -43,13 +43,13 @@ const Recommend:FC=():ReactElement=>{
       }
     })
   }
-  const mouseImgHandle= debounce(async (item:IVideo,index:number)=>{
+  const mouseImgHandle= async (item:IVideo,index:number)=>{
       setCurrentIndex(index);
       const res = await getVideoURL(item.id);
       if(res.status===200){
         setVideoURL(res.data.vioUrl);
       }
-  },700,false);
+  };
   const mouseLeaveHandle=()=>{
     setCurrentIndex(-1)
   }

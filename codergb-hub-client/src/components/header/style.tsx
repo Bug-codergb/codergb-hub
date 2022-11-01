@@ -98,7 +98,14 @@ export const RightContent = styled.div`
         transform: translate(-50%,-50%);
       }
     }
-    
+    .no-avatar-container{
+      width: ${50/40}rem;
+      height: ${50/40}rem;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
   
 `

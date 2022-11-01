@@ -103,7 +103,7 @@ const Header:FC=():ReactElement=>{
           </div>
           <div className="user">
             {
-              loginState && loginState.loginType===0 && <div className="logout" onClick={e=>login()}>
+              (loginState && loginState.loginType===0) && <div className="logout" onClick={e=>login()}>
                 <UserIcon/>
                 <span className="label">登录</span>
               </div>
@@ -114,6 +114,11 @@ const Header:FC=():ReactElement=>{
                   {
                     loginState && loginState.userMsg && loginState.userMsg.avatarUrl &&
                     <img src={loginState.userMsg.avatarUrl} alt="avatar"/>
+                  }
+                  {
+                    loginState && loginState.userMsg && (!loginState.userMsg.avatarUrl)&&<div className="no-avatar-container">
+                      <UserIcon/>
+                    </div>
                   }
               </div>
               </Dropdown>

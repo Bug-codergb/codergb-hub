@@ -9,7 +9,8 @@ const { APP_PORT,APP_HOST } = require("../app/config")
 const {
   uploadVideoService,
   createVideoService,
-  allVideoService
+  allVideoService,
+  getVideoURLService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -108,6 +109,18 @@ class VideoController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
+    }
+  }
+  //获取视频URL
+  async getVideoURL(ctx,next){
+    try{
+      const {id}=ctx.params;
+      const result = await getVideoURLService(ctx,id);
+      if(result){
+        setResponse(ctx,"success",200,result[0]);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
     }
   }
 }

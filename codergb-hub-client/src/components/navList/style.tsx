@@ -8,13 +8,23 @@ export const NavListWrapper= styled.div`
     flex-direction: column-reverse;
     border-bottom: 1px solid #e5e5e5;
     .img-container{
+      position: relative;
       width: ${120/40}rem;
       height: ${120/40}rem;
-      background-color: #7b20a2;
       border-radius: 50%;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #eeeeee;
       img{
         width: 100%;
+      }
+      .upload-avatar-icon{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
       }
     }
     .label{

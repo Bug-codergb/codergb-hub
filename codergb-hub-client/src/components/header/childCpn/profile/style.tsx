@@ -11,11 +11,15 @@ export const ProfileWrapper = styled.div`
     .avatar-container{
       width: ${50/40}rem;
       height: ${50/40}rem;
+      background-color: #eeeeee;
       position: relative;
       border-radius: 50%;
       overflow: hidden;
       cursor: pointer;
       margin: 0 ${24/40}rem 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       img{
         height: 100%;
         position: absolute;
