@@ -7,7 +7,8 @@ const {
   mergeVideo,
   createVideo,
   allVideo,
-  getVideoURL
+  getVideoURL,
+  getVideoDetail
 } = require("../controller/video.controller")
 //视频上传文件信息
 videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
@@ -18,4 +19,6 @@ videoRouter.post("/create",authVerify,createVideo);
 videoRouter.get("/all",authVerify,allVideo);
 //获取视频URL
 videoRouter.get("/url/:id",authVerify,getVideoURL);
+//获取视频详情
+videoRouter.post("/detail/:id",authVerify,getVideoDetail);
 module.exports = videoRouter;

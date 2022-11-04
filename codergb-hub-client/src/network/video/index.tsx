@@ -61,3 +61,8 @@ export function getVideoURL<T=IResponseType<any>>(id:string){
     url:`/video/url/${id}`,
   })
 }
+export function getVideoDetail<T=IResponseType<any>>(id:string){
+  return gbRequest.post<T>({
+    url:`/video/detail/${id}`,
+  })
+}

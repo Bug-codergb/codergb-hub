@@ -6,6 +6,9 @@ import {routes} from "./router";
 import store from "./store"
 import  "./store/actionCreators";
 import "./App.css"
+import HeaderTop from "./components/header/index";
+import {Layout} from "antd";
+const { Header } = Layout;
 function App() {
   function RouteElement(){
     return useRoutes(routes);
@@ -17,6 +20,9 @@ function App() {
           <Suspense fallback={
             <div>wwww</div>
           }>
+            <Header>
+              <HeaderTop/>
+            </Header>
             <RouteElement/>
           </Suspense>
         </BrowserRouter>

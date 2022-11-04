@@ -1,11 +1,64 @@
-import React,{memo,FC,ReactElement} from "react";
+import React, {memo, FC, ReactElement, useState, useEffect,useRef} from "react";
+import { useLocation } from "react-router-dom";
 import {
-  VideoDetailWrapper
+  VideoDetailWrapper,
+  CenterContent,
+  LeftContentWrapper,
+  RightContentWrapper
 } from "./style"
-const VideoDetail:FC=()=>{
+import {getVideoDetail, getVideoURL} from "../../../../network/video";
+import {IResponseType} from "../../../../types/responseType";
+import Hls from "hls.js";
+import {IVideo} from "../../../../types/video/IVideo";
+import VideoInfo from "./childCpn/videoInfo";
+const VideoDetail:FC=():ReactElement=>{
+  const location = useLocation();
+  const { id } = location.state;
+  const [vioURL,setVioURL] = useState<string>("");
+  const [vioId,setVioId] = useState<string>(id);
+  const [videoDetail,setVideoDetail] = useState<IVideo>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(()=>{
+    getVideoURL<IResponseType<{vioUrl:string}>>(id).then((data)=>{
+      if(data.status===200){
+        console.log(data);
+        setVioURL(data.data.vioUrl);
+      }
+    })
+    getVideoDetail(vioId).then((data)=>{
+      if(data.status===200){
+        setVideoDetail(data.data)
+      }
+    })
+  },[vioId])
+  useEffect(()=>{
+    if(videoRef.current){
+      if(Hls.isSupported()){
+        let hls = new Hls();
+        hls.loadSource(vioURL);
+        hls.attachMedia(videoRef.current)
+      }else if(videoRef.current.canPlayType("application/vnd.apple.mpegurl")){
+        videoRef.current.src=vioURL;
+      }
+    }
+  },[videoRef.current,vioURL])
   return (
       <VideoDetailWrapper>
-        www
+        <CenterContent>
+          <LeftContentWrapper>
+            <div className="video-container">
+              {
+                vioURL && <video ref={videoRef} controls={true}  autoPlay={true}/>
+              }
+            </div>
+            <div className="video-info">
+              <VideoInfo videoInfo={videoDetail}/>
+            </div>
+          </LeftContentWrapper>
+          <RightContentWrapper>
+
+          </RightContentWrapper>
+        </CenterContent>
       </VideoDetailWrapper>
   )
 }

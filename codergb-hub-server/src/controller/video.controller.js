@@ -10,7 +10,8 @@ const {
   uploadVideoService,
   createVideoService,
   allVideoService,
-  getVideoURLService
+  getVideoURLService,
+  getVideoDetailService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -116,6 +117,18 @@ class VideoController{
     try{
       const {id}=ctx.params;
       const result = await getVideoURLService(ctx,id);
+      if(result){
+        setResponse(ctx,"success",200,result[0]);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  //获取视频详情
+  async getVideoDetail(ctx,next){
+    try{
+      const { id }=ctx.params;
+      const result = await getVideoDetailService(ctx,id);
       if(result){
         setResponse(ctx,"success",200,result[0]);
       }
