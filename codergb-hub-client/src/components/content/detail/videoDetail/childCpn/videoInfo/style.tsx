@@ -6,6 +6,9 @@ export const VideoInfoWrapper= styled.div`
     font-weight: bold;
   }
   .info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     .left-content{
       display: flex;
       align-items: center;
@@ -37,11 +40,46 @@ export const VideoInfoWrapper= styled.div`
       .sub-btn{
         background-color: #0f0f0f;
         color: #fff;
+        cursor: pointer;
         font-size: ${20/40}rem;
         padding: ${10/40}rem ${20/40}rem;
         border-radius: ${24/40}rem;
         margin: 0 0 0 ${40/40}rem;
       }
     }
+    .right-content{
+      display: flex;
+      align-items: center;
+      .thumb{
+        display: flex;
+        align-items: center;
+        .tread{
+          border-left: 1px solid #d9d9d9;
+          padding: 0 0 0 ${18/40}rem;
+          margin: 0 0 0 ${18/40}rem;
+        }
+      }
+      .thumb,.collection{
+        cursor: pointer;
+        background-color: #f2f2f2;
+        margin: 0 0 0 ${20/40}rem;
+        padding: ${9/40}rem ${18/40}rem ${5/40}rem;
+        border-radius: ${20/40}rem;
+        .thumb-icon,.collection-icon,.tread-icon{
+          svg{
+            font-size: ${24/40}rem;
+          }
+        }
+        .label{
+          margin: 0 0 0 ${15/40}rem;
+        }
+      }
+    }
+  }
+  .desc{
+    background-color: #f2f2f2;
+    padding: ${15/40}rem;
+    margin: ${15/40}rem 0;
+    border-radius: ${10/40}rem;
   }
 `

@@ -1,5 +1,10 @@
 import React,{memo,FC,ReactElement} from "react";
 import {
+  LikeOutlined,
+  FileAddOutlined,
+  DislikeOutlined
+} from '@ant-design/icons'
+import {
   VideoInfoWrapper
 } from "./style";
 import {IVideo} from "../../../../../../types/video/IVideo";
@@ -25,9 +30,22 @@ const VideoInfo:FC<IProps>=(props)=>{
             <div className="sub-btn">订阅</div>
           </div>
           <div className="right-content">
-
+            <div className="thumb">
+              <div className="thumb-inner">
+                <LikeOutlined className="thumb-icon" />
+                <span className="label">14万</span>
+              </div>
+              <div className="tread">
+                <DislikeOutlined className="tread-icon" />
+              </div>
+            </div>
+            <div className="collection">
+              <FileAddOutlined className={"collection-icon"}/>
+              <span className="label">保存</span>
+            </div>
           </div>
         </div>
+        <div className="desc">{videoInfo?.description}</div>
       </VideoInfoWrapper>
   )
 }

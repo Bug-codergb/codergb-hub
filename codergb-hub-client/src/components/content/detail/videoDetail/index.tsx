@@ -11,6 +11,10 @@ import {IResponseType} from "../../../../types/responseType";
 import Hls from "hls.js";
 import {IVideo} from "../../../../types/video/IVideo";
 import VideoInfo from "./childCpn/videoInfo";
+import Comment from "../../../common/comment";
+import {useSelector} from "react-redux";
+import {Map} from "immutable";
+import {ILogin} from "../../../../types/login/ILogin";
 const VideoDetail:FC=():ReactElement=>{
   const location = useLocation();
   const { id } = location.state;
@@ -18,6 +22,10 @@ const VideoDetail:FC=():ReactElement=>{
   const [vioId,setVioId] = useState<string>(id);
   const [videoDetail,setVideoDetail] = useState<IVideo>();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const loginState = useSelector<Map<string,ILogin>,ILogin>(state=>{
+    return state.getIn(['loginReducer','login']) as ILogin;
+  })
+
   useEffect(()=>{
     getVideoURL<IResponseType<{vioUrl:string}>>(id).then((data)=>{
       if(data.status===200){
@@ -53,6 +61,11 @@ const VideoDetail:FC=():ReactElement=>{
             </div>
             <div className="video-info">
               <VideoInfo videoInfo={videoDetail}/>
+            </div>
+            <div className="video-comment">
+              {
+                loginState && loginState.userMsg && videoDetail&&<Comment user={loginState.userMsg} id={videoDetail.id} alias={'vId'}/>
+              }
             </div>
           </LeftContentWrapper>
           <RightContentWrapper>
