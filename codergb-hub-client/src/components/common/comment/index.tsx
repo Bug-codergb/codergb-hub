@@ -10,11 +10,12 @@ import {
   CommentWrapper
 } from "./style";
 import {IUserMsg} from "../../../types/user/IUserMsg";
-import {getAllComment, publishComment} from "../../../network/comment";
+import {getAllComment, publishComment, replyComment} from "../../../network/comment";
 import {IResponseType} from "../../../types/responseType";
 import {IPage} from "../../../types/IPage";
 import {IComment} from "../../../types/comment/IComment";
 import Reply from "./childCpn";
+import Publish from "../publish";
 interface IProps{
   user:IUserMsg,
   alias:string,
@@ -27,6 +28,8 @@ const Comment:FC<IProps>=(props)=>{
   const [commentCount,setCommentCount]=useState<number>(0);
   const [isFocus,setIsFocus] = useState<boolean>(false);
   const [content,setContent] = useState<string>("");
+  const [comIndex,setComIndex] = useState<number>(-1);
+  const [replyIndex,setReplyIndex] = useState<number>(-1);
   useEffect(()=>{
     getAllCommentHandle(id,0,10,alias);
   },[id]);
@@ -62,8 +65,29 @@ const Comment:FC<IProps>=(props)=>{
       }
     })
   }
-  const showReply=()=>{
-    setIsShowReply(!isShowReply);
+  //显示回复评论内容
+  const showReply=(index:number)=>{
+    if(index === comIndex){
+      setComIndex(-1);
+    }else{
+      setComIndex(index);
+    }
+  }
+  //显示回复发布框
+  const showReplyHandle=(index:number)=>{
+    if(index===replyIndex){
+      setReplyIndex(-1)
+    }else{
+      setReplyIndex(index);
+    }
+  }
+  //回复评论
+  const publishReplyHandle = async (content:string,item:IComment)=>{
+    console.log(content,item);
+    const result = await replyComment(item.id,content);
+    if(result.status===200){
+      getAllCommentHandle(id,0,10,alias);
+    }
   }
   return (
       <CommentWrapper>
@@ -112,24 +136,30 @@ const Comment:FC<IProps>=(props)=>{
                           <div className="tread">
                             <DislikeOutlined/>
                           </div>
-                          <div className="reply-label">
+                          <div className="reply-label" onClick={e=>showReplyHandle(index)}>
                             回复
                           </div>
                         </div>
+                        {/* 发表回复 */}
                         {
-                          (typeof item.reply==="number" && item.reply!==0)&&<div className="reply-count-btn" onClick={e=>showReply()}>
+                          (index === replyIndex) && <div className="publish-comment-reply-container">
+                            <Publish isShowAt={false} user={user} publish={(content:string)=>publishReplyHandle(content,item)}/>
+                          </div>
+                        }
+                        {
+                          (typeof item.reply==="number" && item.reply!==0)&&<div className="reply-count-btn" onClick={e=>showReply(index)}>
                             {
-                              (!isShowReply)&&<CaretDownOutlined />
+                              (index!==comIndex)&&<CaretDownOutlined />
                             }
                             {
-                              isShowReply &&<CaretUpOutlined />
+                              index===comIndex &&<CaretUpOutlined />
                             }
                             <span className={"count"}>{typeof item.reply==="number"?item.reply:''}</span>
                             <span className={"label"}>条回复</span>
                           </div>
                         }
                         {
-                          isShowReply&& <Reply id={item.id}/>
+                          (index===comIndex)&& <Reply id={item.id} user={user}/>
                         }
                       </div>
                     </div>

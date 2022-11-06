@@ -61,6 +61,9 @@ export const ReplyWrapper = styled.div`
             }
           }
         }
+        .reply-reply{
+          margin: ${15/40}rem 0;
+        }
       }
     }
   }

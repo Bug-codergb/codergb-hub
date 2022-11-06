@@ -117,6 +117,9 @@ export const CommentWrapper= styled.div`
             background-color: #def1ff
           }
         }
+        .publish-comment-reply-container{
+          margin: ${15/40}rem 0;
+        }
         .reply-controller-btn{
           display: flex;
           align-items: center;

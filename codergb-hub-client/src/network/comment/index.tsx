@@ -32,3 +32,12 @@ export function publishComment<T=IResponseType<any>>(id:string,alias:string,cont
     }
   })
 }
+//回复评论
+export function replyComment<T=IResponseType<any>>(id:string,content:string){
+  return gbRequest.post<T>({
+    url:"/comment/reply/"+id,
+    data:{
+      content
+    }
+  })
+}
