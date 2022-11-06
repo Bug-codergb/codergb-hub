@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 05/11/2022 17:18:46
+ Date: 06/11/2022 17:19:07
 */
 
 SET NAMES utf8mb4;
@@ -109,6 +109,8 @@ CREATE TABLE `channel`  (
   `alias` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `official` int NULL DEFAULT NULL,
+  `trailer` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `banner` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
@@ -118,6 +120,7 @@ CREATE TABLE `channel`  (
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
+INSERT INTO `channel` VALUES ('1667725899715', 'blackping', NULL, '韩国名媛', 0, '1667721308019', '1667724015014', '2022-11-06 17:11:39', '2022-11-06 17:11:39');
 
 -- ----------------------------
 -- Table structure for comment
@@ -166,6 +169,18 @@ INSERT INTO `comment` VALUES ('1667639856262', '孟氏之芳邻。他日趋庭�
 INSERT INTO `comment` VALUES ('1667639861606', '吴会于云间。地势极而南溟深，天柱高而北辰远。关山难越，谁悲失路之人？萍水相逢，尽是他乡之客。怀帝阍而不见，奉', '1667300096850', '1667121382104', NULL, '2022-11-05 17:17:41', '2022-11-05 17:17:41');
 INSERT INTO `comment` VALUES ('1667639873665', '之心？穷且益坚，不坠青云之志。酌贪泉而觉爽，处涸辙以犹欢。北海虽赊，扶摇可接；东隅已逝，桑榆非晚。孟尝', '1667300096850', '1667120940268', NULL, '2022-11-05 17:17:53', '2022-11-05 17:17:53');
 INSERT INTO `comment` VALUES ('1667639879472', '爽籁发而清风生，纤歌凝而白云遏。睢园绿竹，气凌彭泽之樽；邺水朱华，光照临川之笔。四美具，二难并。穷睇眄于中', '1667300096850', '1667120940268', NULL, '2022-11-05 17:17:59', '2022-11-05 17:17:59');
+INSERT INTO `comment` VALUES ('1667715599398', '人人人人哎人人', '1667300096850', NULL, '1667628202533', '2022-11-06 14:19:59', '2022-11-06 14:19:59');
+INSERT INTO `comment` VALUES ('1667715630528', 'rfrfrf', '1667300096850', NULL, '1667628202533', '2022-11-06 14:20:30', '2022-11-06 14:20:30');
+INSERT INTO `comment` VALUES ('1667716271932', '45', '1667300096850', NULL, '1667628202533', '2022-11-06 14:31:11', '2022-11-06 14:31:11');
+INSERT INTO `comment` VALUES ('1667716313140', 'errerer', '1667300096850', NULL, '1667629500681', '2022-11-06 14:31:53', '2022-11-06 14:31:53');
+INSERT INTO `comment` VALUES ('1667716321488', 'ewwrwrw', '1667300096850', NULL, '1667629500681', '2022-11-06 14:32:01', '2022-11-06 14:32:01');
+INSERT INTO `comment` VALUES ('1667716333443', '发分为氛围分为氛围分为氛围', '1667300096850', NULL, '1667629500681', '2022-11-06 14:32:13', '2022-11-06 14:32:13');
+INSERT INTO `comment` VALUES ('1667716349290', '二位分为', '1667300096850', NULL, '1667629500681', '2022-11-06 14:32:29', '2022-11-06 14:32:29');
+INSERT INTO `comment` VALUES ('1667716397975', '11111', '1667300096850', NULL, '1667629505965', '2022-11-06 14:33:17', '2022-11-06 14:33:17');
+INSERT INTO `comment` VALUES ('1667716777054', '欧派附件二排风机房较为频繁', '1667300096850', NULL, '1667629510978', '2022-11-06 14:39:37', '2022-11-06 14:39:37');
+INSERT INTO `comment` VALUES ('1667717858600', 'fwfewfwfwefwfewfwf', '1667300096850', NULL, '1667716397975', '2022-11-06 14:57:38', '2022-11-06 14:57:38');
+INSERT INTO `comment` VALUES ('1667719387934', 'wweewdwfewfewfewfw', '1664789923657', NULL, '1667637870317', '2022-11-06 15:23:07', '2022-11-06 15:23:07');
+INSERT INTO `comment` VALUES ('1667719511263', '哈哈哈哈哈啊哈', '1664789923657', NULL, '1667716313140', '2022-11-06 15:25:11', '2022-11-06 15:25:11');
 
 -- ----------------------------
 -- Table structure for file
@@ -241,6 +256,21 @@ INSERT INTO `file` VALUES ('1667566507344', NULL, 'http://localhost:8888/video/1
 INSERT INTO `file` VALUES ('1667566519568', 'http://localhost:8888/image/1667566519568', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667566519566.jpg', 60373, '2022-11-04 20:55:19', '2022-11-04 20:55:19');
 INSERT INTO `file` VALUES ('1667566560161', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-04 20:56:05', '2022-11-04 20:56:05');
 INSERT INTO `file` VALUES ('1667566570573', 'http://localhost:8888/image/1667566570573', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667566570572.jpg', 98291, '2022-11-04 20:56:10', '2022-11-04 20:56:10');
+INSERT INTO `file` VALUES ('1667721318632', 'http://localhost:8888/image/1667721318632', NULL, 'p1378204929.4.jpg', 'image/jpeg', './upload/image', '1667721318630.jpg', 50844, '2022-11-06 15:55:18', '2022-11-06 15:55:18');
+INSERT INTO `file` VALUES ('1667721308019', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-11-06 15:55:34', '2022-11-06 15:55:34');
+INSERT INTO `file` VALUES ('1667722596688', 'http://localhost:8888/image/1667722596688', NULL, '3.webp', 'image/webp', './upload/image', '1667722596687.webp', 76182, '2022-11-06 16:16:36', '2022-11-06 16:16:36');
+INSERT INTO `file` VALUES ('1667722776632', 'http://localhost:8888/image/1667722776632', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667722776631.jpg', 73093, '2022-11-06 16:19:36', '2022-11-06 16:19:36');
+INSERT INTO `file` VALUES ('1667722810994', 'http://localhost:8888/image/1667722810994', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667722810993.webp', 75135, '2022-11-06 16:20:10', '2022-11-06 16:20:10');
+INSERT INTO `file` VALUES ('1667723662486', 'http://localhost:8888/image/1667723662486', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667723662484.webp', 185103, '2022-11-06 16:34:22', '2022-11-06 16:34:22');
+INSERT INTO `file` VALUES ('1667723725054', 'http://localhost:8888/image/1667723725054', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667723725053.jpg', 64026, '2022-11-06 16:35:25', '2022-11-06 16:35:25');
+INSERT INTO `file` VALUES ('1667723786364', 'http://localhost:8888/image/1667723786364', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667723786364.jpeg', 233672, '2022-11-06 16:36:26', '2022-11-06 16:36:26');
+INSERT INTO `file` VALUES ('1667723818802', 'http://localhost:8888/image/1667723818802', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667723818801.jpeg', 304785, '2022-11-06 16:36:58', '2022-11-06 16:36:58');
+INSERT INTO `file` VALUES ('1667723956110', 'http://localhost:8888/image/1667723956110', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667723956109.jpg', 73428, '2022-11-06 16:39:16', '2022-11-06 16:39:16');
+INSERT INTO `file` VALUES ('1667724015014', 'http://localhost:8888/image/1667724015014', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667724015013.jpg', 156011, '2022-11-06 16:40:15', '2022-11-06 16:40:15');
+INSERT INTO `file` VALUES ('1667724185463', 'http://localhost:8888/image/1667724185463', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1667724185462.webp', 77909, '2022-11-06 16:43:05', '2022-11-06 16:43:05');
+INSERT INTO `file` VALUES ('1667724240400', 'http://localhost:8888/image/1667724240400', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667724240399.jpg', 47104, '2022-11-06 16:44:00', '2022-11-06 16:44:00');
+INSERT INTO `file` VALUES ('1667724248701', 'http://localhost:8888/image/1667724248701', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667724248701.jpg', 152506, '2022-11-06 16:44:08', '2022-11-06 16:44:08');
+INSERT INTO `file` VALUES ('1667724352988', 'http://localhost:8888/image/1667724352988', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667724352987.webp', 177083, '2022-11-06 16:45:52', '2022-11-06 16:45:52');
 
 -- ----------------------------
 -- Table structure for playlist
@@ -371,8 +401,9 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1664789923657', '叶子', '123', 'http://localhost:8888/user/avatar/1664789923657', '2022-10-03 17:38:43', '2022-10-04 15:41:22', 'th.gif', 'image/gif', './upload/user/avatar', '1664869281991.gif', '1235062');
+INSERT INTO `user` VALUES ('1664789923657', '叶子', '123', 'http://localhost:8888/user/avatar/1664789923657', '2022-10-03 17:38:43', '2022-11-06 15:52:56', 'p2677018763.webp', 'image/webp', './upload/user/avatar', '1667721176193.webp', '93480');
 INSERT INTO `user` VALUES ('1667300096850', 'Bug码', '123', 'http://localhost:8888/user/avatar/1667300096850', '2022-11-01 18:54:56', '2022-11-01 20:06:59', '3.webp', 'image/webp', './upload/user/avatar', '1667304419698.webp', '78795');
+INSERT INTO `user` VALUES ('1667726102164', '靡靡', '123', 'http://localhost:8888/user/avatar/1667726102164', '2022-11-06 17:15:02', '2022-11-06 17:15:32', 'p2629896175.webp', 'image/webp', './upload/user/avatar', '1667726132274.webp', '76000');
 
 -- ----------------------------
 -- Table structure for user_block
