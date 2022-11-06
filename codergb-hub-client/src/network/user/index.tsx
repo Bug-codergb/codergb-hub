@@ -10,3 +10,14 @@ export function userUploadAvatar<T=IResponseType<any>>(formData:FormData,getProg
     onUploadProgress:getProgress
   })
 }
+//更换用户头像
+export function updateAvatar<T=IResponseType<any>>(id:string,formData:FormData,getProgress:(e:any)=>void){
+  return gbRequest.post<T>({
+    url:"/user/avatar/update/"+id,
+    data:formData,
+    headers:{
+      'Content-type': 'multipart/form-data',
+    },
+    onUploadProgress:getProgress
+  })
+}

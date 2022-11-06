@@ -10,6 +10,6 @@ const {
   deleteAvatar
 } = require("../controller/channel.controller")
 channelRouter.post("/",authVerify,createChannel);
-//上传频道头像
+//上传频道头像(作废)
 channelRouter.post("/avatar/upload",authVerify,channelAvatarUpload,uploadAvatar);
 module.exports = channelRouter

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 export const ImgUploadWrapper = styled.div`
-  .upload-outer{
+  .global-upload-outer-cpn-style{
     background-color: #3399ff;
     .input-container{
     width: 100%;

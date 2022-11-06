@@ -89,7 +89,9 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
     const file = await uploadRef.current.getCropperFile();
     let formData = new FormData();
     formData.append("file",file);
-    const result = await uploadImage<IResponseType<IImage>>(formData)
+    const result = await uploadImage<IResponseType<IImage>>(formData,()=>{
+
+    })
     if(result.status===200){
       setImgURL(result.data.picUrl);
       setImgID(result.data.id);
@@ -172,6 +174,7 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
                                                   scale={2.15}
                                                   aspectRatio={2.15}
                                                   isCircle={false}
+                                                  realWidth={300}
                       //@ts-ignore
                                                   ref={uploadRef}/>
                 }

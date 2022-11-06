@@ -1,13 +1,14 @@
 const connection = require("../app/databse");
 const { setResponse } = require("../utils/setResponse");
 class ChannelService{
-  async createChannelService(ctx,name,alias,description,official){
+  async createChannelService(ctx,name,banner,trailer,description,official){
     try{
       const id = new Date().getTime();
-      const sql=`insert into channel(id,name,alias,description,official) values(?,?,?,?,?)`;
-      const result =await connection.execute(sql,[id,name,alias,description,official]);
+      const sql=`insert into channel(id,name,banner,trailer,description,official) values(?,?,?,?,?,?)`;
+      const result =await connection.execute(sql,[id,name,banner,trailer,description,official]);
       return result[0]
     }catch (e) {
+      console.log(e)
       setResponse(ctx,e.message,500,{});
     }
   }

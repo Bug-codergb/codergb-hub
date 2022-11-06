@@ -12,9 +12,13 @@ const {
 class ChannelController{
   async createChannel(ctx,next){
     try{
-      const { name,alias="",description="",official=0 } = ctx.request.body;
-      if(!isEmpty(ctx,name,"频道名称不能为空")){
-        const result = await createChannelService(ctx,name,alias,description,official);
+      const { name,alias="",description="",official=0,banner="",trailer="" } = ctx.request.body;
+      console.log(name)
+      if(!isEmpty(ctx,name,"频道名称不能为空") &&
+        !isEmpty(ctx,banner,"频道横幅不能为空") &&
+        !isEmpty(ctx,trailer,"请添加频道预告片")){
+        const result = await createChannelService(ctx,name,banner,trailer,description,official);
+        console.log(result)
         if(result){
           setResponse(ctx,"频道添加成功",200,{});
         }

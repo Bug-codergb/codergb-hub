@@ -43,6 +43,7 @@ const AvatarUpload:FC= forwardRef((props,propsRef):ReactElement=>{
                                               scale={1}
                                               aspectRatio={1}
                                               isCircle={false}
+                                              realWidth={200}
                 //@ts-ignore
                                               ref={uploadRef}/>
           }

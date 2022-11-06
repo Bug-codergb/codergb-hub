@@ -64,8 +64,12 @@ const NavList:FC<IProps>=(props):ReactElement=>{
               }
               <ImgUpload isShow={isAvatarModalOpen}
                          isCustom={true}
+                         realWidth={200}
                          fileSource={file}
+                         aspectRatio={1}
                          handleOk={(file?:File)=>handleAvatarOk(file)}
+                         handleCancel={()=>setIsAvatarModalOpen(false)}
+                         uploadName={"avatar"}
                          network={userUploadAvatar} />
             </div>
           </div>

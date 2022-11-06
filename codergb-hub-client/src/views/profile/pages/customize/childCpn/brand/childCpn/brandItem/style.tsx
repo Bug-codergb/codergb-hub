@@ -24,7 +24,9 @@ export const BrandItemWrapper = styled.div`
       background-color: #f9f9f9;
       position: relative;
       margin: 0 ${24/40}rem 0 0;
+      overflow: hidden;
       img{
+        border-radius: 50%;
         height: 100%;
         position: absolute;
         left: 50%;

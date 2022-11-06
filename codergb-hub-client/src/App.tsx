@@ -1,33 +1,35 @@
-import React,{Suspense} from 'react';
+import React, {Suspense} from 'react';
 import {Provider} from "react-redux";
 import 'antd/dist/antd.css';
-import { BrowserRouter,useRoutes } from "react-router-dom";
+import {BrowserRouter, useRoutes} from "react-router-dom";
 import {routes} from "./router";
 import store from "./store"
-import  "./store/actionCreators";
-import "./App.css"
+import "./store/actionCreators";
 import HeaderTop from "./components/header/index";
 import {Layout} from "antd";
-const { Header } = Layout;
+
+const {Header} = Layout;
+
 function App() {
-  function RouteElement(){
+  function RouteElement() {
     return useRoutes(routes);
   }
+
   return (
-    <div className="App">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Suspense fallback={
-            <div>wwww</div>
-          }>
-            <Header>
-              <HeaderTop/>
-            </Header>
-            <RouteElement/>
-          </Suspense>
-        </BrowserRouter>
-      </Provider>
-    </div>
+      <div className="App">
+        <Provider store={store}>
+          <BrowserRouter>
+            <Suspense fallback={
+              <div>wwww</div>
+            }>
+              <Header>
+                <HeaderTop/>
+              </Header>
+              <RouteElement/>
+            </Suspense>
+          </BrowserRouter>
+        </Provider>
+      </div>
   );
 }
 

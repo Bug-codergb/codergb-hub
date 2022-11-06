@@ -4,6 +4,7 @@ function isEmpty(ctx,rest, msg) {
     setResponse(ctx,msg,400,{});
     return true;
   } else {
+    console.log(msg)
     return false;
   }
 }

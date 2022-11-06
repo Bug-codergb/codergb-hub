@@ -6,12 +6,13 @@ import {
 interface IProps{
   file:File | null,
   imgWidth:number,
+  realWidth:number,
   scale:number,
   aspectRatio:number,
   isCircle:boolean,
 }
 const CustomizeUpload:FC<IProps>= forwardRef((props,propsRef):ReactElement=>{
-  const {file,scale,imgWidth,aspectRatio,isCircle } = props;
+  const {file,scale,imgWidth,aspectRatio,isCircle,realWidth } = props;
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgURL,setImgURL]=useState<string>("");
   const [cropper,setCropper] = useState<Cropper>();
@@ -41,7 +42,7 @@ const CustomizeUpload:FC<IProps>= forwardRef((props,propsRef):ReactElement=>{
       if(cropper){
         let canvasFile = cropper.getCroppedCanvas({
           imageSmoothingQuality: 'high',
-          width:imgWidth*40,
+          width:realWidth,
           imageSmoothingEnabled: false,
           fillColor: '#fff',
         });
