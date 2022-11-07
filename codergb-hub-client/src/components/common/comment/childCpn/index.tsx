@@ -33,7 +33,8 @@ const Reply:FC<IProps>=(props)=>{
   const replyReplyHandle=async (content:string,item:IComment)=>{
     const result = await replyComment(item.id,content);
     if(result.status===200){
-      getAllReplyHandle(id,1,10);
+      await getAllReplyHandle(id,0,10);
+      setReplyIndex(-1);
     }
   }
   const showReplyHandle=(index:number)=>{

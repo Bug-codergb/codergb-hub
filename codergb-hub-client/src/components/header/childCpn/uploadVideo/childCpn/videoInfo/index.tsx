@@ -1,4 +1,14 @@
-import React, {memo, FC, ChangeEvent, useState, useRef, useEffect, useImperativeHandle, forwardRef} from "react";
+import React, {
+  memo,
+  FC,
+  ChangeEvent,
+  useState,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+  forwardRef,
+  RefAttributes, ForwardRefExoticComponent, PropsWithoutRef, Ref, MutableRefObject
+} from "react";
 import {CloudUploadOutlined,RocketOutlined} from "@ant-design/icons"
 import { Input,Select,Modal  } from 'antd';
 import {
@@ -18,13 +28,16 @@ import {ITag} from "../../../../../../types/tag/ITag";
 import {getAllTag} from "../../../../../../network/tag";
 import {ICate} from "../../../../../../types/category/ICate";
 import {getAllCate} from "../../../../../../network/category";
+import {IUploadVideo} from "../../../../../../types/imperative/uploadVideo";
 const { TextArea } = Input;
 const { Option } = Select;
 interface IProps{
   videoURL:string,
-  videoName:string
+  videoName:string,
+  ref: Ref<IUploadVideo>
 }
-const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
+
+const VideoInfo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
   const { videoURL,videoName } = props;
   const [ isModalOpen,setIsModalOpen ] = useState<boolean>(false);
   const [file,setFile] = useState<File | null>(null);
@@ -48,8 +61,9 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
   const [tagParam,setTagParam] =useState<string[]>([]);
   const [cateParam,setCateParam] = useState<string>("1");
 
-  useImperativeHandle(propsRef,()=>{
+  useImperativeHandle<IUploadVideo,IUploadVideo>(propsRef,()=>{
     return {
+      videoId:"",
       imgId:imgID,
       title:title,
       desc:desc,
@@ -57,7 +71,7 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
       tag:tagParam,
       cate:cateParam
     }
-  });
+  },[imgID,title,desc,playlistParam,cateParam,tagParam.length]);
   useEffect(()=>{
     getAllPlaylist<IResponseType<IPage<IPlaylist[]>>>(0,10).then(data=>{
       if(data.status===200){
@@ -244,7 +258,7 @@ const VideoInfo:FC<IProps>=forwardRef((props,propsRef)=>{
           </Select>
         </LeftContent>
         <RightContent>
-          <video controls src={videoURL}></video>
+          <video controls src={videoURL}> </video>
           <div className="video-info">
             <div className="label">文件名</div>
             <div className="value">{videoName}</div>

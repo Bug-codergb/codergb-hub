@@ -20,17 +20,20 @@ import {useSelector} from "react-redux";
 import {ILogin} from "../../types/login/ILogin";
 import Profile from "./childCpn/profile";
 import {createVideo} from "../../network/video";
+import {IUploadVideo} from "../../types/imperative/uploadVideo";
 const Header:FC=():ReactElement=>{
   const [isModalOpen,setIsModelOpen] = useState<boolean>(false);
+  const [keyIndex,setKeyIndex] = useState<number>(0);
   const loginState = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin;
   })
   const navigate = useNavigate();
-  const videoRef = useRef<any>(null);
+  const videoRef = useRef<IUploadVideo>(null);
   const showDialogHandle=()=>{
     setIsModelOpen(true);
   }
   const handleOk=async ()=>{
+    setKeyIndex(keyIndex+1);
     console.log(videoRef.current);
     if(videoRef.current && videoRef.current.videoId && videoRef.current.imgId){
       const {
@@ -95,9 +98,7 @@ const Header:FC=():ReactElement=>{
                    width={'70%'}
                    onCancel={handleCancel}>
               {
-                isModalOpen && <UploadVideo
-                    // @ts-ignore
-                    ref={videoRef}/>
+                isModalOpen && <UploadVideo keyIndex={keyIndex} ref={videoRef}/>
               }
             </Modal>
           </div>

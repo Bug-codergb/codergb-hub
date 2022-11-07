@@ -1,4 +1,12 @@
-import React, {memo, FC, ChangeEvent, useState, forwardRef, useRef, useImperativeHandle} from "react";
+import React, {
+  memo,
+  FC,
+  ChangeEvent,
+  useState,
+  forwardRef,
+  useRef,
+  useImperativeHandle, Ref, useEffect,
+} from "react";
 import {CloudUploadOutlined} from "@ant-design/icons"
 import { Progress,Spin  } from "antd"
 import {
@@ -6,26 +14,38 @@ import {
 } from "./style"
 import {shardUtils} from "../../../../utils/shard";
 import VideoInfo from "./childCpn/videoInfo";
-const UploadVideo:FC=forwardRef((props,propsRef)=>{
+import {IUploadVideo} from "../../../../types/imperative/uploadVideo";
+interface IProps{
+  keyIndex:number,
+  ref:Ref<IUploadVideo>
+}
+const UploadVideo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
+  const { keyIndex } = props;
   const [file,setFile] = useState<File>();
+  const [childKeyIndex,setChildKeyIndex] = useState<number>(keyIndex);
   const [videoURL,setVideoURL]=useState<string>("");
   const [videoName,setVideoName]=useState<string>("");
   const [videoId,setVideoId]=useState<string>("");
   const [percent,setPercent] = useState<number>(0);
   const [isShowUpload,setIsShowUpload]=useState<boolean>(true);
   const [isShowLoading,setIsShowLoading] = useState<boolean>(false);
-  const videoInfoRef = useRef<any>(null);
-  useImperativeHandle(propsRef,()=>{
+  const videoInfoRef = useRef<IUploadVideo>({title:"",desc:"",playlist:"",tag:[],cate:"",imgId:"",videoId:""});
+  useEffect(()=>{
+    setChildKeyIndex(keyIndex)
+    console.log(1)
+  },[keyIndex])
+  useImperativeHandle<IUploadVideo,IUploadVideo>(propsRef,()=>{
+    console.log(videoInfoRef.current)
     return {
       videoId:videoId,
-      title:videoInfoRef.current?.title,
-      desc:videoInfoRef.current?.desc,
-      playlist:videoInfoRef.current?.playlist,
-      tag:videoInfoRef.current?.tag,
-      cate:videoInfoRef.current?.cate,
-      imgId:videoInfoRef.current?.imgId,
+      title:videoInfoRef.current.title,
+      desc:videoInfoRef.current.desc,
+      playlist:videoInfoRef.current.playlist,
+      tag:videoInfoRef.current.tag,
+      cate:videoInfoRef.current.cate,
+      imgId:videoInfoRef.current.imgId,
     }
-  })
+  },[videoInfoRef.current,videoId])
   const fileChangeHandle=async (e:ChangeEvent<HTMLInputElement>)=>{
     if(e.currentTarget.files && e.currentTarget.files.length!==0){
       const file = e.currentTarget.files[0];
@@ -50,6 +70,7 @@ const UploadVideo:FC=forwardRef((props,propsRef)=>{
       }
     }
   }
+
   return (
       <UploadVideoWrapper>
         {
@@ -63,7 +84,6 @@ const UploadVideo:FC=forwardRef((props,propsRef)=>{
         {
           (!isShowUpload) && <VideoInfo videoURL={videoURL}
                                         videoName={videoName}
-              // @ts-ignore
                                         ref={videoInfoRef}  />
         }
         {
