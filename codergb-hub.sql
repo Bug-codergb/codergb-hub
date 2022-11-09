@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 06/11/2022 17:19:07
+ Date: 09/11/2022 22:01:18
 */
 
 SET NAMES utf8mb4;
@@ -181,6 +181,24 @@ INSERT INTO `comment` VALUES ('1667716777054', '欧派附件二排风机房较�
 INSERT INTO `comment` VALUES ('1667717858600', 'fwfewfwfwefwfewfwf', '1667300096850', NULL, '1667716397975', '2022-11-06 14:57:38', '2022-11-06 14:57:38');
 INSERT INTO `comment` VALUES ('1667719387934', 'wweewdwfewfewfewfw', '1664789923657', NULL, '1667637870317', '2022-11-06 15:23:07', '2022-11-06 15:23:07');
 INSERT INTO `comment` VALUES ('1667719511263', '哈哈哈哈哈啊哈', '1664789923657', NULL, '1667716313140', '2022-11-06 15:25:11', '2022-11-06 15:25:11');
+INSERT INTO `comment` VALUES ('1667821501584', '2326', '1664789923657', NULL, '1667716777054', '2022-11-07 19:45:01', '2022-11-07 19:45:01');
+INSERT INTO `comment` VALUES ('1667821539415', '12', '1664789923657', NULL, '1667821501584', '2022-11-07 19:45:39', '2022-11-07 19:45:39');
+INSERT INTO `comment` VALUES ('1667821583457', '12', '1664789923657', NULL, '1667821539415', '2022-11-07 19:46:23', '2022-11-07 19:46:23');
+INSERT INTO `comment` VALUES ('1667821600051', 'eeferfrefrefreferferfeferfef', '1664789923657', NULL, '1667639861606', '2022-11-07 19:46:40', '2022-11-07 19:46:40');
+INSERT INTO `comment` VALUES ('1667821611545', 'vewefeewfwewefewfwefewfewfew', '1664789923657', NULL, '1667821600051', '2022-11-07 19:46:51', '2022-11-07 19:46:51');
+INSERT INTO `comment` VALUES ('1667821624660', 'q', '1664789923657', NULL, '1667821600051', '2022-11-07 19:47:04', '2022-11-07 19:47:04');
+INSERT INTO `comment` VALUES ('1667821673228', '0', '1664789923657', NULL, '1667821624660', '2022-11-07 19:47:53', '2022-11-07 19:47:53');
+INSERT INTO `comment` VALUES ('1667821681037', '0', '1664789923657', NULL, '1667639851832', '2022-11-07 19:48:01', '2022-11-07 19:48:01');
+INSERT INTO `comment` VALUES ('1667821694237', '1', '1664789923657', NULL, '1667821681037', '2022-11-07 19:48:14', '2022-11-07 19:48:14');
+INSERT INTO `comment` VALUES ('1667821724702', '2', '1664789923657', NULL, '1667821694237', '2022-11-07 19:48:44', '2022-11-07 19:48:44');
+INSERT INTO `comment` VALUES ('1667821730775', '34', '1664789923657', NULL, '1667821694237', '2022-11-07 19:48:50', '2022-11-07 19:48:50');
+INSERT INTO `comment` VALUES ('1667821769062', '3', '1664789923657', NULL, '1667821730775', '2022-11-07 19:49:29', '2022-11-07 19:49:29');
+INSERT INTO `comment` VALUES ('1667821824451', 'rt', '1664789923657', NULL, '1667821681037', '2022-11-07 19:50:24', '2022-11-07 19:50:24');
+INSERT INTO `comment` VALUES ('1667821831478', '4', '1664789923657', '1667121382104', NULL, '2022-11-07 19:50:31', '2022-11-07 19:50:31');
+INSERT INTO `comment` VALUES ('1668000704179', '为分为氛围分为氛围', '1667300096850', '1667822028656', NULL, '2022-11-09 21:31:44', '2022-11-09 21:31:44');
+INSERT INTO `comment` VALUES ('1668000710253', '的的哇的', '1667300096850', NULL, '1668000704179', '2022-11-09 21:31:50', '2022-11-09 21:31:50');
+INSERT INTO `comment` VALUES ('1668000720304', '地区青蛙的', '1667300096850', NULL, '1668000710253', '2022-11-09 21:32:00', '2022-11-09 21:32:00');
+INSERT INTO `comment` VALUES ('1668001407918', '呃呃呃呃', '1667300096850', NULL, '1667639763585', '2022-11-09 21:43:27', '2022-11-09 21:43:27');
 
 -- ----------------------------
 -- Table structure for file
@@ -271,6 +289,73 @@ INSERT INTO `file` VALUES ('1667724185463', 'http://localhost:8888/image/1667724
 INSERT INTO `file` VALUES ('1667724240400', 'http://localhost:8888/image/1667724240400', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667724240399.jpg', 47104, '2022-11-06 16:44:00', '2022-11-06 16:44:00');
 INSERT INTO `file` VALUES ('1667724248701', 'http://localhost:8888/image/1667724248701', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667724248701.jpg', 152506, '2022-11-06 16:44:08', '2022-11-06 16:44:08');
 INSERT INTO `file` VALUES ('1667724352988', 'http://localhost:8888/image/1667724352988', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667724352987.webp', 177083, '2022-11-06 16:45:52', '2022-11-06 16:45:52');
+INSERT INTO `file` VALUES ('1667821912543', 'http://localhost:8888/image/1667821912543', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667821912538.jpg', 117515, '2022-11-07 19:51:52', '2022-11-07 19:51:52');
+INSERT INTO `file` VALUES ('1667821906517', NULL, 'http://localhost:8888/video/a932e9d92c87e538f345e77c143841e2.m3u8', '成log.mp4', NULL, './upload/video/', 'a932e9d92c87e538f345e77c143841e2.m3u8', NULL, '2022-11-07 19:53:46', '2022-11-07 19:53:46');
+INSERT INTO `file` VALUES ('1667822106244', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 19:55:12', '2022-11-07 19:55:12');
+INSERT INTO `file` VALUES ('1667822122228', 'http://localhost:8888/image/1667822122228', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667822122227.jpg', 117350, '2022-11-07 19:55:22', '2022-11-07 19:55:22');
+INSERT INTO `file` VALUES ('1667822484771', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:01:32', '2022-11-07 20:01:32');
+INSERT INTO `file` VALUES ('1667822525836', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:02:11', '2022-11-07 20:02:11');
+INSERT INTO `file` VALUES ('1667822536655', 'http://localhost:8888/image/1667822536655', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667822536654.jpeg', 90471, '2022-11-07 20:02:16', '2022-11-07 20:02:16');
+INSERT INTO `file` VALUES ('1667822585709', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:03:10', '2022-11-07 20:03:10');
+INSERT INTO `file` VALUES ('1667822593997', 'http://localhost:8888/image/1667822593997', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667822593996.jpg', 112970, '2022-11-07 20:03:13', '2022-11-07 20:03:13');
+INSERT INTO `file` VALUES ('1667822662469', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:04:27', '2022-11-07 20:04:27');
+INSERT INTO `file` VALUES ('1667822671704', 'http://localhost:8888/image/1667822671704', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667822671703.jpeg', 99322, '2022-11-07 20:04:31', '2022-11-07 20:04:31');
+INSERT INTO `file` VALUES ('1667822723403', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:05:28', '2022-11-07 20:05:28');
+INSERT INTO `file` VALUES ('1667822732184', 'http://localhost:8888/image/1667822732184', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667822732184.jpeg', 94121, '2022-11-07 20:05:32', '2022-11-07 20:05:32');
+INSERT INTO `file` VALUES ('1667823610527', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:20:15', '2022-11-07 20:20:15');
+INSERT INTO `file` VALUES ('1667823619989', 'http://localhost:8888/image/1667823619989', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667823619989.jpeg', 90905, '2022-11-07 20:20:19', '2022-11-07 20:20:19');
+INSERT INTO `file` VALUES ('1667823776196', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:23:01', '2022-11-07 20:23:01');
+INSERT INTO `file` VALUES ('1667823805576', 'http://localhost:8888/image/1667823805576', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667823805575.jpeg', 94754, '2022-11-07 20:23:25', '2022-11-07 20:23:25');
+INSERT INTO `file` VALUES ('1667823910838', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:25:16', '2022-11-07 20:25:16');
+INSERT INTO `file` VALUES ('1667823918747', 'http://localhost:8888/image/1667823918747', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667823918747.jpeg', 94420, '2022-11-07 20:25:18', '2022-11-07 20:25:18');
+INSERT INTO `file` VALUES ('1667824974883', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:43:00', '2022-11-07 20:43:00');
+INSERT INTO `file` VALUES ('1667824986272', 'http://localhost:8888/image/1667824986272', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667824986270.jpg', 118666, '2022-11-07 20:43:06', '2022-11-07 20:43:06');
+INSERT INTO `file` VALUES ('1667825910877', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 20:58:36', '2022-11-07 20:58:36');
+INSERT INTO `file` VALUES ('1667825919207', 'http://localhost:8888/image/1667825919207', NULL, '1.jpg', 'image/jpeg', './upload/image', '1667825919207.jpg', 109177, '2022-11-07 20:58:39', '2022-11-07 20:58:39');
+INSERT INTO `file` VALUES ('1667826043818', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:00:49', '2022-11-07 21:00:49');
+INSERT INTO `file` VALUES ('1667826051804', 'http://localhost:8888/image/1667826051804', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667826051803.jpeg', 94674, '2022-11-07 21:00:51', '2022-11-07 21:00:51');
+INSERT INTO `file` VALUES ('1667826125554', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:02:11', '2022-11-07 21:02:11');
+INSERT INTO `file` VALUES ('1667826133822', 'http://localhost:8888/image/1667826133822', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1667826133821.webp', 95097, '2022-11-07 21:02:13', '2022-11-07 21:02:13');
+INSERT INTO `file` VALUES ('1667826310215', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:05:15', '2022-11-07 21:05:15');
+INSERT INTO `file` VALUES ('1667826318740', 'http://localhost:8888/image/1667826318740', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667826318739.jpg', 68341, '2022-11-07 21:05:18', '2022-11-07 21:05:18');
+INSERT INTO `file` VALUES ('1667826485937', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:08:11', '2022-11-07 21:08:11');
+INSERT INTO `file` VALUES ('1667826495273', 'http://localhost:8888/image/1667826495273', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667826495273.jpeg', 88622, '2022-11-07 21:08:15', '2022-11-07 21:08:15');
+INSERT INTO `file` VALUES ('1667826606598', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:10:12', '2022-11-07 21:10:12');
+INSERT INTO `file` VALUES ('1667826619960', 'http://localhost:8888/image/1667826619960', NULL, 'p2629896175.webp', 'image/webp', './upload/image', '1667826619960.webp', 69592, '2022-11-07 21:10:19', '2022-11-07 21:10:19');
+INSERT INTO `file` VALUES ('1667826771376', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:12:57', '2022-11-07 21:12:57');
+INSERT INTO `file` VALUES ('1667826783697', 'http://localhost:8888/image/1667826783697', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1667826783696.webp', 97297, '2022-11-07 21:13:03', '2022-11-07 21:13:03');
+INSERT INTO `file` VALUES ('1667827096764', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:18:21', '2022-11-07 21:18:21');
+INSERT INTO `file` VALUES ('1667827111000', 'http://localhost:8888/image/1667827111000', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667827110999.jpg', 119082, '2022-11-07 21:18:31', '2022-11-07 21:18:31');
+INSERT INTO `file` VALUES ('1667827472771', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:24:37', '2022-11-07 21:24:37');
+INSERT INTO `file` VALUES ('1667827482308', 'http://localhost:8888/image/1667827482308', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667827482307.jpeg', 87407, '2022-11-07 21:24:42', '2022-11-07 21:24:42');
+INSERT INTO `file` VALUES ('1667827570335', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:26:15', '2022-11-07 21:26:15');
+INSERT INTO `file` VALUES ('1667827577713', 'http://localhost:8888/image/1667827577713', NULL, '1.jpg', 'image/jpeg', './upload/image', '1667827577712.jpg', 109177, '2022-11-07 21:26:17', '2022-11-07 21:26:17');
+INSERT INTO `file` VALUES ('1667827631630', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:27:16', '2022-11-07 21:27:16');
+INSERT INTO `file` VALUES ('1667827644605', 'http://localhost:8888/image/1667827644605', NULL, 'f15887af9.jpg', 'image/jpeg', './upload/image', '1667827644604.jpg', 69910, '2022-11-07 21:27:24', '2022-11-07 21:27:24');
+INSERT INTO `file` VALUES ('1667827691354', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:28:16', '2022-11-07 21:28:16');
+INSERT INTO `file` VALUES ('1667827747332', 'http://localhost:8888/image/1667827747332', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667827747331.jpg', 76278, '2022-11-07 21:29:07', '2022-11-07 21:29:07');
+INSERT INTO `file` VALUES ('1667827774450', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:29:39', '2022-11-07 21:29:39');
+INSERT INTO `file` VALUES ('1667827842273', 'http://localhost:8888/image/1667827842273', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667827842273.jpg', 70478, '2022-11-07 21:30:42', '2022-11-07 21:30:42');
+INSERT INTO `file` VALUES ('1667827971940', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:32:57', '2022-11-07 21:32:57');
+INSERT INTO `file` VALUES ('1667828228110', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:37:13', '2022-11-07 21:37:13');
+INSERT INTO `file` VALUES ('1667828326594', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-11-07 21:39:09', '2022-11-07 21:39:09');
+INSERT INTO `file` VALUES ('1667828604426', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:43:29', '2022-11-07 21:43:29');
+INSERT INTO `file` VALUES ('1667829018789', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:50:24', '2022-11-07 21:50:24');
+INSERT INTO `file` VALUES ('1667829563130', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 21:59:28', '2022-11-07 21:59:28');
+INSERT INTO `file` VALUES ('1667829726667', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 22:02:12', '2022-11-07 22:02:12');
+INSERT INTO `file` VALUES ('1667829773795', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 22:02:59', '2022-11-07 22:02:59');
+INSERT INTO `file` VALUES ('1667829861726', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 22:04:27', '2022-11-07 22:04:27');
+INSERT INTO `file` VALUES ('1667829894527', 'http://localhost:8888/image/1667829894527', NULL, '2.jpg', 'image/jpeg', './upload/image', '1667829894526.jpg', 118368, '2022-11-07 22:04:54', '2022-11-07 22:04:54');
+INSERT INTO `file` VALUES ('1667830071519', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 22:07:56', '2022-11-07 22:07:56');
+INSERT INTO `file` VALUES ('1667830127841', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 22:08:52', '2022-11-07 22:08:52');
+INSERT INTO `file` VALUES ('1667830189914', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-07 22:09:54', '2022-11-07 22:09:54');
+INSERT INTO `file` VALUES ('1667830222518', 'http://localhost:8888/image/1667830222518', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1667830222517.jpeg', 88543, '2022-11-07 22:10:22', '2022-11-07 22:10:22');
+INSERT INTO `file` VALUES ('1667999341283', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-09 21:09:07', '2022-11-09 21:09:07');
+INSERT INTO `file` VALUES ('1667999352800', 'http://localhost:8888/image/1667999352800', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667999352799.jpg', 70166, '2022-11-09 21:09:12', '2022-11-09 21:09:12');
+INSERT INTO `file` VALUES ('1667999532418', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-09 21:12:17', '2022-11-09 21:12:17');
+INSERT INTO `file` VALUES ('1667999542776', 'http://localhost:8888/image/1667999542776', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1667999542775.jpg', 67240, '2022-11-09 21:12:22', '2022-11-09 21:12:22');
+INSERT INTO `file` VALUES ('1667999650979', NULL, 'http://localhost:8888/video/14012f2678f887445b24f9ebd76df0b4.m3u8', '卡塔尔世界杯.mp4', NULL, './upload/video/', '14012f2678f887445b24f9ebd76df0b4.m3u8', NULL, '2022-11-09 21:14:16', '2022-11-09 21:14:16');
+INSERT INTO `file` VALUES ('1667999660918', 'http://localhost:8888/image/1667999660918', NULL, 'f15887af9.jpg', 'image/jpeg', './upload/image', '1667999660916.jpg', 71320, '2022-11-09 21:14:20', '2022-11-09 21:14:20');
 
 -- ----------------------------
 -- Table structure for playlist
@@ -316,9 +401,14 @@ CREATE TABLE `playlist_video`  (
 INSERT INTO `playlist_video` VALUES ('1665824604596', '1667111986632', '2022-10-30 14:39:46', '2022-10-30 14:39:46');
 INSERT INTO `playlist_video` VALUES ('1665824604596', '1667112116703', '2022-10-30 14:41:56', '2022-10-30 14:41:56');
 INSERT INTO `playlist_video` VALUES ('1665824604596', '1667120940268', '2022-10-30 17:09:00', '2022-10-30 17:09:00');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667822028656', '2022-11-07 19:53:48', '2022-11-07 19:53:48');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667826098755', '2022-11-07 21:01:38', '2022-11-07 21:01:38');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667827947706', '2022-11-07 21:32:27', '2022-11-07 21:32:27');
+INSERT INTO `playlist_video` VALUES ('1665824604596', '1667999552964', '2022-11-09 21:12:32', '2022-11-09 21:12:32');
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1667111868216', '2022-10-30 14:37:48', '2022-10-30 14:37:48');
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1667117126446', '2022-10-30 16:05:26', '2022-10-30 16:05:26');
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1667121382104', '2022-10-30 17:16:22', '2022-10-30 17:16:22');
+INSERT INTO `playlist_video` VALUES ('1665824630522', '1667999672452', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 
 -- ----------------------------
 -- Table structure for tag
@@ -369,14 +459,45 @@ INSERT INTO `tag_video` VALUES ('1665897016760', '1667117126446', '2022-10-30 16
 INSERT INTO `tag_video` VALUES ('1665897046778', '1667117126446', '2022-10-30 16:05:26', '2022-10-30 16:05:26');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1667111986632', '2022-10-30 14:39:46', '2022-10-30 14:39:46');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1667120940268', '2022-10-30 17:09:00', '2022-10-30 17:09:00');
+INSERT INTO `tag_video` VALUES ('1665897050494', '1667999672452', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1667111868216', '2022-10-30 14:37:48', '2022-10-30 14:37:48');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1667112116703', '2022-10-30 14:41:56', '2022-10-30 14:41:56');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1667121382104', '2022-10-30 17:16:22', '2022-10-30 17:16:22');
+INSERT INTO `tag_video` VALUES ('1665897054998', '1667999552964', '2022-11-09 21:12:32', '2022-11-09 21:12:32');
 INSERT INTO `tag_video` VALUES ('1665897058346', '1667111986632', '2022-10-30 14:39:46', '2022-10-30 14:39:46');
 INSERT INTO `tag_video` VALUES ('1665897058346', '1667112116703', '2022-10-30 14:41:56', '2022-10-30 14:41:56');
 INSERT INTO `tag_video` VALUES ('1665897058346', '1667120940268', '2022-10-30 17:09:00', '2022-10-30 17:09:00');
+INSERT INTO `tag_video` VALUES ('1665897058346', '1667826098755', '2022-11-07 21:01:38', '2022-11-07 21:01:38');
+INSERT INTO `tag_video` VALUES ('1665897058346', '1667827947706', '2022-11-07 21:32:27', '2022-11-07 21:32:27');
+INSERT INTO `tag_video` VALUES ('1665897058346', '1667999672452', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1667111868216', '2022-10-30 14:37:48', '2022-10-30 14:37:48');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1667121382104', '2022-10-30 17:16:22', '2022-10-30 17:16:22');
+INSERT INTO `tag_video` VALUES ('1665897062762', '1667822028656', '2022-11-07 19:53:48', '2022-11-07 19:53:48');
+INSERT INTO `tag_video` VALUES ('1665897078125', '1667999552964', '2022-11-09 21:12:32', '2022-11-09 21:12:32');
+
+-- ----------------------------
+-- Table structure for thumb
+-- ----------------------------
+DROP TABLE IF EXISTS `thumb`;
+CREATE TABLE `thumb`  (
+  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `commentId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `vId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `userId`(`userId` ASC) USING BTREE,
+  INDEX `vId`(`vId` ASC) USING BTREE,
+  INDEX `commentId`(`commentId` ASC) USING BTREE,
+  CONSTRAINT `thumb_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `thumb_ibfk_2` FOREIGN KEY (`vId`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `thumb_ibfk_3` FOREIGN KEY (`commentId`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of thumb
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for user
@@ -454,6 +575,11 @@ INSERT INTO `video` VALUES ('1667112116703', '反对v反对v发的人', '1664789
 INSERT INTO `video` VALUES ('1667117126446', 'frfr分威风威风方法热但是的的哇风热风热而愤然二分frfr分威风威风方法热但是的的哇风热风热而愤然二分对外服务frfr分威风威风方法热但是的的哇风热风热而愤然二分对外服务对外服务', '1664789923657', '0', NULL, 'frfrfrfrfrfr', '1665897712689', '2022-10-30 16:05:26', '2022-10-30 17:04:56');
 INSERT INTO `video` VALUES ('1667120940268', 'fsfwefwefwfew', '1664789923657', '0', NULL, 'fwfewfwfewfwefewfefffwefwe', '1665897708367', '2022-10-30 17:09:00', '2022-10-30 17:09:00');
 INSERT INTO `video` VALUES ('1667121382104', 'ger咯咯咯g俄格哥哥微软', '1664789923657', '0', NULL, '各人各Greg问问日期人五人死亡认为人', '1665897715639', '2022-10-30 17:16:22', '2022-10-30 17:16:22');
+INSERT INTO `video` VALUES ('1667822028656', 'rfrf', '1667300096850', '0', NULL, 'frfr', '1665897712689', '2022-11-07 19:53:48', '2022-11-07 19:53:48');
+INSERT INTO `video` VALUES ('1667826098755', 'grtgrtg', '1667300096850', '0', NULL, 'trgrgr', '1665897712689', '2022-11-07 21:01:38', '2022-11-07 21:01:38');
+INSERT INTO `video` VALUES ('1667827947706', '25225425425rgr', '1667300096850', '0', NULL, '245grgrgrggrg', '1665897719079', '2022-11-07 21:32:27', '2022-11-07 21:32:27');
+INSERT INTO `video` VALUES ('1667999552964', '地方v地方v', '1667300096850', '0', NULL, '反对vDVD', '1665897708367', '2022-11-09 21:12:32', '2022-11-09 21:12:32');
+INSERT INTO `video` VALUES ('1667999672452', 'eferferfre', '1667300096850', '0', NULL, '非人非任飞', '1665897712689', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 
 -- ----------------------------
 -- Table structure for video_file
@@ -494,6 +620,16 @@ INSERT INTO `video_file` VALUES ('1667120940268', '1667120917236', 'cover');
 INSERT INTO `video_file` VALUES ('1667120940268', '1667120903757', 'source');
 INSERT INTO `video_file` VALUES ('1667121382104', '1667121296931', 'cover');
 INSERT INTO `video_file` VALUES ('1667121382104', '1667121280374', 'source');
+INSERT INTO `video_file` VALUES ('1667822028656', '1667821912543', 'cover');
+INSERT INTO `video_file` VALUES ('1667822028656', '1667821906517', 'source');
+INSERT INTO `video_file` VALUES ('1667826098755', '1667826051804', 'cover');
+INSERT INTO `video_file` VALUES ('1667826098755', '1667826043818', 'source');
+INSERT INTO `video_file` VALUES ('1667827947706', '1667827842273', 'cover');
+INSERT INTO `video_file` VALUES ('1667827947706', '1667827774450', 'source');
+INSERT INTO `video_file` VALUES ('1667999552964', '1667999542776', 'cover');
+INSERT INTO `video_file` VALUES ('1667999552964', '1667999532418', 'source');
+INSERT INTO `video_file` VALUES ('1667999672452', '1667999660918', 'cover');
+INSERT INTO `video_file` VALUES ('1667999672452', '1667999650979', 'source');
 
 -- ----------------------------
 -- Function structure for getAllComment

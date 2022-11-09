@@ -11,8 +11,13 @@ export const VideoItemWrapper:any = styled.div`
     border-radius: ${8/40}rem ${8/40}rem 0 0;
     overflow: hidden;
     width: 100%;
+    height: ${200/40}rem;
+    background-color: black;
     &>video{
       width: 100%;
+      height: ${200/40}rem;
+      object-position: 50% 50%;
+      object-fit: contain;
     } 
   }
   .msg-info{

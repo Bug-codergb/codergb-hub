@@ -53,7 +53,7 @@ const VideoDetail:FC=():ReactElement=>{
   return (
       <VideoDetailWrapper>
         <CenterContent>
-          <LeftContentWrapper>
+          <LeftContentWrapper videoRef={videoRef}>
             <div className="video-container">
               {
                 vioURL && <video ref={videoRef} controls={true} muted={true}  autoPlay={true}/>

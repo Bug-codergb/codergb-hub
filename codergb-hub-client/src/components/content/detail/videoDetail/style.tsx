@@ -14,7 +14,7 @@ export const CenterContent = styled.div`
   display: flex;
   align-items: flex-start;
 `
-export const LeftContentWrapper = styled.div`
+export const LeftContentWrapper:any = styled.div`
   width: 67%;
   height: 10000px;
   padding: ${20/40}rem 0;
@@ -24,7 +24,10 @@ export const LeftContentWrapper = styled.div`
     overflow: hidden;
     background-color: black;
     video{
-      width: 100%;
+      width: ${1150/40}rem;
+      height: ${600/40}rem;
+      object-position: 50% 50%;
+      object-fit: contain;
     }
   }
 `

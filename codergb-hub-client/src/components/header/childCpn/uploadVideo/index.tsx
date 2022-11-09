@@ -22,7 +22,7 @@ interface IProps{
 const UploadVideo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
   const { keyIndex } = props;
   const [file,setFile] = useState<File>();
-  const [childKeyIndex,setChildKeyIndex] = useState<number>(keyIndex);
+  //const [childKeyIndex,setChildKeyIndex] = useState<number>(keyIndex);
   const [videoURL,setVideoURL]=useState<string>("");
   const [videoName,setVideoName]=useState<string>("");
   const [videoId,setVideoId]=useState<string>("");
@@ -30,12 +30,8 @@ const UploadVideo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
   const [isShowUpload,setIsShowUpload]=useState<boolean>(true);
   const [isShowLoading,setIsShowLoading] = useState<boolean>(false);
   const videoInfoRef = useRef<IUploadVideo>({title:"",desc:"",playlist:"",tag:[],cate:"",imgId:"",videoId:""});
-  useEffect(()=>{
-    setChildKeyIndex(keyIndex)
-    console.log(1)
-  },[keyIndex])
+
   useImperativeHandle<IUploadVideo,IUploadVideo>(propsRef,()=>{
-    console.log(videoInfoRef.current)
     return {
       videoId:videoId,
       title:videoInfoRef.current.title,
@@ -45,7 +41,7 @@ const UploadVideo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
       cate:videoInfoRef.current.cate,
       imgId:videoInfoRef.current.imgId,
     }
-  },[videoInfoRef.current,videoId])
+  },[videoInfoRef.current,videoId,keyIndex])
   const fileChangeHandle=async (e:ChangeEvent<HTMLInputElement>)=>{
     if(e.currentTarget.files && e.currentTarget.files.length!==0){
       const file = e.currentTarget.files[0];

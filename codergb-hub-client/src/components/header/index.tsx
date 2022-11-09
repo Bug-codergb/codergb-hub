@@ -1,4 +1,4 @@
-import React, {memo, FC, ReactElement, useState,useRef} from "react";
+import React, {memo, FC, ReactElement, useState, useRef, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import {Map} from "immutable";
 import {Dropdown, Modal} from 'antd';
@@ -32,9 +32,7 @@ const Header:FC=():ReactElement=>{
   const showDialogHandle=()=>{
     setIsModelOpen(true);
   }
-  const handleOk=async ()=>{
-    setKeyIndex(keyIndex+1);
-    console.log(videoRef.current);
+  useEffect(()=>{
     if(videoRef.current && videoRef.current.videoId && videoRef.current.imgId){
       const {
         videoId,
@@ -45,13 +43,16 @@ const Header:FC=():ReactElement=>{
         cate,
         imgId
       }=videoRef.current;
-      const result = await createVideo(videoId, title, desc,imgId, playlist, tag, cate,);
-      if(result.status==200){
-        console.log(result.data);
-        setIsModelOpen(false);
-      }
+      createVideo(videoId, title, desc,imgId, playlist, tag, cate).then((data)=>{
+        if(data.status==200){
+          console.log(data.data);
+          setIsModelOpen(false);
+        }
+      })
     }
-    //setIsModelOpen(false);
+  },[keyIndex]);
+  const handleOk=async ()=>{
+    setKeyIndex(keyIndex+1);
   }
   const handleCancel=()=>{
     setIsModelOpen(false);
