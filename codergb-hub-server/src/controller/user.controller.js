@@ -3,7 +3,11 @@ const { setResponse } = require("../utils/setResponse");
 const { setImgPrev } = require("../utils/setImgPrev");
 const { judgeFile } = require("../utils/judgeFile");
 const { deleteFile } = require("../utils/deleteFile")
-const { uploadAvatarService,getUserMsgService } = require("../service/user.service");
+const {
+  uploadAvatarService,
+  getUserMsgService,
+  userMsgService
+} = require("../service/user.service");
 const {APP_HOST,APP_PORT} = require("../app/config")
 class UserController{
   async uploadAvatar(ctx,next){
@@ -74,6 +78,17 @@ class UserController{
         }
       }else{
         setResponse(ctx,'上传文件不能为空',400);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500)
+    }
+  }
+  async userMsg(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await userMsgService(ctx,id);
+      if(result){
+        setResponse(ctx,"success",200,result[0])
       }
     }catch (e) {
       setResponse(ctx,e.message,500)

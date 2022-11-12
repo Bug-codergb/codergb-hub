@@ -4,6 +4,7 @@ import {IResponseType} from "../../../types/responseType";
 import {login} from "../../../network/login";
 import localCache from "../../../utils/cache";
 import {NavigateFunction} from "react-router/dist/lib/hooks";
+import {getUserMsg} from "../../../network/user";
 
 export function changeUserMsg(userMsg:IUserMsg){
   return {
@@ -46,14 +47,14 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
 export function changeUserDetailAction(userId:string){
   return async (dispatch:any)=>{
     try{
-     /* const data=await getUserDetail<IResponseType<IUserDetail>>(userId);
+      const data=await getUserMsg<IResponseType<IUserDetail>>(userId);
       if(data.status===200){
         dispatch(changeUserDetail(data.data));
         localCache.deleteCache("userDetail");
         localCache.setCache("userDetail",data.data);
-      }*/
+      }
     }catch (e) {
-
+      console.log(e)
     }
   }
 }

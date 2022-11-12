@@ -73,6 +73,11 @@ export const VideoInfoWrapper= styled.div`
         .label{
           margin: 0 0 0 ${15/40}rem;
         }
+        .thumb-icon-active{
+          svg{
+            color: #ff0000;
+          }
+        }
       }
     }
   }

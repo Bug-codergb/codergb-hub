@@ -8,7 +8,21 @@ const defaultState = Map<ILogin>({
       avatarUrl:"",
       token:""
     },
-    userDetail:{},
+    userDetail:{
+      userId:"",
+      userName:"",
+      avatarUrl:"",
+      token:"",
+      subscriber:[],
+      thumb: {
+        video:[],
+        comment:[]
+      },
+      tread:{
+        video:[],
+        comment:[]
+      }
+    },
     loginType:0
   }
 })

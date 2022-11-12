@@ -21,3 +21,9 @@ export function updateAvatar<T=IResponseType<any>>(id:string,formData:FormData,g
     onUploadProgress:getProgress
   })
 }
+//获取userMsg
+export function getUserMsg<T=IResponseType<any>>(userId:string){
+  return gbRequest.post<T>({
+    url:`/user/msg/${userId}`
+  })
+}
