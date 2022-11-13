@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 09/11/2022 22:01:18
+ Date: 12/11/2022 18:17:50
 */
 
 SET NAMES utf8mb4;
@@ -411,6 +411,30 @@ INSERT INTO `playlist_video` VALUES ('1665824630522', '1667121382104', '2022-10-
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1667999672452', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 
 -- ----------------------------
+-- Table structure for subscriber
+-- ----------------------------
+DROP TABLE IF EXISTS `subscriber`;
+CREATE TABLE `subscriber`  (
+  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `upId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `userId`(`userId` ASC) USING BTREE,
+  INDEX `upId`(`upId` ASC) USING BTREE,
+  CONSTRAINT `subscriber_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `subscriber_ibfk_2` FOREIGN KEY (`upId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of subscriber
+-- ----------------------------
+INSERT INTO `subscriber` VALUES ('1668241153931', '1667300096850', '1664789923657', '2022-11-12 16:19:13', '2022-11-12 16:19:13');
+INSERT INTO `subscriber` VALUES ('1668242161324', '1667300096850', '1667726102164', '2022-11-12 16:36:01', '2022-11-12 16:36:01');
+INSERT INTO `subscriber` VALUES ('1668245689551', '1667300096850', '1667300096850', '2022-11-12 17:34:49', '2022-11-12 17:34:49');
+
+-- ----------------------------
 -- Table structure for tag
 -- ----------------------------
 DROP TABLE IF EXISTS `tag`;
@@ -486,6 +510,7 @@ CREATE TABLE `thumb`  (
   `vId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tread` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `userId`(`userId` ASC) USING BTREE,
   INDEX `vId`(`vId` ASC) USING BTREE,
@@ -498,6 +523,7 @@ CREATE TABLE `thumb`  (
 -- ----------------------------
 -- Records of thumb
 -- ----------------------------
+INSERT INTO `thumb` VALUES ('1668248253024', '1667300096850', NULL, '1667111986632', '2022-11-12 18:17:33', '2022-11-12 18:17:33', 0);
 
 -- ----------------------------
 -- Table structure for user

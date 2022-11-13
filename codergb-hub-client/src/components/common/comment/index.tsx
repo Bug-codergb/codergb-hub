@@ -1,11 +1,14 @@
-import React, {memo, FC, ReactElement, useEffect, useState, ChangeEvent, FormEvent} from "react";
+import React, {memo, FC, ReactElement, useEffect, useState, FormEvent} from "react";
 import moment from "moment";
 import {
   LikeOutlined,
   DislikeOutlined,
   CaretUpOutlined,
-  CaretDownOutlined
+  CaretDownOutlined,
+  LikeFilled,
+  DislikeFilled
 } from '@ant-design/icons'
+import {Map} from "immutable"
 import {
   CommentWrapper
 } from "./style";
@@ -16,16 +19,19 @@ import {IPage} from "../../../types/IPage";
 import {IComment} from "../../../types/comment/IComment";
 import Reply from "./childCpn";
 import Publish from "../publish";
+import {useThumb, useTread} from "../../../hook/useThumb";
+
 interface IProps{
   user:IUserMsg,
   alias:string,
   id:string,
 }
-const Comment:FC<IProps>=(props)=>{
+const Comment:FC<IProps>=(props):ReactElement=>{
   const { user,alias,id } = props;
-  const [isShowReply,setIsShowReply] = useState<boolean>(false);
+
   const [comment,setComment] = useState<IComment[]>([]);
   const [commentCount,setCommentCount]=useState<number>(0);
+  const [isShowReply,setIsShowReply] = useState<boolean>(false);
   const [isFocus,setIsFocus] = useState<boolean>(false);
   const [content,setContent] = useState<string>("");
   const [comIndex,setComIndex] = useState<number>(-1);
@@ -33,6 +39,8 @@ const Comment:FC<IProps>=(props)=>{
   useEffect(()=>{
     getAllCommentHandle(id,0,10,alias);
   },[id]);
+  const isThumb = useThumb;
+  const isTread =useTread;
   const getAllCommentHandle=(id:string,offset:number,limit:number,alias:string)=>{
     getAllComment<IResponseType<IPage<IComment[]>>>(id,offset,limit,alias).then((data)=>{
       if(data.status===200){
@@ -89,6 +97,7 @@ const Comment:FC<IProps>=(props)=>{
       getAllCommentHandle(id,0,10,alias);
     }
   }
+
   return (
       <CommentWrapper>
         <div className={`publish-outer ${isFocus?'publish-outer-start':''}`}>
@@ -130,11 +139,21 @@ const Comment:FC<IProps>=(props)=>{
                         </div>
                         <div className="reply-controller-btn">
                           <div className="thumb">
-                            <LikeOutlined/>
+                            {
+                              (!isThumb('comment',item.id))&&<LikeOutlined/>
+                            }
+                            {
+                              isThumb('comment',item.id)&&<LikeFilled/>
+                            }
                             <span className="thumb-count">18w</span>
                           </div>
                           <div className="tread">
-                            <DislikeOutlined/>
+                            {
+                              (!isTread('comment',item.id))&&<DislikeOutlined/>
+                            }
+                            {
+                              (isTread('comment',item.id))&&<DislikeFilled/>
+                            }
                           </div>
                           <div className="reply-label" onClick={e=>showReplyHandle(index)}>
                             回复
