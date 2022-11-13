@@ -6,7 +6,8 @@ const { deleteFile } = require("../utils/deleteFile")
 const {
   uploadAvatarService,
   getUserMsgService,
-  userMsgService
+  userMsgService,
+  userVideoService
 } = require("../service/user.service");
 const {APP_HOST,APP_PORT} = require("../app/config")
 class UserController{
@@ -89,6 +90,18 @@ class UserController{
       const result = await userMsgService(ctx,id);
       if(result){
         setResponse(ctx,"success",200,result[0])
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500)
+    }
+  }
+  async userVideo(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const { offset ="0",limit="30"}= ctx.query;
+      const result = await userVideoService(ctx,id,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result)
       }
     }catch (e) {
       setResponse(ctx,e.message,500)

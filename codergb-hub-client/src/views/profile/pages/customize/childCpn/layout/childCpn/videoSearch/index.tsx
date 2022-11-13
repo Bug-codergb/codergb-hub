@@ -3,7 +3,11 @@ import { AudioOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import { VideoSearchWrapper } from "./style";
 const { Search } = Input;
-const VideoSearch:FC=():ReactElement=>{
+interface IProps{
+  isTrailer:boolean
+}
+const VideoSearch:FC<IProps>=(props):ReactElement=>{
+  const { isTrailer } = props;
   const onSearchUserSelf=()=>{
 
   }
@@ -16,9 +20,11 @@ const VideoSearch:FC=():ReactElement=>{
           <div className="user-self">
             <Search placeholder="搜索您的视频" onSearch={e=>onSearchUserSelf()}/>
           </div>
-          <div className="video-lib">
-            <Search placeholder="搜索您的视频" onSearch={e=>onSearchOther()} />
-          </div>
+          {
+            (!isTrailer) && <div className="video-lib">
+              <Search placeholder="搜索整站的视频" onSearch={e=>onSearchOther()} />
+            </div>
+          }
         </div>
         <ul className="video-list">
 

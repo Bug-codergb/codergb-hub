@@ -139,21 +139,21 @@ const Comment:FC<IProps>=(props):ReactElement=>{
                         </div>
                         <div className="reply-controller-btn">
                           <div className="thumb">
-                            {
+                            {/*{
                               (!isThumb('comment',item.id))&&<LikeOutlined/>
                             }
                             {
                               isThumb('comment',item.id)&&<LikeFilled/>
-                            }
+                            }*/}
                             <span className="thumb-count">18w</span>
                           </div>
                           <div className="tread">
-                            {
+                            {/*{
                               (!isTread('comment',item.id))&&<DislikeOutlined/>
                             }
                             {
                               (isTread('comment',item.id))&&<DislikeFilled/>
-                            }
+                            }*/}
                           </div>
                           <div className="reply-label" onClick={e=>showReplyHandle(index)}>
                             回复

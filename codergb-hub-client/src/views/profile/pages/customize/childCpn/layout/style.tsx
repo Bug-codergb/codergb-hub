@@ -19,7 +19,7 @@ export const LayoutWrapper = styled.div`
     justify-content: space-between;
     border: 1px solid #e5e5e5;
     padding: ${20/40}rem ${20/40}rem ${20/40}rem 0;
-    margin: ${20/40}rem 0 0 0;
+    margin: ${20/40}rem 0 ${20/40}rem 0;
     border-radius: 5px;
     .left-content{
       display: flex;
