@@ -7,9 +7,12 @@ const {
   uploadAvatar,
   getAvatar,
   updateAvatar,
-  deleteAvatar
+  deleteAvatar,
+  userChannel
 } = require("../controller/channel.controller")
-channelRouter.post("/",authVerify,createChannel);
+channelRouter.post("/:id",authVerify,createChannel);
 //上传频道头像(作废)
 channelRouter.post("/avatar/upload",authVerify,channelAvatarUpload,uploadAvatar);
+//获取用户频道
+channelRouter.get("/user/:id",authVerify,userChannel)
 module.exports = channelRouter

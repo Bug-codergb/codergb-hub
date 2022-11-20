@@ -13,3 +13,15 @@ export function uploadAvatar<T=IResponseType<any>>(formData:FormData,getProgress
     }
   })
 }
+export function updateChannel<T=IResponseType<any>>(id:string,params:object){
+  return gbRequest.post<T>({
+    url:`/channel/${id}`,
+    data:params
+  })
+}
+//获取用户频道
+export function getUserChannel<T=IResponseType<any>>(id:string){
+  return gbRequest.get<T>({
+    url:"/channel/user/"+id,
+  })
+}

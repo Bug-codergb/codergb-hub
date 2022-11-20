@@ -5,6 +5,7 @@ import {login} from "../../../network/login";
 import localCache from "../../../utils/cache";
 import {NavigateFunction} from "react-router/dist/lib/hooks";
 import {getUserMsg} from "../../../network/user";
+import {changeChannelAction} from "../../profile/pages/customize/store/actionCreators";
 
 export function changeUserMsg(userMsg:IUserMsg){
   return {
@@ -32,6 +33,7 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
         await dispatch(changeUserMsg(data.data));
         await dispatch(changeUserDetailAction(data.data.userId));
         await dispatch(changeLoginType(1));
+        await dispatch(changeChannelAction(data.data.userId));
         localCache.setCache("userMsg",data.data);
         localCache.setCache("loginType",1)
         navigate("/Home",{

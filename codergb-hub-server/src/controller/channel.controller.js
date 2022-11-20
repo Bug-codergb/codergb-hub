@@ -7,17 +7,32 @@ const { uploadHandle } = require("../utils/uploadHandle")
 const {
   createChannelService,
   getChannelMsgService,
-  uploadAvatarService
+  uploadAvatarService,
+  userChannelService
 } = require("../service/channel.service");
 class ChannelController{
   async createChannel(ctx,next){
     try{
-      const { name,alias="",description="",official=0,banner="",trailer="" } = ctx.request.body;
-      console.log(name)
-      if(!isEmpty(ctx,name,"频道名称不能为空") &&
-        !isEmpty(ctx,banner,"频道横幅不能为空") &&
-        !isEmpty(ctx,trailer,"请添加频道预告片")){
-        const result = await createChannelService(ctx,name,banner,trailer,description,official);
+      const { id } = ctx.params;
+      const { name="",alias="",description="",official="",banner="",trailer="",userId="" } = ctx.request.body;
+      let keys = Object.keys(ctx.request.body);
+      const isAllEmpty = keys.every((item)=>{
+        return ctx.request.body[item]!==0 && (ctx.request.body[item]===null || ctx.request.body[item].trim().length === 0);
+      });
+      if(isAllEmpty){
+        setResponse(ctx,"频道更新参数不能为空",400,{});
+      }else{
+        const notNullKey = keys.filter((item,index)=>{
+          return (ctx.request.body[item]===0 || (ctx.request.body[item]!==null
+                 && (typeof ctx.request.body[item] ==="string" && ctx.request.body[item].trim().length!==0)))&& item!=='userId'
+        })
+        let params=[];
+        for(let item of notNullKey){
+          params.push({
+            [item]:ctx.request.body[item]
+          })
+        }
+        const result = await createChannelService(ctx,id,params);
         console.log(result)
         if(result){
           setResponse(ctx,"频道添加成功",200,{});
@@ -43,6 +58,18 @@ class ChannelController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500);
+    }
+  }
+  //获取用户频道
+  async userChannel(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await userChannelService(ctx,id);
+      if(result){
+        setResponse(ctx,"success",200,result[0])
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
     }
   }
 

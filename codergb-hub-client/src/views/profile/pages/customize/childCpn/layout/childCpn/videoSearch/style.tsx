@@ -24,6 +24,9 @@ export const VideoSearchWrapper = styled.div`
         border: 1px solid #065fd4;
         cursor: pointer;
       }
+      &.active{
+        border: 1px solid #065fd4;
+      }
       .video-cover{
         img{
           width: 100%;

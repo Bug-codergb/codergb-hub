@@ -35,10 +35,30 @@ export const LayoutWrapper = styled.div`
         justify-content: center;
         padding: ${5/40}rem;
       }
+      &.trailer-start{
+        align-items: flex-start;
+        .trailer{
+          margin: ${20/40}rem 0 0 0;
+          width: 90%;
+          display: flex;
+          align-items: flex-start;
+          .trailer-img-container{
+            width: ${280/40}rem;
+            img{
+              width: 100%;
+            } 
+          }
+          .trailer-video-name{
+            width:76%;
+            margin: 0 0 0 ${25/40}rem;
+          }
+        }
+      }
     }
     .right-content{
       color: #065fd4;
       cursor: pointer;
+      white-space: nowrap;
     }
   }
 `
