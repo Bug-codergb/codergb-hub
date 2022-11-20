@@ -7,7 +7,7 @@ export const VideoInfoWrapper = styled.div`
   width: 100%;
 `
 export const LeftContent = styled.div`
-  height: ${440/40}rem;
+  height: ${480/40}rem;
   overflow-y: scroll;
   width: 60%;
   p{
@@ -43,8 +43,8 @@ export const LeftContent = styled.div`
     display: flex;
     align-items: center;
     .delete-abb{
-      width: ${130/40}rem;
-      height: ${130/40}rem;
+      width: ${145/40}rem;
+      height: ${145/40}rem;
       background-color: rgba(238, 238, 238,.7);
       border-left:1px solid #f2f2f2;
       display: flex;
@@ -64,7 +64,7 @@ export const LeftContent = styled.div`
   }
   .abbreviation-upload{
     width: ${280/40}rem;
-    height: ${130/40}rem;
+    height: ${145/40}rem;
     margin: ${15/40}rem 0;
     background-color: #eeeeee;
     position: relative;
@@ -96,9 +96,12 @@ export const LeftContent = styled.div`
 `
 export const RightContent = styled.div`
   width: 38%;
+  height: ${440/40}rem;
   video{
     margin: ${46/40}rem 0 0 0;
     width: 100%;
+    height: ${312/40}rem;
+    object-fit: contain;
   }
   .video-info{
     width: 100%;

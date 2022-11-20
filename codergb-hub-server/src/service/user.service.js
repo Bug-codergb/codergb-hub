@@ -61,14 +61,14 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
-  async userVideoCountService(ctx,userId){
+  async userVideoCountService(ctx,userId,keyword){
     try{
       const sql=`
       select count(v.id) as count
       from video as v
       LEFT JOIN video_file as vf on vf.videoId = v.id
       LEFT JOIN file as f on f.id = vf.fileId
-      where vf.mark = "cover" and v.userId=?
+      where vf.mark = "cover" and v.userId=? ${keyword!==""? `and v.name like '%${keyword}%'` : ''}
       ORDER BY v.createTime desc`;
       const result = await connection.execute(sql,[userId]);
       return result[0]
@@ -77,7 +77,7 @@ class UserService{
     }
   }
   //获取用户视频
-  async userVideoService(ctx,userId,offset,limit){
+  async userVideoService(ctx,userId,offset,limit,keyword){
     try{
       const sql=`
       select v.id,v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,f.picUrl,
@@ -95,11 +95,11 @@ class UserService{
        from video as v
        LEFT JOIN video_file as vf on vf.videoId = v.id
        LEFT JOIN file as f on f.id = vf.fileId
-       where vf.mark = "cover" and v.userId=?
+       where vf.mark = "cover" and v.userId=? ${keyword!==""? `and v.name like '%${keyword}%'` : ''}
        ORDER BY v.createTime desc
        limit ?,? `;
      const result = await connection.execute(sql,[userId,offset,limit]);
-     const count = await new UserService().userVideoCountService(ctx,userId);
+     const count = await new UserService().userVideoCountService(ctx,userId,keyword);
      return {
        count:count[0].count,
        list:result[0]

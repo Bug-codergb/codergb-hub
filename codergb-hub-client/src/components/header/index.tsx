@@ -96,7 +96,7 @@ const Header:FC=():ReactElement=>{
                    onOk={handleOk}
                    maskClosable={false}
                    destroyOnClose={true}
-                   width={'70%'}
+                   width={'74%'}
                    onCancel={handleCancel}>
               {
                 isModalOpen && <UploadVideo keyIndex={keyIndex} ref={videoRef}/>

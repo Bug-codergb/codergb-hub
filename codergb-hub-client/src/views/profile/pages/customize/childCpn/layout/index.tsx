@@ -63,7 +63,7 @@ const Layout:FC=()=>{
                destroyOnClose={true}
                okText={'确定'}
                title={'选择视频'}
-               width={'60%'}
+               width={'65%'}
                onCancel={handleCancel}>
           <VideoSearch isTrailer={isTrailer}/>
         </Modal>

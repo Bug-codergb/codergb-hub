@@ -99,7 +99,8 @@ class UserController{
     try{
       const { id } = ctx.params;
       const { offset ="0",limit="30"}= ctx.query;
-      const result = await userVideoService(ctx,id,offset,limit);
+      const {keyword = ""} = ctx.request.body;
+      const result = await userVideoService(ctx,id,offset,limit,keyword);
       if(result){
         setResponse(ctx,"success",200,result)
       }

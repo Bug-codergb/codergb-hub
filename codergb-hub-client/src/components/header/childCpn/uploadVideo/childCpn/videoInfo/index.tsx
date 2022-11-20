@@ -185,8 +185,8 @@ const VideoInfo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
                 {
                   isModalOpen && <CustomizeUpload file={file}
                                                   imgWidth={7}
-                                                  scale={2.15}
-                                                  aspectRatio={2.15}
+                                                  scale={1.95}
+                                                  aspectRatio={1.95}
                                                   isCircle={false}
                                                   realWidth={300}
                       //@ts-ignore

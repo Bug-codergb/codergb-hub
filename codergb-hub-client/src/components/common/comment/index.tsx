@@ -17,9 +17,11 @@ import {getAllComment, publishComment, replyComment} from "../../../network/comm
 import {IResponseType} from "../../../types/responseType";
 import {IPage} from "../../../types/IPage";
 import {IComment} from "../../../types/comment/IComment";
-import Reply from "./childCpn";
+import Reply from "./childCpn/reply";
 import Publish from "../publish";
 import {useThumb, useTread} from "../../../hook/useThumb";
+import CommentItem from "./childCpn/commentItem";
+import EmptyHolder from "../emptyHolder";
 
 interface IProps{
   user:IUserMsg,
@@ -125,66 +127,20 @@ const Comment:FC<IProps>=(props):ReactElement=>{
             comment && comment.length!==0 && comment.map((item,index)=>{
               return (
                   <li key={item.id}>
-                    <div className="comment-content">
-                      <div className="left-container">
-                        <img src={item.user.avatarUrl}/>
-                      </div>
-                      <div className="right-container">
-                        <div className="user-name-time">
-                          <span className="user-name">{item.user.userName}</span>
-                          <span className="create-time">{moment(item.createTime).locale('zh-CN').fromNow()}</span>
-                        </div>
-                        <div className="content">
-                          {item.content}
-                        </div>
-                        <div className="reply-controller-btn">
-                          <div className="thumb">
-                            {/*{
-                              (!isThumb('comment',item.id))&&<LikeOutlined/>
-                            }
-                            {
-                              isThumb('comment',item.id)&&<LikeFilled/>
-                            }*/}
-                            <span className="thumb-count">18w</span>
-                          </div>
-                          <div className="tread">
-                            {/*{
-                              (!isTread('comment',item.id))&&<DislikeOutlined/>
-                            }
-                            {
-                              (isTread('comment',item.id))&&<DislikeFilled/>
-                            }*/}
-                          </div>
-                          <div className="reply-label" onClick={e=>showReplyHandle(index)}>
-                            回复
-                          </div>
-                        </div>
-                        {/* 发表回复 */}
-                        {
-                          (index === replyIndex) && <div className="publish-comment-reply-container">
-                            <Publish isShowAt={false} user={user} publish={(content:string)=>publishReplyHandle(content,item)}/>
-                          </div>
-                        }
-                        {
-                          (typeof item.reply==="number" && item.reply!==0)&&<div className="reply-count-btn" onClick={e=>showReply(index)}>
-                            {
-                              (index!==comIndex)&&<CaretDownOutlined />
-                            }
-                            {
-                              index===comIndex &&<CaretUpOutlined />
-                            }
-                            <span className={"count"}>{typeof item.reply==="number"?item.reply:''}</span>
-                            <span className={"label"}>条回复</span>
-                          </div>
-                        }
-                        {
-                          (index===comIndex)&& <Reply id={item.id} user={user}/>
-                        }
-                      </div>
-                    </div>
+                    <CommentItem comment={item}
+                                 user={user}
+                                 index={index}
+                                 comIndex={comIndex}
+                                 replyIndex={replyIndex}
+                                 propsPublishReplyHandle={(content, item)=>publishReplyHandle(content,item)}
+                                 propsShowReply={(index)=>showReply(index)}
+                                 propsShowReplyHandle={(index)=>showReplyHandle(index)}/>
                   </li>
               )
             })
+          }
+          {
+            ((!comment) || (comment &&comment.length===0)) && <EmptyHolder msg={"暂无评论，快来发布您的第一条评论"}/>
           }
         </ul>
       </CommentWrapper>

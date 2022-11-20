@@ -5,6 +5,7 @@ export const ReplyWrapper = styled.div`
       display: flex;
       align-items: flex-start;
       margin: 0 0 ${15/40}rem 0;
+      width: 100%;
       .left-msg{
         width: ${40/40}rem;
         height: ${40/40}rem;

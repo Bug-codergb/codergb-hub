@@ -66,3 +66,16 @@ export function getVideoDetail<T=IResponseType<any>>(id:string){
     url:`/video/detail/${id}`,
   })
 }
+//获取用户视频
+export function getUserVideo<T=IResponseType<any>>(id:string,keyword:string,offset:number,limit:number){
+  return gbRequest.post<T>({
+    url:`/user/video/${id}`,
+    params:{
+      offset,
+      limit,
+    },
+    data:{
+      keyword
+    }
+  })
+}
