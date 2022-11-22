@@ -14,6 +14,7 @@ class ChannelController{
   async createChannel(ctx,next){
     try{
       const { id } = ctx.params;
+      console.log(ctx.request.body);
       const { name="",alias="",description="",official="",banner="",trailer="",userId="" } = ctx.request.body;
       let keys = Object.keys(ctx.request.body);
       const isAllEmpty = keys.every((item)=>{

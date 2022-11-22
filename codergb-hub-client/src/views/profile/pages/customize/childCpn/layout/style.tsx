@@ -37,6 +37,7 @@ export const LayoutWrapper = styled.div`
       }
       &.trailer-start{
         align-items: flex-start;
+        width: 100%;
         .trailer{
           margin: ${20/40}rem 0 0 0;
           width: 90%;

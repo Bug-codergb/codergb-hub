@@ -33,7 +33,7 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
         await dispatch(changeUserMsg(data.data));
         await dispatch(changeUserDetailAction(data.data.userId));
         await dispatch(changeLoginType(1));
-        await dispatch(changeChannelAction(data.data.userId));
+
         localCache.setCache("userMsg",data.data);
         localCache.setCache("loginType",1)
         navigate("/Home",{
@@ -41,7 +41,7 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
         })
       }
     }catch (e) {
-
+      console.log(e)
     }
   }
 }
@@ -54,6 +54,7 @@ export function changeUserDetailAction(userId:string){
         dispatch(changeUserDetail(data.data));
         localCache.deleteCache("userDetail");
         localCache.setCache("userDetail",data.data);
+        await dispatch(changeChannelAction(userId));
       }
     }catch (e) {
       console.log(e)

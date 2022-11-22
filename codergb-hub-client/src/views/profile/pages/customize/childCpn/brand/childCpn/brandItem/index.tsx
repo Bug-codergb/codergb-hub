@@ -8,15 +8,16 @@ interface IProps{
   img:ReactElement,
   desc:string,
   uploadHandle:()=>void,
-  operator:string
+  operator:string,
+  isAvatar:boolean
 }
 const BrandItem:FC<IProps>=(props):ReactElement=>{
-  const {title,label,img,desc,uploadHandle,operator} = props;
+  const {title,label,img,desc,uploadHandle,operator,isAvatar} = props;
   const uploadClick=()=>{
     uploadHandle();
   }
   return (
-      <BrandItemWrapper>
+      <BrandItemWrapper isAvatar={isAvatar}>
         <div className="title">{title}</div>
         <div className="label">{label}</div>
         <div className="content">

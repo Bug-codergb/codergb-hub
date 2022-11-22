@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export const BrandItemWrapper = styled.div`
+export const BrandItemWrapper:any = styled.div`
   border-bottom: 1px solid #e5e5e5;
   padding: 0 0 ${20/40}rem 0;
   .title{
@@ -26,7 +26,7 @@ export const BrandItemWrapper = styled.div`
       margin: 0 ${24/40}rem 0 0;
       overflow: hidden;
       img{
-        border-radius: 50%;
+        border-radius:${(props:any)=> props.isAvatar? "50%":0};
         height: 100%;
         position: absolute;
         left: 50%;

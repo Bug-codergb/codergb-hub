@@ -6,7 +6,7 @@ export const UploadVideoWrapper=styled.div`
     justify-content: center;
     flex-direction: column-reverse;
     position: relative;
-    padding: ${40/40}rem;
+    padding: ${80/40}rem;
     width: 100%;
     .file-inp{
       position: absolute;

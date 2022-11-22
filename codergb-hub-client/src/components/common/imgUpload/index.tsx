@@ -11,7 +11,7 @@ interface IProps{
   isShow:boolean,
   fileSource?:File|null,
   isCustom:boolean
-  handleOk:(file?:File)=>void,
+  handleOk:(file?:File|any)=>void,
   handleCancel:()=>void,
   network:(formDate:FormData,getProgress:(e:any)=>void)=>Promise<IResponseType<any>>
   uploadName:string,
@@ -43,7 +43,7 @@ const ImgUpload:FC<IProps>=(props):ReactElement=>{
         setProgress(e.loaded/e.total*100);
       });
       if(res.status===200){
-        handleOk();
+        handleOk(res);
       }
     }
   }
