@@ -12,8 +12,9 @@ const Profile:FC=()=>{
   const login = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin
   })
-  const profileMenuHandle=(item:{name:string})=>{
-    navigate("/studio",{
+  const profileMenuHandle=(item:{name:string,path:string})=>{
+    console.log(item)
+    navigate(item.path,{
       replace:true
     })
   }

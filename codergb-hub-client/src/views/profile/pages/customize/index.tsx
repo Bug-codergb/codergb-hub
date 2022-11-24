@@ -37,7 +37,6 @@ const Customize:FC=():ReactElement=>{
                 ]}
             />
           </div>
-          <button className="pub-btn">发布</button>
         </div>
       </CustomizeWrapper>
   )

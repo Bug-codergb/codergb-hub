@@ -6,19 +6,23 @@ import Exit from "../assets/html/profile/exit/exit";
 const profileMenu=[
   {
     name:"您的频道",
-    icon:<Channel/>
+    icon:<Channel/>,
+    path:"/home/myChannel"
   },
   {
     name:"YouTuBe工作室",
-    icon:<Studio/>
+    icon:<Studio/>,
+    path:"/studio"
   },
   {
     name:"切换账号",
-    icon:<Change/>
+    icon:<Change/>,
+    path:"/studio"
   },
   {
     name:"退出账号",
-    icon:<Exit/>
+    icon:<Exit/>,
+    path:"/studio"
   }
 ]
 export {

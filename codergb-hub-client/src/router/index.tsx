@@ -18,7 +18,7 @@ const RecommendRoute = lazy(()=>import("../views/recommend/index"));
 const ShortsRoute = lazy(()=>import("../views/shorts/index"));
 const SubscriptionsRoute = lazy(()=>import("../views/subscriptions/index"));
 const ThumbRoute = lazy(()=>import("../views/thumb/index"));
-
+const MyChannelRoute = lazy(()=>import("../views/myChannel/index"));
 //工作室
 const StudioRoute = lazy(()=>import("../views/profile/index"));
 
@@ -120,6 +120,14 @@ const routes:RouteObject[]=[
         element:(
             <Suspense>
               <ThumbRoute/>
+            </Suspense>
+        )
+      },
+      {
+        path:"/home/myChannel",
+        element:(
+            <Suspense>
+              <MyChannelRoute/>
             </Suspense>
         )
       }

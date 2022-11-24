@@ -9,6 +9,7 @@ const defaultState = Map<IChannel>({
     official:0,
     createTime:"",
     updateTime:"",
+    description:"",
     user:{
       userId:"",
       userName:"",

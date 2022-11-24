@@ -9,6 +9,7 @@ interface IChannel{
   createTime:string,
   updateTime:string,
   user:IUserMsg,
+  description:string,
   picUrl?:string,
   trailer?:IVideo,
   featured?:IVideo
