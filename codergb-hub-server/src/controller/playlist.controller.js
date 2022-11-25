@@ -9,10 +9,10 @@ class PlaylistController{
     try{
       const {userId} = ctx.user;
       const id = new Date().getTime();
-      const {name="",description=""} = ctx.request.body;
+      const {name="",description="",isPublic=1} = ctx.request.body;
       console.log(name);
-      if(!isEmpty(ctx,name,"播放列表名称不能为空")){
-        const result = await createService(ctx,id,name,description,userId);
+      if(!isEmpty(ctx,name,"播放列表名称不能为空") && !isEmpty(ctx,isPublic,"播放列表是否为公开不能为空")){
+        const result = await createService(ctx,id,name,description,userId,isPublic);
         if(result){
           setResponse(ctx,"播放列表创建成功",200,{});
         }

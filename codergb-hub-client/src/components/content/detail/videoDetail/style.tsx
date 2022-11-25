@@ -16,7 +16,6 @@ export const CenterContent = styled.div`
 `
 export const LeftContentWrapper:any = styled.div`
   width: 67%;
-  height: 10000px;
   padding: ${20/40}rem 0;
   .video-container{
     width: ${1150/40}rem;

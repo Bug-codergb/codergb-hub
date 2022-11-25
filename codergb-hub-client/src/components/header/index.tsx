@@ -21,6 +21,7 @@ import {ILogin} from "../../types/login/ILogin";
 import Profile from "./childCpn/profile";
 import {createVideo} from "../../network/video";
 import {IUploadVideo} from "../../types/imperative/uploadVideo";
+import {debounce} from "../../utils/debounce";
 const Header:FC=():ReactElement=>{
   const [isModalOpen,setIsModelOpen] = useState<boolean>(false);
   const [keyIndex,setKeyIndex] = useState<number>(0);
@@ -62,11 +63,11 @@ const Header:FC=():ReactElement=>{
       replace:false
     })
   }
-  const homeRouter=()=>{
+  const homeRouter=debounce(()=>{
     navigate("/home",{
       replace:false
     })
-  }
+  },500,false);
   return (
       <HeaderWrapper>
         <LeftContent>

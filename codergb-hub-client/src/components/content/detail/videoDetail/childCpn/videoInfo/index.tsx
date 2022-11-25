@@ -87,7 +87,7 @@ const VideoInfo:FC<IProps>=(props)=>{
   }
   return (
       <VideoInfoWrapper>
-        <p className="video-title">{videoInfo?.name}</p>
+        <p className="video-title text-nowrap-mul-line">{videoInfo?.name}</p>
         <div className="info">
           <div className="left-content">
             <div className="user-msg-container">

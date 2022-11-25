@@ -5,12 +5,17 @@ import {
 import {getAllBlock, userAddBlock} from "../../../../../../../../../../network/block";
 import {IResponseType} from "../../../../../../../../../../types/responseType";
 import {IBlock} from "../../../../../../../../../../types/block/IBlock";
+import UploadVideo from "../../../../../../../../../../components/header/childCpn/uploadVideo";
+import {Modal} from "antd";
+import {SINGLE_PLAYLIST} from "../../../../../../../../../../constant/block";
+import {set} from "immutable";
 interface IProps{
   addBlock:()=>void
 }
 const BlockList:FC<IProps>=(props):ReactElement=>{
   const { addBlock } = props;
   const [block,setBlock] = useState<IBlock[]>([]);
+  const [isShowPlay,setIsShowPlay] = useState<boolean>(false);
   useEffect(()=>{
     getAllBlock<IResponseType<IBlock[]>>().then((data)=>{
       if(data.status===200){
@@ -18,12 +23,22 @@ const BlockList:FC<IProps>=(props):ReactElement=>{
       }
     })
   },[])
+  const confirmHandle=()=>{
+    setIsShowPlay(false);
+  }
+  const cancelHandle=()=>{
+    setIsShowPlay(false);
+  }
   const addBlockHandle=(item:IBlock)=>{
-    userAddBlock(item.id).then((data)=>{
+    console.log(item);
+    if(item.name === SINGLE_PLAYLIST){
+      setIsShowPlay(true);
+    }
+    /*userAddBlock(item.id).then((data)=>{
       if(data.status === 200){
         addBlock();
       }
-    })
+    })*/
   }
   return (
       <BlockListWrapper>
@@ -36,6 +51,19 @@ const BlockList:FC<IProps>=(props):ReactElement=>{
             })
           }
         </ul>
+        <Modal title="选择播放列表"
+               cancelText={"取消"}
+               okText={"确定"}
+               open={isShowPlay}
+               onOk={confirmHandle}
+               maskClosable={false}
+               destroyOnClose={true}
+               width={'60%'}
+               onCancel={cancelHandle}>
+          {
+            isShowPlay
+          }
+        </Modal>
       </BlockListWrapper>
   )
 }

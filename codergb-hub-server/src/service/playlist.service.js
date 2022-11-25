@@ -1,10 +1,10 @@
 const connection = require("../app/databse");
 const {setResponse} = require("../utils/setResponse");
 class PlaylistService{
-  async createService(ctx,id,name,description,userId){
+  async createService(ctx,id,name,description,userId,isPublic){
     try{
-      const sql = `insert into playlist(id,name,description,userId) values(?,?,?,?)`;
-      const result =await connection.execute(sql,[id,name,description,userId]);
+      const sql = `insert into playlist(id,name,description,userId,isPublic) values(?,?,?,?,?)`;
+      const result =await connection.execute(sql,[id,name,description,userId,isPublic]);
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{});
