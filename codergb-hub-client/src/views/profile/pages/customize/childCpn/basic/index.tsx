@@ -37,7 +37,7 @@ const Basic:FC=():ReactElement=>{
   return (
       <BasicWrapper>
         <div className="publish-outer">
-          <button disabled={name.trim().length===0 || desc.trim().length===0} onClick={e=>updateChannelHandle()}>发布</button>
+          <button disabled={(!name) || name.trim().length===0 || (!desc) || desc.trim().length===0} onClick={e=>updateChannelHandle()}>发布</button>
         </div>
         <div className="name-label-first">名称</div>
         <p className="desc-label">

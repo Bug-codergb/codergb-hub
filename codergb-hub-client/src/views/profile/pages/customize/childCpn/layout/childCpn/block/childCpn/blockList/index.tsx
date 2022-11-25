@@ -5,7 +5,11 @@ import {
 import {getAllBlock, userAddBlock} from "../../../../../../../../../../network/block";
 import {IResponseType} from "../../../../../../../../../../types/responseType";
 import {IBlock} from "../../../../../../../../../../types/block/IBlock";
-const BlockList:FC=():ReactElement=>{
+interface IProps{
+  addBlock:()=>void
+}
+const BlockList:FC<IProps>=(props):ReactElement=>{
+  const { addBlock } = props;
   const [block,setBlock] = useState<IBlock[]>([]);
   useEffect(()=>{
     getAllBlock<IResponseType<IBlock[]>>().then((data)=>{
@@ -16,7 +20,9 @@ const BlockList:FC=():ReactElement=>{
   },[])
   const addBlockHandle=(item:IBlock)=>{
     userAddBlock(item.id).then((data)=>{
-
+      if(data.status === 200){
+        addBlock();
+      }
     })
   }
   return (

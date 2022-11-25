@@ -140,7 +140,7 @@ const Comment:FC<IProps>=(props):ReactElement=>{
             })
           }
           {
-            ((!comment) || (comment &&comment.length===0)) && <EmptyHolder msg={"暂无评论，快来发布您的第一条评论"}/>
+            ((!comment) || (comment &&comment.length===0)) && <EmptyHolder padding={150} msg={"暂无评论，快来发布您的第一条评论"}/>
           }
         </ul>
       </CommentWrapper>

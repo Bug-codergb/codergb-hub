@@ -4,11 +4,12 @@ import {
   EmptyHolderWrapper
 } from "./style";
 interface IProps{
-  msg?:string
+  msg?:string,
+  padding:number
 }
 const EmptyHolder:FC<IProps>=(props)=>{
-  const { msg } = props;
-  return <EmptyHolderWrapper>
+  const { msg,padding } = props;
+  return <EmptyHolderWrapper padding={padding}>
     <Empty description={msg?msg:"暂无数据"}/>
   </EmptyHolderWrapper>
 }

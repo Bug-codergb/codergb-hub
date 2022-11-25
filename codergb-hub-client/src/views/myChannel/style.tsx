@@ -2,6 +2,8 @@ import styled from "styled-components";
 export const MyChannelWrapper = styled.div`
   .banner{
     width: 100%;
+    height: ${260/40}rem;
+    background-color: #eeeeee;
     img{
       width: 100%;
     }
