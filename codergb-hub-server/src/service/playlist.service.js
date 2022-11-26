@@ -32,5 +32,27 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async getUserPlaylistCountService(ctx,userId){
+    try{
+      const sql=`select count(*) as count from playlist where userId=?`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async getUserPlaylistService(ctx,userId,offset,limit){
+    try{
+      const sql=`select * from playlist where userId=? limit ?,?`;
+      const result = await connection.execute(sql,[userId,offset,limit]);
+      const count = await new PlaylistService().getUserPlaylistCountService(ctx,userId);
+      return {
+        count:count[0].count,
+        list:result[0],
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
 }
 module.exports = new PlaylistService();

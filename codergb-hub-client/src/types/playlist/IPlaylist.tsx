@@ -3,7 +3,8 @@ interface IPlaylist{
   name:string,
   description:string,
   createTime:string,
-  updateTime:string
+  updateTime:string,
+  isPublic:number
 }
 export type{
   IPlaylist

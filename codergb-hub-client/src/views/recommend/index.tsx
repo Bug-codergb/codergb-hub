@@ -72,6 +72,7 @@ const Recommend:FC=():ReactElement=>{
                              }
                              isShowVideo={currentIndex===index}
                              state={item.name}
+                             id={item.id}
                              user={item.user}
                              createTime={item.createTime}
                              dt={item.dt}

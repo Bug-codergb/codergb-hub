@@ -62,3 +62,12 @@ input,textarea,button{
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+.add-new-playlist{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-new-playlist .add-label{
+  margin: 0 0 0 15px;
+  padding: 10px 0;
+}

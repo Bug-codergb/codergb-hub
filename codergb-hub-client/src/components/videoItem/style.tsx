@@ -41,12 +41,28 @@ export const VideoItemWrapper:any = styled.div`
       margin: 0 0 0 ${20/40}rem;
       .msg{
         .state{
-          font-size: ${19/40}rem;
-          color: #0f0f0f;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-          overflow: hidden;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          width: 100%;
+          .video-name{
+            font-size: ${19/40}rem;
+            color: #0f0f0f;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            width: 84%;
+          }
+          .more{
+            width: 10%;
+            .more-icon{
+              cursor: pointer;
+              svg{
+                font-size: ${34/40}rem;
+              }
+            }
+          }
         }
         .user-name{
           font-size: ${16/40}rem;

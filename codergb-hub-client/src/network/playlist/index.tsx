@@ -10,3 +10,36 @@ export function getAllPlaylist<T=IResponseType<any>>(offset:number,limit:number)
     }
   })
 }
+//获取用户播放列表
+export function getUserPlaylist<T=IResponseType<any>>(userId:String,offset:number,limit:number):Promise<T>{
+  return gbRequest.get<T>({
+    url:"/playlist/user/"+userId,
+    params:{
+      offset,
+      limit
+    }
+  })
+}
+//创建播放列表
+export function createPlaylist<T=IResponseType<any>>(name:string,
+                                                     description:string,
+                                                     isPublic:number){
+  return gbRequest.post<T>({
+    url:"/playlist",
+    data:{
+      name,
+      description,
+      isPublic
+    }
+  })
+}
+//将视频添加到播放列表
+export function addVideoPlaylist<T=IResponseType<any>>(vId:string,pId:string){
+  return gbRequest.post<T>({
+    url:"/playlist/video",
+    data:{
+      vId,
+      pId
+    }
+  })
+}
