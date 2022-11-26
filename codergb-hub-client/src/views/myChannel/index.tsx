@@ -6,6 +6,7 @@ import {
 import {useSelector} from "react-redux";
 import {IChannel} from "../../types/channel/IChannel";
 import {ILogin} from "../../types/login/ILogin";
+import TabContent from "./childCpn/TabContent";
 const MyChannel:FC=()=>{
   const channel = useSelector<Map<string,IChannel>,IChannel>(state=>{
     return state.getIn(['channelReducer','channel']) as IChannel
@@ -26,6 +27,7 @@ const MyChannel:FC=()=>{
             <div className="user-name">{login.userMsg.userName}</div>
           </div>
         </div>
+        <TabContent/>
       </MyChannelWrapper>
   )
 }
