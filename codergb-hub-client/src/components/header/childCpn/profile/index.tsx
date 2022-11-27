@@ -15,7 +15,10 @@ const Profile:FC=()=>{
   const profileMenuHandle=(item:{name:string,path:string})=>{
     console.log(item)
     navigate(item.path,{
-      replace:true
+      replace:true,
+      state:{
+        id:login.userMsg.userId
+      }
     })
   }
   return (

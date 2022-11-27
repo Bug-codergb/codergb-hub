@@ -1,5 +1,8 @@
 import React,{memo,FC,ReactElement} from "react";
-const Desc:FC=()=>{
+interface IProps{
+  userId:string
+}
+const Desc:FC<IProps>=(props)=>{
   return (
       <div>
         简介

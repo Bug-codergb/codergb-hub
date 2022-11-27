@@ -1,5 +1,8 @@
 import React,{memo,FC,ReactElement} from "react";
-const Playlist:FC=()=>{
+interface IProps{
+  userId:string
+}
+const Playlist:FC<IProps>=(props)=>{
   return (
       <div>
         播放列表

@@ -22,9 +22,10 @@ interface IProps{
   isShowVideo?:boolean,
   isShowImg?:boolean,
   id:string,
+  isShowMore?:boolean
 }
 const VideoItem:FC<IProps>=(props):ReactElement=>{
-  const {user,img,dt,playCount,state,id,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
+  const {user,img,dt,playCount,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
     e.stopPropagation();
   }
@@ -46,11 +47,13 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
             <div className="msg">
               <div className="state">
                 <div className="video-name">{state}</div>
-                <div className="more" onClick={(e)=>moreOperatorHandle(e)}>
-                  <Dropdown overlayClassName={'profile-drop-style'} trigger={['click']} overlay={<Add id={id}/>}>
-                    <MoreOutlined className="more-icon"/>
-                  </Dropdown>
-                </div>
+                {
+                  isShowMore && <div className="more" onClick={(e)=>moreOperatorHandle(e)}>
+                    <Dropdown overlayClassName={'profile-drop-style'} trigger={['click']} overlay={<Add id={id}/>}>
+                      <MoreOutlined className="more-icon"/>
+                    </Dropdown>
+                  </div>
+                }
               </div>
               <div className="user-name">{user.userName}</div>
               <div className="play-count">

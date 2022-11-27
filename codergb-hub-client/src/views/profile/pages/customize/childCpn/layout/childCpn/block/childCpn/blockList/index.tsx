@@ -9,6 +9,7 @@ import UploadVideo from "../../../../../../../../../../components/header/childCp
 import {Modal} from "antd";
 import {SINGLE_PLAYLIST} from "../../../../../../../../../../constant/block";
 import {set} from "immutable";
+import Playlist from "./childCpn/playlist";
 interface IProps{
   addBlock:()=>void
 }
@@ -61,7 +62,7 @@ const BlockList:FC<IProps>=(props):ReactElement=>{
                width={'60%'}
                onCancel={cancelHandle}>
           {
-            isShowPlay
+            isShowPlay && <Playlist/>
           }
         </Modal>
       </BlockListWrapper>

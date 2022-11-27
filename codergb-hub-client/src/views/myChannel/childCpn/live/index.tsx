@@ -1,5 +1,8 @@
 import React,{memo,FC,ReactElement} from "react";
-const Live:FC=()=>{
+interface IProps{
+  userId:string
+}
+const Live:FC<IProps>=(props)=>{
   return (
       <div>直播</div>
   )

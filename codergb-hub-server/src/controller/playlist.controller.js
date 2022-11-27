@@ -41,8 +41,8 @@ class PlaylistController{
   async getUserPlaylist(ctx,next){
     try{
       const {id} = ctx.params;
-      const { offset="0",limit="30" } = ctx.query;
-      const result = await getUserPlaylistService(ctx,id,offset,limit);
+      const { offset="0",limit="30",keyword="" } = ctx.query;
+      const result = await getUserPlaylistService(ctx,id,keyword,offset,limit);
       if(result){
         setResponse(ctx,"success",200,result);
       }

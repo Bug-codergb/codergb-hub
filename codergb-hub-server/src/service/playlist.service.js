@@ -32,20 +32,20 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getUserPlaylistCountService(ctx,userId){
+  async getUserPlaylistCountService(ctx,userId,keyword){
     try{
-      const sql=`select count(*) as count from playlist where userId=?`;
+      const sql=`select count(*) as count from playlist where userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''}`;
       const result = await connection.execute(sql,[userId]);
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getUserPlaylistService(ctx,userId,offset,limit){
+  async getUserPlaylistService(ctx,userId,keyword,offset,limit){
     try{
-      const sql=`select * from playlist where userId=? limit ?,?`;
+      const sql=`select * from playlist where userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''} limit ?,?`;
       const result = await connection.execute(sql,[userId,offset,limit]);
-      const count = await new PlaylistService().getUserPlaylistCountService(ctx,userId);
+      const count = await new PlaylistService().getUserPlaylistCountService(ctx,userId,keyword);
       return {
         count:count[0].count,
         list:result[0],

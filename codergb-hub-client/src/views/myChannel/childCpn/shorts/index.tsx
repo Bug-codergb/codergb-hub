@@ -1,5 +1,8 @@
 import React,{memo,FC,ReactElement} from "react";
-const Shorts:FC=()=>{
+interface IProps{
+  userId:string
+}
+const Shorts:FC<IProps>=(props)=>{
   return (
       <div>
         短视频

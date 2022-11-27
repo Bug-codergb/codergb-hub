@@ -4,12 +4,17 @@ import {
   TabContentWrapper
 } from "./style";
 import {tabs} from "../../../../constant/profile/tabs";
-const TabContent:FC=()=>{
+
+interface IProps{
+  userId:string
+}
+const TabContent:FC<IProps>=(props)=>{
+  const { userId } = props;
   return (
       <TabContentWrapper>
         <Tabs
             defaultActiveKey="1"
-            items={tabs}
+            items={tabs(userId)}
         />
       </TabContentWrapper>
   )

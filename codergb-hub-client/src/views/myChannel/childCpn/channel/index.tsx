@@ -1,5 +1,8 @@
 import React,{memo,FC,ReactElement} from "react";
-const Channel:FC=()=>{
+interface IProps{
+  userId:string
+}
+const Channel:FC<IProps>=(props)=>{
   return (
       <div>
         频道

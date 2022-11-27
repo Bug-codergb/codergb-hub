@@ -1,5 +1,8 @@
 import React,{memo,FC,ReactElement} from "react";
-const Moment:FC=()=>{
+interface IProps{
+  userId:string
+}
+const Moment:FC<IProps>=(props)=>{
   return (
       <div>
         动态
