@@ -78,6 +78,7 @@ const Recommend:FC=():ReactElement=>{
                              dt={item.dt}
                              playCount={item.playCount}
                              itemWidth={380}
+                             isShowMore={true}
                               scale={0.92}/>
                 </li>
             )
