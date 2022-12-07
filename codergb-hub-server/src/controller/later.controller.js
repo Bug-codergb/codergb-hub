@@ -2,7 +2,8 @@ const { setResponse } = require("../utils/setResponse");
 const {
   createService,
   getAlreadyLaterService,
-  deleteLaterService
+  deleteLaterService,
+  userLaterService
 }=require("../service/later.service")
 class LaterController{
   async create(ctx,next){
@@ -36,6 +37,18 @@ class LaterController{
         setResponse(ctx,"视频已从稍后观看中删除",400,{});
       }
     }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async userLater(ctx,next){
+    try{
+      const {offset="0",limit="30"}=ctx.query;
+      const {id} = ctx.params;
+      const result = await userLaterService(ctx,id,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e){
       setResponse(ctx,e.message,500,{});
     }
   }

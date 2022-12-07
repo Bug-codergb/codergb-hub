@@ -5,8 +5,11 @@ const {
 }=require("../middleware/login.middleware");
 const {
   create,
-  cancel
+  cancel,
+  userLater
 }=require("../controller/later.controller")
 laterRouter.post("/:id",authVerify,create);
 laterRouter.post("/delete/:id",authVerify,cancel);
+//获取用户稍后观看
+laterRouter.get("/user/:id",authVerify,userLater)
 module.exports = laterRouter;
