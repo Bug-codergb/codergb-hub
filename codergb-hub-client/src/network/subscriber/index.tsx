@@ -16,3 +16,13 @@ export function cancelSub<T=IResponseType<any>>(upId:string){
     }
   })
 }
+//获取用户订阅
+export function getUserSub<T=IResponseType<any>>(userId:string,offset:number,limit:number){
+  return gbRequest.post<T>({
+    url:"/sub/user/"+userId,
+    data:{
+      offset,
+      limit
+    }
+  })
+}

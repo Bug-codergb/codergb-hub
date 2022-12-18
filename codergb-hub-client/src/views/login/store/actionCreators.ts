@@ -33,7 +33,7 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
         await dispatch(changeUserMsg(data.data));
         await dispatch(changeUserDetailAction(data.data.userId));
         await dispatch(changeLoginType(1));
-
+        dispatch(changeChannelAction(data.data.userId))
         localCache.setCache("userMsg",data.data);
         localCache.setCache("loginType",1)
         navigate("/Home",{

@@ -1,5 +1,6 @@
 import React, {memo, FC, ReactElement, useState, useEffect} from "react";
 import {Map} from "immutable";
+import moment from "moment";
 import {
   PlaylistWrapper,
   LeftContainer,
@@ -46,7 +47,27 @@ const Playlist:FC=():ReactElement=>{
         </LeftContainer>
       }
       <RightContainer>
-
+        <ul className="vio-list">
+          {
+            userLater && userLater.length!==0 && userLater.map((item)=>{
+              return (
+                  <li key={item.id}>
+                    <div className="cover-container">
+                      <img src={item.video.picUrl}/>
+                    </div>
+                    <div className="later-right-info">
+                      <p className="vio-name text-nowrap-mul-line">{item.video.name}</p>
+                      <div className="desc">
+                        <div className="user-name">{item.video.user.userName}.</div>
+                        <div className="play-count">{item.video.playCount}次观看.</div>
+                        <div className="create-time">{moment(item.createTime).fromNow()}加入</div>
+                      </div>
+                    </div>
+                  </li>
+              )
+            })
+          }
+        </ul>
       </RightContainer>
     </PlaylistWrapper>
   )

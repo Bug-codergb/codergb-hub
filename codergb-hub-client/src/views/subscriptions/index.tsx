@@ -1,9 +1,23 @@
 import React,{memo,FC,ReactElement} from "react";
-const Subscriptions:FC=()=>{
+import { useNavigate } from "react-router-dom";
+import {
+  SubscriptionsWrapper
+} from "./style"
+
+const Subscriptions:FC=():ReactElement=>{
+  const navigate = useNavigate();
+  const manageRouteHandle=()=>{
+    navigate("/home/sub-manage",{
+      replace:true
+    })
+  }
   return (
-    <div>
-      订阅内容
-    </div>
+    <SubscriptionsWrapper>
+      <div className="header-title">
+        <div className="current-time">本月</div>
+        <div className="manage" onClick={e=>manageRouteHandle()}>管理</div>
+      </div>
+    </SubscriptionsWrapper>
   )
 }
 export default memo(Subscriptions)

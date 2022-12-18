@@ -5,6 +5,7 @@ import {
   videoDetailRoute
 } from "./detail/index";
 import Home from "../views/home";
+import SubManage from "../views/subscriptions/childCpn/manage";
 const LoginRoute = lazy(()=>import('../views/login/index'));
 const HomeRoute = lazy(()=>import("../views/home/index"));
 
@@ -19,6 +20,8 @@ const ShortsRoute = lazy(()=>import("../views/shorts/index"));
 const SubscriptionsRoute = lazy(()=>import("../views/subscriptions/index"));
 const ThumbRoute = lazy(()=>import("../views/thumb/index"));
 const MyChannelRoute = lazy(()=>import("../views/myChannel/index"));
+
+const SubscriberManage = lazy(()=>import("../views/subscriptions/childCpn/manage/index"));
 //工作室
 const StudioRoute = lazy(()=>import("../views/profile/index"));
 
@@ -112,6 +115,14 @@ const routes:RouteObject[]=[
         element:(
             <Suspense>
               <SubscriptionsRoute/>
+            </Suspense>
+        )
+      },
+      {
+        path:"/home/sub-manage",
+        element:(
+            <Suspense>
+              <SubscriberManage/>
             </Suspense>
         )
       },
