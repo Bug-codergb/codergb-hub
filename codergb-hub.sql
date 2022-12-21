@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 24/11/2022 22:06:34
+ Date: 21/12/2022 20:51:57
 */
 
 SET NAMES utf8mb4;
@@ -124,7 +124,8 @@ CREATE TABLE `channel`  (
 -- Records of channel
 -- ----------------------------
 INSERT INTO `channel` VALUES ('1668927539032', 'vvvvvvvvvvvvvvvvvvvvvvvvvv', 'Jajajaja', '1667300096850', 'gggvvvvvvvvvvvvvvvvvvvvvvvvvvv反反复复烦烦烦烦烦烦烦烦烦烦烦烦额', 0, '1668935663798', '1668925793223', '1669298036342', '2022-11-20 14:59:07', '2022-11-24 21:53:56');
-INSERT INTO `channel` VALUES ('1668930069921', '集团年后wife org v', NULL, '1664789923657', NULL, NULL, NULL, NULL, '', '2022-11-20 15:41:34', '2022-11-20 16:07:41');
+INSERT INTO `channel` VALUES ('1668930069921', '集团年后wife org v', 'sd', '1664789923657', 'rr的地位rr的地位rr的地位rr的地位rr的地位rr的地位rr的地位rr的地位', 0, '1667111868216', '1667117126446', '1669382287484', '2022-11-20 15:41:34', '2022-12-18 15:37:24');
+INSERT INTO `channel` VALUES ('1671344573529', 'dsd', 'dsd', '1667726102164', 'sfffewfwefwefewfvv分为氛围分为服务范围', 0, NULL, NULL, '1671344668397', '2022-12-18 14:23:31', '2022-12-18 14:24:28');
 
 -- ----------------------------
 -- Table structure for comment
@@ -215,6 +216,14 @@ INSERT INTO `comment` VALUES ('1668922206756', '6', '1667300096850', NULL, '1667
 INSERT INTO `comment` VALUES ('1668922873530', '4545', '1667300096850', '1667999672452', NULL, '2022-11-20 13:41:13', '2022-11-20 13:41:13');
 INSERT INTO `comment` VALUES ('1668935413797', 'fwfwfwfwefwefwefwefewfwefewfewfwef', '1667300096850', NULL, '1667639829871', '2022-11-20 17:10:13', '2022-11-20 17:10:13');
 INSERT INTO `comment` VALUES ('1668935499538', '视，川泽纡其骇瞩24。闾阎扑地，钟鸣鼎食之家；舸舰弥津，青雀黄龙之舳25。云销雨霁，彩彻区明26。落霞与孤鹜齐飞，秋水共长', '1667300096850', '1667822028656', NULL, '2022-11-20 17:11:39', '2022-11-20 17:11:39');
+INSERT INTO `comment` VALUES ('1669384724449', '1561', '1667300096850', '1668935663798', NULL, '2022-11-25 21:58:44', '2022-11-25 21:58:44');
+INSERT INTO `comment` VALUES ('1670940594773', '1564564544', '1667300096850', NULL, '1669384724449', '2022-12-13 22:09:54', '2022-12-13 22:09:54');
+INSERT INTO `comment` VALUES ('1670940602014', '15615615615616', '1667300096850', NULL, '1670940594773', '2022-12-13 22:10:02', '2022-12-13 22:10:02');
+INSERT INTO `comment` VALUES ('1670940607135', '56464', '1667300096850', NULL, '1670940602014', '2022-12-13 22:10:07', '2022-12-13 22:10:07');
+INSERT INTO `comment` VALUES ('1671626800996', 'gregjepgjpegjprejgpejgporegj发【感觉饿揉屁股加热盘管今日尾盘', '1667726102164', '1671626648944', NULL, '2022-12-21 20:46:40', '2022-12-21 20:46:40');
+INSERT INTO `comment` VALUES ('1671627004520', 'gtigjtipgjtpigjtrjrtgjrgjr;pgjt;ggerferewdwe', '1667300096850', '1671626648944', NULL, '2022-12-21 20:50:04', '2022-12-21 20:50:04');
+INSERT INTO `comment` VALUES ('1671627010992', '而根据饿哦感觉饿荣光今儿个', '1667300096850', NULL, '1671626800996', '2022-12-21 20:50:10', '2022-12-21 20:50:10');
+INSERT INTO `comment` VALUES ('1671627022874', '刚刚然后具体如何加入', '1667300096850', NULL, '1671627010992', '2022-12-21 20:50:22', '2022-12-21 20:50:22');
 
 -- ----------------------------
 -- Table structure for file
@@ -393,14 +402,65 @@ INSERT INTO `file` VALUES ('1669124680877', 'http://localhost:8888/image/1669124
 INSERT INTO `file` VALUES ('1669297994250', 'http://localhost:8888/image/1669297994250', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1669297994247.webp', 112467, '2022-11-24 21:53:14', '2022-11-24 21:53:14');
 INSERT INTO `file` VALUES ('1669298017269', 'http://localhost:8888/image/1669298017269', NULL, 'ww.jpeg', 'image/jpeg', './upload/image', '1669298017267.jpeg', 245795, '2022-11-24 21:53:37', '2022-11-24 21:53:37');
 INSERT INTO `file` VALUES ('1669298036342', 'http://localhost:8888/image/1669298036342', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1669298036341.jpg', 158848, '2022-11-24 21:53:56', '2022-11-24 21:53:56');
+INSERT INTO `file` VALUES ('1669382287484', 'http://localhost:8888/image/1669382287484', NULL, '1.jpg', 'image/jpeg', './upload/image', '1669382287482.jpg', 67184, '2022-11-25 21:18:07', '2022-11-25 21:18:07');
+INSERT INTO `file` VALUES ('1670940757293', 'http://localhost:8888/image/1670940757293', NULL, '0130e6573c5df332f8757cb94ab286.jpg', 'image/jpeg', './upload/image', '1670940757290.jpg', 46746, '2022-12-13 22:12:37', '2022-12-13 22:12:37');
+INSERT INTO `file` VALUES ('1670940746277', NULL, 'http://localhost:8888/video/c1d457b7cce2bd3f492232cd2b2a0aa9.m3u8', '怪盗基德.mp4', NULL, './upload/video/', 'c1d457b7cce2bd3f492232cd2b2a0aa9.m3u8', NULL, '2022-12-13 22:13:55', '2022-12-13 22:13:55');
+INSERT INTO `file` VALUES ('1670940903109', NULL, 'http://localhost:8888/video/0f5b2584adef633b42b8a973a3732771.m3u8', 'videoplayback.mp4', NULL, './upload/video/', '0f5b2584adef633b42b8a973a3732771.m3u8', NULL, '2022-12-13 22:15:27', '2022-12-13 22:15:27');
+INSERT INTO `file` VALUES ('1670940945064', 'http://localhost:8888/image/1670940945064', NULL, 'p2677018763.webp', 'image/webp', './upload/image', '1670940945064.webp', 99879, '2022-12-13 22:15:45', '2022-12-13 22:15:45');
+INSERT INTO `file` VALUES ('1671344668397', 'http://localhost:8888/image/1671344668397', NULL, 'p2185073849.webp', 'image/webp', './upload/image', '1671344668394.webp', 23942, '2022-12-18 14:24:28', '2022-12-18 14:24:28');
+INSERT INTO `file` VALUES ('1671621107758', 'http://localhost:8888/image/1671621107758', NULL, 'lisa.jpg', 'image/jpeg', './upload/image', '1671621107756.jpg', 72943, '2022-12-21 19:11:47', '2022-12-21 19:11:47');
+INSERT INTO `file` VALUES ('1671621088584', NULL, 'http://localhost:8888/video/a932e9d92c87e538f345e77c143841e2.m3u8', '成log.mp4', NULL, './upload/video/', 'a932e9d92c87e538f345e77c143841e2.m3u8', NULL, '2022-12-21 19:13:16', '2022-12-21 19:13:16');
+INSERT INTO `file` VALUES ('1671626537287', NULL, 'http://localhost:8888/video/cc44ce47a59d39148516e9469e978e48.m3u8', '775996062-1-208.mp4', NULL, './upload/video/', 'cc44ce47a59d39148516e9469e978e48.m3u8', NULL, '2022-12-21 20:43:11', '2022-12-21 20:43:11');
+INSERT INTO `file` VALUES ('1671626638401', 'http://localhost:8888/image/1671626638401', NULL, 'd82a28f5cacc1ed1b49af75b3c11fc8f95cf83d4.jpg', 'image/jpeg', './upload/image', '1671626638399.jpg', 104988, '2022-12-21 20:43:58', '2022-12-21 20:43:58');
+
+-- ----------------------------
+-- Table structure for history
+-- ----------------------------
+DROP TABLE IF EXISTS `history`;
+CREATE TABLE `history`  (
+  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
+  `vId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `count` int NULL DEFAULT 0,
+  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `vId`(`vId` ASC) USING BTREE,
+  CONSTRAINT `history_ibfk_1` FOREIGN KEY (`vId`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of history
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for later
+-- ----------------------------
+DROP TABLE IF EXISTS `later`;
+CREATE TABLE `later`  (
+  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `vId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`vId`, `userId`) USING BTREE,
+  INDEX `later_ibfk_2`(`userId` ASC) USING BTREE,
+  CONSTRAINT `later_ibfk_1` FOREIGN KEY (`vId`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `later_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of later
+-- ----------------------------
+INSERT INTO `later` VALUES ('1670419015063', '1667117126446', '1667300096850', '2022-12-07 21:16:55', '2022-12-07 21:16:55');
+INSERT INTO `later` VALUES ('1670248055016', '1667121382104', '1667300096850', '2022-12-05 21:47:35', '2022-12-05 21:47:35');
 
 -- ----------------------------
 -- Table structure for playlist
 -- ----------------------------
 DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist`  (
-  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1',
   `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `isPublic` int NULL DEFAULT 1,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
   `userId` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `createTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -414,8 +474,12 @@ CREATE TABLE `playlist`  (
 -- ----------------------------
 -- Records of playlist
 -- ----------------------------
-INSERT INTO `playlist` VALUES ('1665824604596', 'foo', '', '1664789923657', '2022-10-15 17:03:24', '2022-10-15 17:03:24');
-INSERT INTO `playlist` VALUES ('1665824630522', 'sdsds', 'ferferfer', '1664789923657', '2022-10-15 17:03:50', '2022-10-15 17:03:50');
+INSERT INTO `playlist` VALUES ('1665824604596', 'foo', 1, '', '1664789923657', '2022-10-15 17:03:24', '2022-10-15 17:03:24');
+INSERT INTO `playlist` VALUES ('1665824630522', 'sdsds', 1, 'ferferfer', '1664789923657', '2022-10-15 17:03:50', '2022-10-15 17:03:50');
+INSERT INTO `playlist` VALUES ('1669384866494', '天天用户体验', 1, '一体化', '1667300096850', '2022-11-25 22:01:06', '2022-11-25 22:01:06');
+INSERT INTO `playlist` VALUES ('1669385003854', 'bhhbhgbgbh', 0, 'eee3we', '1667300096850', '2022-11-25 22:03:23', '2022-11-25 22:03:23');
+INSERT INTO `playlist` VALUES ('1669448406900', '你好啊李银河', 1, '你好啊李银河', '1667300096850', '2022-11-26 15:40:06', '2022-11-26 15:40:06');
+INSERT INTO `playlist` VALUES ('1669449769836', '王小波你', 0, '王小波一', '1667300096850', '2022-11-26 16:02:49', '2022-11-27 15:07:44');
 
 -- ----------------------------
 -- Table structure for playlist_video
@@ -451,6 +515,13 @@ INSERT INTO `playlist_video` VALUES ('1665824630522', '1668925328332', '2022-11-
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1668925793223', '2022-11-20 14:29:53', '2022-11-20 14:29:53');
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1668926214412', '2022-11-20 14:36:54', '2022-11-20 14:36:54');
 INSERT INTO `playlist_video` VALUES ('1665824630522', '1668935663798', '2022-11-20 17:14:23', '2022-11-20 17:14:23');
+INSERT INTO `playlist_video` VALUES ('1669384866494', '1668925793223', '2022-11-26 16:02:34', '2022-11-26 16:02:34');
+INSERT INTO `playlist_video` VALUES ('1669384866494', '1671621198355', '2022-12-21 19:13:18', '2022-12-21 19:13:18');
+INSERT INTO `playlist_video` VALUES ('1669448406900', '1667999552964', '2022-11-26 15:49:24', '2022-11-26 15:49:24');
+INSERT INTO `playlist_video` VALUES ('1669448406900', '1668925793223', '2022-11-26 16:02:24', '2022-11-26 16:02:24');
+INSERT INTO `playlist_video` VALUES ('1669448406900', '1670940954126', '2022-12-13 22:15:54', '2022-12-13 22:15:54');
+INSERT INTO `playlist_video` VALUES ('1669449769836', '1670940838187', '2022-12-13 22:13:58', '2022-12-13 22:13:58');
+INSERT INTO `playlist_video` VALUES ('1669449769836', '1671626648944', '2022-12-21 20:44:08', '2022-12-21 20:44:08');
 
 -- ----------------------------
 -- Table structure for subscriber
@@ -474,7 +545,8 @@ CREATE TABLE `subscriber`  (
 -- ----------------------------
 INSERT INTO `subscriber` VALUES ('1668241153931', '1667300096850', '1664789923657', '2022-11-12 16:19:13', '2022-11-12 16:19:13');
 INSERT INTO `subscriber` VALUES ('1668242161324', '1667300096850', '1667726102164', '2022-11-12 16:36:01', '2022-11-12 16:36:01');
-INSERT INTO `subscriber` VALUES ('1668245689551', '1667300096850', '1667300096850', '2022-11-12 17:34:49', '2022-11-12 17:34:49');
+INSERT INTO `subscriber` VALUES ('1671347863424', '1664789923657', '1667300096850', '2022-12-18 15:17:43', '2022-12-18 15:17:43');
+INSERT INTO `subscriber` VALUES ('1671626832472', '1667726102164', '1667300096850', '2022-12-21 20:47:12', '2022-12-21 20:47:12');
 
 -- ----------------------------
 -- Table structure for tag
@@ -522,12 +594,18 @@ CREATE TABLE `tag_video`  (
 -- Records of tag_video
 -- ----------------------------
 INSERT INTO `tag_video` VALUES ('1665897016760', '1667117126446', '2022-10-30 16:05:26', '2022-10-30 16:05:26');
+INSERT INTO `tag_video` VALUES ('1665897016760', '1670940954126', '2022-12-13 22:15:54', '2022-12-13 22:15:54');
+INSERT INTO `tag_video` VALUES ('1665897040416', '1671626648944', '2022-12-21 20:44:08', '2022-12-21 20:44:08');
 INSERT INTO `tag_video` VALUES ('1665897046778', '1667117126446', '2022-10-30 16:05:26', '2022-10-30 16:05:26');
+INSERT INTO `tag_video` VALUES ('1665897046778', '1670940838187', '2022-12-13 22:13:58', '2022-12-13 22:13:58');
+INSERT INTO `tag_video` VALUES ('1665897046778', '1671626648944', '2022-12-21 20:44:08', '2022-12-21 20:44:08');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1667111986632', '2022-10-30 14:39:46', '2022-10-30 14:39:46');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1667120940268', '2022-10-30 17:09:00', '2022-10-30 17:09:00');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1667999672452', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1668925328332', '2022-11-20 14:22:08', '2022-11-20 14:22:08');
 INSERT INTO `tag_video` VALUES ('1665897050494', '1668935663798', '2022-11-20 17:14:23', '2022-11-20 17:14:23');
+INSERT INTO `tag_video` VALUES ('1665897050494', '1670940838187', '2022-12-13 22:13:58', '2022-12-13 22:13:58');
+INSERT INTO `tag_video` VALUES ('1665897050494', '1670940954126', '2022-12-13 22:15:54', '2022-12-13 22:15:54');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1667111868216', '2022-10-30 14:37:48', '2022-10-30 14:37:48');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1667112116703', '2022-10-30 14:41:56', '2022-10-30 14:41:56');
 INSERT INTO `tag_video` VALUES ('1665897054998', '1667121382104', '2022-10-30 17:16:22', '2022-10-30 17:16:22');
@@ -541,12 +619,14 @@ INSERT INTO `tag_video` VALUES ('1665897058346', '1667827947706', '2022-11-07 21
 INSERT INTO `tag_video` VALUES ('1665897058346', '1667999672452', '2022-11-09 21:14:32', '2022-11-09 21:14:32');
 INSERT INTO `tag_video` VALUES ('1665897058346', '1668925222416', '2022-11-20 14:20:22', '2022-11-20 14:20:22');
 INSERT INTO `tag_video` VALUES ('1665897058346', '1668935663798', '2022-11-20 17:14:23', '2022-11-20 17:14:23');
+INSERT INTO `tag_video` VALUES ('1665897058346', '1671621198355', '2022-12-21 19:13:18', '2022-12-21 19:13:18');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1667111868216', '2022-10-30 14:37:48', '2022-10-30 14:37:48');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1667121382104', '2022-10-30 17:16:22', '2022-10-30 17:16:22');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1667822028656', '2022-11-07 19:53:48', '2022-11-07 19:53:48');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1668925222416', '2022-11-20 14:20:22', '2022-11-20 14:20:22');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1668925793223', '2022-11-20 14:29:53', '2022-11-20 14:29:53');
 INSERT INTO `tag_video` VALUES ('1665897062762', '1668926214412', '2022-11-20 14:36:54', '2022-11-20 14:36:54');
+INSERT INTO `tag_video` VALUES ('1665897062762', '1671621198355', '2022-12-21 19:13:18', '2022-12-21 19:13:18');
 INSERT INTO `tag_video` VALUES ('1665897078125', '1667999552964', '2022-11-09 21:12:32', '2022-11-09 21:12:32');
 
 -- ----------------------------
@@ -588,7 +668,9 @@ INSERT INTO `thumb` VALUES ('1668935409004', '1667300096850', '1667639829871', N
 INSERT INTO `thumb` VALUES ('1668935420059', '1667300096850', '1668935413797', NULL, '2022-11-20 17:10:20', '2022-11-20 17:10:20', 0);
 INSERT INTO `thumb` VALUES ('1668935427432', '1667300096850', '1668001407918', NULL, '2022-11-20 17:10:27', '2022-11-20 17:10:27', 0);
 INSERT INTO `thumb` VALUES ('1668935480091', '1667300096850', NULL, '1667822028656', '2022-11-20 17:11:20', '2022-11-20 17:11:20', 0);
-INSERT INTO `thumb` VALUES ('1668935905918', '1667300096850', NULL, '1668935663798', '2022-11-20 17:18:25', '2022-11-20 17:18:25', 0);
+INSERT INTO `thumb` VALUES ('1669385255277', '1667300096850', NULL, '1668925793223', '2022-11-25 22:07:35', '2022-11-25 22:07:35', 0);
+INSERT INTO `thumb` VALUES ('1670940585317', '1667300096850', NULL, '1668935663798', '2022-12-13 22:09:45', '2022-12-13 22:09:45', 1);
+INSERT INTO `thumb` VALUES ('1671626997300', '1667300096850', NULL, '1671626648944', '2022-12-21 20:49:57', '2022-12-21 20:49:57', 0);
 
 -- ----------------------------
 -- Table structure for user
@@ -613,8 +695,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1664789923657', '叶子', '123', 'http://localhost:8888/user/avatar/1664789923657', '2022-10-03 17:38:43', '2022-11-06 15:52:56', 'p2677018763.webp', 'image/webp', './upload/user/avatar', '1667721176193.webp', '93480');
-INSERT INTO `user` VALUES ('1667300096850', 'Bug码', '123', 'http://localhost:8888/user/avatar/1667300096850', '2022-11-01 18:54:56', '2022-11-22 21:52:52', 'p2677018763.webp', 'image/webp', './upload/user/avatar', '1669125172895.webp', '96893');
+INSERT INTO `user` VALUES ('1664789923657', '叶子', '123', 'http://localhost:8888/user/avatar/1664789923657', '2022-10-03 17:38:43', '2022-11-25 21:23:32', 'p2629896175.webp', 'image/webp', './upload/user/avatar', '1669382612013.webp', '76227');
+INSERT INTO `user` VALUES ('1667300096850', 'Bug码', '123', 'http://localhost:8888/user/avatar/1667300096850', '2022-11-01 18:54:56', '2022-12-13 22:11:20', '3.webp', 'image/webp', './upload/user/avatar', '1670940680281.webp', '78737');
 INSERT INTO `user` VALUES ('1667726102164', '靡靡', '123', 'http://localhost:8888/user/avatar/1667726102164', '2022-11-06 17:15:02', '2022-11-06 17:15:32', 'p2629896175.webp', 'image/webp', './upload/user/avatar', '1667726132274.webp', '76000');
 
 -- ----------------------------
@@ -634,6 +716,7 @@ CREATE TABLE `user_block`  (
 -- Records of user_block
 -- ----------------------------
 INSERT INTO `user_block` VALUES ('1664789923657', '1667028360697');
+INSERT INTO `user_block` VALUES ('1667300096850', '1667028360697');
 INSERT INTO `user_block` VALUES ('1664789923657', '1667028570849');
 INSERT INTO `user_block` VALUES ('1664789923657', '1667028720735');
 
@@ -676,6 +759,10 @@ INSERT INTO `video` VALUES ('1668925328332', '如果不改变发表个人提供�
 INSERT INTO `video` VALUES ('1668925793223', '3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffffff的伟大伟大我得问问额外的威风威风3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffffff的伟大伟大我得问问额外的威风威风3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffffff的伟大伟大我得问问额外的威风3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffffff的伟大伟大我得问问额外的威风威风3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffffff的伟大伟大我得问问额外的威风威风3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffffff的伟大伟大我得问问额外的威风威风3r43如如rfdfdffffffffffffffffffffffffffffffffffffffffffff伟大我得风威风', '1667300096850', '0', NULL, '34如如4让人', '1665897715639', '2022-11-20 14:29:53', '2022-11-20 16:39:41');
 INSERT INTO `video` VALUES ('1668926214412', '给如果他如果目目目目目目库姆牧民音乐会应用与忽悠忽悠教育局', '1667300096850', '0', NULL, 'j预计预计', '1665897715639', '2022-11-20 14:36:54', '2022-11-20 14:36:54');
 INSERT INTO `video` VALUES ('1668935663798', '天天和她换一换回太皇太后一团火焰好帖好帖今天是个好日子哀家啊哈哈电话费覅我欸就当减肥丰富和乳', '1667300096850', '0', NULL, '好帖好帖好帖好帖还有', '1665897708367', '2022-11-20 17:14:23', '2022-11-20 17:14:23');
+INSERT INTO `video` VALUES ('1670940838187', '分为氛围威风威风威风', '1667300096850', '0', NULL, '服务费人', '1665897712689', '2022-12-13 22:13:58', '2022-12-13 22:13:58');
+INSERT INTO `video` VALUES ('1670940954126', '合同然后他忽然回头任何人和任何突然回头', '1667300096850', '0', NULL, '和肉体和肉体和让他人', '1665897712689', '2022-12-13 22:15:54', '2022-12-13 22:15:54');
+INSERT INTO `video` VALUES ('1671621198355', '我是靡靡咪咪咪', '1667726102164', '0', NULL, '的肥肉Greg人工挖过任何事故', '1665897712689', '2022-12-21 19:13:18', '2022-12-21 19:13:18');
+INSERT INTO `video` VALUES ('1671626648944', '挪威舞团 Quick Style婚礼场齐舞挪威舞团 Quick Style婚礼场齐舞挪威舞团 Quick Style婚礼场齐舞', '1667726102164', '0', NULL, '挪威舞团 Quick Style婚礼场齐舞挪威舞团 Quick Style婚礼场齐舞', '1665897708367', '2022-12-21 20:44:08', '2022-12-21 20:44:08');
 
 -- ----------------------------
 -- Table structure for video_file
@@ -736,6 +823,14 @@ INSERT INTO `video_file` VALUES ('1668926214412', '1668925912076', 'cover');
 INSERT INTO `video_file` VALUES ('1668926214412', '1668925902830', 'source');
 INSERT INTO `video_file` VALUES ('1668935663798', '1668935584352', 'cover');
 INSERT INTO `video_file` VALUES ('1668935663798', '1668935566514', 'source');
+INSERT INTO `video_file` VALUES ('1670940838187', '1670940757293', 'cover');
+INSERT INTO `video_file` VALUES ('1670940838187', '1670940746277', 'source');
+INSERT INTO `video_file` VALUES ('1670940954126', '1670940945064', 'cover');
+INSERT INTO `video_file` VALUES ('1670940954126', '1670940903109', 'source');
+INSERT INTO `video_file` VALUES ('1671621198355', '1671621107758', 'cover');
+INSERT INTO `video_file` VALUES ('1671621198355', '1671621088584', 'source');
+INSERT INTO `video_file` VALUES ('1671626648944', '1671626638401', 'cover');
+INSERT INTO `video_file` VALUES ('1671626648944', '1671626537287', 'source');
 
 -- ----------------------------
 -- Function structure for getAllComment
