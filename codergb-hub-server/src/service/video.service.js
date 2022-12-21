@@ -141,5 +141,54 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getSubUserVioCountService(ctx,userId,isMonth){
+    try{
+      const sql=`
+      select count(DISTINCT(v.id)) as count
+      from subscriber as sub
+      INNER JOIN video as v on v.userId = sub.upId
+      LEFT JOIN category as c on c.id = v.cateId
+      LEFT JOIN video_file as vf on vf.videoId = v.id
+      LEFT JOIN file as f on f.id = vf.fileId
+      LEFT JOIN tag_video as tv on tv.vId = v.id
+      LEFT JOIN tag on tag.id = tv.tId
+      where sub.userId = ? and MONTH(v.createTime) ${isMonth ===1 ?'=' :'!='} MONTH(NOW()) and vf.mark="cover"`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getSubUserVioService(ctx,userId,isMonth,offset,limit){
+    try{
+      const sql=`
+      select v.id,v.name,(select JSON_OBJECT('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
+                    from user as u where u.userId=v.userId) as user,
+       v.playCount,v.dt,v.description,v.createTime,v.updateTime,JSON_OBJECT(
+         'id',c.id,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
+			 ) as category,f.picUrl,JSON_ARRAYAGG(JSON_OBJECT(
+			   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
+			 )) as tag
+        from subscriber as sub
+        INNER JOIN video as v on v.userId = sub.upId
+        LEFT JOIN category as c on c.id = v.cateId
+        LEFT JOIN video_file as vf on vf.videoId = v.id
+        LEFT JOIN file as f on f.id = vf.fileId
+        LEFT JOIN tag_video as tv on tv.vId = v.id
+        LEFT JOIN tag on tag.id = tv.tId
+        where sub.userId = ? and MONTH(v.createTime) ${isMonth ===1 ?'=' :'!='} MONTH(NOW()) and vf.mark="cover"
+        GROUP BY v.id
+        ORDER BY v.createTime desc
+        limit ?,?`;
+      const result = await connection.execute(sql,[userId,offset,limit]);
+      const count = await new VideoService().getSubUserVioCountService(ctx,userId,isMonth);
+      return{
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 module.exports  = new VideoService();

@@ -66,8 +66,10 @@ class ChannelController{
     try{
       const {id} = ctx.params;
       const result = await userChannelService(ctx,id);
-      if(result){
+      if(result && result.length!==0){
         setResponse(ctx,"success",200,result[0])
+      }else{
+        setResponse(ctx,"success",200,[])
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})

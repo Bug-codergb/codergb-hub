@@ -11,7 +11,8 @@ const {
   createVideoService,
   allVideoService,
   getVideoURLService,
-  getVideoDetailService
+  getVideoDetailService,
+  getSubUserVioService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -131,6 +132,19 @@ class VideoController{
       const result = await getVideoDetailService(ctx,id);
       if(result){
         setResponse(ctx,"success",200,result[0]);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getSubUserVio(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const { isMonth=0 } = ctx.request.body;
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await getSubUserVioService(ctx,id,isMonth,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})

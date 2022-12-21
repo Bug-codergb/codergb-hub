@@ -3,7 +3,8 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   getSubService,
-  cancelService
+  cancelService,
+  userSubService
 } = require("../service/subscriber.service")
 class SubscriberController{
   async create(ctx,next){
@@ -40,6 +41,18 @@ class SubscriberController{
         }else{
           setResponse(ctx,"您还未订阅",400,{})
         }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async userSub(ctx,next){
+    try{
+      const {offset="0",limit="30"}=ctx.query;
+      const {id} = ctx.params;
+      const result = await userSubService(ctx,id,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result)
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
