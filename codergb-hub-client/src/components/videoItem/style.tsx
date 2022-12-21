@@ -11,11 +11,11 @@ export const VideoItemWrapper:any = styled.div`
     border-radius: ${8/40}rem ${8/40}rem 0 0;
     overflow: hidden;
     width: 100%;
-    height: ${200/40}rem;
+    height:${props=>(props as any).vioHeight/40+'rem'};;
     background-color: black;
     &>video{
       width: 100%;
-      height: ${200/40}rem;
+      height:${props=>(props as any).vioHeight/40+'rem'};;
       object-position: 50% 50%;
       object-fit: contain;
     } 
@@ -46,7 +46,7 @@ export const VideoItemWrapper:any = styled.div`
           justify-content: space-between;
           width: 100%;
           .video-name{
-            font-size: ${19/40}rem;
+            font-size: ${props=>(props as any).itemWidth/20/40+'rem'};
             color: #0f0f0f;
             display: -webkit-box;
             -webkit-box-orient: vertical;

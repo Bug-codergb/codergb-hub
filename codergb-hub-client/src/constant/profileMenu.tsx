@@ -22,7 +22,7 @@ const profileMenu=[
   {
     name:"退出账号",
     icon:<Exit/>,
-    path:"/studio"
+    path:"/login"
   }
 ]
 export {

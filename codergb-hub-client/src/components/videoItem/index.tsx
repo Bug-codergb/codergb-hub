@@ -22,15 +22,16 @@ interface IProps{
   isShowVideo?:boolean,
   isShowImg?:boolean,
   id:string,
-  isShowMore?:boolean
+  isShowMore?:boolean,
+  vioHeight:number
 }
 const VideoItem:FC<IProps>=(props):ReactElement=>{
-  const {user,img,dt,playCount,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
+  const {user,img,vioHeight,dt,playCount,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
     e.stopPropagation();
   }
   return (
-      <VideoItemWrapper itemWidth={itemWidth} scale={scale}>
+      <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight}>
         {
           (!isShowVideo) && img
         }

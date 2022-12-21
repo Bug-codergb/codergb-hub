@@ -79,6 +79,7 @@ const Video:FC<IProps>=(props)=>{
                                isShowVideo={currentIndex===index}
                                state={item.name}
                                id={item.id}
+                               vioHeight={200}
                                user={item.user}
                                createTime={item.createTime}
                                dt={item.dt}

@@ -79,3 +79,16 @@ export function getUserVideo<T=IResponseType<any>>(id:string,keyword:string,offs
     }
   })
 }
+//获取订阅用户视频
+export function getSubUserVideo<T=IResponseType<any>>(userId:string,offset:number,limit:number,isMonth:number){
+  return gbRequest.post<T>({
+    url:`/video/sub/user/${userId}`,
+    params:{
+      offset,
+      limit
+    },
+    data:{
+      isMonth
+    }
+  })
+}

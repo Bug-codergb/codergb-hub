@@ -4,6 +4,7 @@ export const VideoInfoWrapper= styled.div`
   .video-title{
     font-size: ${24/40}rem;
     font-weight: bold;
+    margin: 0 0 ${20/40}rem 0;
   }
   .info{
     display: flex;

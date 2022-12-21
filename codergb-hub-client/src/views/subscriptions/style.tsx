@@ -9,4 +9,15 @@ export const SubscriptionsWrapper=styled.div`
       cursor: pointer;
     }
   }
+  .sub-user-vio-list{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: ${30/40}rem 0 0 0;
+    &>li{
+      margin: 0 0 ${30/40}rem 0;
+      transition: transform 0.7s;
+    }
+  }
 `
