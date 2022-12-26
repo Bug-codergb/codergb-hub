@@ -59,7 +59,9 @@ input,textarea,button{
 .ant-input{
   border-radius: 6px;
 }
-
+.ant-layout-content{
+  background-color: #fff;
+}
 .text-nowrap-mul-line{
   display: -webkit-box;
   -webkit-box-orient: vertical;
