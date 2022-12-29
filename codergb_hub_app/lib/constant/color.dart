@@ -1,0 +1,1 @@
+const int APP_COLOR= 0xffcc0101;
