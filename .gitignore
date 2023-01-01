@@ -4,14 +4,20 @@
 /node_modules
 /.pnp
 .pnp.js
-/upload
+/upload/channel/avatar/
+/upload/image/
+/upload/user/avatar/
+/upload/video/
 /upload_temp
 # testing
 /coverage
 
 # production
 /build
-/upload
+/upload/channel/avatar/
+/upload/image/
+/upload/user/avatar/
+/upload/video/
 /upload_temp
 # misc
 .DS_Store
