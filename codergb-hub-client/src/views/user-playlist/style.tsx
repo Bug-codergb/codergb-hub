@@ -61,6 +61,8 @@ export const LeftContent:any = styled.div`
 export const RightContent = styled.div`
   margin: 0 0 0 ${30/40}rem;
   width: 70%;
+  height: 86vh; 
+  overflow-y: scroll;
   .vio-list{
     &>li{
       display: flex;

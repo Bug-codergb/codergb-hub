@@ -10,11 +10,11 @@
 
 # production
 /build
-/upload/channel/avatar
+/upload/channel/avatar/
 /upload/image/
-/upload/user/avatar
-/upload/video
-/upload_temp
+/upload/user/avatar/
+/upload/video/
+/upload_temp/
 # misc
 .DS_Store
 .env.local

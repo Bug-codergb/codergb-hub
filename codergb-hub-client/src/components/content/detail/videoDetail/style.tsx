@@ -17,6 +17,46 @@ export const CenterContent = styled.div`
 export const LeftContentWrapper:any = styled.div`
   width: 67%;
   padding: ${20/40}rem 0;
+  .video-dm-container{
+    width: ${1150/40}rem;
+    height: ${600/40}rem;
+    position:relative ;
+    .inner{
+      display: flex;
+      align-items:center ;
+      height:100%;
+      position: absolute;
+      left:50% ;
+      top:50% ;
+      transform:translate(-50%,-50%) ;
+      .start,
+      .end {
+        width: 400px;
+        height: 100%;
+      }
+      .start{
+        display:flex ;
+        justify-content:flex-end ;
+        &>ul{
+          display:flex ;
+          flex-direction:column-reverse ;
+          align-items:flex-end ;
+          &>li{
+            text-align:end ;
+            list-style:none ;
+            background-color:rgba(0,0,0,.4) ;
+            border-radius:18px ;
+            padding:5px 12px 8px 12px;
+            color:#fff ;
+          }
+        }
+      }
+      .text {
+        white-space: nowrap;
+        color: #ec4141;
+      }
+    }
+  }
   .video-container{
     width: ${1150/40}rem;
     height: ${600/40}rem;

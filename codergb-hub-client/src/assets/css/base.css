@@ -26,7 +26,8 @@ a{
   white-space: nowrap;
 }
 ::-webkit-scrollbar{
-  width: 10px;
+  width: 5px;
+  background-color: #e0e0e0;
 }
 .ant-layout-header{
   background-color: #fff;

@@ -15,6 +15,7 @@ const Recommend:FC=():ReactElement=>{
   const [video,setVideo] = useState<IVideo[]>([]);
   const [videoURL,setVideoURL]=useState<string>("");
   const [currentIndex,setCurrentIndex]=useState<number>(-1);
+  let timer:NodeJS.Timeout|null =null;
   const navigate = useNavigate();
   const vioRef = useRef<HTMLVideoElement>(null);
   useEffect(()=>{
@@ -44,13 +45,16 @@ const Recommend:FC=():ReactElement=>{
     })
   }
   const mouseImgHandle= async (item:IVideo,index:number)=>{
-      setCurrentIndex(index);
-      const res = await getVideoURL(item.id);
-      if(res.status===200){
-        setVideoURL(res.data.vioUrl);
-      }
+     timer = setTimeout(async()=>{
+       setCurrentIndex(index);
+       const res = await getVideoURL(item.id);
+       if(res.status===200){
+         setVideoURL(res.data.vioUrl);
+       }
+     },1500)
   };
   const mouseLeaveHandle=()=>{
+    if(timer!==null) clearTimeout(timer);
     setCurrentIndex(-1)
   }
   return (

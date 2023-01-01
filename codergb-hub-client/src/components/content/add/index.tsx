@@ -27,6 +27,7 @@ const Add:FC<IProps>=(props):ReactElement=>{
   const [isPublic,setIsPublic] = useState<number>(0);
   const liClick=(item:IAddType)=>{
     if(item.name === ADD_PLAYLIST){
+      console.log(1)
       setIsShowPlay(true);
     }
     if(item.name === ADD_WATCH_LATER){
