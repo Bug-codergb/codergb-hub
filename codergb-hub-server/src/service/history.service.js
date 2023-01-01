@@ -50,7 +50,7 @@ class HistoryService{
   async userHistoryService(ctx,userId,keyword,offset,limit){
     try{
       const sql=`
-      select  DISTINCT(v.id),v.name,v.description,v.createTime,v.updateTime,JSON_OBJECT(
+      select  DISTINCT(v.id),v.name,v.description,v.createTime,v.updateTime,history.createTime as history,JSON_OBJECT(
          'id',c.id,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
 			 ) as category,f.picUrl,JSON_ARRAYAGG(JSON_OBJECT(
 			   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
@@ -65,7 +65,7 @@ class HistoryService{
       LEFT JOIN tag on tag.id = tv.tId
       where history.userId=? and vf.mark="cover" ${keyword!==''? `and v.name like '%${keyword}%'` : ''}
       GROUP BY v.id
-      ORDER BY v.createTime desc
+      ORDER BY history.createTime desc
       limit ?,?`;
       const result = await connection.execute(sql,[userId,offset,limit]);
       const count = await new HistoryService().userHistoryServiceCount(ctx,keyword,userId);
@@ -73,6 +73,16 @@ class HistoryService{
         count:count[0].count,
         list:result[0]
       }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  //清除所有历史记录
+  async deleteAllService(ctx,userId){
+    try{
+      const sql=`delete from history where userId = ?`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }

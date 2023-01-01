@@ -9,3 +9,9 @@ export function getUserLater<T=IResponseType<any>>(userId:string,offset:number,l
     }
   })
 }
+//添加至稍后观看
+export function addLater<T=IResponseType<any>>(id:string){
+  return gbRequest.post<T>({
+    url:"/later/"+id
+  })
+}

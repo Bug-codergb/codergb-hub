@@ -34,7 +34,7 @@ const SubManage=()=>{
                       <img src={item.up.avatarUrl}/>
                     </div>
                     <div className="center-container">
-                      <div className="channel-name">{item.channel.name}</div>
+                      <div className="channel-name">{item.up.userName}</div>
                       <div className="count">
                         <span>{item.fans}位订阅者</span>
                         <span>{item.video}个视频</span>

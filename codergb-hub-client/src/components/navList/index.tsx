@@ -1,15 +1,20 @@
-import React, {memo, FC, ReactElement, useState, ChangeEvent} from "react";
+import React, {memo, FC, ReactElement, useState, ChangeEvent, useEffect} from "react";
 import {useNavigate} from "react-router";
 import { Map } from "immutable";
 import {NavListWrapper} from "./style";
-import {mainMenu, profileMenu, studioMenu} from "../../constant/menu";
+import {mainMenu, MainMenuType, profileMenu, studioMenu} from "../../constant/menu";
 import {useSelector} from "react-redux";
 import {ILogin} from "../../types/login/ILogin";
 import UserIcon from "../../assets/html/user/userIcon";
-import AvatarUpload from "../../views/profile/pages/customize/childCpn/brand/childCpn/avatarUpload";
-import {Modal, Progress} from "antd";
+
 import ImgUpload from "../common/imgUpload";
 import {userUploadAvatar} from "../../network/user";
+import {getUserPlaylist} from "../../network/playlist";
+import {IResponseType} from "../../types/responseType";
+import {IPage} from "../../types/IPage";
+import {IPlaylist} from "../../types/playlist/IPlaylist";
+import PlaylistIcon from "../../assets/html/playlist/playlistIcon";
+import PlaylistShadowIcon from "../../assets/html/playlist/playlistShadowIcon";
 
 interface IProps{
   isHome:boolean
@@ -18,12 +23,36 @@ const NavList:FC<IProps>=(props):ReactElement=>{
   const { isHome } = props;
   const [isAvatarModalOpen,setIsAvatarModalOpen]=useState<boolean>(false);
   const [file,setFile]=useState<File|null>(null);
+  const [homeMain,setHomeMain] = useState<MainMenuType[]>(profileMenu);
   //const [progress,setProgress]=useState<number>(0);
   const navigate = useNavigate();
   const login = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin
   })
   const [currentIndex,setCurrentIndex] = useState<number>(0);
+
+  useEffect(()=>{
+    if(isHome){
+      getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(login.userMsg.userId,0,100000).then((data)=>{
+        if(data.status === 200){
+          if(data.data.list && data.data.list.length!==0){
+            const list = data.data.list.map((item)=>{
+              return {
+                name:item.name,
+                path:"/home/playlist/"+item.id,
+                icon:<PlaylistIcon/>,
+                shadowIcon:<PlaylistShadowIcon/>
+              }
+            })
+            if(list.length!==0){
+              let newMenu = profileMenu.concat(list);
+              setHomeMain(newMenu);
+            }
+          }
+        }
+      })
+    }
+  },[login.userMsg.userId])
   const navClickHandle=(item:{name:string,path:string},index:number)=>{
     document.title = item.name;
     setCurrentIndex(index)
@@ -104,7 +133,7 @@ const NavList:FC<IProps>=(props):ReactElement=>{
         </ul>
         <ul className="profile-menu">
           {
-            isHome && profileMenu && profileMenu && profileMenu.map((item,index)=>{
+            isHome && homeMain && homeMain && homeMain.map((item,index)=>{
               return (
                   <li key={item.name} onClick={e=>navClickHandle(item,index+mainMenu.length)}>
                     <div className="nav-icon">

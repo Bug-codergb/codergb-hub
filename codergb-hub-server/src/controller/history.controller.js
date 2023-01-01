@@ -4,7 +4,8 @@ const {
   createHistoryService,
   judgeUserHistoryService,
   updateHistoryService,
-  userHistoryService
+  userHistoryService,
+  deleteAllService
 } = require("../service/history.service");
 class HistoryController{
   async createHistory(ctx,next){
@@ -34,6 +35,17 @@ class HistoryController{
       if(keyword==="%%") keyword = "";
       const result = await userHistoryService(ctx,userId,keyword,offset,limit);
       setResponse(ctx,"success",200,result);
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteAll(ctx,next){
+    try{
+      const {userId} = ctx.user;
+      const result = await deleteAllService(ctx,userId);
+      if(result){
+        setResponse(ctx,"success",200,{});
+      }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }

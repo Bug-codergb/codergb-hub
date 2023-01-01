@@ -14,6 +14,7 @@ interface IVideo{
   description:string,
   createTime:string,
   updateTime:string,
+  history?:string,
   category:ICate,
   tag:ITag[]
 }

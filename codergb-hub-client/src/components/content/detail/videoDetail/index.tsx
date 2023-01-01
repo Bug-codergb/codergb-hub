@@ -15,6 +15,7 @@ import Comment from "../../../common/comment";
 import {useSelector} from "react-redux";
 import {Map} from "immutable";
 import {ILogin} from "../../../../types/login/ILogin";
+import {addHistory} from "../../../../network/history";
 const VideoDetail:FC=():ReactElement=>{
   const location = useLocation();
   const { id } = location.state;
@@ -45,6 +46,7 @@ const VideoDetail:FC=():ReactElement=>{
         let hls = new Hls();
         hls.loadSource(vioURL);
         hls.attachMedia(videoRef.current)
+        addHistory(vioId);
       }else if(videoRef.current.canPlayType("application/vnd.apple.mpegurl")){
         videoRef.current.src=vioURL;
       }

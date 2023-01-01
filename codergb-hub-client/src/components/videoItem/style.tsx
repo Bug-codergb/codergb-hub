@@ -40,7 +40,7 @@ export const VideoItemWrapper:any = styled.div`
       }
     }
     .right-container{
-      flex: 1;
+      width: 80%;
       margin: 0 0 0 ${20/40}rem;
       .msg{
         .state{
@@ -55,7 +55,7 @@ export const VideoItemWrapper:any = styled.div`
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
             overflow: hidden;
-            width: 84%;
+            width:100%;
           }
           .more{
             width: 10%;

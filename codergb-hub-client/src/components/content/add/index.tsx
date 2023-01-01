@@ -4,13 +4,14 @@ import {EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
 import {
   AddWrapper
 } from "./style";
-import {ADD_PLAYLIST, addList, IAddType} from "../../../constant/addList";
+import {ADD_PLAYLIST, ADD_WATCH_LATER, addList, IAddType} from "../../../constant/addList";
 import Playlist from "../playlist";
 import {
   PlusOutlined
 } from "@ant-design/icons";
 import {addVideoPlaylist, createPlaylist} from "../../../network/playlist";
 import {IPlaylist} from "../../../types/playlist/IPlaylist";
+import {addLater} from "../../../network/later";
 
 const { Option } = Select;
 interface IProps{
@@ -27,6 +28,13 @@ const Add:FC<IProps>=(props):ReactElement=>{
   const liClick=(item:IAddType)=>{
     if(item.name === ADD_PLAYLIST){
       setIsShowPlay(true);
+    }
+    if(item.name === ADD_WATCH_LATER){
+      addLater(id).then(data=>{
+        if(data.status===200){
+
+        }
+      })
     }
   }
   const cancelHandle=()=>{

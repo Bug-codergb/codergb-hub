@@ -11,7 +11,19 @@ import LibraryIcon from "../assets/html/library/libraryIcon";
 import LibraryShadowIcon from "../assets/html/library/libraryShadowIcon";
 import HistoryIcon from "../assets/html/history/historyIcon";
 import HistoryShadowIcon from "../assets/html/history/historyShadowIcon";
-const mainMenu=[
+import {ReactElement} from "react";
+import LaterIcon from "../assets/html/later/laterIcon";
+import LaterShadowIcon from "../assets/html/later/laterShadowIcon";
+import ThumbIcon from "../assets/html/thumb/thumbIcon";
+import ThumbShadowIcon from "../assets/html/thumb/thumbShadowIcon";
+import MineVideoIcon from "../assets/html/mineVideo/mineVideoIcon";
+interface MainMenuType{
+  name:string,
+  path:string,
+  icon:ReactElement,
+  shadowIcon:ReactElement
+}
+const mainMenu:MainMenuType[]=[
   {
     name:"首页",
     path:"/home/recommend",
@@ -37,7 +49,7 @@ const mainMenu=[
     shadowIcon: <SubscribeShadowIcon/>
   },
 ]
-const profileMenu=[
+const profileMenu:MainMenuType[]=[
   {
     name:"媒体库",
     path:'/home/library',
@@ -52,15 +64,24 @@ const profileMenu=[
   },
   {
     name:"您的视频",
-    path:'/home/channel'
+    path:'/home/channel',
+
+    icon: <MineVideoIcon/>,
+    shadowIcon: <MineVideoIcon/>
   },
   {
     name:"稍后观看",
-    path:'/home/playlist'
+    path:'/home/playlist',
+
+    icon: <LaterIcon/>,
+    shadowIcon: <LaterShadowIcon/>
   },
   {
     name:"顶过的视频",
-    path:'/home/thumb'
+    path:'/home/thumb',
+
+    icon: <ThumbIcon/>,
+    shadowIcon: <ThumbShadowIcon/>
   }
 ]
 const studioMenu=[
@@ -135,4 +156,7 @@ export {
   mainMenu,
   profileMenu,
   studioMenu
+}
+export type {
+  MainMenuType
 }
