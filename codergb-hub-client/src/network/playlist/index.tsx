@@ -43,3 +43,18 @@ export function addVideoPlaylist<T=IResponseType<any>>(vId:string,pId:string){
     }
   })
 }
+//获取播放列表详情
+export function getPlaylistDetail<T=IResponseType<any>>(id:string){
+  return gbRequest.post<T>({
+    url:"/playlist/"+id
+  })
+}
+export function getPlaylistVideo<T=IResponseType<any>>(id:string,offset:number,limit:number){
+  return gbRequest.post<T>({
+    url:"/playlist/video/"+id,
+    params:{
+      offset,
+      limit
+    }
+  })
+}

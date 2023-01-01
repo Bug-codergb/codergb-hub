@@ -1,8 +1,8 @@
-import React, {memo, FC, ReactElement, useState, ChangeEvent, useEffect} from "react";
+import React, {memo, FC, ReactElement, useState, ChangeEvent, useEffect,Suspense} from "react";
 import {useNavigate} from "react-router";
 import { Map } from "immutable";
 import {NavListWrapper} from "./style";
-import {mainMenu, MainMenuType, profileMenu, studioMenu} from "../../constant/menu";
+import {HOME_PATH, mainMenu, MainMenuType, profileMenu, studioMenu, USER_PLAYLIST} from "../../constant/menu";
 import {useSelector} from "react-redux";
 import {ILogin} from "../../types/login/ILogin";
 import UserIcon from "../../assets/html/user/userIcon";
@@ -15,7 +15,8 @@ import {IPage} from "../../types/IPage";
 import {IPlaylist} from "../../types/playlist/IPlaylist";
 import PlaylistIcon from "../../assets/html/playlist/playlistIcon";
 import PlaylistShadowIcon from "../../assets/html/playlist/playlistShadowIcon";
-
+import {routes} from "../../router";
+import UserPlaylist from "../../views/user-playlist";
 interface IProps{
   isHome:boolean
 }
@@ -38,13 +39,29 @@ const NavList:FC<IProps>=(props):ReactElement=>{
           if(data.data.list && data.data.list.length!==0){
             const list = data.data.list.map((item)=>{
               return {
+                id:item.id,
                 name:item.name,
-                path:"/home/playlist/"+item.id,
+                path:USER_PLAYLIST+"/"+item.id,
                 icon:<PlaylistIcon/>,
                 shadowIcon:<PlaylistShadowIcon/>
               }
             })
             if(list.length!==0){
+              for(let item of list){
+                const childrenRoute = routes.find((it)=>{
+                  return it.path === HOME_PATH
+                })
+                if(childrenRoute && childrenRoute.children && childrenRoute.children.length!==0){
+                  childrenRoute.children.push({
+                    path:USER_PLAYLIST+"/"+item.id,
+                    element:(
+                        <Suspense>
+                          <UserPlaylist id={item.id}/>
+                        </Suspense>
+                    )
+                  })
+                }
+              }
               let newMenu = profileMenu.concat(list);
               setHomeMain(newMenu);
             }

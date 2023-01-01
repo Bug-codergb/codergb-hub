@@ -152,10 +152,14 @@ const studioMenu=[
     icon:""
   }
 ]
+const HOME_PATH="/home";
+const USER_PLAYLIST="/home/playlist"
 export {
   mainMenu,
   profileMenu,
-  studioMenu
+  studioMenu,
+  HOME_PATH,
+  USER_PLAYLIST
 }
 export type {
   MainMenuType

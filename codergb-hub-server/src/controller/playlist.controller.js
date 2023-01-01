@@ -3,7 +3,9 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   getAllPlaylistService,
-  getUserPlaylistService
+  getUserPlaylistService,
+  playlistDetailService,
+  playlistVideoService
 } = require("../service/playlist.service");
 const {
   createVideoPlaylistService
@@ -61,6 +63,31 @@ class PlaylistController{
         }
       }
     }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  //获取播放列表详情
+  async playlistDetail(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const result = await playlistDetailService(ctx,id);
+      setResponse(ctx,"success",200,result[0]);
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async playlistVideo(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await playlistVideoService(ctx,id,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }else{
+        setResponse(ctx,"success",200,[]);
+      }
+    }
+    catch (e) {
       setResponse(ctx,e.message,500,{})
     }
   }

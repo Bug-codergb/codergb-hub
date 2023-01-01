@@ -5,7 +5,9 @@ const {
   create,
   getAllPlaylist,
   getUserPlaylist,
-  addVideo
+  addVideo,
+  playlistDetail,
+  playlistVideo
 } = require("../controller/playlist.controller");
 //创建播放列表
 playlistRouter.post("/",authVerify,create);
@@ -15,4 +17,8 @@ playlistRouter.get("/all",authVerify,getAllPlaylist);
 playlistRouter.get("/user/:id",authVerify,getUserPlaylist);
 //将视频添加到播放列表
 playlistRouter.post("/video",authVerify,addVideo);
+//获取播放列表详情
+playlistRouter.post("/:id",authVerify,playlistDetail);
+//获取播放列表中视频
+playlistRouter.post("/video/:id",authVerify,playlistVideo);
 module.exports = playlistRouter
