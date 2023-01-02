@@ -78,6 +78,10 @@ const History:FC=()=>{
                               dt={item.dt}
                               playCount={item.playCount}
                               itemWidth={330}
+                              dtPos={
+                                {left:38,
+                                  top:97}
+                              }
                               isShowMore={false}
                               isFlex={true}
                               scale={0.55}/>

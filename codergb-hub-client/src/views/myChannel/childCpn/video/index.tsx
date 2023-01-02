@@ -75,6 +75,10 @@ const Video:FC<IProps>=(props)=>{
                                         onMouseLeave={e=>mouseLeaveHandle()}
                                         muted={true}/>
                                }
+                               dtPos={
+                                 {left:98,
+                                   top:54}
+                               }
                                isShowMore={false}
                                isShowVideo={currentIndex===index}
                                state={item.name}

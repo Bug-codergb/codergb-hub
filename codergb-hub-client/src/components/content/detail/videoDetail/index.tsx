@@ -7,7 +7,7 @@ import React, {
   useRef,
   MutableRefObject,
   SyntheticEvent,
-  RefObject, useMemo
+  createRef
 } from "react";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
@@ -39,27 +39,21 @@ const VideoDetail:FC=():ReactElement=>{
   const [vioId,setVioId] = useState<string>(id);
   const [videoDetail,setVideoDetail] = useState<IVideo>();
   const [videoDm,setVideoDm] = useState<(IDm&{contentRef:MutableRefObject<HTMLLIElement|null>})[]>();
+  const [dmTotal,setDmTotal] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const loginState = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin;
   })
   const contentRef = useRef<HTMLUListElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
-  const itemRef = useRef<HTMLLIElement | null >(null)
-  let arrRef:MutableRefObject<HTMLLIElement|null>[]=[];
   useEffect(()=>{
     getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
       if(data.data.length!==0){
-        arrRef = [];
-        for(let i=0; i<data.data.length; i++){
-          arrRef.push(itemRef);
-        }
-
+        setDmTotal(data.data.length)
         let list:(IDm & {contentRef:MutableRefObject<HTMLLIElement|null>})[] = data.data.map((item,index)=>{
-          console.log(arrRef[index]);
           return {
             ...item,
-            contentRef: arrRef[index],
+            contentRef: createRef<HTMLLIElement>(),
           }
         })
         setVideoDm(list);
@@ -97,7 +91,7 @@ const VideoDetail:FC=():ReactElement=>{
         let list:(IDm & {contentRef:MutableRefObject<HTMLLIElement|null>})[] = data.data.map((item,index)=>{
           return {
             ...item,
-            contentRef: arrRef[index],
+            contentRef: createRef<HTMLLIElement>(),
           }
         })
         setVideoDm(list);
@@ -158,7 +152,7 @@ const VideoDetail:FC=():ReactElement=>{
                     {videoDm &&
                     videoDm.map((item, index) => {
                       return (
-                          <li key={item.text} className="text" ref={item.contentRef} onMouseEnter={e=>pauseHandle(item)} onMouseLeave={e=>playHandle(item)}>
+                          <li key={item.id} className="text" ref={item.contentRef} onMouseEnter={e=>pauseHandle(item)} onMouseLeave={e=>playHandle(item)}>
                             {item.text}
                           </li>
                       );

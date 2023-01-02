@@ -85,6 +85,7 @@ const Subscriptions:FC=():ReactElement=>{
                                   onMouseLeave={e=>mouseLeaveHandle()}
                                   muted={true}/>
                          }
+
                          isShowVideo={currentIndex===index}
                          state={item.name}
                          id={item.id}
@@ -95,6 +96,10 @@ const Subscriptions:FC=():ReactElement=>{
                          playCount={item.playCount}
                          itemWidth={300}
                          isShowMore={true}
+                         dtPos={
+                           {left:98,
+                             top:54}
+                         }
                          scale={0.93}/>
             </li>
           })

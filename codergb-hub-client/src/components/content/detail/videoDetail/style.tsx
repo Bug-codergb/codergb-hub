@@ -21,6 +21,7 @@ export const LeftContentWrapper:any = styled.div`
     width: ${1150/40}rem;
     height: ${600/40}rem;
     position:relative ;
+    overflow: hidden;
     .inner{
       display: flex;
       align-items:center ;
@@ -37,6 +38,8 @@ export const LeftContentWrapper:any = styled.div`
       .start{
         display:flex ;
         justify-content:flex-end ;
+        position: relative;
+        z-index: 99;
         &>ul{
           display:flex ;
           flex-direction:column-reverse ;
@@ -48,6 +51,10 @@ export const LeftContentWrapper:any = styled.div`
             border-radius:18px ;
             padding:5px 12px 8px 12px;
             color:#fff ;
+            font-weight: bolder;
+            letter-spacing: 2px;
+            font-size: ${20/40}rem;
+            text-shadow: 1px 1px 2px black;
           }
         }
       }

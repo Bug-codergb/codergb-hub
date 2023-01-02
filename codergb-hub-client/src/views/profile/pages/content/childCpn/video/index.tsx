@@ -1,19 +1,25 @@
 import React, {memo, FC, ReactElement, useEffect, useState} from "react";
+import {Map} from "immutable";
 import { Divider, Radio, Table } from 'antd';
 import {
   VideoPageWrapper
 } from "./style"
-import {getAllVideo} from "../../../../../../network/video";
+import { getUserVideo} from "../../../../../../network/video";
 import {IResponseType} from "../../../../../../types/responseType";
 import {IPage} from "../../../../../../types/IPage";
 import {IVideo} from "../../../../../../types/video/IVideo";
 import {columns} from "./config";
+import {useSelector} from "react-redux";
+import {ILogin} from "../../../../../../types/login/ILogin";
 const VideoPage:FC=():ReactElement=>{
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   const [video,setVideo] = useState<IVideo[]>([]);
   const [count,setCount] = useState<number>(0);
+  const login = useSelector<Map<string,ILogin>,ILogin>(state=>{
+    return state.getIn(['loginReducer','login']) as ILogin
+  })
   useEffect(()=>{
-    getAllVideo<IResponseType<IPage<IVideo[]>>>(0,20).then((data)=>{
+    getUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId,"",0,4).then((data)=>{
       if(data.status===200){
         setVideo(data.data.list);
         setCount(data.data.count);
@@ -26,7 +32,12 @@ const VideoPage:FC=():ReactElement=>{
     },
   };
   const pageChangeHandle=(e:number)=>{
-    console.log(e);
+    getUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId,"",e-1,4).then((data)=>{
+      if(data.status===200){
+        setVideo(data.data.list);
+        setCount(data.data.count);
+      }
+    })
   }
   return (
       <VideoPageWrapper>

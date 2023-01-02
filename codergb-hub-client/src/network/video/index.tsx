@@ -30,7 +30,8 @@ export function createVideo<T=IResponseType<any>>(
     imgId:string,
     playlistId:string,
     tagIds:string[],
-    cateId:string
+    cateId:string,
+    dt:number
 ){
   return gbRequest.post<T>({
     url:"/video/create",
@@ -41,7 +42,8 @@ export function createVideo<T=IResponseType<any>>(
       imgId,
       playlistId,
       tagIds,
-      cateId
+      cateId,
+      dt
     }
   })
 }

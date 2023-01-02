@@ -9,6 +9,7 @@ import {
 import {IUserMsg} from "../../types/user/IUserMsg";
 import {Dropdown} from "antd";
 import Add from "../content/add";
+import {getDurationByTimestamp} from "../../utils/time";
 interface IProps{
   user:IUserMsg,
   img:ReactElement,
@@ -24,15 +25,17 @@ interface IProps{
   id:string,
   isShowMore?:boolean,
   vioHeight:number,
-  isFlex?:boolean
+  isFlex?:boolean,
+  dtPos:{left:number,top:number}
 }
 const VideoItem:FC<IProps>=(props):ReactElement=>{
-  const {user,img,vioHeight,dt,playCount,isFlex,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
+  const {user,img,vioHeight,dt,playCount,dtPos,isFlex,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
     e.stopPropagation();
   }
+  console.log(dtPos)
   return (
-      <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex}>
+      <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex} dtPos={dtPos}>
         {
           (!isShowVideo) && img
         }
@@ -41,6 +44,9 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
             {video}
           </div>
         }
+        <div className="dt-pos">
+          {getDurationByTimestamp(dt ? dt:"0")}
+        </div>
         <div className="msg-info">
           <div className="left-container">
             <img src={user.avatarUrl}/>

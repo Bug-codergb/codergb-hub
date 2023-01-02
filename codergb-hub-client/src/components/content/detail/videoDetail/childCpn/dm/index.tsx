@@ -3,6 +3,7 @@ import {
   DmWrapper
 } from "./style";
 import {pubDm} from "../../../../../../network/dm";
+import moment from "moment";
 interface IProps{
   id:string,
   time:string,

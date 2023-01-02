@@ -69,7 +69,8 @@ const VideoInfo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
       desc:desc,
       playlist:playlistParam,
       tag:tagParam,
-      cate:cateParam
+      cate:cateParam,
+      file:null
     }
   },[imgID,title,desc,playlistParam,cateParam,tagParam.length]);
   useEffect(()=>{

@@ -22,6 +22,7 @@ import Profile from "./childCpn/profile";
 import {createVideo} from "../../network/video";
 import {IUploadVideo} from "../../types/imperative/uploadVideo";
 import {debounce} from "../../utils/debounce";
+import {getVideoDuration} from "../../utils/video";
 const Header:FC=():ReactElement=>{
   const [isModalOpen,setIsModelOpen] = useState<boolean>(false);
   const [keyIndex,setKeyIndex] = useState<number>(0);
@@ -42,14 +43,20 @@ const Header:FC=():ReactElement=>{
         playlist,
         tag,
         cate,
-        imgId
+        imgId,
+        file,
       }=videoRef.current;
-      createVideo(videoId, title, desc,imgId, playlist, tag, cate).then((data)=>{
-        if(data.status==200){
-          console.log(data.data);
-          setIsModelOpen(false);
-        }
-      })
+      if(file){
+        getVideoDuration(file).then(data=>{
+          createVideo(videoId, title, desc,imgId, playlist, tag, cate,data).then((data)=>{
+            if(data.status==200){
+              console.log(data.data);
+              setIsModelOpen(false);
+            }
+          })
+        })
+      }
+
     }
   },[keyIndex]);
   const handleOk=async ()=>{

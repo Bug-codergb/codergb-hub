@@ -2,6 +2,7 @@ import {mergeVideo, uploadVideo} from "../network/video";
 import {WEBSOCKET_HOST_NAME} from "../constant/host";
 import SparkMD5 from 'spark-md5';
 import {getSocketMsg, socketClose, socketOpen} from "../network/websocket/mergeVideo";
+import {getVideoDuration} from "./video";
 const chunkSize = 1024 * 1000;
 async function getFileHash(file:File){
   return new Promise((resolve,reject)=>{
@@ -28,13 +29,13 @@ async function getFileHash(file:File){
   })
 }
 async function chunkHandle(HASH:string,index:number,file:File,name:string,
-                           total:number,type:string,uploadedSize:number,dest:string,
+                           total:number,type:string,uploadedSize:number,dest:string,dt:number,
                            fn:(size:number)=>void,handle:(progress:number)=>void){
   try{
     fn(uploadedSize);
     if(uploadedSize>total) {
       let videoId="";
-      let params =`?dest=${dest}&hash=${HASH}&originalname=${name}&type=${type}&total=${total}`;
+      let params =`?dest=${dest}&hash=${HASH}&originalname=${name}&type=${type}&total=${total}&dt=${dt}`;
       let websocket = new WebSocket(`${WEBSOCKET_HOST_NAME}/video/merge${params}`);
       await socketOpen(websocket);
       videoId = await getSocketMsg(websocket,handle);
@@ -79,7 +80,7 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
     formData.append("video",fileBlob);
     const result = await uploadVideo(formData);
     if(result.status === 200){
-       const res:any = await chunkHandle(HASH,index+1,file,name,total,type,result.data.uploadedSize,result.data.dest,fn,handle);
+       const res:any = await chunkHandle(HASH,index+1,file,name,total,type,result.data.uploadedSize,result.data.dest,dt,fn,handle);
        return res;
     }
   }catch (e) {
@@ -90,7 +91,8 @@ async function shardUtils(file:File,fn:(size:number)=>void,handle:(progress:numb
   const { name,size,type } = file;
   let index = 0
   const fileData:any = await getFileHash(file);
-  return await chunkHandle(fileData.HASH,index,file,name,size,type,0,"",fn,handle);
+  const dt:number = await getVideoDuration(file);
+  return await chunkHandle(fileData.HASH,index,file,name,size,type,0,"",dt,fn,handle);
 }
 export {
   shardUtils

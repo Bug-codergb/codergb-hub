@@ -5,7 +5,8 @@ interface IUploadVideo{
   playlist:string,
   tag:string[],
   cate:string,
-  videoId:string
+  videoId:string,
+  file:File|null
 }
 export type{
   IUploadVideo

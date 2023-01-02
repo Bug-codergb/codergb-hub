@@ -5,9 +5,22 @@ export const VideoItemWrapper:any = styled.div`
   height: ${props=> (props as any).isFlex ?'auto' :(props as any).itemWidth* (props as any).scale /40 + 'rem'};
   display: ${props=>(props as any).isFlex ? 'flex':'block'};
   align-items: flex-start;
+  position: relative;
   &>img{
     width:  ${props=> (props as any).isFlex ? (props as any).itemWidth / 40+'rem' :'100%'};
     border-radius: ${8/40}rem ${8/40}rem ${props=> (props as any).isFlex ? `${8/40}rem` :'0'} ${props=> (props as any).isFlex ? `${8/40}rem` :'0'};
+  }
+  .dt-pos{
+    position: absolute;
+    left: ${(props:any) =>props.dtPos? props.dtPos.left+"%":"100%"};
+    top: ${(props:any)=>props.dtPos? props.dtPos.top+"%":"100%"};
+    transform: translate(-100%,-100%);
+    background-color: rgba(0,0,0,.6);
+    color: #fff;
+    font-weight: bolder;
+    font-size: ${18/40}rem;
+    padding: 1px 6px;
+    border-radius: 5px;
   }
   .video-container{
     border-radius: ${8/40}rem ${8/40}rem 0 0;

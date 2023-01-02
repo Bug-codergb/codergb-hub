@@ -90,6 +90,10 @@ const MoreVideo:FC=()=>{
                            itemWidth={300}
                            vioHeight={153}
                            isShowMore={true}
+                           dtPos={
+                             {left:98,
+                               top:54}
+                           }
                            scale={0.93}/>
               </li>
             })

@@ -74,6 +74,10 @@ const Recommend:FC=():ReactElement=>{
                                       onMouseLeave={e=>mouseLeaveHandle()}
                                       muted={true}/>
                              }
+                             dtPos={
+                               {left:98,
+                               top:54}
+                             }
                              isShowVideo={currentIndex===index}
                              state={item.name}
                              vioHeight={200}
