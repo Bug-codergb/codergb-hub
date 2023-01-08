@@ -6,6 +6,8 @@ export const HistoryWrapper=styled.div`
 `
 export const LeftContentWrapper = styled.div`
   width: 65%;
+  height: 86vh;
+  overflow-y: scroll;
   .label-title{
     font-size: ${24/40}rem;
     margin: 0 0 ${20/40}rem 0;
@@ -23,6 +25,7 @@ export const LeftContentWrapper = styled.div`
 `
 export const RightContentWrapper:any = styled.div`
   width: 34%;
+  padding: 0 0 0 ${20/40}rem;
   .search-outer{
     border-bottom:${(props : any) => props.isBolderBorder?'2px solid #0f0f0f':'1px solid #606060'};
     padding: 0 0 ${10/40}rem 0;

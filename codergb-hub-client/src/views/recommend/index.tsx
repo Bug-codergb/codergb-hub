@@ -1,4 +1,4 @@
-import React, {memo, FC, ReactElement, useEffect, useState, useRef, useCallback} from "react";
+import React, {memo, FC, ReactElement, useEffect, useState, useRef, createRef, RefObject} from "react";
 import { useNavigate } from "react-router-dom";
 import {
   RecommendWrapper
@@ -10,18 +10,31 @@ import {IPage} from "../../types/IPage";
 import VideoItem from "../../components/videoItem";
 import HolderCpn from "../../components/holder";
 import Hls from "hls.js";
-import {debounce} from "../../utils/debounce";
+interface IRecommendVideo extends IVideo{
+  vioRef:RefObject<HTMLLIElement>
+}
 const Recommend:FC=():ReactElement=>{
-  const [video,setVideo] = useState<IVideo[]>([]);
+  const [count,setCount] = useState<number>(0);
+  const [video,setVideo] = useState<IRecommendVideo[]>([]);
   const [videoURL,setVideoURL]=useState<string>("");
   const [currentIndex,setCurrentIndex]=useState<number>(-1);
+
+  const [isRight,setIsRight] = useState<boolean>(false);
+  const [isLeft,setIsLeft] = useState<boolean>(false);
   let timer:NodeJS.Timeout|null =null;
   const navigate = useNavigate();
   const vioRef = useRef<HTMLVideoElement>(null);
+  const vioListRef = useRef<HTMLUListElement>(null);
   useEffect(()=>{
-    getAllVideo<IResponseType<IPage<IVideo[]>>>(0,50).then(data=>{
+    getAllVideo<IResponseType<IPage<IRecommendVideo[]>>>(0,50).then(data=>{
       if(data.status===200){
-        setVideo(data.data.list);
+        if(data.data.list && data.data.list.length!==0){
+          for(let item of data.data.list){
+            item.vioRef = createRef<HTMLLIElement>();
+          }
+          setVideo(data.data.list);
+          setCount(data.data.count);
+        }
       }
     });
   },[]);
@@ -44,7 +57,31 @@ const Recommend:FC=():ReactElement=>{
       }
     })
   }
-  const mouseImgHandle= async (item:IVideo,index:number)=>{
+  const isBoundary=(containerWidth:number,itemWidth:number,itemOffset:number,boundary:'left'|'right'):boolean=>{
+    if(boundary === 'right'){
+      if(containerWidth - itemOffset <= itemWidth){
+        return true;
+      }else{
+        return false;
+      }
+    }else if(boundary === 'left'){
+      if(itemOffset < itemWidth){
+        return true;
+      }else{
+        return false;
+      }
+    } else{
+      return false;
+    }
+  }
+  const mouseImgHandle= async (item:IRecommendVideo,index:number)=>{
+    if(item.vioRef.current && vioListRef.current){
+      const isR = isBoundary(vioListRef.current.offsetWidth,item.vioRef.current.offsetWidth,item.vioRef.current.offsetLeft,'right');
+      setIsRight(isR);
+      const isL = isBoundary(vioListRef.current.offsetWidth,item.vioRef.current.offsetWidth,item.vioRef.current.offsetLeft,'left');
+      console.log(isL)
+      setIsLeft(isL);
+    }
      timer = setTimeout(async()=>{
        setCurrentIndex(index);
        const res = await getVideoURL(item.id);
@@ -58,12 +95,15 @@ const Recommend:FC=():ReactElement=>{
     setCurrentIndex(-1)
   }
   return (
-    <RecommendWrapper>
-      <ul className="video-list">
+    <RecommendWrapper isLeftBoundray={isLeft} isRightBoundray={isRight}>
+      <ul className="video-list" ref={vioListRef} >
         {
           video && video.length!==0 && video.map((item,index)=>{
             return (
-                <li key={item.id} onClick={e=>videoRouterHandle(item)} className={currentIndex===index?'active':''}>
+                <li key={item.id}
+                    onClick={e=>videoRouterHandle(item)}
+                    className={currentIndex===index?'active':''}
+                    ref={item.vioRef}>
                   <VideoItem img={<img src={item.picUrl}
                                        onMouseLeave={e=>mouseLeaveHandle()}
                                        onMouseEnter={e=>mouseImgHandle(item,index)}/>}
