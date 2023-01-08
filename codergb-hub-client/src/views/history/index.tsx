@@ -1,5 +1,6 @@
 import React, {memo, FC, ReactElement, useEffect, useState, FormEvent} from "react";
 import { Button, Modal } from 'antd';
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
  SearchOutlined
@@ -26,6 +27,7 @@ const History:FC=()=>{
   const login = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin
   });
+  const navigate = useNavigate();
   useEffect(()=>{
     getAllUserHistory(login.userMsg.userId,0,10,"");
   },[login.userMsg.userId]);
@@ -54,6 +56,14 @@ const History:FC=()=>{
   const confirmSearch=async ()=>{
     await getAllUserHistory(login.userMsg.userId,0,10,keyword);
   }
+  const videoRouterHandle=(item:IVideo)=>{
+    navigate("/videoDetail",{
+      replace:true,
+      state:{
+        id:item.id
+      }
+    })
+  }
   return (
     <HistoryWrapper>
       <LeftContentWrapper>
@@ -62,7 +72,7 @@ const History:FC=()=>{
          {
            video && video.length!==0 && video.map((item,index)=>{
              return (
-                 <li key={item.id}>
+                 <li key={item.id} onClick={e=>videoRouterHandle(item)}>
                    <p className="time">
                      {
                        moment().format('yyyy-MM-DD') === moment(item.history).format('yyyy-MM-DD') ? moment(item.history).fromNow() : moment().format('yyyy-MM-DD')

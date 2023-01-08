@@ -32,7 +32,7 @@ const VideoPage:FC=():ReactElement=>{
     },
   };
   const pageChangeHandle=(e:number)=>{
-    getUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId,"",e-1,4).then((data)=>{
+    getUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId,"",(e-1)*4,4).then((data)=>{
       if(data.status===200){
         setVideo(data.data.list);
         setCount(data.data.count);

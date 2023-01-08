@@ -43,7 +43,19 @@ class PlaylistService{
   }
   async getUserPlaylistService(ctx,userId,keyword,offset,limit){
     try{
-      const sql=`select * from playlist where userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''} limit ?,?`;
+      const sql=`select p.id,p.name,p.isPublic,p.description,JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) AS user,
+                 p.createTime,p.updateTime,count(p.id) as video,
+                 if(f.picUrl is null,u.avatarUrl,f.picUrl) as picUrl
+                 from playlist as p
+                 LEFT JOIN user as u on u.userId = p.userId
+                 LEFT JOIN playlist_video as pv on pv.pId = p.id
+                 LEFT JOIN video as v on v.id = pv.vId
+                 LEFT JOIN video_file as vf on vf.videoId =v.id
+                 LEFT JOIN file as f on f.id = vf.fileId
+                 where p.userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''} and (vf.mark="cover" or vf.mark is null)
+                 GROUP BY p.id
+                 ORDER BY p.updateTime desc
+                 limit ?,?`;
       const result = await connection.execute(sql,[userId,offset,limit]);
       const count = await new PlaylistService().getUserPlaylistCountService(ctx,userId,keyword);
       return {

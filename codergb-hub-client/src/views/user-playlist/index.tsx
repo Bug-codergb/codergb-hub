@@ -1,4 +1,5 @@
 import React, {memo, FC, useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import {Map} from "immutable";
 import {
   UserPlaylistWrapper,
@@ -25,6 +26,7 @@ const UserPlaylist:FC<IProps>=(props)=>{
   const login = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin
   })
+  const navigate = useNavigate();
   useEffect(()=>{
     getPlaylistDetail<IResponseType<IPlaylist>>(id).then((data)=>{
       setPlaylist(data.data);
@@ -36,6 +38,14 @@ const UserPlaylist:FC<IProps>=(props)=>{
       setCount(data.data.count);
     })
   },[id])
+  const videoRouterHandle=(item:IVideo)=>{
+    navigate("/videoDetail",{
+      replace:true,
+      state:{
+        id:item.id
+      }
+    })
+  }
   return (
       <UserPlaylistWrapper>
         {
@@ -60,11 +70,11 @@ const UserPlaylist:FC<IProps>=(props)=>{
               video && video.length!==0 && video.map((item)=>{
                 return (
                     <li key={item.id}>
-                      <div className="cover-container">
+                      <div className="cover-container" onClick={e=>videoRouterHandle(item)}>
                         <img src={item.picUrl}/>
                       </div>
                       <div className="later-right-info">
-                        <p className="vio-name text-nowrap-mul-line">{item.name}</p>
+                        <p className="vio-name text-nowrap-mul-line" onClick={e=>videoRouterHandle(item)}>{item.name}</p>
                         <div className="desc">
                           <div className="user-name">{item.user.userName}.</div>
                           <div className="play-count">{item.playCount}次观看.</div>

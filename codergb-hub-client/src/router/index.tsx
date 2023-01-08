@@ -4,13 +4,12 @@ import StudioChildrenRoute from "./studio/index";
 import {
   videoDetailRoute
 } from "./detail/index";
-import Home from "../views/home";
-import SubManage from "../views/subscriptions/childCpn/manage";
+
 const LoginRoute = lazy(()=>import('../views/login/index'));
 const HomeRoute = lazy(()=>import("../views/home/index"));
 
 //home页主要内容
-const ChannelRoute = lazy(()=>import("../views/channel/index"));
+const ChannelRoute = lazy(()=>import("../views/profile/pages/content/index"));
 const ExploreRoute = lazy(()=>import("../views/explore/index"));
 const HistoryRoute = lazy(()=>import('../views/history/index'));
 const LibraryRoute = lazy(()=>import("../views/library/index"));
@@ -54,14 +53,7 @@ const routes:RouteObject[]=[
             <Navigate to='/home/recommend'/>
         ),
       },
-      {
-        path:"/home/channel",
-        element:(
-            <Suspense>
-              <ChannelRoute/>
-            </Suspense>
-        )
-      },
+
       {
         path:"/home/explore",
         element:(

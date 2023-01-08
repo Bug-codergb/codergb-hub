@@ -1,4 +1,5 @@
 import React, {memo, FC, ReactElement, useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import {Map} from "immutable";
 import moment from "moment";
 import {
@@ -12,12 +13,14 @@ import {IResponseType} from "../../types/responseType";
 import {IPage} from "../../types/IPage";
 import {useSelector} from "react-redux";
 import {ILogin} from "../../types/login/ILogin";
+import {IVideo} from "../../types/video/IVideo";
 const Playlist:FC=():ReactElement=>{
   const [userLater,setUserLater] = useState<ILater[]>([]);
   const [count,setCount] = useState<number>(0);
   const login = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin
   })
+  const navigate = useNavigate();
   const getUserLaterReq=async (userId:string,offset:number,limit:number)=>{
     const result = await getUserLater<IResponseType<IPage<ILater[]>>>(userId,offset,limit);
     if(result.status===200){
@@ -28,6 +31,15 @@ const Playlist:FC=():ReactElement=>{
   useEffect(()=>{
     getUserLaterReq(login.userMsg.userId, 0, 10).then(r  =>{});
   },[])
+
+  const videoRouterHandle=(item:IVideo)=>{
+    navigate("/videoDetail",{
+      replace:true,
+      state:{
+        id:item.id
+      }
+    })
+  }
   return (
     <PlaylistWrapper>
       {
@@ -52,11 +64,11 @@ const Playlist:FC=():ReactElement=>{
             userLater && userLater.length!==0 && userLater.map((item)=>{
               return (
                   <li key={item.id}>
-                    <div className="cover-container">
+                    <div className="cover-container" onClick={e=>videoRouterHandle(item.video)}>
                       <img src={item.video.picUrl}/>
                     </div>
                     <div className="later-right-info">
-                      <p className="vio-name text-nowrap-mul-line">{item.video.name}</p>
+                      <p className="vio-name text-nowrap-mul-line" onClick={e=>videoRouterHandle(item.video)}>{item.video.name}</p>
                       <div className="desc">
                         <div className="user-name">{item.video.user.userName}.</div>
                         <div className="play-count">{item.video.playCount}次观看.</div>

@@ -64,7 +64,7 @@ const profileMenu:MainMenuType[]=[
   },
   {
     name:"您的视频",
-    path:'/home/channel',
+    path:'/studio/content',
 
     icon: <MineVideoIcon/>,
     shadowIcon: <MineVideoIcon/>

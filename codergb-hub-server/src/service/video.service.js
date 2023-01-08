@@ -11,11 +11,11 @@ class VideoService{
     }
   }
   //创建视频
-  async createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId){
+  async createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId,dt){
     try{
       const id = new Date().getTime();
-      const videoSql = `insert into video(id,userId,name,description,cateId) values(?,?,?,?,?)`;
-      const result = await connection.execute(videoSql,[id,userId,title,desc,cateId]);
+      const videoSql = `insert into video(id,userId,name,description,cateId,dt) values(?,?,?,?,?,?)`;
+      const result = await connection.execute(videoSql,[id,userId,title,desc,cateId,dt]);
       await new VideoService().createVideoFileService(ctx,id,imgId,"cover");
       await new VideoService().createVideoFileService(ctx,id,videoId,"source");
       await new VideoService().createVideoPlaylistService(ctx,id,playlistId);
@@ -190,6 +190,57 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
-
+  async getThumbUserCountVioService(ctx,userId){
+    try{
+      const sql=`
+      select count(t.id) as count
+      from thumb as t
+      LEFT JOIN user as u on u.userId=t.userId
+      LEFT JOIN video as v on v.id = t.vId
+      LEFT JOIN video_file as vf on vf.videoId = v.id
+      LEFT JOIN file as f on f.id = vf.fileId
+      where t.userId =  ? and t.tread = 0 and vf.mark="cover" and t.vId is not null`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getThumbUserVioService(ctx,userId,offset,limit){
+    try{
+      const sql=`
+      select t.id,t.createTime,t.updateTime,
+        JSON_OBJECT('userId',t.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) AS user,
+			 JSON_OBJECT('id',v.id,'name',v.name,'playCount',v.playCount,'dt',v.dt,'description',v.description,
+			              'createTime',v.createTime,'updateTime',v.updateTime,'picUrl',f.picUrl,'user',
+       (select JSON_OBJECT(
+			  'userId',v.userId,
+				'userName',u.userName,
+				'avatarUrl',u.avatarUrl
+			 ) from user as u WHERE u.userId = v.userId),
+			 'category',(select JSON_OBJECT(
+			  'id',v.cateId,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
+			 ) from category as c where c.id = v.cateId),
+			 'tag',(select JSON_ARRAYAGG(
+			   JSON_OBJECT('id',t.id,'name',t.name,'createTime',t.createTime,'updateTime',t.updateTime)
+			 ) FROM tag as t LEFT JOIN tag_video as tv on tv.tId = t.id where tv.vId = v.id)) as video
+       from thumb as t
+       LEFT JOIN user as u on u.userId=t.userId
+       LEFT JOIN video as v on v.id = t.vId
+       LEFT JOIN video_file as vf on vf.videoId = v.id
+       LEFT JOIN file as f on f.id = vf.fileId
+       where t.userId = ? and t.tread = 0 and vf.mark="cover" and t.vId is not null
+       ORDER BY t.updateTime desc
+       LIMIT ?,?`;
+      const result = await connection.execute(sql,[userId,offset,limit]);
+      const count = await new VideoService().getThumbUserCountVioService(ctx,userId);
+      return {
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 module.exports  = new VideoService();

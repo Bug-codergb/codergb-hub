@@ -12,7 +12,8 @@ const {
   allVideoService,
   getVideoURLService,
   getVideoDetailService,
-  getSubUserVioService
+  getSubUserVioService,
+  getThumbUserVioService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -34,7 +35,7 @@ class VideoController{
   //视频合并
   async mergeVideo(ctx,next){
     try{
-      const {dest="",hash="",originalname,type,total} = ctx.query;
+      const {dest="",hash="",originalname,type,total,dt=0} = ctx.query;
       if(!isEmpty(ctx,dest,"目的路径不能为空") && !isEmpty(ctx,hash,"文件HASH值不能为空")){
         const id = new Date().getTime();
         const result = await mergeVideo(ctx,dest,path.resolve(__dirname,"../../","./upload/video"),hash);
@@ -83,7 +84,8 @@ class VideoController{
         imgId,
         playlistId,
         tagIds,
-        cateId
+        cateId,
+        dt
       } = ctx.request.body;
       if(!isEmpty(ctx,videoId,"请选择文件")&&
          !isEmpty(ctx,title,"视频标题不能为空")&&
@@ -91,8 +93,9 @@ class VideoController{
          !isEmpty(ctx,imgId,"视频封面不能为空")&&
          !isEmpty(ctx,playlistId,"请选择视频播放列表")&&
          !isEmpty(ctx,tagIds,"视频标签不能为空")&&
+        !isEmpty(ctx,dt,"视频时长不能为空")&&
          !isEmpty(ctx,cateId,"视频分类不能为空")){
-        const result = await createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId);
+        const result = await createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId,dt);
         if(result){
           setResponse(ctx,"success",200,{});
         }
@@ -143,6 +146,18 @@ class VideoController{
       const { isMonth=0 } = ctx.request.body;
       const {offset="0",limit="30"} = ctx.query;
       const result = await getSubUserVioService(ctx,id,isMonth,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getThumbUserVio(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await getThumbUserVioService(ctx,id,offset,limit);
       if(result){
         setResponse(ctx,"success",200,result);
       }

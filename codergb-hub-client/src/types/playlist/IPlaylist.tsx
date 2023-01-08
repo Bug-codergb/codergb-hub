@@ -7,7 +7,9 @@ interface IPlaylist{
   createTime:string,
   updateTime:string,
   isPublic:number,
-  user:IUserMsg
+  user:IUserMsg,
+  video:number,
+  picUrl?:string
 }
 export type{
   IPlaylist

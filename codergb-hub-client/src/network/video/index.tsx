@@ -94,3 +94,13 @@ export function getSubUserVideo<T=IResponseType<any>>(userId:string,offset:numbe
     }
   })
 }
+//获取用户点赞视频
+export function getThumbUserVideo<T=IResponseType<any>>(userId:string,offset:number,limit:number){
+  return gbRequest.post<T>({
+    url:"/video/thumb/user/"+userId,
+    params:{
+      offset,
+      limit
+    }
+  })
+}
