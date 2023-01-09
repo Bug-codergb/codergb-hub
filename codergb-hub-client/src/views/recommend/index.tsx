@@ -79,9 +79,9 @@ const Recommend:FC=():ReactElement=>{
       const isR = isBoundary(vioListRef.current.offsetWidth,item.vioRef.current.offsetWidth,item.vioRef.current.offsetLeft,'right');
       setIsRight(isR);
       const isL = isBoundary(vioListRef.current.offsetWidth,item.vioRef.current.offsetWidth,item.vioRef.current.offsetLeft,'left');
-      console.log(isL)
       setIsLeft(isL);
     }
+    if(timer) clearTimeout(timer);
      timer = setTimeout(async()=>{
        setCurrentIndex(index);
        const res = await getVideoURL(item.id);
@@ -91,6 +91,7 @@ const Recommend:FC=():ReactElement=>{
      },1500)
   };
   const mouseLeaveHandle=()=>{
+    console.log(timer)
     if(timer!==null) clearTimeout(timer);
     setCurrentIndex(-1)
   }

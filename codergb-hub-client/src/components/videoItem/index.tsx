@@ -33,7 +33,6 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
     e.stopPropagation();
   }
-  console.log(dtPos)
   return (
       <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex} dtPos={dtPos}>
         {
