@@ -12,7 +12,6 @@ class GBHttpRequest<T>{
         connectTimeout: 5000
     );
     final dio = Dio(baseOptions);
-
     Options options = Options(method: method);
     try{
       final result = await dio.request<GBResponseType<T>>(url,queryParameters: params,data: data,options: options);

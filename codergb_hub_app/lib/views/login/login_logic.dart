@@ -9,10 +9,11 @@ class LoginLogic extends GetxController {
   Rx<TextEditingController> password = TextEditingController().obs;
   void login(String? userName,String? password)async {
     if(userName!=null && password!=null){
-      GBHttpRequest<UserMsg>().request(LOGIN,method: 'get',data: {
+      GBHttpRequest<UserMsg>().request(LOGIN,method: 'post',params: {},data: {
         "userName":userName,
         "password":password
       }).then((data){
+        print(data);
         if(data.status == 200){
           print("登录成功");
           print(data.data.userName);
