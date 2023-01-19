@@ -1,6 +1,6 @@
-class GBResponseType<T>{
-  final String message;
+class GBResponseType{
   final int status;
-  final T data;
-  GBResponseType(this.message,this.status,T responseData):data = responseData;
+  final dynamic data;
+  GBResponseType(this.status,this.data);
+  GBResponseType.fromMap(Map<String,dynamic> json) :data = json['data'],status = json['status'];
 }

@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Youtube',
       home: AppHomePage(),
       getPages: routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
