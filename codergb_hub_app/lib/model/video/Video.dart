@@ -5,7 +5,7 @@ class Video{
   final String id;
   final String name;
   final String picUrl;
-  final String dt;
+  String? dt;
   final String playCount;
   final String description;
   Category ?category;

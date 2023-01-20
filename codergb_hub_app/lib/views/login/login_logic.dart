@@ -11,7 +11,7 @@ class LoginLogic extends GetxController {
   Rx<TextEditingController> password = TextEditingController().obs;
   void login(String? userName,String? password)async {
     if(userName!=null && password!=null){
-      GBHttpRequest<UserMsg>().request(LOGIN,method: 'post',dataParser: UserMsg.fromMap,params: {},data: {
+      GBHttpRequest<UserMsg>().requestData(LOGIN,method: 'post',dataParser: UserMsg.fromMap,params: {},data: {
         "userName":userName,
         "password":password
       }).then((data) async {

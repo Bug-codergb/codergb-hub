@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeLogic  extends GetxController with GetSingleTickerProviderStateMixin   {
-  Rx<UserMsg> userMsg = UserMsg("", "", "", "").obs;
+  Rx<UserMsg> userMsg = UserMsg().obs;
   RxInt currentIndex = 0.obs;
   RxList<String> tabList = ['推荐','探索','shorts','订阅内容'].obs;
   TabController? tabController;

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class AppLogic extends GetxController {
-  Rx<UserMsg> userMsg = UserMsg("", "", "", "").obs;
+  Rx<UserMsg> userMsg = UserMsg().obs;
   RxInt currentIndex = 0.obs;
   Rx<TextEditingController> keyword = TextEditingController().obs;
   @override

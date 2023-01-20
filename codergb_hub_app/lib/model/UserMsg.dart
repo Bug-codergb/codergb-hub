@@ -1,7 +1,9 @@
+import 'package:codergb_hub_app/network/index.dart';
+
 class UserMsg{
   final String userId;
   final String userName;
-  final String token;
+  String? token;
   final String avatarUrl;
   UserMsg({this.userId="",this.userName="",this.token="",this.avatarUrl=""});
   UserMsg.fromMap(Map<dynamic,dynamic> json): userId = json['userId'],
