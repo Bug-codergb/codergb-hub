@@ -242,5 +242,50 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getSimilarVideoCountService(ctx,id){
+    try{
+      const sql=`
+      select count(DISTINCT(v.id)) as count
+      from category as c
+      LEFT JOIN video as v on v.cateId = c.id
+      LEFT JOIN tag_video as tv on tv.vId = v.id
+      LEFT JOIN tag on tag.id = tv.tId
+      LEFT JOIN video_file as vf on vf.videoId =v.id
+      LEFT JOIN file as f on f.id = vf.fileId
+      where c.id = ? and vf.mark="cover"`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getSimilarVideoService(ctx,id,offset,limit){
+    try{
+      const sql=`
+      select v.id,v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,f.picUrl,
+       (select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
+			 from user as u where u.userId = v.userId) as user,
+			 JSON_OBJECT('id',v.cateId,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime) AS category,
+			 JSON_ARRAYagg(JSON_OBJECT('id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime)) as tag
+       from category as c
+       LEFT JOIN video as v on v.cateId = c.id
+       LEFT JOIN tag_video as tv on tv.vId = v.id
+       LEFT JOIN tag on tag.id = tv.tId
+       LEFT JOIN video_file as vf on vf.videoId =v.id
+       LEFT JOIN file as f on f.id = vf.fileId
+       where c.id = ? and vf.mark="cover"
+       GROUP BY v.id
+       ORDER BY v.playCount desc
+       limit ?,?`;
+      const result = await connection.execute(sql,[id,offset,limit]);
+      const count = await new VideoService().getSimilarVideoCountService(ctx,id);
+      return {
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 module.exports  = new VideoService();

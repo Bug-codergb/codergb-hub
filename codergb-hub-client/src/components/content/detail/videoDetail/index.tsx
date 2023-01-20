@@ -31,6 +31,7 @@ import Dm from "./childCpn/dm";
 import {IDm} from "../../../../types/dm/IDm";
 import {getVideoDm} from "../../../../network/dm";
 import {getRandom, getRandomStr} from "../../../../utils/getRandom";
+import Similar from "./childCpn/similar";
 const VideoDetail:FC=():ReactElement=>{
   const location = useLocation();
   const { id } = location.state;
@@ -84,7 +85,7 @@ const VideoDetail:FC=():ReactElement=>{
         videoRef.current.src=vioURL;
       }
     }
-  },[videoRef.current,vioURL]);
+  },[videoRef.current,vioURL,vioId]);
   const pubSuccess=()=>{
     getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
       if(data.data.length!==0){
@@ -141,6 +142,10 @@ const VideoDetail:FC=():ReactElement=>{
   const playHandle=(item:IDm & {contentRef:MutableRefObject<HTMLLIElement | null>})=>{
     if( item.contentRef.current) item.contentRef.current.style.animationPlayState="running"
   }
+  const playVideo=(id:string)=>{
+    console.log(id)
+    setVioId(id);
+  }
   return (
       <VideoDetailWrapper>
         <CenterContent>
@@ -182,7 +187,11 @@ const VideoDetail:FC=():ReactElement=>{
             </div>
           </LeftContentWrapper>
           <RightContentWrapper>
-
+            <Similar id={videoDetail?.category.id}
+                     videoId={videoDetail?.id}
+                     userId={videoDetail?.user.userId}
+                     userName={videoDetail?.user.userName}
+                     play={(id:string)=>playVideo(id)} />
           </RightContentWrapper>
         </CenterContent>
       </VideoDetailWrapper>

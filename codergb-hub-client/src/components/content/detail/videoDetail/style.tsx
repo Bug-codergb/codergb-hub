@@ -18,7 +18,7 @@ export const LeftContentWrapper:any = styled.div`
   width: 67%;
   padding: ${20/40}rem 0;
   .video-dm-container{
-    width: ${1150/40}rem;
+    width: ${1190/40}rem;
     height: ${600/40}rem;
     position:relative ;
     overflow: hidden;
@@ -78,5 +78,5 @@ export const LeftContentWrapper:any = styled.div`
   }
 `
 export const RightContentWrapper = styled.div`
-
+ padding: 0 0 0 ${26/40}rem; 
 `

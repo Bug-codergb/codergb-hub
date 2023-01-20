@@ -10,7 +10,8 @@ const {
   getVideoURL,
   getVideoDetail,
   getSubUserVio,
-  getThumbUserVio
+  getThumbUserVio,
+  getSimilarVideo
 } = require("../controller/video.controller")
 //视频上传文件信息
 videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
@@ -27,4 +28,6 @@ videoRouter.post("/detail/:id",authVerify,getVideoDetail);
 videoRouter.post("/sub/user/:id",authVerify,getSubUserVio);
 //获取用户点赞视频
 videoRouter.post("/thumb/user/:id" , authVerify,getThumbUserVio);
+//获取相关视频
+videoRouter.post("/similar/:id",authVerify,getSimilarVideo);
 module.exports = videoRouter;

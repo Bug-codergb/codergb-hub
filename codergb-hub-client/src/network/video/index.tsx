@@ -104,3 +104,13 @@ export function getThumbUserVideo<T=IResponseType<any>>(userId:string,offset:num
     }
   })
 }
+//获取相关视频
+export function getSimilarVideo<T=IResponseType<any>>(id:string,offset:number,limit:number){
+  return gbRequest.post<T>({
+    url:"/video/similar/"+id,
+    params:{
+      offset,
+      limit
+    }
+  })
+}

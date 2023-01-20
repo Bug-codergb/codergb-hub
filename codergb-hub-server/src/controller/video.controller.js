@@ -13,7 +13,8 @@ const {
   getVideoURLService,
   getVideoDetailService,
   getSubUserVioService,
-  getThumbUserVioService
+  getThumbUserVioService,
+  getSimilarVideoService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -160,6 +161,20 @@ class VideoController{
       const result = await getThumbUserVioService(ctx,id,offset,limit);
       if(result){
         setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getSimilarVideo(ctx,next){
+    try{
+      const {id} = ctx.params;//分类ID
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await getSimilarVideoService(ctx,id,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }else{
+        setResponse(ctx,e.message,500,{})
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
