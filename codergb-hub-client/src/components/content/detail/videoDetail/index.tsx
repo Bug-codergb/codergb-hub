@@ -61,8 +61,9 @@ const VideoDetail:FC=():ReactElement=>{
       }else{
         setVideoDm([]);
       }
-      getVideoURL<IResponseType<{vioUrl:string}>>(id).then((data)=>{
+      getVideoURL<IResponseType<{vioUrl:string}>>(vioId).then((data)=>{
         if(data.status===200){
+          console.log(data.data.vioUrl)
           setVioURL(data.data.vioUrl);
         }
       })
@@ -85,7 +86,7 @@ const VideoDetail:FC=():ReactElement=>{
         videoRef.current.src=vioURL;
       }
     }
-  },[videoRef.current,vioURL,vioId]);
+  },[videoRef.current,vioURL]);
   const pubSuccess=()=>{
     getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
       if(data.data.length!==0){
@@ -143,7 +144,6 @@ const VideoDetail:FC=():ReactElement=>{
     if( item.contentRef.current) item.contentRef.current.style.animationPlayState="running"
   }
   const playVideo=(id:string)=>{
-    console.log(id)
     setVioId(id);
   }
   return (
@@ -188,6 +188,7 @@ const VideoDetail:FC=():ReactElement=>{
           </LeftContentWrapper>
           <RightContentWrapper>
             <Similar id={videoDetail?.category.id}
+                     key={vioId}
                      videoId={videoDetail?.id}
                      userId={videoDetail?.user.userId}
                      userName={videoDetail?.user.userName}

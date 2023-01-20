@@ -1,6 +1,7 @@
 import React, {memo, FC, ReactElement, useState, FormEvent} from "react";
-import {Modal, Input, Select} from "antd";
+import {Modal, Input, Select,notification} from "antd";
 import {EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
+import type { NotificationPlacement } from 'antd/es/notification';
 import {
   AddWrapper
 } from "./style";
@@ -25,6 +26,15 @@ const Add:FC<IProps>=(props):ReactElement=>{
 
   const [name,setName] = useState<string>("");
   const [isPublic,setIsPublic] = useState<number>(0);
+
+  const openNotification = (placement: NotificationPlacement) => {
+    notification.info({
+      message: `已成功添加至稍后观看`,
+      description: '在"稍后观看"查看您添加的视频',
+      placement,
+    });
+  };
+
   const liClick=(item:IAddType)=>{
     if(item.name === ADD_PLAYLIST){
       console.log(1)
@@ -32,9 +42,11 @@ const Add:FC<IProps>=(props):ReactElement=>{
     }
     if(item.name === ADD_WATCH_LATER){
       addLater(id).then(data=>{
+        console.log(data)
         if(data.status===200){
-
+          openNotification('bottomLeft');
         }
+      }).catch(err=>{
       })
     }
   }

@@ -9,3 +9,8 @@ export function getAllCate<T=IResponseType<any>>(offset:number,limit:number){
     }
   })
 }
+export function getCateExplore<T=IResponseType<any>>(){
+  return gbRequest.get<T>({
+    url:"/cate/explore",
+  })
+}

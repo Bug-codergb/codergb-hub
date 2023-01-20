@@ -33,7 +33,15 @@ class CategoryService{
       setResponse(ctx,e.message,500,{})
     }
   }
-
+  async getExploreService(ctx){
+    try{
+      const sql=`select * from category where isExplore = 1`;
+      const result =await connection.execute(sql);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 
 module.exports = new CategoryService();
