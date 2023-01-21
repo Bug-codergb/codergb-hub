@@ -1,0 +1,24 @@
+html{
+  font-size:2.083333333333vw;
+}
+:root{
+  --primary-color:#ff0000
+}
+*{
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+}
+input,button{
+  outline: none;
+  border: none;
+}
+ul,li{
+  list-style: none;
+}
+
+p{
+  padding: 0;
+  margin: 0;
+}
