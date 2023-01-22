@@ -12,7 +12,7 @@
       </div>
       <div class="control-btn">
         <div class="register-btn">注册</div>
-        <div class="login-btn">登录</div>
+        <div class="login-btn" @click="login">登录</div>
       </div>
     </div>
   </div>
@@ -20,10 +20,21 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import useLoginStore from './store';
+import { useRouter } from 'vue-router';
+import { HOME_PATH } from '@/router/constant';
+const loginMsg = useLoginStore();
+const router = useRouter();
 const account = reactive({
   userName: '',
   password: ''
 });
+const login = async () => {
+  const res = await loginMsg.loginAction(account.userName, account.password);
+  if (res) {
+    await router.push(HOME_PATH);
+  }
+};
 </script>
 
 <style scoped lang="less">

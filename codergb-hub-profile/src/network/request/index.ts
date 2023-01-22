@@ -1,4 +1,4 @@
-import axios, { RawAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface GBRequestInterceptors<T = AxiosResponse> {

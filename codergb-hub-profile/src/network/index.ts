@@ -1,7 +1,6 @@
 import GBRequest from './request/index';
 import { HOST_NAME } from '@/constant/host';
 import localCache from '../utils/cache';
-import { AxiosHeaders } from 'axios';
 
 const gbRequest = new GBRequest({
   baseURL: HOST_NAME,
