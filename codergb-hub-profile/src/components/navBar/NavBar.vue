@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-menu
-      default-active="2"
       class="el-menu-vertical-demo"
       @open="handleOpen"
+      default-active="1-1"
       @close="handleClose"
     >
       <template v-for="item in menu" :key="item.index">

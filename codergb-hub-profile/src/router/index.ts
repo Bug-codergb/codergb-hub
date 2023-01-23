@@ -31,6 +31,10 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     children: [
       {
+        path: HOME_PATH,
+        redirect: VIDEO_PATH
+      },
+      {
         path: VIDEO_PATH,
         name: 'video',
         component: VideoPage
