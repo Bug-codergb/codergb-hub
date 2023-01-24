@@ -20,7 +20,7 @@ import {
   VIDEO_PATH,
   PLAYLIST_PATH
 } from '@/router/constant';
-
+import * as detailRoutes from './detail/index';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -69,7 +69,8 @@ const routes: Array<RouteRecordRaw> = [
         path: USER_PATH,
         name: 'user',
         component: UserPage
-      }
+      },
+      detailRoutes.collectionRoute
     ]
   }
 ];

@@ -11,20 +11,20 @@ class TagService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async getTagCountService(ctx){
+  async getTagCountService(ctx,keyword){
     try{
-      const sql = `select count(*) as count from tag`;
+      const sql = `select count(*) as count from tag ${keyword.length!==0 ? `where name like '%${keyword}%'`:''}`;
       const result = await connection.execute(sql);
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }
   }
-  async getAllTagService(ctx,offset,limit){
+  async getAllTagService(ctx,offset,limit,keyword){
     try{
-      const sql=`select * from tag limit ?,?`;
+      const sql=`select * from tag ${keyword.length!==0 ? `where name like '%${keyword}%'`:''} limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
-      const count = await new TagService().getTagCountService(ctx);
+      const count = await new TagService().getTagCountService(ctx,keyword);
       return {
         list:result[0],
         count:count[0].count

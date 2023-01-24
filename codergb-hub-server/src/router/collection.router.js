@@ -5,8 +5,10 @@ const {
 } = require("../middleware/login.middleware");
 const {
   create,
-  addVideo
+  addVideo,
+  allCollection
 } = require("../controller/collection.controller");
 collectionRouter.post("/",authVerify,create);
 collectionRouter.post("/video",authVerify,addVideo);//将视频添加至集合
+collectionRouter.get("/all",authVerify,allCollection);
 module.exports = collectionRouter;

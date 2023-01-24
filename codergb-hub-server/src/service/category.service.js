@@ -11,20 +11,21 @@ class CategoryService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async getCateCount(ctx){
+  async getCateCount(ctx,keyword){
     try{
-      const sql=`select count(*) as count from category`;
+      const sql=`select count(*) as count from category ${keyword.length!==0 ? `where name like '%${keyword}%'`:''}`;
       const result = await connection.execute(sql);
       return result[0]
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }
   }
-  async getAllCateService(ctx,offset,limit){
+  async getAllCateService(ctx,offset,limit,keyword){
     try{
-      const sql=`select * from category limit ?,?`;
+      const sql=`select * from category ${keyword.length!==0 ? `where name like '%${keyword}%'`:''} limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
-      const count = await new CategoryService().getCateCount(ctx);
+      const count = await new CategoryService().getCateCount(ctx,keyword);
+      console.log(count)
       return {
         count:count[0].count,
         list:result[0],

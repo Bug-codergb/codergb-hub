@@ -2,7 +2,7 @@
   <div>
     <GbHeader :header="header" :isShowRefresh="true" />
     <GbTable :tableData="tableData" ref="gbTable" />
-    <CreateCate ref="createCateRef" />
+    <CreateTag ref="createTagRef" />
   </div>
 </template>
 
@@ -15,12 +15,12 @@ import { IResponseType } from '@/types/responseType';
 import { ICate } from '@/types/category/ICate';
 import { IPage } from '@/types/IPage';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
-import CreateCate from './childCpn/CreateCate.vue';
+import CreateTag from './childCpn/CreateTag';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
-const createCateRef = ref<InstanceType<typeof CreateCate>>();
+const createTagRef = ref<InstanceType<typeof CreateTag>>();
 const tableData = reactive({
-  url: '/cate/all',
+  url: '/tag/all',
   method: 'get',
   pageSize: 9,
   params: {
@@ -70,8 +70,8 @@ const tableData = reactive({
           text: '编辑',
           type: 'primary',
           onClick: (row: ICate, index: number) => {
-            if (createCateRef.value) {
-              createCateRef.value.showDrawer(row);
+            if (createTagRef.value) {
+              createTagRef.value.showDrawer(row);
             }
           }
         },
@@ -89,7 +89,7 @@ const tableData = reactive({
 const header = reactive([
   {
     type: 'input',
-    hint: '请输入分类名称',
+    hint: '请输入标签名称',
     id: '23',
     bingParam: '',
     attr: {

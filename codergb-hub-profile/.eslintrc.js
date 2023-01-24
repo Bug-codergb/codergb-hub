@@ -22,6 +22,7 @@ module.exports = {
     'prefer-rest-params': 'off',
     ' @typescript-eslint/no-this-alias': 'off',
     ' @typescript-eslint/explicit-module-boundary-types': 'off',
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
+    '@typescript-eslint/no-this-alias': 'off'
   }
 };

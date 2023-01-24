@@ -21,8 +21,8 @@ class CategoryController{
   }
   async getAllCate(ctx,next){
     try{
-      const { offset="0",limit="30" } = ctx.query;
-      const result = await getAllCateService(ctx,offset,limit);
+      const { offset="0",limit="30",keyword="" } = ctx.query;
+      const result = await getAllCateService(ctx,offset,limit,keyword);
       setResponse(ctx,"success",200,result)
     }catch (e) {
       setResponse(ctx,e.message,500,{});

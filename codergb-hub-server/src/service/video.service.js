@@ -70,7 +70,7 @@ class VideoService{
           LEFT JOIN tag on tag.id = tv.tId
           where vf.mark="cover"
            ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
-      ${tag!==null && tag.length!==0? `and tv.tId in (${tag.join(",")})`:''}
+      ${tag!==null && tag.length!==0? `and tag.id in (${tag.join(",")})`:''}
       ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
           ORDER BY v.createTime desc`;
       const result = await connection.execute(sql);
@@ -84,9 +84,12 @@ class VideoService{
       const sql=`
       select DISTINCT(v.id),v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,JSON_OBJECT(
          'id',c.id,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
-			 ) as category,f.picUrl,JSON_ARRAYAGG(JSON_OBJECT(
-			   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
-			 )) as tag,(select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
+			 ) as category,f.picUrl,(select JSON_ARRAYAGG(JSON_OBJECT(
+\t\t\t   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
+\t\t\t )) from tag_video as tv
+\t\t\t   \tLEFT JOIN tag on tag.id = tv.tId
+\t\t\t\t\twhere tv.vId = v.id
+\t\t\t ) as tag,(select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
                         from user as u where u.userId=v.userId) as user
       from video as v
       LEFT JOIN category as c on c.id = v.cateId
@@ -96,7 +99,7 @@ class VideoService{
       LEFT JOIN tag on tag.id = tv.tId
       where vf.mark="cover"
       ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
-      ${tag!==null && tag.length!==0? `and tv.tId in (${tag.join(",")})`:''}
+      ${tag!==null && tag.length!==0? `and tag.id in (${tag.join(",")})`:''}
       ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
       GROUP BY v.id
       ORDER BY v.createTime desc

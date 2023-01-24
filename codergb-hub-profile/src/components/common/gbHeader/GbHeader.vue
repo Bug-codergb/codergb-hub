@@ -6,7 +6,7 @@
           <el-input
             v-model="item.bingParam"
             :placeholder="item.hint"
-            @input="item.onChange"
+            @input="keywordInp(item)"
             v-bind="{ ...item.attr }"
           />
         </template>
@@ -40,6 +40,8 @@
 <script lang="ts" setup>
 import { defineProps, ref, isReactive } from 'vue';
 import { Refresh } from '@element-plus/icons-vue';
+import { debounce } from '@/utils/debounce';
+
 const props = defineProps({
   header: {
     type: Object,
@@ -62,6 +64,13 @@ const changeRotate = () => {
     isRotate.value = false;
   }, 2000);
 };
+const keywordInp = debounce(
+  (item) => {
+    item.onChange(item.bingParam);
+  },
+  1000,
+  false
+);
 </script>
 
 <style scoped lang="less">

@@ -1,6 +1,12 @@
 <template>
   <div class="gb-table">
-    <el-table :data="tableList.list" style="width: 100%" :height="tableData.height">
+    <el-table
+      row-key="id"
+      :data="tableList.list"
+      style="width: 100%"
+      :height="tableData.height"
+      @selection-change="selectionChange"
+    >
       <template v-for="item in tableData.columns" :key="item.prop">
         <template v-if="!item.btns">
           <el-table-column
@@ -9,7 +15,7 @@
             v-bind="{ ...item }"
           ></el-table-column>
         </template>
-        <template v-if="item.btns && item.btns.length !== 0">
+        <template v-if="isOperate && item.btns && item.btns.length !== 0">
           <el-table-column #default="scope" :label="item.label" v-bind="{ ...item }">
             <el-button
               v-for="it in item.btns"
@@ -24,7 +30,7 @@
         </template>
       </template>
     </el-table>
-    <div class="page">
+    <div class="page" v-if="total > tableData.pageSize">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -37,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineExpose, reactive, ref } from 'vue';
+import { defineProps, defineExpose, defineEmits, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { IResponseType } from '@/types/responseType';
 import { IPage } from '@/types/IPage';
@@ -48,8 +54,13 @@ const props = defineProps({
     default() {
       return {};
     }
+  },
+  isOperate: {
+    type: Boolean,
+    default: true
   }
 });
+const emit = defineEmits(['selectionChange']);
 let tableList = reactive<{ list: any[] }>({
   list: []
 });
@@ -108,6 +119,9 @@ const btnClick = (it: any, scope: any) => {
   } else {
     it.onClick(scope.row, scope.$index);
   }
+};
+const selectionChange = (row: unknown) => {
+  emit('selectionChange', row);
 };
 defineExpose({
   search
