@@ -1,4 +1,11 @@
-import { VIDEO_COLLECTION, VIDEO_DICT, VIDEO_DM, VIDEO_PATH } from '@/router/constant';
+import {
+  PLAYLIST_PATH,
+  USER_PATH,
+  VIDEO_COLLECTION,
+  VIDEO_DICT,
+  VIDEO_DM,
+  VIDEO_PATH
+} from '@/router/constant';
 
 const menu = [
   {
@@ -25,6 +32,30 @@ const menu = [
         index: '1-4',
         name: '字典',
         path: VIDEO_DICT
+      }
+    ]
+  },
+  {
+    index: '3',
+    name: '播放列表',
+    icon: 'memo',
+    children: [
+      {
+        index: '3-1',
+        name: '播放列表',
+        path: PLAYLIST_PATH
+      }
+    ]
+  },
+  {
+    index: '2',
+    name: '用户管理',
+    icon: 'user',
+    children: [
+      {
+        index: '2-1',
+        name: '用户',
+        path: USER_PATH
       }
     ]
   }

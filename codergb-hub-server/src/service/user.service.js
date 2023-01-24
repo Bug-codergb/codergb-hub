@@ -108,5 +108,30 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
+  async getAllUserCountService(ctx){
+    try{
+      const sql=`select count(u.userId) as count
+                 from user as u`;
+      const result = await connection.execute(sql);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500);
+    }
+  }
+  async getAllUserService(ctx,offset,limit){
+    try{
+      const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore
+                  from user as u
+                  limit ?,?`;
+      const result = await connection.execute(sql,[offset,limit]);
+      const count = await new UserService().getAllUserCountService(ctx);
+      return {
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500);
+    }
+  }
 }
 module.exports=new UserService();

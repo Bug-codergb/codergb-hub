@@ -58,7 +58,7 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async allVideoCountService(ctx){
+  async allVideoCountService(ctx,keyword,tag,cate){
     try{
       const sql=`
       select count(DISTINCT(v.id)) as count
@@ -69,6 +69,9 @@ class VideoService{
           LEFT JOIN tag_video as tv on tv.vId = v.id
           LEFT JOIN tag on tag.id = tv.tId
           where vf.mark="cover"
+           ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+      ${tag!==null && tag.length!==0? `and tv.tId in (${tag.join(",")})`:''}
+      ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
           ORDER BY v.createTime desc`;
       const result = await connection.execute(sql);
       return result[0];
@@ -76,7 +79,7 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async allVideoService(ctx,offset,limit){
+  async allVideoService(ctx,offset,limit,keyword,tag,cate){
     try{
       const sql=`
       select DISTINCT(v.id),v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,JSON_OBJECT(
@@ -92,11 +95,14 @@ class VideoService{
       LEFT JOIN tag_video as tv on tv.vId = v.id
       LEFT JOIN tag on tag.id = tv.tId
       where vf.mark="cover"
+      ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+      ${tag!==null && tag.length!==0? `and tv.tId in (${tag.join(",")})`:''}
+      ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
       GROUP BY v.id
       ORDER BY v.createTime desc
       limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
-      const count = await new VideoService().allVideoCountService(ctx);
+      const count = await new VideoService().allVideoCountService(ctx,keyword,tag,cate);
       return {
         count:count[0].count,
         list:result[0]

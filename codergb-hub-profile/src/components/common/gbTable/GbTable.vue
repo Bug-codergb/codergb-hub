@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, reactive, ref } from 'vue';
+import { defineProps, defineExpose, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { IResponseType } from '@/types/responseType';
 import { IPage } from '@/types/IPage';
@@ -54,13 +54,13 @@ let tableList = reactive<{ list: any[] }>({
   list: []
 });
 const total = ref<number>(0);
-const getTableDataReq = async (offset: number, limit: number) => {
+const getTableDataReq = async (offset: number, limit: number, data: any, params: any) => {
   const result = await gbRequest.request<IResponseType<IPage<any[]>>>({
     url: props.tableData.url,
     method: props.tableData.method,
-    data: props.tableData.data,
+    data: data,
     params: {
-      ...props.tableData.params,
+      ...params,
       offset,
       limit
     }
@@ -71,11 +71,27 @@ const getTableDataReq = async (offset: number, limit: number) => {
     console.log(tableList.list, total.value);
   }
 };
-getTableDataReq(0, props.tableData.pageSize ? props.tableData.pageSize : 10);
+//初始化调用
+getTableDataReq(
+  0,
+  props.tableData.pageSize ? props.tableData.pageSize : 10,
+  props.tableData.data,
+  props.tableData.params
+);
 const currentChange = (e: number) => {
   getTableDataReq(
     (e - 1) * (props.tableData.pageSize ? props.tableData.pageSize : 10),
-    props.tableData.pageSize ? props.tableData.pageSize : 10
+    props.tableData.pageSize ? props.tableData.pageSize : 10,
+    props.tableData.data,
+    props.tableData.params
+  );
+};
+const search = () => {
+  getTableDataReq(
+    0,
+    props.tableData.pageSize ? props.tableData.pageSize : 10,
+    props.tableData.data,
+    props.tableData.params
   );
 };
 const btnClick = (it: any, scope: any) => {
@@ -93,6 +109,9 @@ const btnClick = (it: any, scope: any) => {
     it.onClick(scope.row, scope.$index);
   }
 };
+defineExpose({
+  search
+});
 </script>
 
 <style scoped lang="less">

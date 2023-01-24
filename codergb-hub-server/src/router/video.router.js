@@ -19,7 +19,7 @@ videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
 //视频创建(数据库信息)
 videoRouter.post("/create",authVerify,createVideo);
 //获取所有视频
-videoRouter.get("/all",authVerify,allVideo);
+videoRouter.post("/all",authVerify,allVideo);
 //获取视频URL
 videoRouter.get("/url/:id",authVerify,getVideoURL);
 //获取视频详情

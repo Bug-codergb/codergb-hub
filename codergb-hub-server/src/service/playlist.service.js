@@ -21,7 +21,11 @@ class PlaylistService{
   }
   async getAllPlaylistService(ctx,offset,limit){
     try{
-      const sql=`select * from playlist limit ?,?`;
+      const sql=`select p.id,p.name,p.isPublic,p.description,p.createTime,p.updateTime,
+                 JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
+                 from playlist as p
+                 left join user as u on u.userId = p.userId
+                 limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
       const count = await new PlaylistService().getPlaylistCount(ctx);
       return {

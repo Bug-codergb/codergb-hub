@@ -109,9 +109,14 @@ class VideoController{
   async allVideo(ctx,next){
     try{
       const {offset="0",limit="30"} = ctx.query;
-      const result = await allVideoService(ctx,offset,limit);
-      if(result){
-        setResponse(ctx,"success",200,result);
+      const { keyword="",tag=[],cate="" } = ctx.request.body;
+      if(!Array.isArray(tag)){
+        setResponse(ctx,'标签必须为数组',400,{});
+      }else{
+        const result = await allVideoService(ctx,offset,limit , keyword,tag,cate);
+        if(result){
+          setResponse(ctx,"success",200,result);
+        }
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

@@ -9,10 +9,9 @@
           <NavBar />
         </el-aside>
         <el-container>
-          <el-main>
+          <el-main class="codergb-main">
             <RouterView />
           </el-main>
-          <el-footer></el-footer>
         </el-container>
       </el-container>
     </el-container>
@@ -35,5 +34,10 @@ loginInit.userMsg = localCache.getCache('userMsg');
 }
 .codergb-aside {
   border-right: 1px solid var(--line-color);
+}
+.codergb-main {
+  height: 89vh;
+  overflow-y: scroll;
+  background-color: #fff;
 }
 </style>

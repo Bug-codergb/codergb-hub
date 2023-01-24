@@ -7,7 +7,8 @@ const {
   uploadAvatarService,
   getUserMsgService,
   userMsgService,
-  userVideoService
+  userVideoService,
+  getAllUserService
 } = require("../service/user.service");
 const {APP_HOST,APP_PORT} = require("../app/config")
 class UserController{
@@ -101,6 +102,17 @@ class UserController{
       const { offset ="0",limit="30"}= ctx.query;
       const {keyword = ""} = ctx.request.body;
       const result = await userVideoService(ctx,id,offset,limit,keyword);
+      if(result){
+        setResponse(ctx,"success",200,result)
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500)
+    }
+  }
+  async getAllUser(ctx,next){
+    try{
+      const { offset="0" ,limit="30" } = ctx.request.query;
+      const result = await getAllUserService(ctx,offset,limit);
       if(result){
         setResponse(ctx,"success",200,result)
       }
