@@ -296,5 +296,63 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getColVideoCountService(ctx,id,keyword,tag,cate){
+    try{
+      const sql=`
+      select count(DISTINCT(v.id)) as count
+      from collection as col
+      INNER JOIN collection_video as cv on cv.cId = col.id
+      LEFT JOIN video as v on v.id=cv.vId
+      LEFT JOIN category as c on c.id = v.cateId
+      LEFT JOIN video_file as vf on vf.videoId = v.id
+      LEFT JOIN file as f on f.id = vf.fileId
+      LEFT JOIN tag_video as tv on tv.vId = v.id
+      LEFT JOIN tag on tag.id = tv.tId
+      where vf.mark="cover" and col.id=?
+      ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+      ${tag!==null && tag.length!==0? `and tag.id in (${tag.join(",")})`:''}
+      ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
+  async getColVideoService(ctx,id,offset,limit,keyword,tag,cate){
+    try{
+      const sql=`select DISTINCT(v.id),v.name,v.description,v.dt,v.playCount,v.createTime,v.updateTime,JSON_OBJECT(
+         'id',c.id,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
+			 ) as category,f.picUrl,(select JSON_ARRAYAGG(JSON_OBJECT(
+\t\t\t   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
+\t\t\t )) from tag_video as tv
+\t\t\t   \tLEFT JOIN tag on tag.id = tv.tId
+\t\t\t\t\twhere tv.vId = v.id
+\t\t\t ) as tag,(select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
+									from user as u where u.userId=v.userId) as user
+       from collection as col
+       INNER JOIN collection_video as cv on cv.cId = col.id
+       LEFT JOIN video as v on v.id=cv.vId
+       LEFT JOIN category as c on c.id = v.cateId
+       LEFT JOIN video_file as vf on vf.videoId = v.id
+       LEFT JOIN file as f on f.id = vf.fileId
+       LEFT JOIN tag_video as tv on tv.vId = v.id
+       LEFT JOIN tag on tag.id = tv.tId
+       where vf.mark="cover" and col.id=?
+       ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+      ${tag!==null && tag.length!==0? `and tag.id in (${tag.join(",")})`:''}
+      ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
+       GROUP BY v.id
+       ORDER BY v.createTime desc
+       limit ?,?`;
+      const result = await connection.execute(sql,[id,offset,limit]);
+      const count = await new VideoService().getColVideoCountService(ctx,id,keyword,tag,cate);
+      return {
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+
+    }
+  }
 }
 module.exports  = new VideoService();

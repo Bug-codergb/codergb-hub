@@ -29,6 +29,7 @@
           </el-table-column>
         </template>
       </template>
+      <slot name="end"></slot>
     </el-table>
     <div class="page" v-if="total > tableData.pageSize">
       <el-pagination

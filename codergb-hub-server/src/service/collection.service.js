@@ -11,10 +11,20 @@ class CollectionService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async addVideoService(ctx,vId,cId,sort){
+  async addVideoService(ctx,vId,cId){
     try{
-      const sql='insert into collection_video(cId,vId,sort) values(?,?,?)';
-      const result = await connection.execute(sql,[cId,vId,sort]);
+      let values=[];
+      for(let item of vId){
+        values.push(`(?,?,?)`);
+      }
+      let sqlValues = values.join(",");
+      const sql=`insert into collection_video(cId,vId,sort) values${sqlValues}`;
+      let execArr=[];
+      for(let item of vId){
+        execArr = execArr.concat(cId,item.id,item.sort);
+      }
+      const result = await connection.execute(sql,execArr);
+      console.log(result)
       return result[0]
     }catch (e) {
       console.log(e)
@@ -53,6 +63,30 @@ class CollectionService{
       }
     }catch (e) {
 
+    }
+  }
+  async getColDetailService(ctx,id){
+    try{
+      const sql=`
+      select c.id,c.name,c.createTime,c.updateTime,f.picUrl,
+			 JSON_OBJECT('userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
+       from collection as c
+       LEFT JOIN user as u on u.userId = c.userId
+       LEFT JOIN file as f on f.id = c.cover
+       where c.id = ?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async delColVideoService(ctx,cId,vId){
+    try{
+      const sql=`delete from collection_video where cId=? and vId=?`;
+      const result = await connection.execute(sql,[cId,vId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
     }
   }
 }

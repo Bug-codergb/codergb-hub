@@ -2,7 +2,7 @@
   <GbDrawer
     v-model="drawer"
     :title="title"
-    width="70%"
+    width="75%"
     @openDrawer="openDrawer"
     @confirm="confirmHandle"
   >

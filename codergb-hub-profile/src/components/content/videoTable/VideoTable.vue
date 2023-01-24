@@ -5,7 +5,11 @@
     ref="gbTable"
     :isOperate="isOperate"
     @selectionChange="selectionChange"
-  />
+  >
+    <template v-slot:end>
+      <slot name="video-end"></slot>
+    </template>
+  </GbTable>
 </template>
 
 <script lang="ts" setup>
@@ -26,6 +30,10 @@ const props = defineProps({
   isOperate: {
     type: Boolean,
     default: true
+  },
+  url: {
+    type: String,
+    default: ''
   }
 });
 const emit = defineEmits(['selectionChange']);
@@ -35,7 +43,7 @@ const cateList = reactive<{ list: ICate }>({
 });
 
 const tableData = reactive({
-  url: '/video/all',
+  url: props.url,
   method: 'post',
   pageSize: 9,
   params: {

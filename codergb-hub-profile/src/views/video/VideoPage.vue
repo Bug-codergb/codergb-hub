@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VideoTable />
+    <VideoTable url="/video/all" />
   </div>
 </template>
 

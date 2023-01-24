@@ -14,7 +14,8 @@ const {
   getVideoDetailService,
   getSubUserVioService,
   getThumbUserVioService,
-  getSimilarVideoService
+  getSimilarVideoService,
+  getColVideoService
 } = require("../service/video.service")
 class VideoController{
   async uploadVideo(ctx,next){
@@ -180,6 +181,23 @@ class VideoController{
         setResponse(ctx,"success",200,result);
       }else{
         setResponse(ctx,e.message,500,{})
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getColVideo(ctx,next){
+    try{
+      const { offset="0",limit="30" } = ctx.query;
+      const { id } = ctx.params;
+      const { keyword="",tag=[],cate="" } = ctx.request.body;
+      if(!Array.isArray(tag)){
+        setResponse(ctx,'标签必须为数组',400,{});
+      }else{
+        const result = await getColVideoService(ctx,id,offset,limit,keyword,tag,cate);
+        if(result){
+          setResponse(ctx,"success",200,result);
+        }
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
