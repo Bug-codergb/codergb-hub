@@ -24,10 +24,8 @@ class CollectionService{
         execArr = execArr.concat(cId,item.id,item.sort);
       }
       const result = await connection.execute(sql,execArr);
-      console.log(result)
       return result[0]
     }catch (e) {
-      console.log(e)
       setResponse(ctx,e.message,500,{});
     }
   }

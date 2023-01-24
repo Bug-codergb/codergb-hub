@@ -49,6 +49,8 @@ class CollectionController{
           if(flag){
             const result = await addVideoService(ctx,vId,cId);
             setResponse(ctx,"success",200, {});
+          }else{
+            setResponse(ctx,"视频ID或者sort不能为空",400, {});
           }
         }
       }
