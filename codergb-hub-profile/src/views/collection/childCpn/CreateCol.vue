@@ -13,7 +13,9 @@ import Create from '@/components/content/create/Create.vue';
 import { ICate } from '@/types/category/ICate';
 import { createPlaylist } from '@/network/playlist';
 import { ElMessage } from 'element-plus';
-
+import { createCol } from '@/network/collection';
+import useLoginStore from '@/views/login/store/index';
+const userMsg = useLoginStore();
 const emit = defineEmits(['refresh']);
 const drawer = ref(false);
 const title = ref('新增集合');
@@ -27,7 +29,8 @@ defineExpose({
 const formData = reactive({
   data: {
     name: '',
-    avatar: null
+    cover: '',
+    desc: ''
   }
 });
 const tableConstructor = reactive([
@@ -49,6 +52,23 @@ const tableConstructor = reactive([
   [
     {
       type: {
+        name: 'input',
+        attr: {
+          style: 'width:100%',
+          rows: '2',
+          type: 'textarea'
+        }
+      },
+      hint: '请输入集合简介',
+      label: '简介',
+      prop: 'desc',
+      required: true,
+      trigger: 'blur'
+    }
+  ],
+  [
+    {
+      type: {
         name: 'avatar',
         attr: {
           style: 'width:100%',
@@ -57,29 +77,28 @@ const tableConstructor = reactive([
       },
       hint: '请选择集合封面',
       label: '集合封面',
-      prop: 'avatar',
+      prop: 'cover',
       required: true,
       trigger: 'change'
     }
   ]
 ]);
 const confirmHandle = () => {
-  console.log(formData);
-  console.log(create.value.ruleFormRef);
   if (create.value && create.value.ruleFormRef) {
     create.value.ruleFormRef.validate(async (e: boolean) => {
       if (e) {
-        const result = await createPlaylist(
+        const result = await createCol(
           formData.data.name,
-          formData.data.description,
-          formData.data.isPublic
+          formData.data.cover,
+          userMsg.userMsg.userId,
+          formData.data.desc
         );
         if (result.status === 200) {
           drawer.value = false;
           emit('refresh');
           ElMessage({
             type: 'success',
-            message: '播放列表创建成功'
+            message: '集合创建成功'
           });
         }
       }

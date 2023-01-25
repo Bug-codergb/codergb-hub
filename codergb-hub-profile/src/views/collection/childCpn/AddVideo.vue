@@ -24,12 +24,18 @@ import VideoTable from '@/components/content/videoTable/VideoTable.vue';
 import { ICollection } from '@/types/collection/ICollection';
 import { IVideo } from '@/types/video/IVideo';
 import { ElMessage } from 'element-plus';
+import { addVideoToCol, IVCol } from '@/network/collection';
 
 const videoTable = ref<InstanceType<typeof VideoTable>>(null);
 const drawer = ref(false);
 const title = ref('添加视频');
 const selectVideo = reactive<{ list: IVideo[] }>({
   list: []
+});
+const collection = reactive<{
+  item: ICollection | null;
+}>({
+  item: null
 });
 const openDrawer = () => {
   if (videoTable.value) {
@@ -43,8 +49,9 @@ const selectionChange = (item: IVideo[]) => {
 };
 const showDrawer = (data: ICollection) => {
   drawer.value = true;
+  collection.item = data;
 };
-const confirmHandle = (close) => {
+const confirmHandle = async (close) => {
   if (selectVideo.list.length === 0) {
     ElMessage({
       type: 'warning',
@@ -52,7 +59,22 @@ const confirmHandle = (close) => {
     });
     return;
   } else {
-    close();
+    const list: IVCol[] = selectVideo.list.map((item) => {
+      return {
+        id: item.id,
+        sort: 12
+      };
+    });
+    if (collection.item) {
+      const result = await addVideoToCol(list, collection.item.id);
+      if (result.status === 200) {
+        ElMessage({
+          type: 'success',
+          message: '添加成功'
+        });
+        close();
+      }
+    }
   }
 };
 defineExpose({

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <GbHeader :header="header" :isShowRefresh="true" />
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
     <GbTable :tableData="tableData" ref="gbTable" />
-    <CreateCol ref="createColRef" />
+    <CreateCol ref="createColRef" @refresh="refresh" />
     <AddVideo ref="addVideo" />
   </div>
 </template>
@@ -94,11 +94,7 @@ const tableData = reactive({
         {
           text: '编辑',
           type: 'primary',
-          onClick: (row: ICollection, index: number) => {
-            if (createColRef.value) {
-              createColRef.value.showDrawer(row);
-            }
-          }
+          onClick: (row: ICollection, index: number) => {}
         },
         {
           text: '删除',
@@ -126,6 +122,14 @@ const header = reactive([
     }
   }
 ]);
+const createHandle = () => {
+  if (createColRef.value) {
+    createColRef.value.showDrawer();
+  }
+};
+const refresh = () => {
+  gbTable.value.search();
+};
 </script>
 
 <style scoped lang="less"></style>

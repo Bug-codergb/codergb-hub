@@ -108,23 +108,33 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
-  async getAllUserCountService(ctx){
+  async getAllUserCountService(ctx,isExplore){
     try{
       const sql=`select count(u.userId) as count
-                 from user as u`;
-      const result = await connection.execute(sql);
+                 from user as u
+                 ${isExplore!==-1?`where isExplore = ?`:``}`;
+      let exeArr=[];
+      if(isExplore!==-1){
+        exeArr=[isExplore];
+      }
+      const result = await connection.execute(sql,exeArr);
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500);
     }
   }
-  async getAllUserService(ctx,offset,limit){
+  async getAllUserService(ctx,offset,limit,isExplore){
     try{
       const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore
                   from user as u
+                  ${isExplore!==-1?`where isExplore = ?`:``}
                   limit ?,?`;
-      const result = await connection.execute(sql,[offset,limit]);
-      const count = await new UserService().getAllUserCountService(ctx);
+      let exeArr=[offset,limit];
+      if(isExplore!==-1){
+        exeArr=[isExplore,offset,limit];
+      }
+      const result = await connection.execute(sql,exeArr);
+      const count = await new UserService().getAllUserCountService(ctx,isExplore);
       return {
         count:count[0].count,
         list:result[0]

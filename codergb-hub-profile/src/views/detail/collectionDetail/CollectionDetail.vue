@@ -2,8 +2,8 @@
   <div class="collection-detail">
     <div class="detail-header">
       <el-row>
-        <el-col :span="4" class="img-container">
-          <el-image :src="colDetail.detail.picUrl" />
+        <el-col :span="3" class="img-container">
+          <el-image :src="colDetail.detail.picUrl" fit="contain" />
         </el-col>
         <el-col :span="18">
           <el-row class="item">
@@ -106,6 +106,11 @@ const delHandle = (item: IVideo) => {
 <style scoped lang="less">
 .img-container {
   margin: 0 (20/40rem) 0 0;
+  .el-image {
+    width: (180/40rem);
+    height: (180/40rem);
+    background-color: var(--img-bgc);
+  }
 }
 .item {
   margin: 0 (20/40rem) 0 0;

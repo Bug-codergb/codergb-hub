@@ -33,7 +33,7 @@
                   </template>
                   <template v-if="!isPrev">
                     <el-icon class="upload-icon"><Picture class="upload-icon" /></el-icon>
-                    <input type="file" @change="fileChange" />
+                    <input type="file" @change="(e) => fileChange(e, it.prop)" />
                   </template>
                 </div>
               </template>
@@ -42,12 +42,22 @@
         </el-row>
       </template>
     </el-form>
+    <GbUpload
+      v-model="isShowUpload"
+      :file="file"
+      :aspectRatio="1"
+      :realWidth="200"
+      :itemWidth="100"
+      :scale="1"
+      @confirm="confirmHandle"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, defineExpose, reactive, watch, ref } from 'vue';
+import { defineProps, defineEmits, defineExpose, reactive, watch, ref, nextTick } from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
+import GbUpload from '@/components/common/gbUpload/GbUpload.vue';
 const props = defineProps({
   tableConstructor: {
     type: Array,
@@ -62,11 +72,14 @@ const props = defineProps({
     }
   }
 });
+const emit = defineEmits(['update:modelValue']);
 const newFormData = ref(JSON.parse(JSON.stringify(props.modelValue)));
 const ruleFormRef = ref<FormInstance>();
 const imgURL = ref('');
 const isPrev = ref(false);
-const emit = defineEmits(['update:modelValue']);
+const isShowUpload = ref(false);
+const file = ref();
+const imgProp = ref('');
 watch(
   newFormData,
   (newVal) => {
@@ -92,7 +105,21 @@ for (let item of props.tableConstructor) {
   }
 }
 const rules = reactive<FormRules>(ruleObj);
-const fileChange = () => {};
+const fileChange = (e: Event, prop: string) => {
+  imgProp.value = prop;
+  const tar = e.target as HTMLInputElement;
+  if (tar.files && tar.files[0]) {
+    isShowUpload.value = true;
+    nextTick(() => {
+      file.value = tar.files![0];
+    });
+  }
+};
+const confirmHandle = (e: { file: File; id: string }) => {
+  isPrev.value = true;
+  imgURL.value = URL.createObjectURL(e.file);
+  newFormData.value[imgProp.value] = e.id;
+};
 defineExpose({
   ruleFormRef
 });
@@ -111,6 +138,9 @@ defineExpose({
     .upload-icon {
       font-size: (50/40rem);
       color: var(--primary-color);
+    }
+    img {
+      height: 100%;
     }
     & > input {
       position: absolute;
