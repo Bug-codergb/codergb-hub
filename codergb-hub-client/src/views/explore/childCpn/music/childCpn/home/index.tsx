@@ -1,5 +1,5 @@
 import React, {memo, FC, useEffect, useState} from 'react';
-import { Image } from 'antd';
+import {Image, Pagination} from 'antd';
 import {
   HomeWrapper
 } from "./style"
@@ -8,6 +8,7 @@ import {getUserCol} from "../../../../../../network/collection";
 import {IResponseType} from "../../../../../../types/responseType";
 import {IPage} from "../../../../../../types/IPage";
 import HolderCpn from "../../../../../../components/holder";
+import holder from "../../../../../../assets/img/placeholder.png"
 interface IProps{
   userId:string
 }
@@ -23,6 +24,14 @@ const Home:FC<IProps>=(props)=>{
       }
     })
   },[userId])
+  const pageChange=(e:number)=>{
+    getUserCol<IResponseType<IPage<ICollection[]>>>(userId,(e-1)*8,8).then((data)=>{
+      if(data.status===200){
+        setTotal(data.data.count);
+        setCollection(data.data.list);
+      }
+    })
+  }
   return <HomeWrapper>
     <ul className='col-list'>
       {
@@ -30,11 +39,16 @@ const Home:FC<IProps>=(props)=>{
           return (
               <li key={item.id}>
                 <div className='left-container'>
-                  <Image className={'img-cover'} width={120} height={120} src={item.picUrl} alt={item.name} preview={false}/>
+                  <Image className={'img-cover'}
+                         width={120}
+                         height={120}
+                         src={item.picUrl}
+                         fallback={holder} preview={false}/>
                 </div>
                 <div className='right-container'>
-                  <p className="name">{item.name}</p>
+                  <p className="name text-nowrap-mul-line">{item.name}</p>
                   <p className={'desc text-nowrap-mul-line'}>{item.description}</p>
+                  <p className='count'>{item.count}个作品</p>
                 </div>
               </li>
           )
@@ -44,6 +58,9 @@ const Home:FC<IProps>=(props)=>{
         HolderCpn(collection.length, 4, 350)
       }
     </ul>
+    <div className='page'>
+      <Pagination defaultCurrent={1} pageSize={8} total={total} onChange={e=>pageChange(e)}/>
+    </div>
   </HomeWrapper>
 }
 export default memo(Home);

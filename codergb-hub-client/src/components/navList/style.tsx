@@ -56,6 +56,7 @@ export const NavListWrapper= styled.div`
       .nav-name{
         margin: 0 0 0 ${20/40}rem;
         font-size: ${20/40}rem;
+        width: ${170/40}rem;
       }
     }
   }

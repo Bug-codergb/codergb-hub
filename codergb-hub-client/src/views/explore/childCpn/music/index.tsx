@@ -42,7 +42,7 @@ const Music:FC<IProps>=(props)=>{
               <div className={'sub'}>1.8亿位订阅</div>
             </div>
           </div>
-          <div className="left-container">
+          <div className="right-container">
             订阅
           </div>
         </div>

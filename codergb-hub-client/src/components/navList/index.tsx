@@ -156,7 +156,7 @@ const NavList:FC<IProps>=(props):ReactElement=>{
                     <div className="nav-icon">
                       {currentIndex === index+mainMenu.length?item.shadowIcon : item.icon}
                     </div>
-                    <div className="nav-name">{item.name}</div>
+                    <div className="nav-name text-nowrap" title={item.name}>{item.name}</div>
                   </li>
               )
             })

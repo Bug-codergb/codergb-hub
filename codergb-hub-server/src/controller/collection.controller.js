@@ -8,6 +8,9 @@ const {
   delColVideoService,
   getUserColService
 } = require("../service/collection.service");
+const {
+  getColVideoCountService
+} = require("../service/video.service");
 class CollectionController{
   async create(ctx,next){
     try{
@@ -99,6 +102,10 @@ class CollectionController{
       const  { id } = ctx.params;
       const result = await getUserColService(ctx,id,offset,limit);
       if(result){
+        for(let item of result.list){
+         let count = await getColVideoCountService(ctx,item.id,'',[],'');
+         item.count = count[0].count;
+        }
         setResponse(ctx,"success",200, result);
       }
     }catch (e) {

@@ -315,7 +315,7 @@ class VideoService{
       const result = await connection.execute(sql,[id]);
       return result[0];
     }catch (e) {
-
+      console.log(e)
     }
   }
   async getColVideoService(ctx,id,offset,limit,keyword,tag,cate){
