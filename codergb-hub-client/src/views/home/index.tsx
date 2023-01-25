@@ -16,7 +16,7 @@ const Home:FC=():ReactElement=>{
               <HeaderTop/>
             </Header>*/}
             <Layout>
-              <Sider>
+              <Sider className={'codergb-sider'}>
                 <NavList isHome={true}/>
               </Sider>
               <Content>

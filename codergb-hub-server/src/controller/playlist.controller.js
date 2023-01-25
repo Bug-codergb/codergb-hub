@@ -16,7 +16,6 @@ class PlaylistController{
       const {userId} = ctx.user;
       const id = new Date().getTime();
       const {name="",description="",isPublic=1} = ctx.request.body;
-      console.log(name);
       if(!isEmpty(ctx,name,"播放列表名称不能为空") && !isEmpty(ctx,isPublic,"播放列表是否为公开不能为空")){
         const result = await createService(ctx,id,name,description,userId,isPublic);
         if(result){
@@ -31,7 +30,8 @@ class PlaylistController{
   async getAllPlaylist(ctx,next){
     try{
       const { offset="0",limit="30" } = ctx.query;
-      const result = await getAllPlaylistService(ctx,offset,limit);
+      const { keyword="", isPublic = -1 } = ctx.request.body;
+      const result = await getAllPlaylistService(ctx,offset,limit,keyword,isPublic);
       if(result){
         setResponse(ctx,"success",200,result);
       }

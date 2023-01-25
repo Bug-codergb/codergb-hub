@@ -28,6 +28,11 @@
       </template>
     </div>
     <div class="right-container">
+      <div class="create">
+        <slot>
+          <el-button type="primary" @click="createHandle">新增</el-button>
+        </slot>
+      </div>
       <template v-if="isShowRefresh">
         <div class="page-item-list-header-right">
           <el-icon :class="{ active: isRotate }" @click="changeRotate"><refresh /></el-icon>
@@ -38,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, isReactive } from 'vue';
+import { defineProps, defineEmits, ref, isReactive } from 'vue';
 import { Refresh } from '@element-plus/icons-vue';
 import { debounce } from '@/utils/debounce';
 
@@ -54,6 +59,7 @@ const props = defineProps({
     default: true
   }
 });
+const emit = defineEmits(['create']);
 if (!isReactive(props.header)) {
   console.error('header必须是一个reactive');
 }
@@ -64,8 +70,11 @@ const changeRotate = () => {
     isRotate.value = false;
   }, 2000);
 };
+const createHandle = () => {
+  emit('create');
+};
 const keywordInp = debounce(
-  (item) => {
+  (item: any) => {
     item.onChange(item.bingParam);
   },
   1000,
@@ -92,6 +101,13 @@ const keywordInp = debounce(
     }
   }
   .right-container {
+    display: flex;
+    align-items: center;
+    .create {
+      margin: 0 (15/40rem) 0 0;
+      display: flex;
+      align-items: center;
+    }
     .page-item-list-header-right {
       background-color: #00a1d6;
       display: flex;

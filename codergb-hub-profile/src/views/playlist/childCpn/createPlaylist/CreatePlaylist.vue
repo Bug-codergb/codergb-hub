@@ -16,7 +16,7 @@ import { ElMessage } from 'element-plus';
 
 const emit = defineEmits(['refresh']);
 const drawer = ref(false);
-const title = ref('新增集合');
+const title = ref('新增播放列表');
 const create = ref<InstanceType<typeof Create>>();
 const showDrawer = (data: ICate) => {
   drawer.value = true;
@@ -27,7 +27,8 @@ defineExpose({
 const formData = reactive({
   data: {
     name: '',
-    avatar: null
+    description: '',
+    isPublic: 1
   }
 });
 const tableConstructor = reactive([
@@ -39,7 +40,7 @@ const tableConstructor = reactive([
           style: 'width:100%'
         }
       },
-      hint: '请输入集合名称',
+      hint: '请输入播放列表名称',
       label: '名称',
       prop: 'name',
       required: true,
@@ -49,17 +50,41 @@ const tableConstructor = reactive([
   [
     {
       type: {
-        name: 'avatar',
+        name: 'select',
         attr: {
-          style: 'width:100%',
-          alias: 'avatar'
+          style: 'width:100%'
         }
       },
-      hint: '请选择集合封面',
-      label: '集合封面',
-      prop: 'avatar',
+      hint: '请输入播放列表状态',
+      label: '状态',
+      prop: 'isPublic',
       required: true,
-      trigger: 'change'
+      trigger: 'change',
+      options: [
+        {
+          label: '私有',
+          value: 0
+        },
+        {
+          label: '公开',
+          value: 1
+        }
+      ]
+    },
+    {
+      type: {
+        name: 'input',
+        attr: {
+          style: 'width:100%',
+          rows: '2',
+          type: 'textarea'
+        }
+      },
+      hint: '请输入播放列表简介',
+      label: '名称',
+      prop: 'description',
+      required: true,
+      trigger: 'blur'
     }
   ]
 ]);

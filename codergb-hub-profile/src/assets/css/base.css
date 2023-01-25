@@ -3,7 +3,8 @@ html{
 }
 :root{
   --primary-color:#ff0000;
-  --line-color:#dcdfe6
+  --line-color:#dcdfe6;
+  --img-bgc:#f5f7fa;
 }
 *{
   box-sizing: border-box;

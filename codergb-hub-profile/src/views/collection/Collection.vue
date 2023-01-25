@@ -16,14 +16,14 @@ import { IResponseType } from '@/types/responseType';
 import { ICate } from '@/types/category/ICate';
 import { IPage } from '@/types/IPage';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
-import CreateCate from './childCpn/CreateCol.vue';
+import CreateCol from './childCpn/CreateCol.vue';
 import AddVideo from './childCpn/AddVideo.vue';
 import { ICollection } from '@/types/collection/ICollection';
 import { useRouter } from 'vue-router';
 import { COLLECTION_DETAIL_PATH } from '@/router/constant';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
-const createColRef = ref<InstanceType<typeof CreateCate>>();
+const createColRef = ref<InstanceType<typeof CreateCol>>();
 const addVideo = ref<InstanceType<typeof AddVideo>>();
 const router = useRouter();
 const tableData = reactive({

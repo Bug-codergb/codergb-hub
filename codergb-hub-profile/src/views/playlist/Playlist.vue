@@ -1,23 +1,34 @@
 <template>
   <div class="playlist">
-    <GbTable :tableData="tableData" />
+    <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" />
+    <GbTable :tableData="tableData" ref="gbTable" />
+    <CreatePlaylist ref="createPlaylist" @refresh="refresh" :key="keyIndex" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { h, reactive } from 'vue';
+import { reactive, ref, nextTick } from 'vue';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
+import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { IPlaylist } from '../../types/playlist';
 import { IUserMsg } from '@/types/user/IUserMsg';
+import CreatePlaylist from './childCpn/createPlaylist/CreatePlaylist.vue';
 
+const gbTable = ref<InstanceType<typeof GbHeader>>();
+const createPlaylist = ref<InstanceType<typeof CreatePlaylist>>();
+const keyIndex = ref(0);
 const tableData = reactive({
   url: '/playlist/all',
-  method: 'get',
+  method: 'post',
   pageSize: 9,
   params: {
     offset: 0,
     limit: 9
+  },
+  data: {
+    keyword: '',
+    isPublic: -1
   },
   columns: [
     {
@@ -109,6 +120,61 @@ const tableData = reactive({
     }
   ]
 });
+const header = reactive([
+  {
+    type: 'input',
+    hint: '请输入播放列表名称',
+    id: 'name',
+    bingParam: '',
+    attr: {
+      clearable: true
+    },
+    onChange: (e: string) => {
+      tableData.data.keyword = e;
+      gbTable.value.search();
+    }
+  },
+  {
+    type: 'select',
+    hint: '请选择状态',
+    id: 'isPublic',
+    bingParam: -1,
+    attr: {
+      style: 'min-width:40%',
+      clearable: false
+    },
+    options: [
+      {
+        label: '全部',
+        value: -1
+      },
+
+      {
+        label: '私有',
+        value: 0
+      },
+      {
+        label: '公开',
+        value: 1
+      }
+    ],
+    onChange: (e: number) => {
+      tableData.data.isPublic = e;
+      gbTable.value.search();
+    }
+  }
+]);
+const newPlaylist = () => {
+  if (createPlaylist.value) {
+    createPlaylist.value.showDrawer();
+  }
+};
+const refresh = () => {
+  gbTable.value.search();
+  setTimeout(() => {
+    keyIndex.value = keyIndex.value + 1;
+  }, 500);
+};
 </script>
 
 <style scoped></style>

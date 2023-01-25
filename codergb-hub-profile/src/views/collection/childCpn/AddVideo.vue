@@ -7,7 +7,12 @@
     @confirm="confirmHandle"
   >
     <div>
-      <VideoTable :isOperate="false" ref="videoTable" @selectionChange="selectionChange" />
+      <VideoTable
+        :isOperate="false"
+        ref="videoTable"
+        @selectionChange="selectionChange"
+        url="/video/all"
+      />
     </div>
   </GbDrawer>
 </template>

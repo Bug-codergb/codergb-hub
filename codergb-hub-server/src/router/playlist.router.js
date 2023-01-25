@@ -12,7 +12,7 @@ const {
 //创建播放列表
 playlistRouter.post("/",authVerify,create);
 //获取所有播放列表
-playlistRouter.get("/all",authVerify,getAllPlaylist);
+playlistRouter.post("/all",authVerify,getAllPlaylist);
 //获取用户播放列表
 playlistRouter.get("/user/:id",authVerify,getUserPlaylist);
 //将视频添加到播放列表

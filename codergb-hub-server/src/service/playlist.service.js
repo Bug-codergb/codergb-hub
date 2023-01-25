@@ -10,24 +10,47 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getPlaylistCount(ctx){
+  async getPlaylistCount(ctx,keyword,isPublic){
     try{
-      const sql=`select count(*) as count from playlist`;
-      const result = await connection.execute(sql);
+      let pSQL = '',execArr=[];
+      if(keyword.trim().length!==0 && isPublic!==-1){
+        pSQL = `where name like '%${keyword}%' and isPublic = ?`;
+        execArr=[isPublic]
+      }else if(keyword.trim().length===0 && isPublic!==-1){
+        pSQL = `where isPublic = ?`;
+        execArr=[isPublic]
+      }else if(keyword.trim().length!==0 && isPublic === -1){
+        pSQL = `where name like '%${keyword}%'`;
+      }
+      const sql=`select count(*) as count from playlist ${pSQL}`;
+      const result = await connection.execute(sql,execArr);
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getAllPlaylistService(ctx,offset,limit){
+  async getAllPlaylistService(ctx,offset,limit,keyword,isPublic){
     try{
+      let pSQL = '',execArr=[offset,limit];
+      if(keyword.trim().length!==0 && isPublic!==-1){
+        pSQL = `where name like '%${keyword}%' and isPublic = ?`;
+        execArr=[isPublic,offset,limit]
+      }else if(keyword.trim().length===0 && isPublic!==-1){
+        pSQL = `where isPublic = ?`;
+        execArr=[isPublic,offset,limit]
+      }else if(keyword.trim().length!==0 && isPublic === -1){
+        pSQL = `where name like '%${keyword}%'`;
+      }
       const sql=`select p.id,p.name,p.isPublic,p.description,p.createTime,p.updateTime,
                  JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
                  from playlist as p
                  left join user as u on u.userId = p.userId
+                 ${pSQL}
+                 order by p.createTime desc
                  limit ?,?`;
-      const result = await connection.execute(sql,[offset,limit]);
-      const count = await new PlaylistService().getPlaylistCount(ctx);
+      console.log(sql)
+      const result = await connection.execute(sql,execArr);
+      const count = await new PlaylistService().getPlaylistCount(ctx,keyword,isPublic);
       return {
         count:count[0].count,
         list:result[0],

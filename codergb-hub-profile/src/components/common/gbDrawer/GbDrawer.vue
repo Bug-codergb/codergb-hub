@@ -40,7 +40,7 @@ const props = defineProps({
     default: '30%'
   }
 });
-const emit = defineEmits(['update:modelValue', 'openDrawer']);
+const emit = defineEmits(['update:modelValue', 'openDrawer', 'confirm']);
 const direction = ref('rtl');
 
 const showDrawer = computed({
@@ -48,7 +48,6 @@ const showDrawer = computed({
     return props.modelValue;
   },
   set(value: boolean) {
-    console.log(value);
     emit('update:modelValue', value);
   }
 });
