@@ -50,7 +50,7 @@ class HistoryService{
   async userHistoryService(ctx,userId,keyword,offset,limit){
     try{
       const sql=`
-      select  DISTINCT(v.id),v.name,v.description,v.createTime,v.updateTime,history.createTime as history,JSON_OBJECT(
+      select  DISTINCT(v.id),v.name,v.description,v.createTime,v.dt,v.updateTime,history.createTime as history,JSON_OBJECT(
          'id',c.id,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
 			 ) as category,f.picUrl,JSON_ARRAYAGG(JSON_OBJECT(
 			   'id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime

@@ -1,4 +1,4 @@
-import React, {memo, FC, ReactElement, useEffect, useState, useRef, createRef, RefObject} from "react";
+import React, {memo, FC, ReactElement, useEffect, useState, useRef, createRef, RefObject,useMemo} from "react";
 import { useNavigate } from "react-router-dom";
 import {
   RecommendWrapper
@@ -18,10 +18,11 @@ const Recommend:FC=():ReactElement=>{
   const [video,setVideo] = useState<IRecommendVideo[]>([]);
   const [videoURL,setVideoURL]=useState<string>("");
   const [currentIndex,setCurrentIndex]=useState<number>(-1);
+  const [timer,setTimer] = useState<NodeJS.Timeout | null>(null);
 
   const [isRight,setIsRight] = useState<boolean>(false);
   const [isLeft,setIsLeft] = useState<boolean>(false);
-  let timer:NodeJS.Timeout|null =null;
+
   const navigate = useNavigate();
   const vioRef = useRef<HTMLVideoElement>(null);
   const vioListRef = useRef<HTMLUListElement>(null);
@@ -82,18 +83,19 @@ const Recommend:FC=():ReactElement=>{
       setIsLeft(isL);
     }
     if(timer) clearTimeout(timer);
-     timer = setTimeout(async()=>{
+     let timeoutTimer = setTimeout(async()=>{
+       console.log(3333333333333333333)
        setCurrentIndex(index);
        const res = await getVideoURL(item.id);
        if(res.status===200){
          setVideoURL(res.data.vioUrl);
        }
-     },1500)
+     },2500);
+     setTimer(timeoutTimer);
   };
   const mouseLeaveHandle=()=>{
-    console.log(timer)
-    if(timer!==null) clearTimeout(timer);
     setCurrentIndex(-1)
+    if(timer!==null) clearTimeout(timer);
   }
   return (
     <RecommendWrapper isLeftBoundray={isLeft} isRightBoundray={isRight}>
