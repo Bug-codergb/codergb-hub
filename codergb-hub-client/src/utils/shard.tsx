@@ -40,25 +40,6 @@ async function chunkHandle(HASH:string,index:number,file:File,name:string,
       await socketOpen(websocket);
       videoId = await getSocketMsg(websocket,handle);
       return await socketClose(websocket,videoId);
-      /*websocket.onmessage=function(e){
-        let res = JSON.parse(e.data);
-        let percent = res.percent? res.percent : 0;
-        if(res.isProgress===false){
-          videoId = res.id;
-        }else{
-          handle(percent);
-        }
-      }
-      websocket.onclose = function (){
-        console.log("socket 关闭");
-        return {
-          status:200,
-          data:{
-            id:videoId
-          }
-        };
-      }*/
-      //const res = await mergeVideo(dest,HASH,name,type,total);
     }
     let end = index*chunkSize + chunkSize;
     if(end > total-1){

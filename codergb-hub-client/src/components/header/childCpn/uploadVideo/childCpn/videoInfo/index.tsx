@@ -22,13 +22,14 @@ import {deleteImage, uploadImage} from "../../../../../../network/image";
 import {IResponseType} from "../../../../../../types/responseType";
 import {IImage} from "../../../../../../types/upload/image";
 import {IPlaylist} from "../../../../../../types/playlist/IPlaylist";
-import {getAllPlaylist} from "../../../../../../network/playlist";
+import {getAllPlaylist, getUserPlaylist} from "../../../../../../network/playlist";
 import {IPage} from "../../../../../../types/IPage";
 import {ITag} from "../../../../../../types/tag/ITag";
 import {getAllTag} from "../../../../../../network/tag";
 import {ICate} from "../../../../../../types/category/ICate";
 import {getAllCate} from "../../../../../../network/category";
 import {IUploadVideo} from "../../../../../../types/imperative/uploadVideo";
+import {useLoginMsg} from "../../../../../../hook/useLoginMsg";
 const { TextArea } = Input;
 const { Option } = Select;
 interface IProps{
@@ -45,7 +46,7 @@ const VideoInfo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
   const [isShowAbbreviation,setIsShowAbbreviation] = useState<boolean>(true);
   const [imgURL,setImgURL] = useState<string>("");
   const [imgID,setImgID]=useState<string>("");
-
+  const login = useLoginMsg();
   //播放列表
   const [playlist,setPlaylist]=useState<IPlaylist[]>([]);
   const uploadRef = useRef<any>(null);
@@ -74,7 +75,7 @@ const VideoInfo:FC<IProps>=forwardRef<IUploadVideo,IProps>((props,propsRef)=>{
     }
   },[imgID,title,desc,playlistParam,cateParam,tagParam.length]);
   useEffect(()=>{
-    getAllPlaylist<IResponseType<IPage<IPlaylist[]>>>(0,10).then(data=>{
+    getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(login.userMsg.userId,0,10).then(data=>{
       if(data.status===200){
         setPlaylist(data.data.list);
       }
