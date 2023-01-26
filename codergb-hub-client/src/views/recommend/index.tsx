@@ -22,6 +22,7 @@ const Recommend:FC=():ReactElement=>{
 
   const [isRight,setIsRight] = useState<boolean>(false);
   const [isLeft,setIsLeft] = useState<boolean>(false);
+  const [isTop,setIsTop] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const vioRef = useRef<HTMLVideoElement>(null);
@@ -58,14 +59,23 @@ const Recommend:FC=():ReactElement=>{
       }
     })
   }
-  const isBoundary=(containerWidth:number,itemWidth:number,itemOffset:number,boundary:'left'|'right'):boolean=>{
+  const isBoundary=(containerWidth:number,itemWidth:number,itemOffset:number,boundary:'left'|'right'|'top'):boolean=>{
+     console.log(containerWidth,itemOffset,itemWidth)
     if(boundary === 'right'){
-      if(containerWidth - itemOffset <= itemWidth){
+      if(containerWidth - itemOffset-16 <= itemWidth){
         return true;
       }else{
         return false;
       }
     }else if(boundary === 'left'){
+      console.log(itemWidth,itemOffset)
+      if(itemOffset < itemWidth){
+        console.log(itemWidth,itemOffset)
+        return true;
+      }else{
+        return false;
+      }
+    }else if(boundary==='top'){
       if(itemOffset < itemWidth){
         return true;
       }else{
@@ -81,10 +91,11 @@ const Recommend:FC=():ReactElement=>{
       setIsRight(isR);
       const isL = isBoundary(vioListRef.current.offsetWidth,item.vioRef.current.offsetWidth,item.vioRef.current.offsetLeft,'left');
       setIsLeft(isL);
+      const isT = isBoundary(vioListRef.current.offsetHeight,item.vioRef.current.offsetHeight,item.vioRef.current.offsetTop,'top');
+      setIsTop(isT);
     }
     if(timer) clearTimeout(timer);
      let timeoutTimer = setTimeout(async()=>{
-       console.log(3333333333333333333)
        setCurrentIndex(index);
        const res = await getVideoURL(item.id);
        if(res.status===200){
@@ -98,7 +109,7 @@ const Recommend:FC=():ReactElement=>{
     if(timer!==null) clearTimeout(timer);
   }
   return (
-    <RecommendWrapper isLeftBoundray={isLeft} isRightBoundray={isRight}>
+    <RecommendWrapper isLeftBoundray={isLeft} isRightBoundray={isRight} isTopBoundray={isTop}>
       <ul className="video-list" ref={vioListRef} >
         {
           video && video.length!==0 && video.map((item,index)=>{
