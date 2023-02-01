@@ -12,7 +12,7 @@
   </GbTable>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import moment from 'moment';
 import { reactive, ref, defineProps, defineEmits, defineExpose } from 'vue';
 import { IVideo } from '@/types/video/IVideo';
@@ -25,7 +25,7 @@ import { getAllCate } from '@/network/category';
 import { IResponseType } from '@/types/responseType';
 import { IPage } from '@/types/IPage';
 import { getAllTag } from '@/network/tag';
-
+import { getRandColor } from '@/constant/color';
 const props = defineProps({
   isOperate: {
     type: Boolean,
@@ -38,7 +38,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['selectionChange']);
 const gbTable = ref<InstanceType<typeof GbHeader>>();
-const cateList = reactive<{ list: ICate }>({
+const cateList = reactive<{ list: ICate[] }>({
   list: []
 });
 
@@ -90,7 +90,11 @@ const tableData = reactive({
       formatter: (row: IVideo) => {
         const { tag } = row;
         return tag.map((item: ITag) => {
-          return item.name + ' ';
+          return (
+            <el-tag type="success" color={getRandColor()} effect="light">
+              {item.name}
+            </el-tag>
+          );
         });
       }
     },
@@ -108,7 +112,7 @@ const tableData = reactive({
       label: '创建时间',
       'min-width': 160,
       formatter: (row: IVideo) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
@@ -116,7 +120,7 @@ const tableData = reactive({
       label: '更新时间',
       'min-width': 160,
       formatter: (row: IVideo) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
@@ -238,4 +242,9 @@ defineExpose({
 });
 </script>
 
-<style scoped></style>
+<style lang="less">
+.el-tag__content {
+  color: #ffffff !important;
+}
+</style>
+<style scoped lang="less"></style>

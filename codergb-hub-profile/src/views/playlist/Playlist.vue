@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { reactive, ref, nextTick } from 'vue';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
@@ -14,6 +14,7 @@ import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { IPlaylist } from '../../types/playlist';
 import { IUserMsg } from '@/types/user/IUserMsg';
 import CreatePlaylist from './childCpn/createPlaylist/CreatePlaylist.vue';
+import { View, Hide } from '@element-plus/icons-vue';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createPlaylist = ref<InstanceType<typeof CreatePlaylist>>();
@@ -34,21 +35,35 @@ const tableData = reactive({
     {
       prop: 'name',
       label: '名称',
-      'min-width': 100
+      'min-width': 150
     },
     {
       prop: 'isPublic',
       label: '状态',
-      'min-width': 90,
+      'min-width': 120,
       formatter: (row: IPlaylist) => {
         const { isPublic } = row;
-        return isPublic === 1 ? '公开' : '私有';
+        return isPublic === 1 ? (
+          <div class="playlist-status">
+            <el-icon>
+              <View />
+            </el-icon>
+            <span class="label">公开</span>
+          </div>
+        ) : (
+          <div class="playlist-status">
+            <el-icon>
+              <Hide />
+            </el-icon>
+            <span class="label">私有</span>
+          </div>
+        );
       }
     },
     {
       prop: 'user',
       label: '用户',
-      'min-width': 100,
+      'min-width': 120,
       formatter: (row: IPlaylist) => {
         const { user } = row;
         return user.userName;
@@ -57,17 +72,17 @@ const tableData = reactive({
     {
       prop: 'createTime',
       label: '创建时间',
-      'min-width': 160,
+      'min-width': 140,
       formatter: (row: IPlaylist) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
       prop: 'updateTime',
       label: '更新时间',
-      'min-width': 160,
+      'min-width': 140,
       formatter: (row: IPlaylist) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
@@ -176,5 +191,15 @@ const refresh = () => {
   }, 500);
 };
 </script>
-
-<style scoped></style>
+<style lang="less">
+.playlist {
+  .playlist-status {
+    display: flex;
+    align-items: center;
+    .label {
+      margin: 0 0 0 (15/40rem);
+    }
+  }
+}
+</style>
+<style scoped lang="less"></style>

@@ -65,7 +65,7 @@ export const LeftContentWrapper:any = styled.div`
     }
   }
   .video-container{
-    width: ${1150/40}rem;
+    width: ${1190/40}rem;
     height: ${600/40}rem;
     overflow: hidden;
     background-color: black;

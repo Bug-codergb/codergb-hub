@@ -20,8 +20,13 @@ const emit = defineEmits(['refresh']);
 const drawer = ref(false);
 const title = ref('新增集合');
 const create = ref<InstanceType<typeof Create>>();
-const showDrawer = (data: ICate) => {
+const showDrawer = (data: ICate | null) => {
   drawer.value = true;
+  if (!data) {
+    formData.data.name = '';
+    formData.data.cover = '';
+    formData.data.desc = '';
+  }
 };
 defineExpose({
   showDrawer
@@ -76,7 +81,7 @@ const tableConstructor = reactive([
         }
       },
       hint: '请选择集合封面',
-      label: '集合封面',
+      label: '封面',
       prop: 'cover',
       required: true,
       trigger: 'change'
