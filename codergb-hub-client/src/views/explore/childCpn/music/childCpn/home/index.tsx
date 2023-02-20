@@ -1,4 +1,5 @@
 import React, {memo, FC, useEffect, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import {Image, Pagination} from 'antd';
 import {
   HomeWrapper
@@ -16,6 +17,7 @@ const Home:FC<IProps>=(props)=>{
   const { userId } = props;
   const [collection,setCollection] = useState<ICollection[]>([]);
   const [total,setTotal] = useState<number>(0);
+  const navigate = useNavigate();
   useEffect(()=>{
     getUserCol<IResponseType<IPage<ICollection[]>>>(userId,0,8).then((data)=>{
       if(data.status===200){
@@ -32,6 +34,14 @@ const Home:FC<IProps>=(props)=>{
       }
     })
   }
+  const videoRouter=(item:ICollection)=>{
+    navigate("/videoDetail",{
+      replace:true,
+      state:{
+        cId:item.id
+      }
+    })
+  }
   return <HomeWrapper>
     <ul className='col-list'>
       {
@@ -43,6 +53,7 @@ const Home:FC<IProps>=(props)=>{
                          width={120}
                          height={120}
                          src={item.picUrl}
+                         onClick={()=>videoRouter(item)}
                          fallback={holder} preview={false}/>
                 </div>
                 <div className='right-container'>

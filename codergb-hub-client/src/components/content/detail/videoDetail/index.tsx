@@ -48,32 +48,34 @@ const VideoDetail:FC=():ReactElement=>{
   const contentRef = useRef<HTMLUListElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   useEffect(()=>{
-    getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
-      if(data.data.length!==0){
-        setDmTotal(data.data.length)
-        let list:(IDm & {contentRef:MutableRefObject<HTMLLIElement|null>})[] = data.data.map((item,index)=>{
-          return {
-            ...item,
-            contentRef: createRef<HTMLLIElement>(),
+    if(vioId){
+      getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
+        if(data.data.length!==0){
+          setDmTotal(data.data.length)
+          let list:(IDm & {contentRef:MutableRefObject<HTMLLIElement|null>})[] = data.data.map((item,index)=>{
+            return {
+              ...item,
+              contentRef: createRef<HTMLLIElement>(),
+            }
+          })
+          setVideoDm(list);
+        }else{
+          setVideoDm([]);
+        }
+        getVideoURL<IResponseType<{vioUrl:string}>>(vioId).then((data)=>{
+          if(data.status===200){
+            console.log(data.data.vioUrl)
+            setVioURL(data.data.vioUrl);
           }
         })
-        setVideoDm(list);
-      }else{
-        setVideoDm([]);
-      }
-      getVideoURL<IResponseType<{vioUrl:string}>>(vioId).then((data)=>{
+      })
+
+      getVideoDetail(vioId).then((data)=>{
         if(data.status===200){
-          console.log(data.data.vioUrl)
-          setVioURL(data.data.vioUrl);
+          setVideoDetail(data.data)
         }
       })
-    })
-
-    getVideoDetail(vioId).then((data)=>{
-      if(data.status===200){
-        setVideoDetail(data.data)
-      }
-    })
+    }
   },[vioId])
   useEffect(()=>{
     if(videoRef.current){
@@ -178,7 +180,9 @@ const VideoDetail:FC=():ReactElement=>{
             </div>
             <Dm id={vioId} time={currentTime} pub={()=>pubSuccess()}/>
             <div className="video-info">
-              <VideoInfo videoInfo={videoDetail}/>
+              {
+                videoDetail&&videoDetail.user && <VideoInfo videoInfo={videoDetail}/>
+              }
             </div>
             <div className="video-comment">
               {
@@ -187,12 +191,14 @@ const VideoDetail:FC=():ReactElement=>{
             </div>
           </LeftContentWrapper>
           <RightContentWrapper>
-            <Similar id={videoDetail?.category.id}
-                     key={vioId}
-                     videoId={videoDetail?.id}
-                     userId={videoDetail?.user.userId}
-                     userName={videoDetail?.user.userName}
-                     play={(id:string)=>playVideo(id)} />
+            {
+              videoDetail&&videoDetail.user&&<Similar id={videoDetail?.category.id}
+                                    key={vioId}
+                                    videoId={videoDetail?.id}
+                                    userId={videoDetail?.user.userId}
+                                    userName={videoDetail?.user.userName}
+                                    play={(id:string)=>playVideo(id)} />
+            }
           </RightContentWrapper>
         </CenterContent>
       </VideoDetailWrapper>

@@ -130,6 +130,7 @@ class VideoService{
   }
   //获取视频详情
   async getVideoDetailService(ctx,id){
+    console.log("success");
     try{
       const sql=`
       select v.id,v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,f.picUrl,
