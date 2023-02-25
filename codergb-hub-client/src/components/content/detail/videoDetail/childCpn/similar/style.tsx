@@ -58,6 +58,7 @@ export const SimilarWrapper = styled.div`
           white-space: normal;
           display: flex;
           flex-wrap: wrap;
+          word-break: break-all;
         }
         .dt-play-count{
           display: flex;

@@ -1,11 +1,13 @@
 import React,{memo,FC} from "react";
+import Common from "../common";
 interface IProps{
   userId:string
 }
 const Game:FC<IProps>=(props)=>{
+  const {userId} = props;
   return (
       <div>
-        游戏
+        <Common userId={userId}/>
       </div>
   )
 }

@@ -69,6 +69,7 @@ export const VideoItemWrapper:any = styled.div`
             -webkit-line-clamp: 2;
             overflow: hidden;
             width:100%;
+            word-break: break-all;
           }
           .more{
             width: 10%;

@@ -89,6 +89,9 @@ const VideoDetail:FC=():ReactElement=>{
       }
     }
   },[videoRef.current,vioURL]);
+  useEffect(()=>{
+    document.title=videoDetail?.name??"youtube"
+  },[videoDetail])
   const pubSuccess=()=>{
     getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
       if(data.data.length!==0){
