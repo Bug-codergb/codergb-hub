@@ -16,10 +16,11 @@ import {addLater} from "../../../network/later";
 
 const { Option } = Select;
 interface IProps{
-  id:string
+  id:string,
+  changeShow:()=>void
 }
 const Add:FC<IProps>=(props):ReactElement=>{
-  const { id } = props;
+  const { id ,changeShow} = props;
   const [isShowAddPlay,setIsShowPlay] = useState<boolean>(false);
   const [isCreate,setIsCreate] = useState<boolean>(false);
   const [keyIndex,setKeyIndex] = useState<number>(1);
@@ -37,7 +38,6 @@ const Add:FC<IProps>=(props):ReactElement=>{
 
   const liClick=(item:IAddType)=>{
     if(item.name === ADD_PLAYLIST){
-      console.log(1)
       setIsShowPlay(true);
     }
     if(item.name === ADD_WATCH_LATER){
@@ -49,6 +49,7 @@ const Add:FC<IProps>=(props):ReactElement=>{
       }).catch(err=>{
       })
     }
+    changeShow();
   }
   const cancelHandle=()=>{
     setIsShowPlay(false);
@@ -74,7 +75,11 @@ const Add:FC<IProps>=(props):ReactElement=>{
     if(checked){
       addVideoPlaylist(id,item.id).then((data)=>{
         if(data.status===200){
-          console.log(data);
+          notification.info({
+            message: `已成功添加至${item.name}`,
+            description: `在"${item.name}"查看您添加的视频`,
+            placement:'bottomLeft',
+          });
         }
       })
     }
@@ -87,18 +92,18 @@ const Add:FC<IProps>=(props):ReactElement=>{
               return (
                   <li key={item.name} onClick={e=>liClick(item)}>
                     <div className="icon">{item.icon}</div>
-                    <div className="name">{item.name}</div>
+                    <div className="name">{isShowAddPlay+''}{item.name}</div>
                   </li>
               )
             })
           }
         </ul>
-        <Modal title="保存到..."
+        <Modal key={id}
+               title="保存到..."
                width={"30%"}
                destroyOnClose={true}
                maskClosable={false}
                open={isShowAddPlay}
-               getContainer={".add-list"}
                onCancel={e=>cancelHandle()}
                footer={(!isCreate)?[
                  <div className="add-new-playlist">
@@ -132,7 +137,7 @@ const Add:FC<IProps>=(props):ReactElement=>{
                   </div>
                ]}>
           {
-            isShowAddPlay && <Playlist key={keyIndex} select={(checked,item)=>checkHandle(checked,item)}/>
+            isShowAddPlay && <Playlist key={id} select={(checked,item)=>checkHandle(checked,item)}/>
           }
         </Modal>
       </AddWrapper>

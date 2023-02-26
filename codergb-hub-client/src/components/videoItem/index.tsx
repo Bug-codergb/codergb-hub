@@ -1,4 +1,4 @@
-import React,{memo,FC,ReactElement,MouseEvent} from "react";
+import React, {memo, FC, ReactElement, MouseEvent, useState} from "react";
 import moment from "moment";
 import {
   VideoItemWrapper
@@ -30,8 +30,16 @@ interface IProps{
 }
 const VideoItem:FC<IProps>=(props):ReactElement=>{
   const {user,img,vioHeight,dt,playCount,dtPos,isFlex,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
+  const [isShowDrop,setIsShowDrop] = useState<boolean>(false);
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
     e.stopPropagation();
+    setIsShowDrop(true);
+  }
+  const changeShowDrop=()=>{
+    setIsShowDrop(false);
+  }
+  const openChangeHandle=()=>{
+    setIsShowDrop(false);
   }
   return (
       <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex} dtPos={dtPos}>
@@ -56,7 +64,12 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
                 <div className="video-name">{state}</div>
                 {
                   isShowMore && <div className="more" onClick={(e)=>moreOperatorHandle(e)}>
-                    <Dropdown overlayClassName={'profile-drop-style'} trigger={['click']} overlay={<Add id={id}/>}>
+                    {isShowDrop+''}
+                    <Dropdown open={isShowDrop}
+                              onOpenChange={()=>openChangeHandle()}
+                              overlayClassName={'profile-drop-style'}
+                              trigger={['click']}
+                              overlay={<Add id={id} changeShow={()=>changeShowDrop()}/>}>
                       <MoreOutlined className="more-icon"/>
                     </Dropdown>
                   </div>
