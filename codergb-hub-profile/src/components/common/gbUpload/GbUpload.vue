@@ -1,6 +1,6 @@
 <template>
   <div class="gb-upload">
-    <el-dialog v-model="dialogVisible" title="Tips" width="60%">
+    <el-dialog v-model="dialogVisible" title="图片上传" width="60%" :close-on-click-modal="false">
       <div class="img-container">
         <div class="container">
           <img ref="imgRef" class="cropper-img" :src="imgURL" />

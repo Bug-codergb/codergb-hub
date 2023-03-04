@@ -1,15 +1,17 @@
 <template>
-  <GbHeader :header="header" :isShowRefresh="true" />
-  <GbTable
-    :tableData="tableData"
-    ref="gbTable"
-    :isOperate="isOperate"
-    @selectionChange="selectionChange"
-  >
-    <template v-slot:end>
-      <slot name="video-end"></slot>
-    </template>
-  </GbTable>
+  <div class="video-table">
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
+    <GbTable
+      :tableData="tableData"
+      ref="gbTable"
+      :isOperate="isOperate"
+      @selectionChange="selectionChange"
+    >
+      <template v-slot:end>
+        <slot name="video-end"></slot>
+      </template>
+    </GbTable>
+  </div>
 </template>
 
 <script lang="tsx" setup>
@@ -36,7 +38,7 @@ const props = defineProps({
     default: ''
   }
 });
-const emit = defineEmits(['selectionChange']);
+const emit = defineEmits(['selectionChange', 'create']);
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const cateList = reactive<{ list: ICate[] }>({
   list: []
@@ -91,7 +93,7 @@ const tableData = reactive({
         const { tag } = row;
         return tag.map((item: ITag) => {
           return (
-            <el-tag type="success" color={getRandColor()} effect="light">
+            <el-tag class="video-tag" type="success" color={getRandColor()} effect="light">
               {item.name}
             </el-tag>
           );
@@ -237,14 +239,22 @@ getAllTagReq();
 const selectionChange = (row: IVideo[]) => {
   emit('selectionChange', row);
 };
+const createHandle = () => {
+  emit('create');
+};
 defineExpose({
-  tableData
+  tableData,
+  gbTable
 });
 </script>
 
 <style lang="less">
-.el-tag__content {
-  color: #ffffff !important;
+.video-table {
+  .video-tag {
+    .el-tag__content {
+      color: #ffffff !important;
+    }
+  }
 }
 </style>
 <style scoped lang="less"></style>

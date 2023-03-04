@@ -1,26 +1,29 @@
-html{
-  font-size:2.083333333333vw;
+html {
+  font-size: 2.083333333333vw;
 }
-:root{
-  --primary-color:#ff0000;
-  --line-color:#dcdfe6;
-  --img-bgc:#f5f7fa;
+:root {
+  --primary-color: #ff0000;
+  --line-color: #dcdfe6;
+  --img-bgc: #f5f7fa;
+  --el-loading-spinner-size: 30px!important;
 }
-*{
+* {
   box-sizing: border-box;
 }
-a{
+a {
   text-decoration: none;
 }
-input,button{
+input,
+button {
   outline: none;
   border: none;
 }
-ul,li{
+ul,
+li {
   list-style: none;
 }
 
-p{
+p {
   padding: 0;
   margin: 0;
 }

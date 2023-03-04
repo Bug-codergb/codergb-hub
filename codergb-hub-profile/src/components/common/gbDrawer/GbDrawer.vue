@@ -14,7 +14,7 @@
         <div class="left-header">{{ title }}</div>
         <div class="right-header">
           <el-button size="small" type="primary" @click="confirmHandle(close)">确定</el-button>
-          <el-button size="small" @click="close">取消</el-button>
+          <el-button size="small" @click="cancelHandle(close)">取消</el-button>
         </div>
       </div>
     </template>
@@ -40,7 +40,7 @@ const props = defineProps({
     default: '30%'
   }
 });
-const emit = defineEmits(['update:modelValue', 'openDrawer', 'confirm']);
+const emit = defineEmits(['update:modelValue', 'openDrawer', 'confirm', 'cancel']);
 const direction = ref('rtl');
 
 const showDrawer = computed({
@@ -51,8 +51,12 @@ const showDrawer = computed({
     emit('update:modelValue', value);
   }
 });
-const confirmHandle = (close) => {
+const confirmHandle = (close: any) => {
   emit('confirm', close);
+};
+const cancelHandle = (close: any) => {
+  close();
+  emit('cancel', close);
 };
 const openDrawer = () => {
   emit('openDrawer');
