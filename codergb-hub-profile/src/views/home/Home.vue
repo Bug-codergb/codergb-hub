@@ -34,6 +34,7 @@ loginInit.userMsg = localCache.getCache('userMsg');
 }
 .codergb-aside {
   border-right: 1px solid var(--line-color);
+  background-color: #0c2135;
 }
 .codergb-main {
   height: 89vh;

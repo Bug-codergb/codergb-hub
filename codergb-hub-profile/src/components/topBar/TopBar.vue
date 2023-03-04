@@ -17,5 +17,11 @@ const loginMsg = useLoginStore();
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .left-container {
+    display: flex;
+    align-items: center;
+    font-size: (40/40rem);
+    color: #ff0000;
+  }
 }
 </style>

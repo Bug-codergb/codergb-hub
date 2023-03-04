@@ -48,12 +48,15 @@ export function createVideo<T=IResponseType<any>>(
   })
 }
 //获取所有视频
-export function getAllVideo<T=IResponseType<any>>(offset:number,limit:number){
+export function getAllVideo<T=IResponseType<any>>(offset:number,limit:number,keyword:string){
   return gbRequest.post<T>({
     url:"/video/all",
     params:{
       offset,
-      limit
+      limit,
+    },
+    data:{
+      keyword
     }
   })
 }

@@ -1,6 +1,9 @@
 html{
   font-size:2.083333333333vw;
 }
+:root{
+  --line-color:#d9d9d9
+}
 *{
   margin: 0;
   padding: 0;
@@ -77,4 +80,11 @@ input,textarea,button{
 .add-new-playlist .add-label{
   margin: 0 0 0 15px;
   padding: 10px 0;
+}
+.moment-out-of-body-img-container{
+  display: flex;
+  justify-content: center;
+  height: 120px;
+  background-color: var(--line-color);
+  margin: 15px 0;
 }
