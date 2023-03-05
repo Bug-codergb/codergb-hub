@@ -4,6 +4,7 @@ import StudioChildrenRoute from "./studio/index";
 import {
   videoDetailRoute
 } from "./detail/index";
+import {LOGIN_PATH} from "../constant/routes";
 
 const LoginRoute = lazy(()=>import('../views/login/index'));
 const HomeRoute = lazy(()=>import("../views/home/index"));
@@ -28,11 +29,11 @@ const routes:RouteObject[]=[
   {
     path:"/",
     element:(
-        <Navigate to='/login'/>
+        <Navigate to={LOGIN_PATH}/>
     )
   },
   {
-    path:"/login",
+    path:LOGIN_PATH,
     element:(
         <Suspense>
           <LoginRoute/>

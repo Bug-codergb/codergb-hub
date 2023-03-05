@@ -22,11 +22,13 @@ function App() {
           <Provider store={store}>
             <BrowserRouter>
               <Suspense fallback={
-                <div>www...........................w</div>
+                <div>wwww</div>
               }>
-                <Header>
-                  <HeaderTop/>
-                </Header>
+                {
+                  <Header>
+                    <HeaderTop/>
+                  </Header>
+                }
                 <RouteElement/>
               </Suspense>
             </BrowserRouter>
