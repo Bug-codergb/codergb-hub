@@ -1,28 +1,46 @@
 import React, { memo, FC, useState, useRef } from "react";
-import { FormOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Modal, Form, Input, FormInstance,message } from "antd";
+import { FormOutlined, PlusOutlined,RadiusBottomrightOutlined } from "@ant-design/icons";
+import { Button, Modal, Form, Input, FormInstance,message ,notification} from "antd";
 import { CommunityWrapper } from "./style";
 import VideoList from "./childCpn/videoList";
 import {IVideo} from "../../../../../../types/video/IVideo";
+import {createMoment} from "../../../../../../network/moment";
+import {useLoginMsg} from "../../../../../../hook/useLoginMsg";
+import {login} from "../../../../../../network/login";
+import MomentList from "./childCpn/momentList";
+import {channel} from "diagnostics_channel";
 interface IVideoListRef{
   videoSource:IVideo|null
 }
+interface IMomentList{
+  getChannelMomentReq:(id:string,offset:number,limit:number)=>void
+}
 interface IProps {
   userId: string;
+  cId:string
 }
 const { TextArea } = Input;
-const Community: FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
-
+const Community: FC<IProps> = (props) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const formRef = useRef<FormInstance | null>(null);
+  const loginMsg = useLoginMsg();
   const publishClick = () => {
     formRef.current?.resetFields();
     setIsModalOpen(true);
   };
+  const momentRef = useRef<IMomentList|null>(null);
   const handleOk = () => {
-    formRef.current?.validateFields().then((value) => {
-      console.log(value);
-      setIsModalOpen(false);
+    formRef.current?.validateFields().then(async (value) => {
+      const result = await createMoment(value.title,value.content,value.videoId,props.userId,props.cId);
+      if(result.status===200){
+        setIsModalOpen(false);
+        momentRef.current?.getChannelMomentReq(props.cId,0,15);
+        notification.info({
+          message:"动态创建成功",
+          description:"请在您的频道社区查看您的发布",
+          placement:"bottomLeft"
+        })
+      }
     });
   };
   const handleCancel = () => {
@@ -30,6 +48,7 @@ const Community: FC = () => {
   };
   const [isShowVideoModel, setShowVideoModel] = useState<boolean>(false);
   const selectVideo = () => {
+    setVideoSource(null);
     setShowVideoModel(true);
   };
   const videoListRef = useRef<IVideoListRef|null>(null);
@@ -48,20 +67,19 @@ const Community: FC = () => {
   const selectCancel = () => {
     setShowVideoModel(false);
   };
-  const normFile=(a:any)=>{
-    console.log(a)
-  }
   return (
     <CommunityWrapper>
-      <div className="publish-btn">
-        <Button
-          type="primary"
-          icon={<FormOutlined />}
-          onClick={(e) => publishClick()}
-        >
-          发表你的看法
-        </Button>
-      </div>
+      {
+        loginMsg.userMsg.userId===props.userId&&<div className="publish-btn">
+          <Button
+              type="primary"
+              icon={<FormOutlined />}
+              onClick={(e) => publishClick()}
+          >
+            发表你的看法
+          </Button>
+        </div>
+      }
       <Modal
         title="发布动态"
         open={isModalOpen}
@@ -127,6 +145,10 @@ const Community: FC = () => {
       >
         <VideoList ref={videoListRef}/>
       </Modal>
+      {/*频道动态*/}
+      {
+        props.cId && <MomentList cId={props.cId} ref={momentRef}/>
+      }
     </CommunityWrapper>
   );
 };

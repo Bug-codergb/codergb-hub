@@ -1,5 +1,5 @@
 import React, {memo, FC, useState, useEffect} from 'react';
-import {Avatar} from 'antd'
+import {Avatar, Empty} from 'antd'
 import { UserOutlined  } from '@ant-design/icons';
 
 import errorImg from "../../../../assets/img/1677308494819.png";
@@ -28,7 +28,7 @@ const Common:FC<IProps>=(props)=>{
   },[])
   const items = [
     { label: '首页', key: 'item-1', children: <Home userId={userId}/> },
-    { label: '社区', key: 'item-2', children: <Community/> },
+    { label: '社区', key: 'item-2', children: channel? <Community cId={channel.id} userId={userId}/>:<Empty/> },
     { label: '简介', key: 'item-3', children: <Desc/> },
   ];
   return (
