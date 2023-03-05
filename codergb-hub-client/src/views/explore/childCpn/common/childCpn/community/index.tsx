@@ -27,6 +27,7 @@ const Community: FC<IProps> = (props) => {
   const publishClick = () => {
     formRef.current?.resetFields();
     setIsModalOpen(true);
+    setVideoSource(null);
   };
   const momentRef = useRef<IMomentList|null>(null);
   const handleOk = () => {
@@ -48,7 +49,6 @@ const Community: FC<IProps> = (props) => {
   };
   const [isShowVideoModel, setShowVideoModel] = useState<boolean>(false);
   const selectVideo = () => {
-    setVideoSource(null);
     setShowVideoModel(true);
   };
   const videoListRef = useRef<IVideoListRef|null>(null);

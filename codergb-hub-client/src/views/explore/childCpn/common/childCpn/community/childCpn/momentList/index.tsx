@@ -1,4 +1,4 @@
-import React, {memo, FC, useEffect, useState, useImperativeHandle, forwardRef, Ref} from "react";
+import React, {memo, FC, useEffect, useState, useImperativeHandle, forwardRef, Ref,Fragment} from "react";
 import {
   MomentListWrapper
 } from "./style";
@@ -7,7 +7,7 @@ import {IMoment} from "../../../../../../../../types/moment";
 import {IResponseType} from "../../../../../../../../types/responseType";
 import {IPage} from "../../../../../../../../types/IPage";
 import timeMoment from "moment";
-import {Dropdown} from "antd";
+import {Dropdown, Pagination} from "antd";
 import Operation from "./childCpn/operation";
 import {DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined, MoreOutlined} from "@ant-design/icons";
 interface IMomentList{
@@ -34,8 +34,11 @@ const MomentList:FC<IProps>=forwardRef((props,propsRef)=>{
     }
   })
   useEffect(()=>{
-    getChannelMomentReq(cId,0,15).then(()=>{});
+    getChannelMomentReq(cId,0,10).then(()=>{});
   },[cId]);
+  const pageChange=(e:number)=>{
+    getChannelMomentReq(cId,(e-1)*10,10).then(()=>{});
+  }
   return (
       <MomentListWrapper>
         <ul className="moment-list">
@@ -82,6 +85,13 @@ const MomentList:FC<IProps>=forwardRef((props,propsRef)=>{
             })
           }
         </ul>
+        {
+          total>10&&<Fragment>
+            <div className={'page'}>
+              <Pagination defaultCurrent={1} pageSize={10} total={total} onChange={e=>pageChange(e)}/>
+            </div>
+          </Fragment>
+        }
       </MomentListWrapper>
   )
 })

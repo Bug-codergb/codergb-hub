@@ -119,4 +119,9 @@ export const MomentListWrapper = styled.div`
       }
     }
   }
+  .page{
+    display: flex;
+    justify-content: center;
+    padding: ${20/40}rem 0 ${30/40}rem 0;
+  }
 `

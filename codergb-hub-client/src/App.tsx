@@ -7,6 +7,7 @@ import store from "./store"
 import "./store/actionCreators";
 import HeaderTop from "./components/header/index";
 import {Layout} from "antd";
+import ErrorBoundary from "./components/error";
 
 const {Header} = Layout;
 
@@ -17,18 +18,20 @@ function App() {
 
   return (
       <div className="App">
-        <Provider store={store}>
-          <BrowserRouter>
-            <Suspense fallback={
-              <div>wwww</div>
-            }>
-              <Header>
-                <HeaderTop/>
-              </Header>
-              <RouteElement/>
-            </Suspense>
-          </BrowserRouter>
-        </Provider>
+        <ErrorBoundary>
+          <Provider store={store}>
+            <BrowserRouter>
+              <Suspense fallback={
+                <div>www...........................w</div>
+              }>
+                <Header>
+                  <HeaderTop/>
+                </Header>
+                <RouteElement/>
+              </Suspense>
+            </BrowserRouter>
+          </Provider>
+        </ErrorBoundary>
       </div>
   );
 }
