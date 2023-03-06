@@ -24,11 +24,6 @@ function App() {
               <Suspense fallback={
                 <div>wwww</div>
               }>
-                {
-                  <Header>
-                    <HeaderTop/>
-                  </Header>
-                }
                 <RouteElement/>
               </Suspense>
             </BrowserRouter>

@@ -11,9 +11,9 @@ const Profile:FC=()=>{
       <ProfileWrapper>
         <Layout>
           <Layout>
-           {/* <Header>
+           <Header>
               <HeaderTop/>
-            </Header>*/}
+            </Header>
             <Layout>
               <Sider>
                 <NavList isHome={false}/>

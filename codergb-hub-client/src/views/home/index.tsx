@@ -12,9 +12,9 @@ const Home:FC=():ReactElement=>{
       <HomeWrapper>
         <Layout>
           <Layout>
-            {/*<Header>
+            <Header>
               <HeaderTop/>
-            </Header>*/}
+            </Header>
             <Layout>
               <Sider className={'codergb-sider'}>
                 <NavList isHome={true}/>
