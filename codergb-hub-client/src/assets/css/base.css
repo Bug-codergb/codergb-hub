@@ -10,6 +10,7 @@ html{
   box-sizing: border-box;
   font-size: 14px;
   font-family: "Roboto","Arial",sans-serif;
+  word-break: break-all;
 }
 ul,li{
   list-style: none;

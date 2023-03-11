@@ -3,7 +3,8 @@ import {lazy,Suspense} from "react";
 import StudioChildrenRoute from "./studio/index";
 import {
   videoDetailRoute,
-  userDetailRoute
+  userDetailRoute,
+  chatDetailRoute
 } from "./detail/index";
 import {LOGIN_PATH} from "../constant/routes";
 
@@ -151,6 +152,7 @@ const routes:RouteObject[]=[
   },
   //详情页
   videoDetailRoute,
+  chatDetailRoute
 ]
 export {
   routes

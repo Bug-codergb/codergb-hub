@@ -1,13 +1,14 @@
 import Home from "../childCpn/home";
 import Community from "../childCpn/community";
 import Desc from "../childCpn/desc";
+import {IChannel} from "../../../../../types/channel/IChannel";
 
-const tabs = (userId: string) => {
+const tabs = (userId: string,channel?:IChannel) => {
   return [
     {
       label: "首页",
       key: "1001",
-      children: <Home userId={userId}/>
+      children: <Home userId={userId} channel={channel}/>
     },
     {
       label: "社区",

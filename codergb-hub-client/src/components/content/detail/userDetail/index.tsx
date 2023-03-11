@@ -1,6 +1,6 @@
 import React, {memo, FC, ReactElement, useEffect, useState} from 'react';
 import { Tabs } from 'antd';
-import {useLocation} from 'react-router-dom';
+import {useLocation,useNavigate} from 'react-router-dom';
 import {
   UserDetailWrapper
 } from "./style"
@@ -15,55 +15,80 @@ import {UPLOADED_VIDEO} from "../../../../constant/block";
 import UploadedVideo from "./childCpn/uploadedVideo";
 const UserDetail:FC=():ReactElement=>{
   const location = useLocation();
+  const navigate = useNavigate();
   const {userId} = location.state;
+
+  const [keyIndex,setKeyIndex] = useState<number>(0);
   const [userChannel,setUserChannel] = useState<IChannel>();
   const [block,setBlock] = useState<IBlock[]>([]);
   const [userTabs,setUserTabs]=useState<any[]>([]);
   useEffect(()=>{
-    const tabList = tabs(userId);
-    setUserTabs(tabList);
-    console.log(tabList)
-  },[userId]);
-  useEffect(()=>{
     getUserChannel<IResponseType<IChannel>>(userId).then((data)=>{
-      if(data.status===200){
+      if(data.status===200) {
         setUserChannel(data.data);
-      }
-    })
-  },[userId]);
-  useEffect(()=>{
-    getUserBlock<IResponseType<IBlock[]>>(userId).then((data)=>{
-      if(data.status===200){
-        setBlock(data.data);
-        console.log(userTabs)
-        if(data.data.length!==0){
-          for(let item of data.data){
-            if(item.name===UPLOADED_VIDEO){
-              let tabs = [userTabs,<UploadedVideo userId={userId}/>];
-              setUserTabs(tabs);
-            }
-          }
-        }
+        setUserTabs(tabs(userId, data.data))
+        setKeyIndex(1)
       }
     })
   },[userId])
+  useEffect(()=>{
+    if(keyIndex!==0){
+      getUserBlock<IResponseType<IBlock[]>>(userId).then((data)=>{
+        if(data.status===200){
+          setBlock(data.data);
+          if(data.data.length!==0){
+            for(let item of data.data){
+              if(item.name===UPLOADED_VIDEO){
+                let tabList = [...userTabs,{
+                  key:item.id,
+                  label:item.name,
+                  children:<UploadedVideo userId={userId}/>
+                }];
+                setUserTabs(tabList);
+              }
+            }
+          }
+        }
+      })
+    }
+  },[keyIndex])
+  const chatRouter=()=>{
+    if(userId&& userChannel&&userChannel.user){
+      navigate("/chatDetail",{
+        state:{
+          userId:userId,
+          userName:userChannel!.user.userName
+        }
+      })
+    }
+  }
   return (
       <UserDetailWrapper>
         <div className={'banner'}>
           <img src={userChannel?.picUrl}/>
         </div>
         <div className="user-info">
-          <div className="img-container">
-            <img src={userChannel?.user.avatarUrl}/>
+          <div className="left">
+            <div className="img-container">
+              <img src={userChannel?.user.avatarUrl}/>
+            </div>
+            <div className="right-info">
+              <div className="user-name">{userChannel?.user.userName}</div>
+            </div>
           </div>
-          <div className="right-info">
-            <div className="user-name">{userChannel?.user.userName}</div>
+          <div className="control-btn">
+            <div className="sub-btn">订阅</div>
+            <div className="sub-btn message" onClick={e=>chatRouter()}>
+              私信
+            </div>
           </div>
         </div>
-        <Tabs
-            defaultActiveKey="1"
-            items={userTabs}
-        />
+        {
+          userTabs && userTabs.length!==0&& <Tabs
+              defaultActiveKey="1"
+              items={userTabs}
+          />
+        }
       </UserDetailWrapper>
   )
 }

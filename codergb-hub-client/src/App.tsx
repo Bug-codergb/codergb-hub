@@ -8,6 +8,7 @@ import "./store/actionCreators";
 import HeaderTop from "./components/header/index";
 import {Layout} from "antd";
 import ErrorBoundary from "./components/error";
+import {CommonWrapper} from "./assets/css/common";
 
 const {Header} = Layout;
 
@@ -17,19 +18,21 @@ function App() {
   }
 
   return (
-      <div className="App">
-        <ErrorBoundary>
-          <Provider store={store}>
-            <BrowserRouter>
-              <Suspense fallback={
-                <div>wwww</div>
-              }>
-                <RouteElement/>
-              </Suspense>
-            </BrowserRouter>
-          </Provider>
-        </ErrorBoundary>
-      </div>
+      <CommonWrapper>
+        <div className="App">
+          <ErrorBoundary>
+            <Provider store={store}>
+              <BrowserRouter>
+                <Suspense fallback={
+                  <div>wwww</div>
+                }>
+                  <RouteElement/>
+                </Suspense>
+              </BrowserRouter>
+            </Provider>
+          </ErrorBoundary>
+        </div>
+      </CommonWrapper>
   );
 }
 

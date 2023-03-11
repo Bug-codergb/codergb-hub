@@ -19,6 +19,8 @@ const useRoutes = require("../router/index");
 useRoutes(app);
 const videoRouter = require("../socket/video.router");
 webApp.ws.use(videoRouter.routes());
+const chatRouter=require("../socket/chat.router");
+webApp.ws.use(chatRouter.routes());
 app.on("error",errorHandle);
 module.exports={
   app,

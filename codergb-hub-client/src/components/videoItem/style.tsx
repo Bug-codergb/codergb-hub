@@ -21,6 +21,7 @@ export const VideoItemWrapper:any = styled.div`
     font-size: ${18/40}rem;
     padding: 1px 6px;
     border-radius: 5px;
+    white-space: nowrap;
   }
   .video-container{
     border-radius: ${8/40}rem ${8/40}rem 0 0;
