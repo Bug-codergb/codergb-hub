@@ -1,4 +1,5 @@
 import React, {memo, FC, ReactElement, MouseEvent, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import {
   VideoItemWrapper
@@ -31,6 +32,7 @@ interface IProps{
 const VideoItem:FC<IProps>=(props):ReactElement=>{
   const {user,img,vioHeight,dt,playCount,dtPos,isFlex,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
   const [isShowDrop,setIsShowDrop] = useState<boolean>(false);
+  const navigate = useNavigate();
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
     e.stopPropagation();
     setIsShowDrop(true);
@@ -40,6 +42,17 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
   }
   const openChangeHandle=()=>{
     setIsShowDrop(false);
+  }
+  const userRouter=(e:MouseEvent<HTMLDivElement>)=>{
+    if(user){
+      e.stopPropagation();
+      navigate("/home/userDetail",{
+        state:{
+          userId:user.userId
+        },
+        replace:false
+      })
+    }
   }
   return (
       <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex} dtPos={dtPos}>
@@ -55,7 +68,7 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
           {getDurationByTimestamp(dt ? dt:"0")}
         </div>
         <div className="msg-info">
-          <div className="left-container">
+          <div className="left-container" onClick={e=>userRouter(e)}>
             <img src={user.avatarUrl}/>
           </div>
           <div className="right-container">

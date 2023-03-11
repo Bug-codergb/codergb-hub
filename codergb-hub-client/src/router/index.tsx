@@ -2,7 +2,8 @@ import {Navigate, RouteObject} from "react-router-dom";
 import {lazy,Suspense} from "react";
 import StudioChildrenRoute from "./studio/index";
 import {
-  videoDetailRoute
+  videoDetailRoute,
+  userDetailRoute
 } from "./detail/index";
 import {LOGIN_PATH} from "../constant/routes";
 
@@ -134,7 +135,8 @@ const routes:RouteObject[]=[
               <MyChannelRoute/>
             </Suspense>
         )
-      }
+      },
+      userDetailRoute
     ]
   },
   //工作室

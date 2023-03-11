@@ -7,7 +7,7 @@ import {IResponseType} from "../../../../../../../../../../types/responseType";
 import {IBlock} from "../../../../../../../../../../types/block/IBlock";
 import UploadVideo from "../../../../../../../../../../components/header/childCpn/uploadVideo";
 import {Modal} from "antd";
-import {SINGLE_PLAYLIST} from "../../../../../../../../../../constant/block";
+import {SINGLE_PLAYLIST, UPLOADED_VIDEO} from "../../../../../../../../../../constant/block";
 import {set} from "immutable";
 import Playlist from "./childCpn/playlist";
 interface IProps{
@@ -34,12 +34,13 @@ const BlockList:FC<IProps>=(props):ReactElement=>{
     console.log(item);
     if(item.name === SINGLE_PLAYLIST){
       setIsShowPlay(true);
+    }else if(item.name===UPLOADED_VIDEO){
+      userAddBlock(item.id).then((data)=>{
+        if(data.status === 200){
+          addBlock();
+        }
+      })
     }
-    /*userAddBlock(item.id).then((data)=>{
-      if(data.status === 200){
-        addBlock();
-      }
-    })*/
   }
   return (
       <BlockListWrapper>
