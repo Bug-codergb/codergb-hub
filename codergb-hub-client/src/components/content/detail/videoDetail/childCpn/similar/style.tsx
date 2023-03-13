@@ -47,6 +47,7 @@ export const SimilarWrapper = styled.div`
           border-radius: ${8/40}rem;
           font-size: ${14/40}rem;
           font-weight: bolder;
+          white-space: nowrap;
         }
       }
       .right-container{

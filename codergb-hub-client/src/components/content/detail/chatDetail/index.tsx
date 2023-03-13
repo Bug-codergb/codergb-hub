@@ -17,8 +17,10 @@ const ChatDetail:FC=()=>{
             <HeaderTop/>
           </Header>
           <Content className="gb-content">
-            <div className="title">我的消息</div>
-            <ChatWindow userId={userId} userName={userName}/>
+            <div className="gb-content-inner">
+              <div className="title">我的消息</div>
+              <ChatWindow userId={userId} userName={userName}/>
+            </div>
           </Content>
         </Layout>
       </ChatWrapper>

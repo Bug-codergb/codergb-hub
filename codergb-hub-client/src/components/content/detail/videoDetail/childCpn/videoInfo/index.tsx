@@ -1,5 +1,6 @@
-import React,{memo,FC,ReactElement} from "react";
-import {is, Map} from "immutable";
+import React, {memo, FC, ReactElement, MouseEvent} from "react";
+import { useNavigate } from 'react-router-dom';
+import {Map} from "immutable";
 import {useDispatch, useSelector} from "react-redux";
 import {
   LikeOutlined,
@@ -19,6 +20,7 @@ import {useSub} from "../../../../../../hook/useSub";
 import {changeUserDetailAction} from "../../../../../../views/login/store/actionCreators";
 import {Dispatch} from "redux";
 import {useThumb, useTread} from "../../../../../../hook/useThumb";
+import {IUserMsg} from "../../../../../../types/user/IUserMsg";
 
 interface IProps{
   videoInfo?:IVideo
@@ -85,15 +87,28 @@ const VideoInfo:FC<IProps>=(props)=>{
       }
     }
   }
+  const navigate = useNavigate();
+  const userRouter=(user:IUserMsg)=>{
+    if(user){
+      navigate("/home/userDetail",{
+        state:{
+          userId:user.userId
+        },
+        replace:false
+      })
+    }
+  }
   return (
       <VideoInfoWrapper>
         <p className="video-title text-nowrap-mul-line">{videoInfo?.name}</p>
         <div className="info">
           <div className="left-content">
             <div className="user-msg-container">
-              <div className="img-container">
-                <img src={videoInfo?.user.avatarUrl}/>
-              </div>
+              {
+                videoInfo&& <div className="img-container" onClick={e=>userRouter(videoInfo?.user)}>
+                  <img src={videoInfo?.user.avatarUrl}/>
+                </div>
+              }
               <div className="right-msg">
                 <p className="user-name">{videoInfo?.user.userName}</p>
                 <p className="sub-counter">270万位订阅者</p>
