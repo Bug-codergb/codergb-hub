@@ -5,7 +5,7 @@ import {CHAT, CHAT_CONTENT, CHAT_QUEUE, CommonWebSocket} from "../../../../../..
 import {useLoginMsg} from "../../../../../../hook/useLoginMsg";
 import {IChatQueue} from "../../../../../../types/chat/IChat";
 import {IPage} from "../../../../../../types/IPage";
-import {log} from "util";
+import moment from "moment";
 import {IResponseType} from "../../../../../../types/responseType";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -137,7 +137,10 @@ const ChatWindow:FC<IProps>=(props)=>{
                       <div className="img-container">
                         <img src={item.sourceUser.avatarUrl}/>
                       </div>
-                      <div className="content">{item.content}</div>
+                      <div className="content-container">
+                        <div className="content">{item.content}</div>
+                        <div className="time">{ moment(item.createTime).fromNow() }</div>
+                      </div>
                     </li>
                 )
               })

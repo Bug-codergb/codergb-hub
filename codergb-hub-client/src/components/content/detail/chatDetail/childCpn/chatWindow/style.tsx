@@ -17,10 +17,11 @@ export const ChatWindowWrapper=styled.div`
   .gb-chat{
     height: ${520/40}rem;
     overflow-y: scroll;
+    background-color: #f4f5f7;
     .chat-history{
       &>li{
         display: flex;
-        padding: ${10/40}rem 0;
+        padding: ${20/40}rem 0;
         align-items: flex-start;
         .img-container{
           width: ${50/40}rem;
@@ -30,13 +31,31 @@ export const ChatWindowWrapper=styled.div`
             width: 100%;
           }
         }
-        .content{
+        .content-container{
+          max-width: 90%;
           margin: 0 0 0 ${10/40}rem;
+          .content{
+            max-width: 100%;
+            background-color:#ffffff ;
+            padding: ${10/40}rem ${15/40}rem;
+            font-size: ${18/40}rem;
+            border-radius: ${20/40}rem;
+          }
+          .time{
+            font-size: ${16/40}rem;
+            color: #999999;
+            display: flex;
+            justify-content: flex-start;
+            margin: ${10/40}rem 0 0 ${5/40}rem;
+          }
         }
         &.active{
           flex-direction: row-reverse;
           .content{
             margin: 0 ${10/40}rem 0 0;
+          }
+          .time{
+            justify-content: flex-end;
           }
         }
       }
