@@ -38,8 +38,8 @@ export const ChatWindowWrapper=styled.div`
             max-width: 100%;
             background-color:#ffffff ;
             padding: ${10/40}rem ${15/40}rem;
-            font-size: ${18/40}rem;
-            border-radius: ${20/40}rem;
+            font-size: ${20/40}rem;
+            border-radius: ${24/40}rem;
           }
           .time{
             font-size: ${16/40}rem;
@@ -53,6 +53,8 @@ export const ChatWindowWrapper=styled.div`
           flex-direction: row-reverse;
           .content{
             margin: 0 ${10/40}rem 0 0;
+            background-color: #80b9f2;
+            color: #fff;
           }
           .time{
             justify-content: flex-end;
@@ -70,7 +72,11 @@ export const ChatWindowWrapper=styled.div`
         display: flex;
         align-items: flex-start;
         padding: ${10/40}rem ${15/40}rem;
+        cursor: pointer;
         &:hover{
+          background-color: #e4e5e6;
+        }
+        &.active{
           background-color: #e4e5e6;
         }
         .img-container{

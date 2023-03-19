@@ -13,6 +13,7 @@ import {getUserBlock} from "../../../../network/block";
 import {IBlock} from "../../../../types/block/IBlock";
 import {UPLOADED_VIDEO} from "../../../../constant/block";
 import UploadedVideo from "./childCpn/uploadedVideo";
+import {useLoginMsg} from "../../../../hook/useLoginMsg";
 const UserDetail:FC=():ReactElement=>{
   const location = useLocation();
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const UserDetail:FC=():ReactElement=>{
   const [userChannel,setUserChannel] = useState<IChannel>();
   const [block,setBlock] = useState<IBlock[]>([]);
   const [userTabs,setUserTabs]=useState<any[]>([]);
+
+  const loginMsg = useLoginMsg();
   useEffect(()=>{
     getUserChannel<IResponseType<IChannel>>(userId).then((data)=>{
       if(data.status===200) {
@@ -78,9 +81,11 @@ const UserDetail:FC=():ReactElement=>{
           </div>
           <div className="control-btn">
             <div className="sub-btn">订阅</div>
-            <div className="sub-btn message" onClick={e=>chatRouter()}>
-              私信
-            </div>
+            {
+              loginMsg.userMsg.userId!==userId && <div className="sub-btn message" onClick={e=>chatRouter()}>
+                私信
+              </div>
+            }
           </div>
         </div>
         {

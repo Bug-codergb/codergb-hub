@@ -18,10 +18,11 @@ const Login:FC=():ReactElement=>{
   },[])
   return(
       <LoginWrappers>
+        <div className="title cssanimation leMagnify sequence">coderhub</div>
         <div className="login-inner">
           <Form
               name="basic"
-              labelCol={{ span: 7 }}
+              labelCol={{ span: 6 }}
               wrapperCol={{ span: 16 }}
               initialValues={{ remember: true }}
               onFinish={onFinish}
@@ -41,6 +42,9 @@ const Login:FC=():ReactElement=>{
               <Input.Password />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 7, span: 16 }}>
+              <Button>
+                注册
+              </Button>
               <Button type="primary" htmlType="submit">
                 登录
               </Button>

@@ -44,6 +44,19 @@ class ChatService{
      console.log(e)
    }
   }
+  //判断聊天队列是否存在当前用户
+  async judgeCurrentUserInQueue(targetUser,sourceUser){
+    try{
+      const sql=`
+           select *
+           from user_chat_queue as uc
+           where uc.targetUser=? and uc.sourceUser=?`;
+      const result = await connection.execute(sql,[targetUser,sourceUser]);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
   async recentUserChatService(sourceUser,targetUser,content){
     try{
       const id=new Date().getTime();
@@ -83,6 +96,16 @@ class ChatService{
         count:count[0].count,
         list:result[0]
       }
+    }catch (e) {
+
+    }
+  }
+  //更新队列第一条信息
+  async updateQueueMessage(queueId,content){
+    try{
+      const sql=`update user_chat_queue as uc set content=? where id=?`;
+      const result = await connection.execute(sql,[content,queueId]);
+      return result[0];
     }catch (e) {
 
     }

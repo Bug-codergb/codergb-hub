@@ -89,3 +89,6 @@ input,textarea,button{
   background-color: var(--line-color);
   margin: 15px 0;
 }
+#root{
+  height: 100%;
+}

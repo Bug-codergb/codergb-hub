@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, memo, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, memo, useEffect, useState,useRef} from 'react';
 import {Input, Layout} from 'antd';
 import {ChatWindowWrapper} from "./style";
 import {CHAT, CHAT_CONTENT, CHAT_QUEUE, CommonWebSocket} from "../../../../../../network/websocket/chat";
@@ -16,6 +16,10 @@ interface IProps{
 }
 const ChatWindow:FC<IProps>=(props)=>{
   const { userName,userId }=props;//目标用户
+  //目标聊天用户
+  const [targetUser,setTargetUser] = useState<string>(userId);
+  const [targetUserName,setTargetUserName] = useState<string>(userName);
+
   const [chatQueue,setChatQueue] = useState<IChatQueue[]>([]);
   const [chatQueueTotal,setChatQueueTotal] = useState<number>(0)
 
@@ -26,9 +30,10 @@ const ChatWindow:FC<IProps>=(props)=>{
   const [historyWebSocket,setHistoryWebSocket] = useState<CommonWebSocket|null>(null);//聊天记录
   const [queueWebSocket,setQueueWebSocket] = useState<CommonWebSocket|null>(null);//聊天队列
   useEffect(()=>{
-    //获取聊天队列
+    //获取聊天队列(当前登陆人)
     let params={
-      targetUser:login.userMsg.userId
+      targetUser:login.userMsg.userId,//当前登陆人
+      targetChatUser:targetUser //目标聊天用户是否再聊天队列里
     }
     const webSocket = new CommonWebSocket(CHAT_QUEUE,params);
     setQueueWebSocket(webSocket);
@@ -40,11 +45,11 @@ const ChatWindow:FC<IProps>=(props)=>{
       }
     }
   },[login.userMsg.userId]);
-  //聊天发布
+  //聊天发布(交互socket)
   useEffect(()=>{
-    if(userId && login.userMsg.userId){
+    if(targetUser && login.userMsg.userId){
       let params={
-        targetUser:userId,
+        targetUser:targetUser,
         sourceUser:login.userMsg.userId
       }
       let webSocket = new CommonWebSocket(CHAT, params);
@@ -53,19 +58,22 @@ const ChatWindow:FC<IProps>=(props)=>{
         if(historyWebSocket){
           historyWebSocket.sendSocketMsg('pull');
         }
+        if(queueWebSocket){
+          queueWebSocket.sendSocketMsg('pull');
+        }
       }
       webSocket.websocket.onopen=function(){
         console.log("建立成功")
       }
     }
-  },[userId,login.userMsg.userId,historyWebSocket])
+  },[targetUser,login.userMsg.userId,historyWebSocket])
   //聊天记录
   const [contentHistory,setContentHistory] = useState<IChatQueue[]>([]);
   const [contentHistoryTotal,setContentHistoryTotal] = useState<number>(0);
   useEffect(()=>{
-    if(userId){
+    if(targetUser){
       let params={
-        targetUser:userId,
+        targetUser:targetUser,
         sourceUser:login.userMsg.userId,
         limit:30000
       }
@@ -76,7 +84,6 @@ const ChatWindow:FC<IProps>=(props)=>{
         if(data.status===200){
           setContentHistory(data.data.list);
         }
-        console.log(e.data)
         if(queueWebSocket){
           queueWebSocket.sendSocketMsg("pull")
         }
@@ -85,7 +92,7 @@ const ChatWindow:FC<IProps>=(props)=>{
         console.log("建立成功")
       }
     }
-  },[userId,queueWebSocket])
+  },[targetUser,queueWebSocket])
   //聊天输入
   const chatInp=(e:ChangeEvent<HTMLTextAreaElement>)=>{
     if(e.currentTarget && e.currentTarget.value){
@@ -96,23 +103,37 @@ const ChatWindow:FC<IProps>=(props)=>{
     if(chatWebSocket){
       chatWebSocket.sendSocketMsg(chatContent);
       setContent("")
-      if(historyWebSocket){
-        historyWebSocket.sendSocketMsg('pull');
-      }
-      if(queueWebSocket){
-        queueWebSocket.sendSocketMsg('pull');
-      }
+      // if(historyWebSocket){
+      //   historyWebSocket.sendSocketMsg('pull');
+      // }
+      // if(queueWebSocket){
+      //   queueWebSocket.sendSocketMsg('pull');
+      // }
     }
   }
+  const [currentIndex,setCurrentIndex] = useState<number>(0);
+  const userClick=(item:IChatQueue,index:number)=>{
+    setTargetUser(item.sourceUser.userId);
+    setTargetUserName(item.sourceUser.userName);
+    setCurrentIndex(index);
+  }
+
+  const contentRef = useRef<HTMLDivElement|null>(null);
+  useEffect(()=>{
+    console.log(contentRef.current?.offsetHeight,contentRef.current?.scrollHeight)
+    if(contentRef.current && (contentRef.current.offsetHeight <= contentRef.current.scrollHeight)){
+      contentRef.current.scrollTop = contentRef.current.scrollHeight//-contentRef.current.offsetHeight
+    }
+  },[contentRef.current,contentHistory.length])
   return <ChatWindowWrapper>
     <Layout>
       <Sider className="gb-chat-side">
         <div className="recent-title">近期消息</div>
         <ul className="chat-queue">
           {
-            chatQueue && chatQueue.length!==0 && chatQueue.map((item)=>{
+            chatQueue && chatQueue.length!==0 && chatQueue.map((item,index)=>{
               return (
-                  <li key={item.id}>
+                  <li key={item.id} onClick={e=>userClick(item,index)} className={currentIndex===index?'active':''}>
                     <div className="img-container">
                       <img src={item.sourceUser.avatarUrl}/>
                     </div>
@@ -127,13 +148,13 @@ const ChatWindow:FC<IProps>=(props)=>{
         </ul>
       </Sider>
       <Layout>
-        <Header className="gb-chat-header">{userName}</Header>
-        <Content className='gb-chat'>
+        <Header className="gb-chat-header">{targetUserName}</Header>
+        <Content className='gb-chat' ref={contentRef}>
           <ul className="chat-history">
             {
               contentHistory && contentHistory.length!==0 && contentHistory.map((item)=>{
                 return (
-                    <li key={item.id} className={item.sourceUser.userId===userId?'active':''}>
+                    <li key={item.id} className={item.sourceUser.userId!==targetUser?'active':''}>
                       <div className="img-container">
                         <img src={item.sourceUser.avatarUrl}/>
                       </div>

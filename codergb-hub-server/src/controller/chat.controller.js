@@ -2,7 +2,9 @@ const {
   createService,
   recentUserChatService,
   getChatQueueService,
-  getChatContentService
+  getChatContentService,
+  judgeCurrentUserInQueue,
+  updateQueueMessage
 }=require("../service/chat.service");
 const contextMap=new Map();
 
@@ -13,22 +15,27 @@ class ChatController{
     ctx.websocket.on('message', async function(message) {
       const context = contextMap.get(targetUser);
       const self = contextMap.get(sourceUser);
+
+      const data = await getChatQueueService(targetUser,'0','150000');
+      if(data && data.list && data.list.length!==0) {
+        const isExists = data.list.find((item) => {
+          return item.sourceUser.userId=== sourceUser && item.targetUser.userId === targetUser;
+        })
+        if (!isExists) {
+          await recentUserChatService(sourceUser, targetUser, message.toString());
+        }else{
+          console.log(isExists);
+          await updateQueueMessage(isExists.id,message.toString());
+        }
+      }else if(data && data.list.length===0){
+        await recentUserChatService(sourceUser, targetUser, message.toString());
+      }
+
       if(context){
         await createService(sourceUser,targetUser,message.toString(),1);
         context.websocket.send(message.toString());
       }else{
         await createService(sourceUser,targetUser,message.toString(),0);
-      }
-      const data = await getChatQueueService(targetUser,'0','150000');
-      if(data && data.list && data.list.length!==0) {
-        const isExists = data.list.findIndex((item) => {
-          return item.sourceUser.userId=== sourceUser && item.targetUser.userId === targetUser;
-        })
-        if (isExists === -1) {
-          await recentUserChatService(sourceUser, targetUser, message.toString());
-        }
-      }else if(data && data.list.length===0){
-        await recentUserChatService(sourceUser, targetUser, message.toString());
       }
       if(self) self.websocket.send('success');
     });
@@ -39,8 +46,16 @@ class ChatController{
   }
   async getChatQueue(ctx,next){
     try{
-      const { targetUser="",offset="0",limit="30" } = ctx.query;
+      /*targetUser 当前登陆人*/
+      const { targetUser="",offset="0",limit="30",targetChatUser="" } = ctx.query;
+      if(targetChatUser){
+        const result = await judgeCurrentUserInQueue(targetUser,targetChatUser);//这里颠倒一下
+        if(result.length===0){
+          await recentUserChatService(targetChatUser,targetUser,"");
+        }
+      }
       const data = await getChatQueueService(targetUser,offset,limit);
+      console.log(data);
       let res={
         status:200,
         data:data
