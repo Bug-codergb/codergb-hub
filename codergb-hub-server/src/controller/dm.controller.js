@@ -1,4 +1,5 @@
 const {isEmpty} = require("../utils/isEmpty");
+const { addTime } = require("../utils/addTime")
 const {setResponse} = require("../utils/setResponse");
 const {
   createService,
@@ -11,7 +12,8 @@ class DmController{
       const {userId} = ctx.user;
       if(!isEmpty(ctx,vId,"视频ID不能为空") && !isEmpty(ctx,text,"弹幕内容不能为空")
          &&!isEmpty(ctx,time,"时间不能为空")){
-        const result = await createService(ctx,vId,text,time,userId);
+        let newTime = addTime(time);
+        const result = await createService(ctx,vId,text,newTime,userId);
         if(result){
           setResponse(ctx,"success",200,result[0]);
         }

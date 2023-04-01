@@ -47,7 +47,7 @@ const NavList:FC<IProps>=(props):ReactElement=>{
               }
             })
             if(list.length!==0){
-              for(let item of list){
+              /*for(let item of list){
                 const childrenRoute = routes.find((it)=>{
                   return it.path === HOME_PATH
                 })
@@ -61,7 +61,7 @@ const NavList:FC<IProps>=(props):ReactElement=>{
                     )
                   })
                 }
-              }
+              }*/
               let newMenu = profileMenu.concat(list);
               setHomeMain(newMenu);
             }

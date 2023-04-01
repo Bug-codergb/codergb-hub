@@ -27,10 +27,12 @@ interface IProps{
   isShowMore?:boolean,
   vioHeight:number,
   isFlex?:boolean,
-  dtPos:{left:number,top:number}
+  dtPos:{left:number,top:number},
+  isShowUser?:boolean,
+  isPosUser?:boolean
 }
 const VideoItem:FC<IProps>=(props):ReactElement=>{
-  const {user,img,vioHeight,dt,playCount,dtPos,isFlex,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
+  const {user,isShowUser=true,isPosUser=false,img,vioHeight,dt,playCount,dtPos,isFlex,state,id,isShowMore,createTime,itemWidth,scale,video,isShowVideo,isShowImg} = props;
   const [isShowDrop,setIsShowDrop] = useState<boolean>(false);
   const navigate = useNavigate();
   const moreOperatorHandle=(e:MouseEvent<HTMLDivElement>)=>{
@@ -55,7 +57,7 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
     }
   }
   return (
-      <VideoItemWrapper itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex} dtPos={dtPos}>
+      <VideoItemWrapper isShowUser={isShowUser} itemWidth={itemWidth} scale={scale} vioHeight={vioHeight} isFlex={isFlex} dtPos={dtPos}>
         {
           (!isShowVideo) && img
         }
@@ -68,16 +70,17 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
           {getDurationByTimestamp(dt ? dt:"0")}
         </div>
         <div className="msg-info">
-          <div className="left-container" onClick={e=>userRouter(e)}>
-            <img src={user.avatarUrl}/>
-          </div>
+          {
+            isShowUser && <div className="left-container" onClick={e=>userRouter(e)}>
+              <img src={user.avatarUrl}/>
+            </div>
+          }
           <div className="right-container">
             <div className="msg">
               <div className="state">
                 <div className="video-name">{state}</div>
                 {
                   isShowMore && <div className="more" onClick={(e)=>moreOperatorHandle(e)}>
-                    {isShowDrop+''}
                     <Dropdown open={isShowDrop}
                               onOpenChange={()=>openChangeHandle()}
                               overlayClassName={'profile-drop-style'}
@@ -88,7 +91,14 @@ const VideoItem:FC<IProps>=(props):ReactElement=>{
                   </div>
                 }
               </div>
-              <div className="user-name">{user.userName}</div>
+              <div className={isPosUser?'pos-user-container':''}>
+                {
+                  isPosUser && <div className="pos-user-container-avatar" onClick={e=>userRouter(e)}>
+                    <img src={user.avatarUrl}/>
+                  </div>
+                }
+                <div className="user-name">{user.userName}</div>
+              </div>
               <div className="play-count">
                 <span>{playCount}次观看</span>
                 <span>{moment(new Date(createTime).getTime()).locale('zh-CN').fromNow()}</span>

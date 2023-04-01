@@ -1,5 +1,5 @@
 import React, {memo, FC, useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation,useParams } from "react-router-dom";
 import {Map} from "immutable";
 import {
   UserPlaylistWrapper,
@@ -16,10 +16,11 @@ import {useSelector} from "react-redux";
 
 import {ILogin} from "../../types/login/ILogin";
 interface IProps{
-  id:string
+  id?:string
 }
 const UserPlaylist:FC<IProps>=(props)=>{
-  const {id} = props;
+  const params = useParams<{id:string}>();
+  const  { id }=params as {id:string};
   const [playlist,setPlaylist] = useState<IPlaylist>();
   const [video,setVideo] = useState<IVideo[]>([]);
   const [count,setCount] = useState<number>(0);

@@ -11,9 +11,11 @@ import {channel} from "diagnostics_channel";
 import {tabs} from "./config";
 import {getUserBlock} from "../../../../network/block";
 import {IBlock} from "../../../../types/block/IBlock";
-import {UPLOADED_VIDEO} from "../../../../constant/block";
+import {CREATED_PLAYLIST, SUB_CHANNEL, UPLOADED_VIDEO} from "../../../../constant/block";
 import UploadedVideo from "./childCpn/uploadedVideo";
 import {useLoginMsg} from "../../../../hook/useLoginMsg";
+import CreatePlaylist from "./childCpn/playlist";
+import Subscriber from "./childCpn/subscriber";
 const UserDetail:FC=():ReactElement=>{
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,16 +42,31 @@ const UserDetail:FC=():ReactElement=>{
         if(data.status===200){
           setBlock(data.data);
           if(data.data.length!==0){
+            let tabList = [...userTabs];
             for(let item of data.data){
               if(item.name===UPLOADED_VIDEO){
-                let tabList = [...userTabs,{
+                tabList.push({
                   key:item.id,
                   label:item.name,
                   children:<UploadedVideo userId={userId}/>
-                }];
-                setUserTabs(tabList);
+                });
+              }
+              if(item.name===CREATED_PLAYLIST){
+                tabList.push({
+                  key:item.id,
+                  label:item.name,
+                  children:<CreatePlaylist userId={userId}/>
+                });
+              }
+              if(item.name === SUB_CHANNEL){
+                tabList.push({
+                  key:item.id,
+                  label:item.name,
+                  children:<Subscriber userId={userId}/>
+                });
               }
             }
+            setUserTabs(tabList);
           }
         }
       })

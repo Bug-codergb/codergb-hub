@@ -7,7 +7,12 @@ import {IResponseType} from "../../../../../../../../../../types/responseType";
 import {IBlock} from "../../../../../../../../../../types/block/IBlock";
 import UploadVideo from "../../../../../../../../../../components/header/childCpn/uploadVideo";
 import {Modal} from "antd";
-import {SINGLE_PLAYLIST, UPLOADED_VIDEO} from "../../../../../../../../../../constant/block";
+import {
+  CREATED_PLAYLIST,
+  SINGLE_PLAYLIST,
+  SUB_CHANNEL,
+  UPLOADED_VIDEO
+} from "../../../../../../../../../../constant/block";
 import {set} from "immutable";
 import Playlist from "./childCpn/playlist";
 interface IProps{
@@ -35,6 +40,18 @@ const BlockList:FC<IProps>=(props):ReactElement=>{
     if(item.name === SINGLE_PLAYLIST){
       setIsShowPlay(true);
     }else if(item.name===UPLOADED_VIDEO){
+      userAddBlock(item.id).then((data)=>{
+        if(data.status === 200){
+          addBlock();
+        }
+      })
+    }else if(item.name===CREATED_PLAYLIST){
+      userAddBlock(item.id).then((data)=>{
+        if(data.status === 200){
+          addBlock();
+        }
+      })
+    }else if(item.name ===SUB_CHANNEL){
       userAddBlock(item.id).then((data)=>{
         if(data.status === 200){
           addBlock();

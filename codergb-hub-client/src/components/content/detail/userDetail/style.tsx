@@ -2,13 +2,15 @@ import styled from "styled-components";
 
 export const UserDetailWrapper = styled.div`
   width: 100%;
-  height: ${260 / 40}rem;
-  background-color: #eeeeee;
-
+  height: 86vh;
+  background-color: #fff;
+  overflow-y: scroll;
   img {
     width: 100%;
   }
-
+  .banner{
+    min-height: ${200/40}rem;
+  }
   .user-info {
     display: flex;
     justify-content: space-between;

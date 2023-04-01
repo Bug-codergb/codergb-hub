@@ -8,8 +8,6 @@ export const VideoDetailWrapper = styled.div`
 `
 export const CenterContent = styled.div`
   width: ${centerWidth/40}rem;
-  border-left: 1px solid #ec4141;
-  border-right: 1px solid #ec4141;
   margin: 0 auto;
   display: flex;
   align-items: flex-start;

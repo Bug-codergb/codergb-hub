@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const VideoItemWrapper:any = styled.div`
   background-color: #fff;
-  width: ${props=> (props as any).isFlex ? 'auto' :(props as any).itemWidth / 40+'rem'};
+  width: ${props=> (props as any).isFlex ? '100%' :(props as any).itemWidth / 40+'rem'};
   height: ${props=> (props as any).isFlex ?'auto' :(props as any).itemWidth* (props as any).scale /40 + 'rem'};
   display: ${props=>(props as any).isFlex ? 'flex':'block'};
   align-items: flex-start;
@@ -41,21 +41,21 @@ export const VideoItemWrapper:any = styled.div`
     align-items: flex-start;
     margin: ${props=> (props as any).isFlex ? 0 :`${20/40}rem`} 0 0 0;
     padding: 0 ${15/40}rem;
-    width: ${props=>(props as any).isFlex ? '100%':'100%'};
+    width: 100%;
     .left-container{
       width: ${50/40}rem;
       height: ${50/40}rem;
       border-radius: 50%;
       background-color: #eeeeee;
       overflow: hidden;
-      display: ${props=> (props as any).isFlex ? `none` :'block'};
+      display: ${props=> (props as any).isFlex && !(props as any).isShowUser ? `none` :'block'};
       img{
         width: 100%;
       }
     }
     .right-container{
-      width: 80%;
-      margin: 0 0 0 ${20/40}rem;
+      width: ${props=>(props as any).isShowUser ? '80%':'100%'};
+      margin: 0 0 0 ${props=>(props as any).isShowUser?`${20/40}rem`:'0'};
       .msg{
         .state{
           display: flex;
@@ -79,6 +79,22 @@ export const VideoItemWrapper:any = styled.div`
               svg{
                 font-size: ${34/40}rem;
               }
+            }
+          }
+        }
+        .pos-user-container{
+          display: flex;
+          align-items: center;
+          padding: ${10/40}rem 0;
+          .pos-user-container-avatar{
+            width: ${50/40}rem;
+            height: ${50/40}rem;
+            border-radius: 50%;
+            background-color: #eeeeee;
+            overflow: hidden;
+            margin: 0 ${10/40}rem 0 0;
+            img{
+              width: 100%;
             }
           }
         }

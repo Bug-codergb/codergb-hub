@@ -3,6 +3,7 @@ import {RouteObject} from "react-router-dom";
 const VideoDetail = lazy(()=>import("../../components/content/detail/videoDetail/index"));
 const UserDetail=lazy(()=>import("../../components/content/detail/userDetail/index"));
 const ChatDetail=lazy(()=>import("../../components/content/detail/chatDetail/index"));
+const SearchDetail=lazy(()=>import("../../components/content/detail/searchDetail/index"));
 const videoDetailRoute:RouteObject={
     path:"/videoDetail",
     element:<Suspense>
@@ -21,8 +22,15 @@ const chatDetailRoute:RouteObject={
     <ChatDetail/>
   </Suspense>
 }
+const searchDetailRoute:RouteObject={
+  path:"/home/search",
+  element:<Suspense>
+    <SearchDetail/>
+  </Suspense>
+}
 export {
   videoDetailRoute,
   userDetailRoute,
-  chatDetailRoute
+  chatDetailRoute,
+  searchDetailRoute
 };

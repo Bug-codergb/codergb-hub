@@ -17,7 +17,8 @@ interface IMomentList{
 }
 interface IProps {
   userId: string;
-  cId:string
+  cId:string,
+  isShowPub?:boolean
 }
 const { TextArea } = Input;
 const Community: FC<IProps> = (props) => {
@@ -70,7 +71,7 @@ const Community: FC<IProps> = (props) => {
   return (
     <CommunityWrapper>
       {
-        loginMsg.userMsg.userId===props.userId&&<div className="publish-btn">
+        (loginMsg.userMsg.userId===props.userId || props.isShowPub)&&<div className="publish-btn">
           <Button
               type="primary"
               icon={<FormOutlined />}

@@ -1,12 +1,15 @@
 import {Navigate, RouteObject} from "react-router-dom";
-import {lazy,Suspense} from "react";
+import React, {lazy,Suspense} from "react";
 import StudioChildrenRoute from "./studio/index";
 import {
   videoDetailRoute,
   userDetailRoute,
-  chatDetailRoute
+  chatDetailRoute,
+  searchDetailRoute
 } from "./detail/index";
 import {LOGIN_PATH} from "../constant/routes";
+import {USER_PLAYLIST} from "../constant/menu";
+import UserPlaylist from "../views/user-playlist";
 
 const LoginRoute = lazy(()=>import('../views/login/index'));
 const HomeRoute = lazy(()=>import("../views/home/index"));
@@ -137,7 +140,16 @@ const routes:RouteObject[]=[
             </Suspense>
         )
       },
-      userDetailRoute
+      {
+        path:USER_PLAYLIST+"/:id",
+        element:(
+            <Suspense>
+              <UserPlaylist/>
+            </Suspense>
+        )
+      },
+      userDetailRoute,
+      searchDetailRoute
     ]
   },
   //工作室

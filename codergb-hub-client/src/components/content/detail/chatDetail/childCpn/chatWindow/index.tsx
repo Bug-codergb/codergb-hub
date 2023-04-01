@@ -95,7 +95,7 @@ const ChatWindow:FC<IProps>=(props)=>{
   },[targetUser,queueWebSocket])
   //聊天输入
   const chatInp=(e:ChangeEvent<HTMLTextAreaElement>)=>{
-    if(e.currentTarget && e.currentTarget.value){
+    if(e.currentTarget && e.currentTarget.value!==undefined && e.currentTarget.value!==null){
       setContent(e.currentTarget.value)
     }
   }

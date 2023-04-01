@@ -94,6 +94,7 @@ const History:FC=()=>{
                               }
                               isShowMore={false}
                               isFlex={true}
+                              isShowUser={false}
                               scale={0.55}/>
                  </li>
              )

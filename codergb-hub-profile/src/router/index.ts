@@ -9,6 +9,7 @@ import Playlist from '@/views/playlist/Playlist.vue';
 import Dm from '../views/dm/Dm.vue';
 import VideoDict from '../views/videoDict/VideoDict.vue';
 import VideoCollection from '../views/collection/Collection.vue';
+const VideoSource = import('../views/videoSource/VideoSource.vue');
 
 import {
   HOME_PATH,
@@ -18,7 +19,8 @@ import {
   VIDEO_DICT,
   VIDEO_DM,
   VIDEO_PATH,
-  PLAYLIST_PATH
+  PLAYLIST_PATH,
+  VIDEO_SOURCE
 } from '@/router/constant';
 import * as detailRoutes from './detail/index';
 const routes: Array<RouteRecordRaw> = [
@@ -69,6 +71,11 @@ const routes: Array<RouteRecordRaw> = [
         path: USER_PATH,
         name: 'user',
         component: UserPage
+      },
+      {
+        path: VIDEO_SOURCE,
+        name: 'videoSource',
+        component: VideoSource
       },
       detailRoutes.collectionRoute
     ]

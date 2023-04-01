@@ -1,11 +1,12 @@
-import React, {memo, FC, ReactElement, useState, useRef, useEffect} from "react";
+import React, {memo, FC, ReactElement, useState, useRef, useEffect, ChangeEvent, FormEvent} from "react";
 import { useNavigate } from "react-router-dom";
 import {Map} from "immutable";
-import {Dropdown, Modal} from 'antd';
+import {Dropdown, Modal,Badge } from 'antd';
 import {
   SearchOutlined,
   VideoCameraOutlined,
-  MailOutlined} from '@ant-design/icons';
+  MailOutlined
+} from '@ant-design/icons';
 import {
   HeaderWrapper,
   LeftContent,
@@ -25,6 +26,7 @@ import {debounce} from "../../utils/debounce";
 import {getVideoDuration} from "../../utils/video";
 const Header:FC=():ReactElement=>{
   const [isModalOpen,setIsModelOpen] = useState<boolean>(false);
+  const [searchContent,setSearchContent] = useState<string>("");
   const [keyIndex,setKeyIndex] = useState<number>(0);
   const loginState = useSelector<Map<string,ILogin>,ILogin>(state=>{
     return state.getIn(['loginReducer','login']) as ILogin;
@@ -74,7 +76,22 @@ const Header:FC=():ReactElement=>{
     navigate("/home",{
       replace:false
     })
-  },500,false);
+  },100,false);
+  const searchInp=(e:FormEvent<HTMLInputElement>)=>{
+    if(e.currentTarget && e.currentTarget.value!==undefined && e.currentTarget.value!==null){
+      setSearchContent(e.currentTarget.value)
+    }
+  }
+  const searchRouter=()=>{
+    if(searchContent.trim().length!==0){
+      navigate("/home/search",{
+        replace:false,
+        state:{
+          keyword:searchContent
+        }
+      })
+    }
+  }
   return (
       <HeaderWrapper>
         <LeftContent>
@@ -85,8 +102,10 @@ const Header:FC=():ReactElement=>{
         </LeftContent>
         <CenterContent>
           <div className="search-outer">
-            <input placeholder="搜索"/>
-            <div className="search-icon">
+            <input placeholder="搜索" value={searchContent}
+                   maxLength={30}
+                   onInput={(e)=>searchInp(e)}/>
+            <div className="search-icon" onClick={e=>searchRouter()}>
               <SearchOutlined />
             </div>
           </div>
@@ -96,21 +115,23 @@ const Header:FC=():ReactElement=>{
             <VideoCameraOutlined />
           </div>
           <div className="tip">
-            <MailOutlined />
-            <Modal title="视频上传"
-                   cancelText={"取消"}
-                   okText={"确定"}
-                   open={isModalOpen}
-                   onOk={handleOk}
-                   maskClosable={false}
-                   destroyOnClose={true}
-                   width={'74%'}
-                   onCancel={handleCancel}>
-              {
-                isModalOpen && <UploadVideo keyIndex={keyIndex} ref={videoRef}/>
-              }
-            </Modal>
+            <Badge count={100} size="default" offset={[4, -1]}>
+              <MailOutlined />
+            </Badge>
           </div>
+          <Modal title="视频上传"
+                 cancelText={"取消"}
+                 okText={"确定"}
+                 open={isModalOpen}
+                 onOk={handleOk}
+                 maskClosable={false}
+                 destroyOnClose={true}
+                 width={'74%'}
+                 onCancel={handleCancel}>
+            {
+              isModalOpen && <UploadVideo keyIndex={keyIndex} ref={videoRef}/>
+            }
+          </Modal>
           <div className="user">
             {
               (loginState && loginState.loginType===0) && <div className="logout" onClick={e=>login()}>

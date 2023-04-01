@@ -13,7 +13,7 @@ const tabs = (userId: string,channel?:IChannel) => {
     {
       label: "社区",
       key: "1006",
-      children: <Community userId={userId}/>
+      children: <Community userId={userId} channel={channel}/>
     },
     {
       label: "简介",

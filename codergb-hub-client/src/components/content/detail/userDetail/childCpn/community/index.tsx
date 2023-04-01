@@ -1,12 +1,18 @@
 import React,{memo,FC} from "react";
+import CommunityPro from "../../../../../../views/explore/childCpn/common/childCpn/community";
+import {IChannel} from "../../../../../../types/channel/IChannel";
 interface IProps{
-  userId:string
+  userId:string,
+  channel?:IChannel
 }
 const Community:FC<IProps>=(props)=>{
-  const {userId}=props;
+  const {userId,channel}=props;
+  console.log(channel)
   return (
       <div>
-        dddd
+        {
+          channel && <CommunityPro userId={userId} cId={channel.id} isShowPub={false}/>
+        }
       </div>
   )
 }

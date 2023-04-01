@@ -11,6 +11,7 @@ import React, {
 } from "react";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
+import { Layout } from 'antd';
 import {
   VideoDetailWrapper,
   CenterContent,
@@ -32,6 +33,8 @@ import {IDm} from "../../../../types/dm/IDm";
 import {getVideoDm} from "../../../../network/dm";
 import {getRandom, getRandomStr} from "../../../../utils/getRandom";
 import Similar from "./childCpn/similar";
+import HeaderTop from "../../../header";
+const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail:FC=():ReactElement=>{
   const location = useLocation();
   const { id } = location.state;
@@ -153,57 +156,64 @@ const VideoDetail:FC=():ReactElement=>{
   }
   return (
       <VideoDetailWrapper>
-        <CenterContent>
-          <LeftContentWrapper videoRef={videoRef}>
-            <div className="video-dm-container">
-              <div className="inner">
-                <div className="start">
-                  <ul ref={contentRef}>
-                    {videoDm &&
-                    videoDm.map((item, index) => {
-                      return (
-                          <li key={item.id} className="text" ref={item.contentRef} onMouseEnter={e=>pauseHandle(item)} onMouseLeave={e=>playHandle(item)}>
-                            {item.text}
-                          </li>
-                      );
-                    })}
-                  </ul>
+        <Layout>
+          <Header>
+            <HeaderTop/>
+          </Header>
+          <Content>
+            <CenterContent>
+              <LeftContentWrapper videoRef={videoRef}>
+                <div className="video-dm-container">
+                  <div className="inner">
+                    <div className="start">
+                      <ul ref={contentRef}>
+                        {videoDm &&
+                        videoDm.map((item, index) => {
+                          return (
+                              <li key={item.id} className="text" ref={item.contentRef} onMouseEnter={e=>pauseHandle(item)} onMouseLeave={e=>playHandle(item)}>
+                                {item.text}
+                              </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                    <div className="video-container" ref={screenRef}>
+                      {
+                        vioURL && <video ref={videoRef}
+                                         controls={true}
+                                         muted={false}
+                                         onTimeUpdate={(e) => videoPlayHandle(e)}
+                                         autoPlay={true}/>
+                      }
+                    </div>
+                    <div className="end"> </div>
+                  </div>
                 </div>
-                <div className="video-container" ref={screenRef}>
+                <Dm id={vioId} time={currentTime} pub={()=>pubSuccess()}/>
+                <div className="video-info">
                   {
-                    vioURL && <video ref={videoRef}
-                                     controls={true}
-                                     muted={false}
-                                     onTimeUpdate={(e) => videoPlayHandle(e)}
-                                     autoPlay={true}/>
+                    videoDetail&&videoDetail.user && <VideoInfo videoInfo={videoDetail}/>
                   }
                 </div>
-                <div className="end"> </div>
-              </div>
-            </div>
-            <Dm id={vioId} time={currentTime} pub={()=>pubSuccess()}/>
-            <div className="video-info">
-              {
-                videoDetail&&videoDetail.user && <VideoInfo videoInfo={videoDetail}/>
-              }
-            </div>
-            <div className="video-comment">
-              {
-                loginState && loginState.userMsg && videoDetail&&<Comment user={loginState.userMsg} id={videoDetail.id} alias={'vId'}/>
-              }
-            </div>
-          </LeftContentWrapper>
-          <RightContentWrapper>
-            {
-              videoDetail&&videoDetail.user&&<Similar id={videoDetail?.category.id}
-                                    key={vioId}
-                                    videoId={videoDetail?.id}
-                                    userId={videoDetail?.user.userId}
-                                    userName={videoDetail?.user.userName}
-                                    play={(id:string)=>playVideo(id)} />
-            }
-          </RightContentWrapper>
-        </CenterContent>
+                <div className="video-comment">
+                  {
+                    loginState && loginState.userMsg && videoDetail&&<Comment user={loginState.userMsg} id={videoDetail.id} alias={'vId'}/>
+                  }
+                </div>
+              </LeftContentWrapper>
+              <RightContentWrapper>
+                {
+                  videoDetail&&videoDetail.user&&<Similar id={videoDetail?.category.id}
+                                                          key={vioId}
+                                                          videoId={videoDetail?.id}
+                                                          userId={videoDetail?.user.userId}
+                                                          userName={videoDetail?.user.userName}
+                                                          play={(id:string)=>playVideo(id)} />
+                }
+              </RightContentWrapper>
+            </CenterContent>
+          </Content>
+        </Layout>
       </VideoDetailWrapper>
   )
 }
