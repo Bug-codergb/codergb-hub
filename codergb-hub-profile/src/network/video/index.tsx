@@ -134,3 +134,32 @@ export function getSimilarVideo<T = IResponseType<any>>(id: string, offset: numb
     }
   });
 }
+//获取视频源文件
+export function getVideoSource<T = IResponseType<any>>(
+  offset: number,
+  limit: number,
+  keyword: string,
+  isNull: number | undefined
+) {
+  return gbRequest.post<T>({
+    url: '/video/source',
+    params: {
+      offset,
+      limit,
+      keyword,
+      isNull
+    }
+  });
+}
+//删除视频源文件
+export function deleteVideoSource<T = IResponseType<any>>(name: string) {
+  return gbRequest.post<T>({
+    url: `/video/source/delete/${name}`
+  });
+}
+//删除视频
+export function deleteVideo<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: '/video/delete/' + id
+  });
+}

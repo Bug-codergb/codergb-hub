@@ -4,7 +4,8 @@ import {
   VIDEO_COLLECTION,
   VIDEO_DICT,
   VIDEO_DM,
-  VIDEO_PATH
+  VIDEO_PATH,
+  VIDEO_SOURCE
 } from '@/router/constant';
 
 const menu = [
@@ -32,6 +33,11 @@ const menu = [
         index: '1-4',
         name: '字典',
         path: VIDEO_DICT
+      },
+      {
+        index: '1-5',
+        name: '源文件',
+        path: VIDEO_SOURCE
       }
     ]
   },

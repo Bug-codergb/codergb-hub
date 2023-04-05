@@ -355,5 +355,28 @@ class VideoService{
 
     }
   }
+  async getVideoSourceService(){
+    try{
+      const sql=`
+      select f.id,f.originalname,f.mimetype,f.dest,f.filename,vf.videoId as vid,v.name
+      from file as f
+      LEFT JOIN video_file as vf on vf.fileId = f.id
+      LEFT JOIN video as v on v.id = vf.videoId
+      where vf.mark='source'`;
+      const result = await connection.execute(sql);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
+  async deleteVideoService(ctx,id){
+    try{
+      const sql=`delete from video where id=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
 }
 module.exports  = new VideoService();

@@ -28,6 +28,8 @@ import { IResponseType } from '@/types/responseType';
 import { IPage } from '@/types/IPage';
 import { getAllTag } from '@/network/tag';
 import { getRandColor } from '@/constant/color';
+import { deleteVideo } from '@/network/video';
+import { ElMessage } from 'element-plus';
 const props = defineProps({
   isOperate: {
     type: Boolean,
@@ -149,8 +151,17 @@ const tableData = reactive({
         {
           text: '删除',
           type: 'danger',
-          onClick: (row: IVideo, index: number) => {
+          onClick: async (row: IVideo, index: number) => {
             console.log(index);
+            const result = await deleteVideo(row.id);
+            if (result.status === 200) {
+              ElMessage.closeAll();
+              ElMessage({
+                type: 'success',
+                message: '删除成功'
+              });
+              gbTable.value?.search();
+            }
           }
         }
       ]

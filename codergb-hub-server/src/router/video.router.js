@@ -12,7 +12,10 @@ const {
   getSubUserVio,
   getThumbUserVio,
   getSimilarVideo,
-  getColVideo
+  getColVideo,
+  getVideoSource,
+  deleteVideo,
+  deleteVideoSource
 } = require("../controller/video.controller")
 //视频上传文件信息
 videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
@@ -33,4 +36,10 @@ videoRouter.post("/thumb/user/:id" , authVerify,getThumbUserVio);
 videoRouter.post("/similar/:id",authVerify,getSimilarVideo);
 //获取集合下视频
 videoRouter.post("/collection/:id",authVerify,getColVideo);
+//获取视频源文件
+videoRouter.post("/source",authVerify,getVideoSource);
+//删除
+videoRouter.post("/delete/:id",authVerify,deleteVideo);
+//删除文件切片
+videoRouter.post("/source/delete/:name",authVerify,deleteVideoSource);
 module.exports = videoRouter;

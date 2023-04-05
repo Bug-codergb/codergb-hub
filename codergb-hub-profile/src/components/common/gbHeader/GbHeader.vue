@@ -32,6 +32,7 @@
         <slot>
           <el-button type="primary" @click="createHandle">新增</el-button>
         </slot>
+        <slot name="btnContent"></slot>
       </div>
       <template v-if="isShowRefresh">
         <div class="page-item-list-header-right">

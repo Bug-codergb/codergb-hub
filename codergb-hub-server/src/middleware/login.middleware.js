@@ -10,7 +10,7 @@ async function authVerify(ctx,next){
     return ctx.app.emit('error',err,ctx);
   }else{
     try{
-      const token = authorization.replace('Bearer','');
+      const token = authorization.replace('Bearer ','');
       const result = await jwt.verify(token,PUBLIC_KEY,{
         algorithms:['RS256']
       })
