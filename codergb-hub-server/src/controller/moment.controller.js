@@ -2,7 +2,8 @@ const { setResponse } = require("../utils/setResponse");
 const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
-  channelMomentService
+  channelMomentService,
+  momentDetailService
 }=require("../service/moment.service");
 class MomentController{
   async create(ctx,next){
@@ -32,6 +33,19 @@ class MomentController{
       const result = await channelMomentService(ctx,offset,limit,id);
       if(result){
         setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  //获取动态详情
+  async momentDetail(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await momentDetailService(ctx,id);
+      console.log(result);
+      if(result){
+        setResponse(ctx,"success",200,result[0]);
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

@@ -1,4 +1,5 @@
 import React, {memo, FC, useEffect, useState, useImperativeHandle, forwardRef, Ref,Fragment} from "react";
+import {useNavigate} from 'react-router-dom';
 import {
   MomentListWrapper
 } from "./style";
@@ -39,6 +40,15 @@ const MomentList:FC<IProps>=forwardRef((props,propsRef)=>{
   const pageChange=(e:number)=>{
     getChannelMomentReq(cId,(e-1)*10,10).then(()=>{});
   }
+  const navigate = useNavigate();
+  const momentRouter=(item:IMoment)=>{
+    navigate("/home/moment",{
+      replace:false,
+      state:{
+        id:item.id
+      }
+    })
+  }
   return (
       <MomentListWrapper>
         <ul className="moment-list">
@@ -59,13 +69,13 @@ const MomentList:FC<IProps>=forwardRef((props,propsRef)=>{
                         <p className="user-name">{item.user.userName}</p>
                         <p className="create-time">{timeMoment(item.createTime).fromNow()}</p>
                       </div>
-                      <p className="title">
+                      <p className="title" onClick={()=>momentRouter(item)}>
                         {item.title}
                       </p>
                       <p className="content">
                         {item.content}
                       </p>
-                      <div className="video-container">
+                      <div className="video-container" onClick={()=>momentRouter(item)}>
                         <img src={item.video.picUrl}/>
                       </div>
                       <div className="thumb">

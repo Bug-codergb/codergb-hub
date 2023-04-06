@@ -21,3 +21,8 @@ export function getChannelMoment<T=IResponseType<any>>(id:string,offset:number,l
     }
   })
 }
+export function getMomentDetail<T=IResponseType<any>>(id:string){
+  return gbRequest.post<T>({
+    url:"/moment/"+id
+  })
+}

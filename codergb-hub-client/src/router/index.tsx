@@ -5,7 +5,8 @@ import {
   videoDetailRoute,
   userDetailRoute,
   chatDetailRoute,
-  searchDetailRoute
+  searchDetailRoute,
+    momentDetailRoute
 } from "./detail/index";
 import {LOGIN_PATH} from "../constant/routes";
 import {USER_PLAYLIST} from "../constant/menu";
@@ -149,7 +150,8 @@ const routes:RouteObject[]=[
         )
       },
       userDetailRoute,
-      searchDetailRoute
+      searchDetailRoute,
+      momentDetailRoute
     ]
   },
   //工作室

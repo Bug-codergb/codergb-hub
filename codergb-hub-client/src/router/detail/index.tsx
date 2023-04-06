@@ -4,6 +4,8 @@ const VideoDetail = lazy(()=>import("../../components/content/detail/videoDetail
 const UserDetail=lazy(()=>import("../../components/content/detail/userDetail/index"));
 const ChatDetail=lazy(()=>import("../../components/content/detail/chatDetail/index"));
 const SearchDetail=lazy(()=>import("../../components/content/detail/searchDetail/index"));
+const MomentDetail=lazy(()=>import("../../components/content/detail/momentDetail/index"));
+
 const videoDetailRoute:RouteObject={
     path:"/videoDetail",
     element:<Suspense>
@@ -28,9 +30,16 @@ const searchDetailRoute:RouteObject={
     <SearchDetail/>
   </Suspense>
 }
+const momentDetailRoute:RouteObject={
+  path:"/home/moment",
+  element:<Suspense>
+    <MomentDetail/>
+  </Suspense>
+}
 export {
   videoDetailRoute,
   userDetailRoute,
   chatDetailRoute,
-  searchDetailRoute
+  searchDetailRoute,
+  momentDetailRoute
 };
