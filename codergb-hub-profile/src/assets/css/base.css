@@ -5,7 +5,7 @@ html {
   --primary-color: #ff0000;
   --line-color: #dcdfe6;
   --img-bgc: #f5f7fa;
-  --el-loading-spinner-size: 30px!important;
+  --el-loading-spinner-size: 30px !important;
 }
 * {
   box-sizing: border-box;
@@ -28,4 +28,9 @@ li {
 p {
   padding: 0;
   margin: 0;
+}
+.text-nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

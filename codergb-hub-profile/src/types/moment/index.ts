@@ -1,15 +1,15 @@
-import { IMoment } from '../moment';
 import { IUserMsg } from '../user/IUserMsg';
 import { IVideo } from '../video/IVideo';
 
-interface IComment {
+interface IMoment {
   id: string;
+  title: string;
   content: string;
+  cId: string;
   createTime: string;
   updateTime: string;
   user: IUserMsg;
-  reply?: IComment | number;
-  video?: IVideo;
-  moment?: IMoment;
+  video: IVideo;
+  picUrl?: string;
 }
-export type { IComment };
+export type { IMoment };

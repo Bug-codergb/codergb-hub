@@ -1,4 +1,5 @@
 import {
+  COMMENT_PATH,
   PLAYLIST_PATH,
   USER_PATH,
   VIDEO_COLLECTION,
@@ -50,6 +51,18 @@ const menu = [
         index: '3-1',
         name: '播放列表',
         path: PLAYLIST_PATH
+      }
+    ]
+  },
+  {
+    index: '4',
+    name: '评论管理',
+    icon: 'chatLineSquare',
+    children: [
+      {
+        index: '4-1',
+        name: '用户评论',
+        path: COMMENT_PATH
       }
     ]
   },

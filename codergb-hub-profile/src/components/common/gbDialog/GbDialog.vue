@@ -36,6 +36,8 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
+  (e: 'confirmHandle'): void;
+  (e: 'cancelHandle'): void;
 }>();
 const showDialog = computed({
   get() {
@@ -47,9 +49,11 @@ const showDialog = computed({
 });
 const confirmHandle = () => {
   showDialog.value = false;
+  emit('confirmHandle');
 };
 const cancelHandle = () => {
   showDialog.value = false;
+  emit('cancelHandle');
 };
 </script>
 <style lang="less">

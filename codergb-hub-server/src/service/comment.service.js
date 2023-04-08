@@ -95,5 +95,61 @@ class CommentService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async sysCommentCountService(ctx){
+    try{
+      const sql=`
+      select count(distinct(c.id)) as count
+      from comment as c
+      LEFT JOIN user as u on u.userId = c.userId
+      LEFT JOIN video as v on v.id = c.vId
+      LEFT JOIN moment as m on m.id = c.mId
+      LEFT JOIN comment as rep on rep.replyId = c.id`;
+      const result = await connection.execute(sql)
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async sysCommentService(ctx,offset,limit){
+    try{
+      const sql=`
+      select distinct(c.id),c.content,c.createTime,c.updateTime,
+			JSON_OBJECT('userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) AS user,
+			if(c.vId is not null,JSON_OBJECT('id',v.id,'name',v.name,'playCount',v.playCount,'dt',v.dt,'description',
+			            v.description,'createTime',v.createTime,'updateTime',v.updateTime,'picUrl',(
+									  select f.picUrl from video_file as vf LEFT JOIN file as f on vf.fileId = f.id where vf.mark="cover" and vf.videoId = v.id
+									)),null) as video,
+			if(c.mId is not null ,JSON_OBJECT('id',m.id,'title',m.title,'content',m.content,'createTime',m.createTime,'updateTime',m.updateTime,
+			   'picUrl',(
+									  select f.picUrl from video_file as vf LEFT JOIN file as f on vf.fileId = f.id where vf.mark="cover" and vf.videoId = m.vid
+									)),null) as        moment,
+			if(c.replyId is not null,JSON_OBJECT(
+			 'id',c.id,'content',c.content,'createTime',c.createTime,'updateTime',c.updateTime
+			),null) as reply
+      from comment as c
+      LEFT JOIN user as u on u.userId = c.userId
+      LEFT JOIN video as v on v.id = c.vId
+      LEFT JOIN moment as m on m.id = c.mId
+      LEFT JOIN comment as rep on rep.replyId = c.id
+      limit ?,?`;
+      const result =await connection.execute(sql,[offset,limit]);
+      const count = await new CommentService().sysCommentCountService(ctx);
+      return{
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteComService(ctx,id){
+    try{
+      const sql=`delete from comment where id =?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
 }
 module.exports = new CommentService();

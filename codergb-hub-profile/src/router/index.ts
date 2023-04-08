@@ -5,6 +5,7 @@ import Home from '../views/home/Home.vue';
 import VideoPage from '../views/video/VideoPage.vue';
 import UserPage from '../views/user/User.vue';
 import Playlist from '@/views/playlist/Playlist.vue';
+const Comment = import('../views/comment/Comment.vue');
 
 import Dm from '../views/dm/Dm.vue';
 import VideoDict from '../views/videoDict/VideoDict.vue';
@@ -20,7 +21,8 @@ import {
   VIDEO_DM,
   VIDEO_PATH,
   PLAYLIST_PATH,
-  VIDEO_SOURCE
+  VIDEO_SOURCE,
+  COMMENT_PATH
 } from '@/router/constant';
 import * as detailRoutes from './detail/index';
 const routes: Array<RouteRecordRaw> = [
@@ -71,6 +73,11 @@ const routes: Array<RouteRecordRaw> = [
         path: USER_PATH,
         name: 'user',
         component: UserPage
+      },
+      {
+        path: COMMENT_PATH,
+        name: 'comment',
+        component: Comment
       },
       {
         path: VIDEO_SOURCE,

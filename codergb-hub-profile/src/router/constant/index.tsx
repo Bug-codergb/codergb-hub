@@ -9,6 +9,7 @@ const VIDEO_COLLECTION = HOME_PATH + '/video/collection';
 
 const USER_PATH = HOME_PATH + '/user';
 const PLAYLIST_PATH = HOME_PATH + '/playlist';
+const COMMENT_PATH = HOME_PATH + '/comment';
 ///detail
 const COLLECTION_DETAIL_PATH = HOME_PATH + '/collection-detail';
 export {
@@ -21,5 +22,6 @@ export {
   USER_PATH,
   PLAYLIST_PATH,
   COLLECTION_DETAIL_PATH,
-  VIDEO_SOURCE
+  VIDEO_SOURCE,
+  COMMENT_PATH
 };
