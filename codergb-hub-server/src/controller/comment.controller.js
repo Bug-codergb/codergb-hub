@@ -5,7 +5,8 @@ const {
   allCommentService,
   allReplyService,
   sysCommentService,
-  deleteComService
+  deleteComService,
+  userCommentService
 }=require("../service/comment.service")
 const {isEmpty} = require("../utils/isEmpty");
 class CommentController{
@@ -80,6 +81,18 @@ class CommentController{
     try{
       const {id}  =ctx.params;
       const result = await deleteComService(ctx,id);
+      if(result){
+        setResponse(ctx,'success',200,result)
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async userComment(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {offset="0",limit="30"} = ctx.query;
+      const result= await userCommentService(ctx,id,offset,limit);
       if(result){
         setResponse(ctx,'success',200,result)
       }

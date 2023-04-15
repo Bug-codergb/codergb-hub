@@ -9,7 +9,8 @@ const {
   allComment,
   allReply,
   sysComment,
-  deleteCom
+  deleteCom,
+  userComment
 }=require("../controller/comment.controller");
 commentRouter.post("/",authVerify,create);
 //评论回复
@@ -21,4 +22,6 @@ commentRouter.get("/reply/all/:id",authVerify,allReply);
 //获取系统所有评论
 commentRouter.post("/all",authVerify,sysComment);
 commentRouter.post("/delete/:id",authVerify,deleteCom);
+//获取用户评论
+commentRouter.get("/user/:id",authVerify,userComment);
 module.exports = commentRouter;

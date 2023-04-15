@@ -41,3 +41,13 @@ export function replyComment<T=IResponseType<any>>(id:string,content:string){
     }
   })
 }
+//获取所有评论
+export function getUserComment<T=IResponseType<any>>(userId:string,offset:number,limit:number){
+  return gbRequest.get<T>({
+    url:`/comment/user/${userId}`,
+    params:{
+      offset,
+      limit
+    }
+  })
+}
