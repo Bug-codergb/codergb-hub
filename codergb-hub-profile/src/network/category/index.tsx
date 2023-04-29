@@ -20,3 +20,11 @@ export function deleteCate<T = IResponseType<any>>(id: string) {
     url: '/cate/delete/' + id
   });
 }
+export function createCate<T = IResponseType<any>>(name: string) {
+  return gbRequest.post<T>({
+    url: '/cate/',
+    data: {
+      name
+    }
+  });
+}

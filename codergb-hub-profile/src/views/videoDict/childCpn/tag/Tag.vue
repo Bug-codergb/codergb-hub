@@ -1,8 +1,8 @@
 <template>
   <div>
-    <GbHeader :header="header" :isShowRefresh="true" />
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
     <GbTable :tableData="tableData" ref="gbTable" />
-    <CreateTag ref="createTagRef" />
+    <CreateTag ref="createTagRef" @refresh="refresh" />
   </div>
 </template>
 
@@ -107,6 +107,12 @@ const header = reactive([
     }
   }
 ]);
+const refresh = () => {
+  gbTable.value.search();
+};
+const createHandle = () => {
+  createTagRef.value.showDrawer();
+};
 </script>
 
 <style scoped lang="less"></style>

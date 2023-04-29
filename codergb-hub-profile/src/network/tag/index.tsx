@@ -14,3 +14,11 @@ export function deleteTag<T = IResponseType<any>>(id: string) {
     url: '/tag/delete/' + id
   });
 }
+export function createTag<T = IResponseType<any>>(name: string) {
+  return gbRequest.post<T>({
+    url: '/tag/',
+    data: {
+      name
+    }
+  });
+}

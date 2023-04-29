@@ -2,7 +2,7 @@
   <div>
     <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
     <GbTable :tableData="tableData" ref="gbTable" />
-    <CreateCate ref="createCateRef" />
+    <CreateCate ref="createCateRef" @refresh="refresh" />
   </div>
 </template>
 
@@ -109,6 +109,9 @@ const header = reactive([
 
 const createHandle = () => {
   createCateRef.value?.showDrawer();
+};
+const refresh = () => {
+  gbTable.value?.search();
 };
 </script>
 
