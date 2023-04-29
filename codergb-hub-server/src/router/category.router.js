@@ -6,9 +6,11 @@ const {
 const {
   create,
   getAllCate,
-  getExplore
+  getExplore,
+  deleteCate
 } = require("../controller/category.controller");
 cateRouter.post("/",authVerify,create);
 cateRouter.get("/all",authVerify,getAllCate)
 cateRouter.get("/explore",authVerify,getExplore);
+cateRouter.post("/delete/:id",authVerify,deleteCate);
 module.exports = cateRouter;

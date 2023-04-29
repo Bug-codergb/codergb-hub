@@ -2,7 +2,8 @@ const { setResponse } =require("../utils/setResponse");
 const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
-  getAllTagService
+  getAllTagService,
+  deleteTagService
 } = require("../service/tag.service");
 class TagController{
   async create(ctx,next){
@@ -28,6 +29,16 @@ class TagController{
       if(result){
         setResponse(ctx,"success",200,result)
       }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async deleteTag(ctx,next){
+    try{
+      const {id} = ctx.params;
+      console.log(id);
+      const result = await deleteTagService(ctx,id);
+      setResponse(ctx,"success",200,result)
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }

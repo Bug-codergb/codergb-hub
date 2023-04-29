@@ -39,4 +39,9 @@ export function addVideoToCol<T = IResponseType<any>>(vId: IVCol[], cId: string)
     }
   });
 }
+export function deleteCol<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: '/collection/delete/' + id
+  });
+}
 export type { IVCol };

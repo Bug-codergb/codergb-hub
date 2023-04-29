@@ -3,7 +3,8 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   getAllCateService,
-  getExploreService
+  getExploreService,
+  deleteCateService
 } = require("../service/category.service");
 class CategoryController{
   async create(ctx,next){
@@ -34,6 +35,15 @@ class CategoryController{
       if(result){
         setResponse(ctx,"success",200,result)
       }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteCate(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await deleteCateService(ctx,id);
+      setResponse(ctx,"success",200,result)
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }

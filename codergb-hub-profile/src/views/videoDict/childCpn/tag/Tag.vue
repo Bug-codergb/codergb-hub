@@ -10,12 +10,14 @@
 import { reactive, ref } from 'vue';
 import moment from 'moment';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
-import { getAllCate } from '@/network/category';
+import { deleteCate, getAllCate } from '@/network/category';
 import { IResponseType } from '@/types/responseType';
 import { ICate } from '@/types/category/ICate';
 import { IPage } from '@/types/IPage';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import CreateTag from './childCpn/CreateTag';
+import { ElMessage } from 'element-plus';
+import { deleteTag } from '@/network/tag';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createTagRef = ref<InstanceType<typeof CreateTag>>();
@@ -78,8 +80,12 @@ const tableData = reactive({
         {
           text: '删除',
           type: 'danger',
-          onClick: (row: ICate, index: number) => {
-            console.log(index);
+          onClick: async (row: ICate, index: number) => {
+            const result = await deleteTag(row.id);
+            if (result.status === 200) {
+              ElMessage.success('删除成功');
+              gbTable.value?.search();
+            }
           }
         }
       ]

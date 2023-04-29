@@ -15,3 +15,8 @@ export function getCateExplore<T = IResponseType<any>>() {
     url: '/cate/explore'
   });
 }
+export function deleteCate<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: '/cate/delete/' + id
+  });
+}

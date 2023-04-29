@@ -60,12 +60,13 @@ const props = defineProps({
     default: true
   }
 });
-const emit = defineEmits(['create']);
+const emit = defineEmits(['create', 'refresh']);
 if (!isReactive(props.header)) {
   console.error('header必须是一个reactive');
 }
 const isRotate = ref(false);
 const changeRotate = () => {
+  emit('refresh');
   isRotate.value = true;
   setTimeout(() => {
     isRotate.value = false;

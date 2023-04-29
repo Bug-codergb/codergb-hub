@@ -9,7 +9,7 @@ import { ref, defineExpose } from 'vue';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
 import { ICate } from '@/types/category/ICate';
 const drawer = ref(false);
-const title = ref('编辑分类');
+const title = ref('新增分类');
 const showDrawer = (data: ICate) => {
   drawer.value = true;
 };

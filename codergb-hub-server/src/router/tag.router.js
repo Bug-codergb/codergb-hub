@@ -5,8 +5,10 @@ const {
 } = require("../middleware/login.middleware");
 const {
   create,
-  getAllTag
+  getAllTag,
+  deleteTag
 } = require("../controller/tag.controller");
 tagRouter.post("/",authVerify,create);
 tagRouter.get("/all",authVerify,getAllTag);
+tagRouter.post("/delete/:id",authVerify,deleteTag);
 module.exports = tagRouter;

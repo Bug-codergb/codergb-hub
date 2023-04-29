@@ -30,7 +30,16 @@ class TagService{
         count:count[0].count
       }
     }catch (e) {
-
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async deleteTagService(ctx,id){
+    try{
+      const sql=`delete from tag where id=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
     }
   }
 }

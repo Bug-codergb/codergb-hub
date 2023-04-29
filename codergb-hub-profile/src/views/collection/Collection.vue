@@ -21,6 +21,8 @@ import AddVideo from './childCpn/AddVideo.vue';
 import { ICollection } from '@/types/collection/ICollection';
 import { useRouter } from 'vue-router';
 import { COLLECTION_DETAIL_PATH } from '@/router/constant';
+import { deleteCol } from '@/network/collection';
+import { ElMessage } from 'element-plus';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createColRef = ref<InstanceType<typeof CreateCol>>();
@@ -88,7 +90,7 @@ const tableData = reactive({
           text: '添加视频',
           type: 'primary',
           onClick: (row: ICollection, index: number) => {
-            addVideo.value.showDrawer(row);
+            addVideo.value?.showDrawer(row);
           }
         },
         {
@@ -99,8 +101,12 @@ const tableData = reactive({
         {
           text: '删除',
           type: 'danger',
-          onClick: (row: ICollection, index: number) => {
-            console.log(index);
+          onClick: async (row: ICollection, index: number) => {
+            const result = await deleteCol(row.id);
+            if (result.status === 200) {
+              ElMessage.success('删除成功');
+              gbTable.value?.search();
+            }
           }
         }
       ]
@@ -128,7 +134,7 @@ const createHandle = () => {
   }
 };
 const refresh = () => {
-  gbTable.value.search();
+  gbTable.value?.search();
 };
 </script>
 

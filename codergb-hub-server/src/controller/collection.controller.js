@@ -6,7 +6,8 @@ const {
   allCollectionService,
   getColDetailService,
   delColVideoService,
-  getUserColService
+  getUserColService,
+  deleteColService
 } = require("../service/collection.service");
 const {
   getColVideoCountService
@@ -108,6 +109,15 @@ class CollectionController{
         }
         setResponse(ctx,"success",200, result);
       }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteCol(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await deleteColService(ctx,id);
+      setResponse(ctx,"success",200, result);
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }
