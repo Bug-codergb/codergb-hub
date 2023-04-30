@@ -13,8 +13,8 @@
       <div class="gb-drawer-header">
         <div class="left-header">{{ title }}</div>
         <div class="right-header">
-          <el-button size="small" type="primary" @click="confirmHandle(close)">确定</el-button>
-          <el-button size="small" @click="cancelHandle(close)">取消</el-button>
+          <el-button type="primary" @click="confirmHandle(close)">确定</el-button>
+          <el-button @click="cancelHandle(close)">取消</el-button>
         </div>
       </div>
     </template>

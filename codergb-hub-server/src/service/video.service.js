@@ -90,7 +90,11 @@ class VideoService{
 \t\t\t   \tLEFT JOIN tag on tag.id = tv.tId
 \t\t\t\t\twhere tv.vId = v.id
 \t\t\t ) as tag,(select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
-                        from user as u where u.userId=v.userId) as user
+                        from user as u where u.userId=v.userId) as user,
+                        (select JSON_ARRAYAGG(JSON_OBJECT(
+\t\t\t\t'id',pp.id,'name',pp.name,'isPublic',pp.isPublic,'description',pp.description
+\t\t\t)) from playlist_video as pv LEFT JOIN playlist as pp on pp.id=pv.pId where pv.vId = v.id) as playlist,
+vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.id and vf.mark="source") as videoSourceId  \t\t\t\t\t
       from video as v
       LEFT JOIN category as c on c.id = v.cateId
       LEFT JOIN video_file as vf on vf.videoId = v.id

@@ -1,4 +1,5 @@
 import { ICate } from '../category/ICate';
+import { IPlaylist } from '../playlist/IPlaylist';
 import { ITag } from '../tag/ITag';
 import { IUserMsg } from '../user/IUserMsg';
 interface IVideo {
@@ -16,6 +17,9 @@ interface IVideo {
   history?: string;
   category: ICate;
   tag: ITag[];
+  playlist?: IPlaylist;
+  imgId?: string;
+  videoSourceId?: string;
 }
 
 interface IVideoFile {

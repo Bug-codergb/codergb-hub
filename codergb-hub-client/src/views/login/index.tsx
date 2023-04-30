@@ -18,7 +18,9 @@ const Login:FC=():ReactElement=>{
   },[])
   return(
       <LoginWrappers>
-        <div className="title cssanimation leMagnify sequence">coderhub</div>
+        <div className="codergb-hub-title">
+          <span className="label">coderhub</span>
+        </div>
         <div className="login-inner">
           <Form
               name="basic"

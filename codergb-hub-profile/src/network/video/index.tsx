@@ -53,6 +53,35 @@ export function createVideo<T = IResponseType<any>>(
     }
   });
 }
+
+//更新video
+export function updateVideo<T = IResponseType<any>>(
+  id: string,
+  videoId: string,
+  title: string,
+  desc: string,
+  imgId: string,
+  playlistId: string,
+  tagIds: string[],
+  cateId: string,
+  dt: number
+) {
+  return gbRequest.post<T>({
+    url: '/video/update',
+    data: {
+      id,
+      videoId,
+      title,
+      desc,
+      imgId,
+      playlistId,
+      tagIds,
+      cateId,
+      dt
+    }
+  });
+}
+
 //获取所有视频
 export function getAllVideo<T = IResponseType<any>>(offset: number, limit: number) {
   return gbRequest.post<T>({

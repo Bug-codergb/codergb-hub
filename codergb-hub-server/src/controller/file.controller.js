@@ -55,7 +55,6 @@ class FileController{
     try {
       const {id} = ctx.params;
       const result = await getFileService(ctx,id);
-      console.log(result);
       if(result){
         const {dest,filename} = result[0];
         const filePath = path.resolve(__dirname,"../../",`${dest}/${filename}`);

@@ -1,6 +1,17 @@
 import { ref } from 'vue';
+interface IFormData {
+  title: string;
+  desc: string;
+  videoId: string;
+  playlist: string;
+  tag: string[];
+  cate: string;
+  imgId: string;
+  dt: number;
+  imgURL: string;
+}
 const useFormData = () => {
-  const formData = ref({
+  const formData = ref<IFormData>({
     title: '',
     desc: '',
     videoId: '',
@@ -8,7 +19,8 @@ const useFormData = () => {
     tag: [],
     cate: '',
     imgId: '',
-    dt: 0
+    dt: 0,
+    imgURL: ''
   });
   const resetFormData = () => {
     formData.value.title = '';

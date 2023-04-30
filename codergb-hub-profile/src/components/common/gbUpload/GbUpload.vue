@@ -1,6 +1,12 @@
 <template>
   <div class="gb-upload">
-    <el-dialog v-model="dialogVisible" title="图片上传" width="60%" :close-on-click-modal="false">
+    <el-dialog
+      v-model="dialogVisible"
+      title="图片上传"
+      width="60%"
+      :close-on-click-modal="false"
+      :destroy-on-close="true"
+    >
       <div class="img-container">
         <div class="container">
           <img ref="imgRef" class="cropper-img" :src="imgURL" />
@@ -116,6 +122,7 @@ const confirmHandle = async () => {
     display: flex;
     align-items: center;
     height: (260/40rem);
+    width: 100%;
     .container {
       flex: 1;
       height: 100%;

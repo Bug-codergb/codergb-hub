@@ -40,7 +40,7 @@ const props = defineProps({
     default: ''
   }
 });
-const emit = defineEmits(['selectionChange', 'create']);
+const emit = defineEmits(['selectionChange', 'create', 'edit']);
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const cateList = reactive<{ list: ICate[] }>({
   list: []
@@ -141,12 +141,10 @@ const tableData = reactive({
         },
         {
           text: '编辑',
-          type: 'primary'
-          /*onClick: (row: ICate, index: number) => {
-            if (createCateRef.value) {
-              createCateRef.value.showDrawer(row);
-            }
-          }*/
+          type: 'primary',
+          onClick: (row: IVideo, index: number) => {
+            emit('edit', row);
+          }
         },
         {
           text: '删除',

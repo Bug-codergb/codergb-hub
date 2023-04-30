@@ -35,6 +35,11 @@
                     <el-icon class="upload-icon"><Picture class="upload-icon" /></el-icon>
                     <input type="file" @change="(e) => fileChange(e, it.prop)" />
                   </template>
+                  <template v-if="isPrev">
+                    <div class="mask" @click="deleteCover">
+                      <el-icon><Delete /></el-icon>
+                    </div>
+                  </template>
                 </div>
               </template>
               <template v-if="it.type.name === 'video'">
@@ -67,7 +72,16 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, defineExpose, reactive, watch, ref, nextTick } from 'vue';
+import {
+  defineProps,
+  defineEmits,
+  defineExpose,
+  reactive,
+  watch,
+  ref,
+  nextTick,
+  onMounted
+} from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
 import GbUpload from '@/components/common/gbUpload/GbUpload.vue';
 import GbVideo from '@/components/common/gbVideo/GbVideo.vue';
@@ -100,6 +114,10 @@ const props = defineProps({
     default() {
       return {};
     }
+  },
+  isUpdate: {
+    type: Boolean,
+    default: false
   }
 });
 const emit = defineEmits(['update:modelValue']);
@@ -118,6 +136,10 @@ watch(
   },
   { deep: true }
 );
+onMounted(() => {
+  isPrev.value = true;
+  imgURL.value = newFormData.value['imgURL'];
+});
 let ruleObj = {};
 for (let item of props.tableConstructor) {
   for (let it of item) {
@@ -175,6 +197,11 @@ const videoConfirm = async (e: { file: File | null; videoId: string }) => {
     newFormData.value['dt'] = data;
   }
 };
+
+const deleteCover = () => {
+  isPrev.value = false;
+  file.value = null;
+};
 defineExpose({
   ruleFormRef
 });
@@ -197,6 +224,7 @@ defineExpose({
     }
     img {
       height: 100%;
+      object-fit: contain;
     }
     video {
       height: 100%;
@@ -209,6 +237,30 @@ defineExpose({
       width: 100%;
       height: 100%;
       opacity: 0;
+    }
+    .mask {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 99;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      .el-icon {
+        color: #fff;
+        font-size: (50/40rem);
+      }
+    }
+  }
+  .img-container:hover {
+    .mask {
+      opacity: 1;
     }
   }
 }

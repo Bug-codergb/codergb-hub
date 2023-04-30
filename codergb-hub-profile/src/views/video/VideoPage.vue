@@ -9,9 +9,10 @@
         :aspect-ratio="1.95"
         :item-width="260"
         :real-width="280"
+        :is-update="isUpdate"
       />
     </GbDrawer>
-    <VideoTable url="/video/all" @create="createHandle" ref="videoTableRef" />
+    <VideoTable url="/video/all" @create="createHandle" ref="videoTableRef" @edit="editHandle" />
   </div>
 </template>
 
@@ -24,12 +25,34 @@ import Create from '@/components/content/create/Create.vue';
 
 import useFormData from '@/views/video/hook/useFormData';
 import useTableConstructor from '@/views/video/hook/useTableConstructor';
-import { createVideo } from '@/network/video';
+import { createVideo, updateVideo } from '@/network/video';
+import { IVideo } from '@/types/video/IVideo';
+import { ITag } from '@/types/tag/ITag';
+import { ElMessage } from 'element-plus';
 
 const title = ref('新增视频');
 const drawer = ref(false);
 const createHandle = () => {
   drawer.value = true;
+  isUpdate.value = false;
+  vid.value = '';
+};
+
+const vid = ref('');
+const isUpdate = ref(false);
+const editHandle = (row: IVideo) => {
+  isUpdate.value = true;
+  drawer.value = true;
+  formData.value.title = row.name;
+  formData.value.desc = row.description;
+  formData.value.dt = row.dt;
+  formData.value.cate = row.category.id;
+  formData.value.playlist = row.playlist ? row.playlist.id : '';
+  formData.value.tag = row.tag.map((item: ITag) => item.id);
+  formData.value.imgId = row.imgId ?? '';
+  formData.value.imgURL = row.picUrl;
+  formData.value.videoId = row.videoSourceId ?? '';
+  vid.value = row.id;
 };
 const { formData, resetFormData } = useFormData();
 const tableConstructor = ref();
@@ -44,18 +67,31 @@ const videoTableRef = ref<InstanceType<typeof VideoTable>>();
 const confirmHandle = () => {
   createRef.value?.ruleFormRef.validate(async (e: boolean) => {
     if (e) {
-      const result = await createVideo(
-        formData.value.videoId,
-        formData.value.title,
-        formData.value.desc,
-        formData.value.imgId,
-        formData.value.playlist,
-        formData.value.tag,
-        formData.value.cate,
-        formData.value.dt
-      );
+      const result = !isUpdate.value
+        ? await createVideo(
+            formData.value.videoId,
+            formData.value.title,
+            formData.value.desc,
+            formData.value.imgId,
+            formData.value.playlist,
+            formData.value.tag,
+            formData.value.cate,
+            formData.value.dt
+          )
+        : await await updateVideo(
+            vid.value,
+            formData.value.videoId,
+            formData.value.title,
+            formData.value.desc,
+            formData.value.imgId,
+            formData.value.playlist,
+            formData.value.tag,
+            formData.value.cate,
+            formData.value.dt
+          );
       if (result.status === 200) {
         drawer.value = false;
+        ElMessage.success(`${isUpdate.value ? '更新' : '创建'}成功`);
         if (videoTableRef.value.gbTable) videoTableRef.value.gbTable.search();
         resetFormData();
       }

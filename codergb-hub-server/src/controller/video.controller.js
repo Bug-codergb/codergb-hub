@@ -326,6 +326,39 @@ class VideoController {
       setResponse(ctx, e.message, 500, {});
     }
   }
+  async updateVideo(ctx,next){
+    try {
+      const {userId} = ctx.user;
+      const {
+        id,
+        videoId,
+        title,
+        desc,
+        imgId,
+        playlistId,
+        tagIds,
+        cateId,
+        dt
+      } = ctx.request.body;
+      if (!isEmpty(ctx, id, "视频id不能为空")&&
+        !isEmpty(ctx, videoId, "请选择文件") &&
+        !isEmpty(ctx, title, "视频标题不能为空") &&
+        !isEmpty(ctx, desc, "视频简介不能为空") &&
+        !isEmpty(ctx, imgId, "视频封面不能为空") &&
+        !isEmpty(ctx, playlistId, "请选择视频播放列表") &&
+        !isEmpty(ctx, tagIds, "视频标签不能为空") &&
+        !isEmpty(ctx, dt, "视频时长不能为空") &&
+        !isEmpty(ctx, cateId, "视频分类不能为空")) {
+        // const result = await createVideoService(ctx, userId, videoId, title, desc, imgId, playlistId, tagIds, cateId, dt);
+        // if (result) {
+        //   setResponse(ctx, "success", 200, {});
+        // }
+        setResponse(ctx, "success", 200, {});
+      }
+    } catch (e) {
+      setResponse(ctx, e.message, 500, {});
+    }
+  }
 }
 
 module.exports = new VideoController();
