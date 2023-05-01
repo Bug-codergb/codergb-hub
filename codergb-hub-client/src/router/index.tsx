@@ -1,4 +1,4 @@
-import {Navigate, RouteObject} from "react-router-dom";
+import {Navigate, RouteObject,Outlet} from "react-router-dom";
 import React, {lazy,Suspense} from "react";
 import StudioChildrenRoute from "./studio/index";
 import {

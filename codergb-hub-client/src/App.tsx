@@ -20,17 +20,19 @@ function App() {
   return (
       <CommonWrapper>
         <div className="App">
-          <ErrorBoundary>
+
             <Provider store={store}>
               <BrowserRouter>
                 <Suspense fallback={
                   <div>wwww</div>
                 }>
-                  <RouteElement/>
+                  <ErrorBoundary>
+                    <RouteElement/>
+                  </ErrorBoundary>
                 </Suspense>
               </BrowserRouter>
             </Provider>
-          </ErrorBoundary>
+
         </div>
       </CommonWrapper>
   );
