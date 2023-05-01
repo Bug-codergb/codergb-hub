@@ -7,9 +7,22 @@ class RegisterService{
       const userId = new Date().getTime();
       const sql=`insert into user(userId,userName,password) values(?,?,?)`;
       const result = await connection.execute(sql,[userId,userName,password]);
-      return result;
+      return {
+        ...result[0],
+        userId
+      };
     }catch (e) {
       setResponse(ctx,e.message,500)
+    }
+  }
+  async addChannelService(ctx,userId){
+    try{
+      const id = new Date().getTime();
+      const sql =`insert into channel(id,name,userId) values(?,?,?)`;
+      const result = await connection.execute(sql,[id,"",userId]);
+      return result[0];
+    }catch (e) {
+
     }
   }
 }

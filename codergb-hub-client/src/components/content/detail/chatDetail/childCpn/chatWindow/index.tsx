@@ -103,12 +103,6 @@ const ChatWindow:FC<IProps>=(props)=>{
     if(chatWebSocket){
       chatWebSocket.sendSocketMsg(chatContent);
       setContent("")
-      // if(historyWebSocket){
-      //   historyWebSocket.sendSocketMsg('pull');
-      // }
-      // if(queueWebSocket){
-      //   queueWebSocket.sendSocketMsg('pull');
-      // }
     }
   }
   const [currentIndex,setCurrentIndex] = useState<number>(0);

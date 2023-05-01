@@ -40,7 +40,6 @@ class ChatController{
       if(self) self.websocket.send('success');
     });
     ctx.websocket.on("close",()=>{
-      console.log("12")
        contextMap.delete(sourceUser);
     })
   }
