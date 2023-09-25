@@ -2,6 +2,25 @@ const Multer=require('koa-multer');
 const fs = require("fs");
 const Jimp=require('jimp');
 const path=require('path');
+
+const createUploadPath=(relativePath)=>{
+  const fullPath = path.resolve(__dirname,"../../",relativePath);
+  fs.access(fullPath,(err)=>{
+    if(err){
+      const arr=relativePath.split("/").filter((item)=>item!==".");
+      let str = path.resolve(__dirname,"../../");
+      for(let item of arr){
+        str+=`/${item}`;
+        try{
+          fs.accessSync(str);
+        }catch (e) {
+          fs.mkdirSync(str);
+        }
+      }
+    }
+  })
+}
+
 const fileStorage = (filePath=>{
   try{
     return Multer.diskStorage({
@@ -16,18 +35,22 @@ const fileStorage = (filePath=>{
     console.log(e)
   }
 })
-function uploadHandle(path,uploadName,method){
+
+function uploadHandle(relativePath,uploadName,method){
   try{
+
+    createUploadPath(relativePath);
+
     const methods=['single','array']
     if(!methods.includes(method)){
       return;
     }
     const upload = Multer({
-      storage:fileStorage(path),
+      storage:fileStorage(relativePath),
     })
     return upload[method](uploadName)
   }catch (e) {
-    console.log(e)
+    console.log(relativePath);
   }
 }
 
@@ -56,14 +79,15 @@ function fileStorageChunk(filePath){
   }
 }
 //分片上传
-function chunkHandle(path,uploadName,method){
+function chunkHandle(relativePath,uploadName,method){
   try{
+    createUploadPath(relativePath);
     const methods=['single','array']
     if(!methods.includes(method)){
       return;
     }
     const upload = Multer({
-      storage:fileStorageChunk(path),
+      storage:fileStorageChunk(relativePath),
     })
     return upload[method](uploadName)
   }catch (e) {
