@@ -17,6 +17,7 @@ function videoToM3u8(sourcePath,destPath,videoName,progressHandle){
               .outputOption('-hls_time 30')
               .output(path.resolve(destPath,`${videoName}.m3u8`))
               .on('progress',(progress)=>{
+                console.log(progress);
                 progressHandle(progress)
               })
               .on("end",()=>{

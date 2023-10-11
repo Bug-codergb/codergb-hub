@@ -103,9 +103,12 @@ const channelAvatarUpload = uploadHandle("./upload/channel/avatar",'avatar','sin
 const imageUpload = uploadHandle("./upload/image","file","single");
 //视频上传
 const videoUpload= chunkHandle("./upload_temp/video",'video','single');
+
+createUploadPath("./upload/video");
 module.exports={
   userAvatarUpload,
-  channelAvatarUpload,
+  channelAvatarUpload,  
   videoUpload,
-  imageUpload
+  imageUpload,
+  createUploadPath
 }

@@ -22,6 +22,7 @@ const {
   getVideoSourceService,
   deleteVideoService
 } = require("../service/video.service")
+const {createUploadPath} = require("../middleware/file.middleware");
 
 class VideoController {
   async uploadVideo(ctx, next) {
