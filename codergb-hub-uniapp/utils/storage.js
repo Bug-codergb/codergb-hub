@@ -1,16 +1,19 @@
 class LocalStorage{
+	constructor(isAsync){
+		this.isAsync = isAsync;
+	}
 	getItem(key){
-		return new Promise((resolve,reject)=>{
+		 return this.isAsync ?  new Promise((resolve,reject)=>{
 			uni.getStorage({
 				key:key,
-				success:()=>{
+				success:(res)=>{
 					resolve(res.data);
 				}
 			})
-		})
+		}) : uni.getStorageSync(key);
 	}
 	setItem(key,value){
-		return new Promise((resolve,reject)=>{
+		return this.isAsync ? new Promise((resolve,reject)=>{
 			 uni.setStorage({
 			 	key:key,
 			 	data:value,
@@ -18,7 +21,9 @@ class LocalStorage{
 					resolve(true);
 				}
 			 })
-		})
+		}): uni.setStorageSync(key,value);
 	}
 }
-export default new LocalStorage();
+export {
+	LocalStorage
+}

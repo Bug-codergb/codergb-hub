@@ -1,5 +1,5 @@
 import App from './App'
-
+import { judgeLogin } from "./utils/judgeLogin.js";
 // #ifndef VUE3
 import Vue from 'vue'
 import './uni.promisify.adaptor'
@@ -19,4 +19,6 @@ export function createApp() {
     app
   }
 }
+
 // #endif
+judgeLogin();

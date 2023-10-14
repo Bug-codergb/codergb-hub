@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "dplayer": "^1.27.1",
+    "hls.js": "^1.4.12"
+  }
+}

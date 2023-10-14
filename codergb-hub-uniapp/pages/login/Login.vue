@@ -4,7 +4,7 @@
 			<input placeholder="请输入您的账号" v-model="login.account"/>
 		</view>
 		<view class="password">
-			<input placeholder="请输入密码" v-model="login.password"/>
+			<input placeholder="请输入密码" type="password" v-model="login.password"/>
 		</view>
 		<view class="login-btn">
 			<button class="login" type="default" @click="loginHandler">登陆</button>
@@ -19,7 +19,7 @@
 <script setup>
 import {reactive,computed,ref} from "vue";
 import {loginReq} from "../../network/login/index.js";
-import localStorage from "../../utils/storage.js"
+import {LocalStorage} from "../../utils/storage.js"
 const login = reactive({
 	account:"",
 	password:""
@@ -32,10 +32,10 @@ const loginHandler=()=>{
 	){
 		loginReq(login.account,login.password).then((data)=>{
 			if(data.status===200){
-				localStorage.setItem("user",data.data).then(()=>{
-					uni.switchTab({
-						url:"/pages/shorts/Shorts",
-					})
+				let storage = new LocalStorage(false);
+				storage.setItem("user",data.data)
+				uni.switchTab({
+					url:"/pages/home/Home",
 				})
 			}
 		})

@@ -1,7 +1,7 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/login/Login",
 			"style": {
 				"navigationBarTitleText": "codergb-hub"
 			}
@@ -17,8 +17,21 @@
 			"style": {
 				"navigationBarTitleText": "codergb-hub"
 			}
-		},{
+		},
+		{
 			"path": "pages/shorts/Shorts",
+			"style": {
+				"navigationBarTitleText": "codergb-hub"
+			}
+		},
+		{
+			"path":"pages/explore/Explore",
+			"style":{
+				"navigationBarTitleText":"codergb-hub"
+			}
+		},
+		{
+			"path": "pages/detail/videoDetail/VideoDetail",
 			"style": {
 				"navigationBarTitleText": "codergb-hub"
 			}
@@ -34,11 +47,19 @@
 	"tabBar": {
 		"list": [
 			{
-				"pagePath": "pages/profile/Profile",
+				"pagePath": "pages/home/Home",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/shorts/Shorts",
+				"text":"Short"
+			},
+			{
+				"pagePath": "pages/explore/Explore",
+				"text":"探索"
+			},
+			{
+				"pagePath": "pages/profile/Profile",
 				"text": "我的"
 			}
 		]
