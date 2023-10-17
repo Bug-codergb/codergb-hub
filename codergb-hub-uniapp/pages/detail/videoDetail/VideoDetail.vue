@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view ref="videoRef"></view>
+		<!-- <view ref="videoRef"></view> -->
 	</view>
 </template>
 <script>
@@ -23,7 +23,7 @@
 	import DPlayer from "dplayer";
 	const url = ref("");
 	const videoRef = ref(null);
-	onMounted(()=>{
+	/*onMounted(()=>{
 		const instance = getCurrentInstance();
 		let id = instance.data.id;
 		getVideoURL(id).then((data)=>{
@@ -51,7 +51,7 @@
 				}
 			}
 		})
-	})
+	})*/
 	
 </script>
 
