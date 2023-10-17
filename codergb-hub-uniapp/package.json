@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@dcloudio/uni-ui": "^1.4.28",
     "dplayer": "^1.27.1",
     "hls.js": "^1.4.12"
   }
