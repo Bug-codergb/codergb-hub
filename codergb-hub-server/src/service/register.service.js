@@ -15,14 +15,15 @@ class RegisterService{
       setResponse(ctx,e.message,500)
     }
   }
-  async addChannelService(ctx,userId){
+  async addChannelService(ctx,userId,userName){
     try{
       const id = new Date().getTime();
       const sql =`insert into channel(id,name,userId) values(?,?,?)`;
-      const result = await connection.execute(sql,[id,"",userId]);
+      const result = await connection.execute(sql,[id,userName,userId]);
+      console.log(result);
       return result[0];
     }catch (e) {
-
+      console.log(e)
     }
   }
 }

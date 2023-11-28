@@ -6,7 +6,7 @@ class RegisterController{
       const {userName,password}=ctx.request.body;
       const result = await registerService(ctx,userName,password);
       if(result){
-        await addChannelService(ctx,result.userId);
+        await addChannelService(ctx,result.userId,userName);
         setResponse(ctx,"用户注册成功",200);
       }
     }catch (e) {
