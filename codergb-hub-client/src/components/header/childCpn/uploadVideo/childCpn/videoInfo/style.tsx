@@ -10,6 +10,7 @@ export const LeftContent = styled.div`
   height: ${480/40}rem;
   overflow-y: scroll;
   width: 60%;
+  padding: 0 ${20/40}rem 0 0;
   p{
     margin: 0;
     padding: 0;
