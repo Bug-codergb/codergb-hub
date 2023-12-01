@@ -20,7 +20,8 @@ const {
   getSimilarVideoService,
   getColVideoService,
   getVideoSourceService,
-  deleteVideoService
+  deleteVideoService,
+  updateVideoInfoService
 } = require("../service/video.service")
 const {createUploadPath} = require("../middleware/file.middleware");
 
@@ -350,10 +351,10 @@ class VideoController {
         !isEmpty(ctx, tagIds, "视频标签不能为空") &&
         !isEmpty(ctx, dt, "视频时长不能为空") &&
         !isEmpty(ctx, cateId, "视频分类不能为空")) {
-        // const result = await createVideoService(ctx, userId, videoId, title, desc, imgId, playlistId, tagIds, cateId, dt);
-        // if (result) {
-        //   setResponse(ctx, "success", 200, {});
-        // }
+        const result = await updateVideoInfoService(ctx, id, videoId, title, desc, imgId, playlistId, tagIds, cateId, dt);
+         if (result) {
+           setResponse(ctx, "success", 200, {});
+         }
         setResponse(ctx, "success", 200, {});
       }
     } catch (e) {

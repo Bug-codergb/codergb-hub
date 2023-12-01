@@ -382,5 +382,52 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
 
     }
   }
+  //更新视频
+  async updateVideoInfoService(ctx, id, videoId, title, desc, imgId, playlistId, tagIds, cateId, dt){
+    console.log(title);
+    try{
+      const sourceSQL=`update video set name=?,dt=?,description=?,cateId=? where id=?`;
+      await connection.execute(sourceSQL,[title,dt,desc,cateId,id]);
+      if(imgId){//更新封面
+        const sql = `update video_file set fileId = ? where videoId=? and mark ='cover'`;
+        await connection.execute(sql,[imgId,id]);
+      }
+      if(videoId){//更新视频源文件
+        const sql = `update video_file set fileId = ? where videoId = ? and mark='source'`;
+        await connection.execute(sql,[videoId,id]);
+      }
+      if(tagIds && Array.isArray(tagIds)){//更新标签
+        const delSql=`delete from tag_video where vId =?`;
+        await connection.execute(delSql,[id]);
+        let temp = [];
+        let s="";
+        const len = tagIds.length;
+        for(let i=0;i<tagIds.length;i++){
+          const item = tagIds[i];
+          s+= `(?,?)${i!==len-1?',':''}`;
+          temp.push(item,id);
+        }
+        const insSql = `insert into tag_video (tId,vId) values ${s}`;
+
+        await connection.execute(insSql,temp);
+      }
+      if(playlistId){
+        const judgeSql = `select * from playlist_video where vId=?`;
+        const res = await connection.execute(judgeSql,[id]);
+        console.log(res[0]);
+        if(res[0] && res[0].length===0){
+          const sql = `insert into playlist_video(pId,vId) values(?,?)`;
+          connection.execute(sql,[playlistId,id])
+        }else{
+          const sql = `update playlist_video set pId = ? where vId =?`;
+          await connection.execute(sql,[playlistId,id]);
+        }
+
+      }
+      return {}
+    }catch (e) {
+      console.log(e)
+    }
+  }
 }
 module.exports  = new VideoService();

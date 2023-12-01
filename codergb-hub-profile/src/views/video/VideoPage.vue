@@ -48,7 +48,7 @@ const editHandle = (row: IVideo) => {
   formData.value.dt = row.dt;
   formData.value.cate = row.category.id;
   formData.value.playlist = row.playlist ? row.playlist.id : '';
-  formData.value.tag = row.tag.map((item: ITag) => item.id);
+  formData.value.tag = row.tag ? row.tag.map((item: ITag) => item.id) : [];
   formData.value.imgId = row.imgId ?? '';
   formData.value.imgURL = row.picUrl;
   formData.value.videoId = row.videoSourceId ?? '';

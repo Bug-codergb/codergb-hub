@@ -92,14 +92,17 @@ const tableData = reactive({
       label: '标签',
       'min-width': 180,
       formatter: (row: IVideo) => {
-        const { tag } = row;
-        return tag.map((item: ITag) => {
-          return (
-            <el-tag class="video-tag" type="success" color={getRandColor()} effect="light">
-              {item.name}
-            </el-tag>
-          );
-        });
+        const { tag = [] } = row;
+        return (
+          tag &&
+          tag.map((item: ITag) => {
+            return (
+              <el-tag class="video-tag" type="success" color={getRandColor()} effect="light">
+                {item.name}
+              </el-tag>
+            );
+          })
+        );
       }
     },
     {
