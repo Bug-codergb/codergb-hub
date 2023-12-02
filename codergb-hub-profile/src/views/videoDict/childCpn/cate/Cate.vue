@@ -8,6 +8,8 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { CATE_VIDEO_DETAIL_PATH } from '../../../../router/constant/index';
 import moment from 'moment';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { deleteCate, getAllCate } from '@/network/category';
@@ -20,6 +22,7 @@ import { ElMessage } from 'element-plus';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createCateRef = ref<InstanceType<typeof CreateCate>>();
+const router = useRouter();
 const tableData = reactive({
   url: '/cate/all',
   method: 'get',
@@ -64,7 +67,12 @@ const tableData = reactive({
           text: '查看',
           type: 'primary',
           onClick: (row: ICate, index: number) => {
-            console.log(row);
+            router.push({
+              path: CATE_VIDEO_DETAIL_PATH + '/' + row.id,
+              query: {
+                name: row.name
+              }
+            });
           }
         },
         {

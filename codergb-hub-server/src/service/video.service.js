@@ -429,5 +429,48 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
       console.log(e)
     }
   }
+  async cateVideoService(ctx,cateId,offset,limit){
+    try{
+      const sql=`
+            select v.id,v.name,(
+              select JSON_OBJECT('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
+              from user as u
+              where u.userId = v.userId
+            ) as user,playCount,dt,description,v.createTime,v.updateTime,f.picUrl,
+            JSON_OBJECT('id',v.cateId,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime) as category,v.dt,
+            JSON_ARRAYAGG(
+              json_object(
+                'id',tag.id,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime
+              )
+            ) as tag
+            from video as v
+            left join category c on v.cateId =c.id
+            left join tag_video as tv on tv.vId = v.id
+            left join tag on tag.id = tv.tId
+            LEFT JOIN video_file AS vf on vf.videoId = v.id
+            left join file as f on f.id = vf.fileId
+            where vf.mark="cover" and c.id=?
+            group by v.id
+            limit ?,?`;
+      const res = await connection.execute(sql,[cateId,offset,limit]);
+      const countSQL=`select count(distinct(v.id)) as count
+              from video as v
+              left join category c on v.cateId =c.id
+              left join tag_video as tv on tv.vId = v.id
+              left join tag on tag.id = tv.tId
+              LEFT JOIN video_file AS vf on vf.videoId = v.id
+              left join file as f on f.id = vf.fileId
+              where vf.mark="cover" and c.id=?
+              `;
+      const count = await connection.execute(countSQL,[cateId])
+
+      return{
+        list:res[0],
+        count:count[0][0].count
+      }
+    }catch (e) {
+      setResponse(ctx, e.message, 500, {});
+    }
+  }
 }
 module.exports  = new VideoService();

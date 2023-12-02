@@ -9,3 +9,8 @@ export function getUserCol<T=IResponseType<any>>(id:string,offset:number,limit:n
     }
   })
 }
+export function getCollectionDetail<T=IResponseType<any>>(id:string) {
+  return gbRequest.post<T>({
+    url:"/collection/detail/"+id
+  })
+}

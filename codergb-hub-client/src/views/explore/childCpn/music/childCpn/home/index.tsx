@@ -34,11 +34,13 @@ const Home:FC<IProps>=(props)=>{
       }
     })
   }
-  const videoRouter=(item:ICollection)=>{
+  const videoRouter = (item: ICollection) => {
+    console.log(item);
     navigate("/videoDetail",{
       replace:true,
       state:{
-        cId:item.id
+        cId: item.id,
+        type:"collection"
       }
     })
   }

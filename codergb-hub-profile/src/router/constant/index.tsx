@@ -12,6 +12,7 @@ const PLAYLIST_PATH = HOME_PATH + '/playlist';
 const COMMENT_PATH = HOME_PATH + '/comment';
 ///detail
 const COLLECTION_DETAIL_PATH = HOME_PATH + '/collection-detail';
+const CATE_VIDEO_DETAIL_PATH = HOME_PATH + '/video-cate-detail';
 export {
   HOME_PATH,
   LOGIN_PATH,
@@ -23,5 +24,6 @@ export {
   PLAYLIST_PATH,
   COLLECTION_DETAIL_PATH,
   VIDEO_SOURCE,
-  COMMENT_PATH
+  COMMENT_PATH,
+  CATE_VIDEO_DETAIL_PATH
 };

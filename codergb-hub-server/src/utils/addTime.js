@@ -38,6 +38,21 @@ function addTime(time){
     return time;
   }
 }
+function toSecond(time){
+  if(!time){
+    return 0 ;
+  }
+  const timeArr = time.split(":");
+  const hour = timeArr[0]??0;
+  const minute = timeArr[1]??0;
+  const second = timeArr[2]??0;
+
+  const hourToSec = hour*60*60;
+  const minuteToSec = minute*60;
+  const finalSecond = Number(hourToSec)+Number(minuteToSec)+Number(second);
+  return finalSecond*1000;
+}
 module.exports={
-  addTime
+  addTime,
+  toSecond
 }

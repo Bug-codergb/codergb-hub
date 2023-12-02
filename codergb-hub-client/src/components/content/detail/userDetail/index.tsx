@@ -90,10 +90,10 @@ const UserDetail:FC=():ReactElement=>{
         <div className="user-info">
           <div className="left">
             <div className="img-container">
-              <img src={userChannel?.user.avatarUrl}/>
+              <img src={userChannel?.user?.avatarUrl}/>
             </div>
             <div className="right-info">
-              <div className="user-name">{userChannel?.user.userName}</div>
+              <div className="user-name">{userChannel?.user?.userName}</div>
             </div>
           </div>
           <div className="control-btn">

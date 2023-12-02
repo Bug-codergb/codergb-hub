@@ -117,3 +117,12 @@ export function getSimilarVideo<T=IResponseType<any>>(id:string,offset:number,li
     }
   })
 }
+export function getCollectionVideo<T=IResponseType<any>>(id:string,offset:number,limit:number) {
+  return gbRequest.post<T>({
+    url: "/video/collection/" + id,
+    params: {
+      offset,
+      limit
+    }
+  })
+}

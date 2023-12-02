@@ -1,7 +1,8 @@
 const ffmpeg = require("fluent-ffmpeg");
 const fs = require("fs");
 const path = require('path');
-function videoToM3u8(sourcePath,destPath,videoName,progressHandle){
+const { toSecond } = require("../utils/addTime");
+function videoToM3u8(sourcePath,destPath,videoName,dt,progressHandle){
   console.log(sourcePath)
   return new Promise((resolve,reject)=>{
     fs.access(sourcePath,(err)=>{
@@ -17,8 +18,20 @@ function videoToM3u8(sourcePath,destPath,videoName,progressHandle){
               .outputOption('-hls_time 30')
               .output(path.resolve(destPath,`${videoName}.m3u8`))
               .on('progress',(progress)=>{
-                console.log(progress);
-                progressHandle(progress)
+
+                if(progress.percent!==undefined){
+                  progressHandle(progress)
+                }else{
+                  const { timemark } = progress;
+                  if(timemark!==undefined){
+                    const timestamp = toSecond(timemark);
+                    progressHandle({
+                      ...progress,
+                      percent: (timestamp / (dt??1))*100
+                    })
+                  }
+                }
+
               })
               .on("end",()=>{
                 resolve(true);

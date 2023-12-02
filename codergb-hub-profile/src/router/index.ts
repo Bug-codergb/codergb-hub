@@ -84,7 +84,8 @@ const routes: Array<RouteRecordRaw> = [
         name: 'videoSource',
         component: VideoSource
       },
-      detailRoutes.collectionRoute
+      detailRoutes.collectionRoute,
+      detailRoutes.cateVideoRoute
     ]
   }
 ];

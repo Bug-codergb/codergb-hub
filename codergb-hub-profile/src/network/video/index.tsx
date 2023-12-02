@@ -192,3 +192,14 @@ export function deleteVideo<T = IResponseType<any>>(id: string) {
     url: '/video/delete/' + id
   });
 }
+
+//获取分类下视频
+export function getCateVideo<T = IResponseType<any>>(id: string, offset: number, limit: number) {
+  return gbRequest.get<T>({
+    url: '/video/cate/' + id,
+    params: {
+      offset,
+      limit
+    }
+  });
+}

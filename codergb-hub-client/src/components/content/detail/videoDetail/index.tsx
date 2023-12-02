@@ -18,8 +18,9 @@ import {
   LeftContentWrapper,
   RightContentWrapper
 } from "./style"
-import {getVideoDetail, getVideoURL} from "../../../../network/video";
+import {getVideoDetail, getVideoURL,getCollectionVideo} from "../../../../network/video";
 import {IResponseType} from "../../../../types/responseType";
+import {IPage} from "../../../../types/IPage";
 import Hls from "hls.js";
 import {IVideo} from "../../../../types/video/IVideo";
 import VideoInfo from "./childCpn/videoInfo";
@@ -34,10 +35,12 @@ import {getVideoDm} from "../../../../network/dm";
 import {getRandom, getRandomStr} from "../../../../utils/getRandom";
 import Similar from "./childCpn/similar";
 import HeaderTop from "../../../header";
+import CollectionVideo from "./childCpn/collectionVideo";
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail:FC=():ReactElement=>{
   const location = useLocation();
-  const { id } = location.state;
+  const { id, type = "source", cId } = location.state;
+  const [videoSourceType, setVideoSourceType] = useState<string>(type);
   const [currentTime, setCurrentTime] = useState("");
   const [vioURL,setVioURL] = useState<string>("");
   const [vioId,setVioId] = useState<string>(id);
@@ -50,6 +53,20 @@ const VideoDetail:FC=():ReactElement=>{
   })
   const contentRef = useRef<HTMLUListElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
+
+  const [collectionVideo,setCollectionVideo] = useState<IVideo[]>([]);
+  useEffect(() => {
+    if (type === 'collection') {
+      getCollectionVideo<IResponseType<IPage<IVideo[]>>>(cId, 0, 10000).then((res) => {
+        if (res.status === 200) {
+          if (res.data.list && res.data.list.length!==0) {
+            setCollectionVideo(res.data.list);
+            setVioId(res.data.list[0].id);
+          }
+        }
+      })
+    }
+  },[type,cId])
   useEffect(()=>{
     if(vioId){
       getVideoDm<IResponseType<IDm[]>>(vioId).then((data)=>{
@@ -154,6 +171,10 @@ const VideoDetail:FC=():ReactElement=>{
   const playVideo=(id:string)=>{
     setVioId(id);
   }
+  const changeVideoType = (id: string) => {
+    setVideoSourceType("source");
+    playVideo(id)
+  }
   return (
       <VideoDetailWrapper>
         <Layout>
@@ -201,14 +222,20 @@ const VideoDetail:FC=():ReactElement=>{
                   }
                 </div>
               </LeftContentWrapper>
-              <RightContentWrapper>
+            <RightContentWrapper>
+              {
+                videoSourceType==='collection' &&<CollectionVideo
+                  videoList={collectionVideo}
+                  cId={cId}
+                  onClick={(item, index) => playVideo(item.id)} />
+              }
                 {
                   videoDetail&&videoDetail.user&&<Similar id={videoDetail?.category.id}
                                                           key={vioId}
                                                           videoId={videoDetail?.id}
                                                           userId={videoDetail?.user.userId}
                                                           userName={videoDetail?.user.userName}
-                                                          play={(id:string)=>playVideo(id)} />
+                                                          play={(id:string)=>changeVideoType(id)} />
                 }
               </RightContentWrapper>
             </CenterContent>

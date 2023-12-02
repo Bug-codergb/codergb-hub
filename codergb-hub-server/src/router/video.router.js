@@ -16,7 +16,8 @@ const {
   getVideoSource,
   deleteVideo,
   deleteVideoSource,
-  updateVideo
+  updateVideo,
+  cateVideo
 } = require("../controller/video.controller")
 //视频上传文件信息
 videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
@@ -45,4 +46,6 @@ videoRouter.post("/delete/:id",authVerify,deleteVideo);
 videoRouter.post("/source/delete/:name",authVerify,deleteVideoSource);
 //视频更新
 videoRouter.post("/update",authVerify,updateVideo);
+//获取视频下分类
+videoRouter.post("/cate/:id",authVerify,cateVideo);
 module.exports = videoRouter;

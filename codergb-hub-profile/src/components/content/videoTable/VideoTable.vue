@@ -38,6 +38,12 @@ const props = defineProps({
   url: {
     type: String,
     default: ''
+  },
+  excludeHeader: {
+    type: Array,
+    default() {
+      return [];
+    }
   }
 });
 const emit = defineEmits(['selectionChange', 'create', 'edit']);
@@ -216,6 +222,17 @@ const header = reactive([
     }
   }
 ]);
+if (props.excludeHeader.length !== 0) {
+  for (let item of props.excludeHeader) {
+    const index = header.findIndex((it) => {
+      return it.id === item;
+    });
+    if (index !== -1) {
+      header.splice(index, 1);
+    }
+  }
+}
+
 const getAllCateReq = async () => {
   const result = await getAllCate<IResponseType<IPage<ICate[]>>>(0, 15000, '');
   if (result.status === 200) {

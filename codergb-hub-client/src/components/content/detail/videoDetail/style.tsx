@@ -76,5 +76,6 @@ export const LeftContentWrapper:any = styled.div`
   }
 `
 export const RightContentWrapper = styled.div`
- padding: 0 0 0 ${26/40}rem; 
+ padding: 0 0 0 ${26 / 40}rem; 
+ width:33%;
 `

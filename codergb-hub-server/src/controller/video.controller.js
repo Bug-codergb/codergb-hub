@@ -21,7 +21,8 @@ const {
   getColVideoService,
   getVideoSourceService,
   deleteVideoService,
-  updateVideoInfoService
+  updateVideoInfoService,
+  cateVideoService
 } = require("../service/video.service")
 const {createUploadPath} = require("../middleware/file.middleware");
 
@@ -47,6 +48,7 @@ class VideoController {
   async mergeVideo(ctx, next) {
     try {
       const {dest = "", hash = "", originalname, type, total, dt = 0} = ctx.query;
+      console.log(dt);
       if (!isEmpty(ctx, dest, "目的路径不能为空") && !isEmpty(ctx, hash, "文件HASH值不能为空")) {
         const id = new Date().getTime();
         const result = await mergeVideo(ctx, dest, path.resolve(__dirname, "../../", "./upload/video"), hash);
@@ -54,11 +56,12 @@ class VideoController {
           const suffix = originalname.substring(originalname.lastIndexOf("."));
           const sourcePath = path.resolve(__dirname, "../../", `./upload/video/${hash}${suffix}`);
           const destPath = path.resolve(__dirname, "../../", `./upload/video/`)
-          const result = await videoToM3u8(sourcePath, destPath, hash, (progress) => {
+          const result = await videoToM3u8(sourcePath, destPath, hash, dt,(progress) => {
             let res = {
               isProgress: true,
               percent: progress.percent
             }
+
             ctx.websocket.send(JSON.stringify(res));
           });
           if (result) {
@@ -358,6 +361,18 @@ class VideoController {
         setResponse(ctx, "success", 200, {});
       }
     } catch (e) {
+      setResponse(ctx, e.message, 500, {});
+    }
+  }
+  async cateVideo(ctx,cateId){
+    try{
+      const {offset='0',limit='30'} = ctx.query;
+      const {id} = ctx.params;
+      const res = await cateVideoService(ctx,id,offset,limit);
+      if(res){
+        setResponse(ctx, "success", 200, res);
+      }
+    }catch (e) {
       setResponse(ctx, e.message, 500, {});
     }
   }
