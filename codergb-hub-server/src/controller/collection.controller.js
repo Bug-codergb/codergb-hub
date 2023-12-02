@@ -53,6 +53,7 @@ class CollectionController{
             }
           }
           if(flag){
+            console.log(cId,vId);
             const result = await addVideoService(ctx,vId,cId);
             setResponse(ctx,"success",200, {});
           }else{

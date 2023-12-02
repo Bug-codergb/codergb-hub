@@ -1,32 +1,46 @@
-import React, {memo, FC, ReactElement, useState, FormEvent} from "react";
-import {Modal, Input, Select,notification} from "antd";
-import {EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
-import type { NotificationPlacement } from 'antd/es/notification';
+import React, {
+  memo,
+  FC,
+  ReactElement,
+  useState,
+  FormEvent,
+  useImperativeHandle,
+  forwardRef,
+  Ref,
+  MouseEvent,
+} from "react";
+import { Modal, Input, Select, notification, Menu } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import type { NotificationPlacement } from "antd/es/notification";
+import { AddWrapper } from "./style";
 import {
-  AddWrapper
-} from "./style";
-import {ADD_PLAYLIST, ADD_WATCH_LATER, addList, IAddType} from "../../../constant/addList";
+  ADD_PLAYLIST,
+  ADD_WATCH_LATER,
+  addList,
+  IAddType,
+} from "../../../constant/addList";
 import Playlist from "../playlist";
-import {
-  PlusOutlined
-} from "@ant-design/icons";
-import {addVideoPlaylist, createPlaylist} from "../../../network/playlist";
-import {IPlaylist} from "../../../types/playlist/IPlaylist";
-import {addLater} from "../../../network/later";
+import { PlusOutlined } from "@ant-design/icons";
+import { addVideoPlaylist, createPlaylist } from "../../../network/playlist";
+import { IPlaylist } from "../../../types/playlist/IPlaylist";
+import { addLater } from "../../../network/later";
 
 const { Option } = Select;
-interface IProps{
-  id:string,
-  changeShow:()=>void
+interface IAdd {
+  liClick: (item: IAddType) => void;
 }
-const Add:FC<IProps>=(props):ReactElement=>{
-  const { id ,changeShow} = props;
-  const [isShowAddPlay,setIsShowPlay] = useState<boolean>(false);
-  const [isCreate,setIsCreate] = useState<boolean>(false);
-  const [keyIndex,setKeyIndex] = useState<number>(1);
+interface IProps {
+  id: string;
+  ref: Ref<IAdd> | null;
+}
+const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
+  const { id } = props;
+  const [isShowAddPlay, setIsShowPlay] = useState<boolean>(false);
+  const [isCreate, setIsCreate] = useState<boolean>(false);
+  const [keyIndex, setKeyIndex] = useState<number>(1);
 
-  const [name,setName] = useState<string>("");
-  const [isPublic,setIsPublic] = useState<number>(0);
+  const [name, setName] = useState<string>("");
+  const [isPublic, setIsPublic] = useState<number>(0);
 
   const openNotification = (placement: NotificationPlacement) => {
     notification.info({
@@ -36,91 +50,109 @@ const Add:FC<IProps>=(props):ReactElement=>{
     });
   };
 
-  const liClick=(item:IAddType)=>{
-    if(item.name === ADD_PLAYLIST){
+  const liClick = (item: IAddType) => {
+    if (item.name === ADD_PLAYLIST) {
       setIsShowPlay(true);
     }
-    if(item.name === ADD_WATCH_LATER){
-      addLater(id).then(data=>{
-        console.log(data)
-        if(data.status===200){
-          openNotification('bottomLeft');
-        }
-      }).catch(err=>{
-      })
+    if (item.name === ADD_WATCH_LATER) {
+      addLater(id)
+        .then((data) => {
+          console.log(data);
+          if (data.status === 200) {
+            openNotification("bottomLeft");
+          }
+        })
+        .catch((err) => {});
     }
-    changeShow();
-  }
-  const cancelHandle=()=>{
+  };
+
+  useImperativeHandle<IAdd, IAdd>(propsRef, () => {
+    return {
+      liClick,
+    };
+  });
+  const cancelHandle = () => {
     setIsShowPlay(false);
-  }
-  const nameInpHandle=(e:FormEvent<HTMLInputElement>)=>{
-    setName(e.currentTarget.value)
-  }
-  const selectPublicHandle=(value:number)=>{
-    setIsPublic(value)
-  }
+  };
+  const nameInpHandle = (e: FormEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
+  };
+  const selectPublicHandle = (value: number) => {
+    setIsPublic(value);
+  };
   //创建播放列表
-  const createHandle=()=>{
-    if(name){
-      createPlaylist(name,name,isPublic).then(data=>{
-        if(data.status===200){
+  const createHandle = () => {
+    if (name) {
+      createPlaylist(name, name, isPublic).then((data) => {
+        if (data.status === 200) {
           setIsCreate(false);
-          setKeyIndex(keyIndex+1)
+          setKeyIndex(keyIndex + 1);
         }
-      })
+      });
     }
-  }
-  const checkHandle=(checked:boolean,item:IPlaylist)=>{
-    if(checked){
-      addVideoPlaylist(id,item.id).then((data)=>{
-        if(data.status===200){
+  };
+  const checkHandle = (checked: boolean, item: IPlaylist) => {
+    if (checked) {
+      addVideoPlaylist(id, item.id).then((data) => {
+        if (data.status === 200) {
           notification.info({
             message: `已成功添加至${item.name}`,
             description: `在"${item.name}"查看您添加的视频`,
-            placement:'bottomLeft',
+            placement: "bottomLeft",
           });
         }
-      })
+      });
     }
-  }
-  return(
-      <AddWrapper>
-        <ul className="add-list">
-          {
-            addList.map((item,index)=>{
-              return (
-                  <li key={item.name} onClick={e=>liClick(item)}>
-                    <div className="icon">{item.icon}</div>
-                    <div className="name">{isShowAddPlay+''}{item.name}</div>
-                  </li>
-              )
-            })
-          }
-        </ul>
-        <Modal key={id}
-               title="保存到..."
-               width={"30%"}
-               destroyOnClose={true}
-               maskClosable={false}
-               open={isShowAddPlay}
-               onCancel={e=>cancelHandle()}
-               footer={(!isCreate)?[
-                 <div className="add-new-playlist">
-                   <PlusOutlined />
-                   <div className="add-label" onClick={()=>setIsCreate(true)}>新建播放列表</div>
-                 </div>
-               ]:[
+  };
+
+  const createPlaylistHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    setIsCreate(true);
+  };
+  return (
+    <AddWrapper>
+      <div onClick={(e) => e.stopPropagation()}>
+        <Modal
+          key={id}
+          title="保存到..."
+          width={"30%"}
+          destroyOnClose={true}
+          maskClosable={false}
+          open={isShowAddPlay}
+          onCancel={(e) => cancelHandle()}
+          footer={
+            !isCreate
+              ? [
+                  <div className="add-new-playlist">
+                    <PlusOutlined />
+                    <div
+                      className="add-label"
+                      onClick={(e) => createPlaylistHandler(e)}
+                    >
+                      新建播放列表
+                    </div>
+                  </div>,
+                ]
+              : [
                   <div className="create-playlist">
                     <p>名称</p>
-                    <Input placeholder="请输入播放列表名称" showCount maxLength={20} onInput={(e)=>nameInpHandle(e)}/>
+                    <Input
+                      placeholder="请输入播放列表名称"
+                      showCount
+                      maxLength={20}
+                      onInput={(e) => nameInpHandle(e)}
+                    />
                     <p>隐私设置</p>
-                    <Select onChange={selectPublicHandle} value={isPublic} placeholder={"请选择播放列表属性"}>
+                    <Select
+                      onChange={selectPublicHandle}
+                      value={isPublic}
+                      placeholder={"请选择播放列表属性"}
+                    >
                       <Option value={0}>
                         <div className="private">
                           <div className="name">私享</div>
                           <div className="icon">
-                            <EyeInvisibleOutlined/>
+                            <EyeInvisibleOutlined />
                           </div>
                         </div>
                       </Option>
@@ -128,19 +160,30 @@ const Add:FC<IProps>=(props):ReactElement=>{
                         <div className="private">
                           <div className="name">公开</div>
                           <div className="icon">
-                            <EyeOutlined/>
+                            <EyeOutlined />
                           </div>
                         </div>
                       </Option>
                     </Select>
-                    <div className="create-label" onClick={e=>createHandle()}>创建</div>
-                  </div>
-               ]}>
-          {
-            isShowAddPlay && <Playlist key={id} select={(checked,item)=>checkHandle(checked,item)}/>
+                    <div
+                      className="create-label"
+                      onClick={(e) => createHandle()}
+                    >
+                      创建
+                    </div>
+                  </div>,
+                ]
           }
+        >
+          {isShowAddPlay && (
+            <Playlist
+              key={keyIndex}
+              select={(checked, item) => checkHandle(checked, item)}
+            />
+          )}
         </Modal>
-      </AddWrapper>
-  )
-}
+      </div>
+    </AddWrapper>
+  );
+});
 export default memo(Add);

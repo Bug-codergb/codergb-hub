@@ -82,6 +82,36 @@ input,textarea,button{
   margin: 0 0 0 15px;
   padding: 10px 0;
 }
+.create-playlist{
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+}
+.create-playlist p{
+  margin: 8px 0 5px 0;
+}
+.create-playlist .ant-select{
+  width: 100%;
+}
+.create-label{
+  font-size: 16px;
+  color: #065fd4;
+  margin: 18px 0 0 0;
+  cursor: pointer;
+  width: 100%;
+}
+.create-playlist .private{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.ant-select-item-option-content .private{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 .moment-out-of-body-img-container{
   display: flex;
   justify-content: center;

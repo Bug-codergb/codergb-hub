@@ -52,7 +52,7 @@ export const CollectionVideoWrapper = styled.div`
         color: #969aa0;
         white-space:nowrap;
         padding-right:5.7px ;
-
+        font-size: ${18.4/40}rem;
       }
       .img-container{
         width: ${150 / 40}rem;

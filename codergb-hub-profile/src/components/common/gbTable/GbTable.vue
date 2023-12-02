@@ -1,17 +1,19 @@
 <template>
   <div class="gb-table">
     <el-table
+      ref="tableRef"
       row-key="id"
       :data="tableList.list"
       style="width: 100%"
       :height="tableData.height"
-      @selection-change="selectionChange"
+      @select="selectionChange"
     >
       <template v-for="item in tableData.columns" :key="item.prop">
         <template v-if="!item.btns">
           <el-table-column
             :label="item.label"
             :prop="item.prop"
+            :key="item.label"
             v-bind="{ ...item }"
           ></el-table-column>
         </template>
@@ -44,7 +46,8 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineExpose, defineEmits, reactive, ref } from 'vue';
+import { defineProps, defineExpose, defineEmits, reactive, ref, nextTick } from 'vue';
+import lodash from 'lodash';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { IResponseType } from '@/types/responseType';
 import { IPage } from '@/types/IPage';
@@ -80,7 +83,7 @@ const getTableDataReq = async (offset: number, limit: number, data: any, params:
   if (result.status === 200) {
     tableList.list = result.data.list;
     total.value = result.data.count;
-    console.log(tableList.list, total.value);
+    //console.log(tableList.list, total.value);
   }
 };
 //初始化调用
@@ -90,13 +93,30 @@ getTableDataReq(
   props.tableData.data,
   props.tableData.params
 );
-const currentChange = (e: number) => {
-  getTableDataReq(
+const tableRef = ref();
+const selectMap = ref(new Map());
+
+const currentPage = ref(1);
+const currentChange = async (e: number) => {
+  console.log(11);
+  currentPage.value = e;
+  await getTableDataReq(
     (e - 1) * (props.tableData.pageSize ? props.tableData.pageSize : 10),
     props.tableData.pageSize ? props.tableData.pageSize : 10,
     props.tableData.data,
     props.tableData.params
   );
+  await nextTick();
+  const rows = selectMap.value.get(e) ?? [];
+  console.log(rows, 109);
+  if (rows.length !== 0) {
+    for (let item of rows) {
+      tableRef.value.toggleRowSelection(
+        tableList.list.find((row) => row.id === item.id),
+        true
+      );
+    }
+  }
 };
 const search = () => {
   getTableDataReq(
@@ -122,10 +142,13 @@ const btnClick = (it: any, scope: any) => {
   }
 };
 const selectionChange = (row: unknown) => {
+  console.log(row, 143);
+  selectMap.value.set(currentPage.value, row);
   emit('selectionChange', row);
 };
 defineExpose({
-  search
+  search,
+  selectMap: selectMap.value
 });
 </script>
 

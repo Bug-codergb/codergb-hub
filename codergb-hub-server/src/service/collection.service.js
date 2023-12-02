@@ -13,6 +13,8 @@ class CollectionService{
   }
   async addVideoService(ctx,vId,cId){
     try{
+      const delSQL=`delete from collection_video where cId=?`;
+      await connection.execute(delSQL,[cId]);
       let values=[];
       for(let item of vId){
         values.push(`(?,?,?)`);

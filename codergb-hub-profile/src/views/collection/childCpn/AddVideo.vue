@@ -45,13 +45,20 @@ const openDrawer = () => {
   }
 };
 const selectionChange = (item: IVideo[]) => {
-  selectVideo.list = item;
+  //console.log(item);
+  //selectVideo.list = item;
 };
 const showDrawer = (data: ICollection) => {
   drawer.value = true;
   collection.item = data;
 };
 const confirmHandle = async (close) => {
+  const map = videoTable.value.gbTable.selectMap ?? new Map();
+  selectVideo.list = [];
+  map.forEach((value: IVideo, key: number) => {
+    if (Array.isArray(value)) selectVideo.list.push(...value);
+  });
+  console.log(selectVideo.list);
   if (selectVideo.list.length === 0) {
     ElMessage({
       type: 'warning',

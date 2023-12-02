@@ -16,7 +16,7 @@
 
 <script lang="tsx" setup>
 import moment from 'moment';
-import { reactive, ref, defineProps, defineEmits, defineExpose } from 'vue';
+import { reactive, ref, defineProps, defineEmits, defineExpose, nextTick } from 'vue';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
@@ -271,6 +271,9 @@ const selectionChange = (row: IVideo[]) => {
 const createHandle = () => {
   emit('create');
 };
+nextTick(() => {
+  console.log(gbTable.value.selectMap);
+});
 defineExpose({
   tableData,
   gbTable
