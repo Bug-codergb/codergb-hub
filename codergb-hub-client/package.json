@@ -19,6 +19,7 @@
     "cropperjs": "^1.5.12",
     "hls.js": "^1.2.4",
     "immutable": "^4.1.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "prettier": "^2.7.1",
     "react": "^18.2.0",

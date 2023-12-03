@@ -6,7 +6,7 @@ export const ShortsWrapper = styled.div`
   }
   .short-video-list {
     .item {
-      height: 60vh;
+      height: 70vh;
       background-color: #333;
       &:nth-child(1) {
         background-color: pink;
