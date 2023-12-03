@@ -12,6 +12,8 @@
         ref="videoTable"
         @selectionChange="selectionChange"
         url="/video/all"
+        :is-show-refresh="false"
+        :is-show-create="false"
       />
     </div>
   </GbDrawer>

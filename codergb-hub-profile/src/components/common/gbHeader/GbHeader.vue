@@ -30,7 +30,7 @@
     <div class="right-container">
       <div class="create">
         <slot>
-          <el-button type="primary" @click="createHandle">新增</el-button>
+          <el-button v-if="isShowCreate" type="primary" @click="createHandle">新增</el-button>
         </slot>
         <slot name="btnContent"></slot>
       </div>
@@ -56,6 +56,10 @@ const props = defineProps({
     }
   },
   isShowRefresh: {
+    type: Boolean,
+    default: true
+  },
+  isShowCreate: {
     type: Boolean,
     default: true
   }

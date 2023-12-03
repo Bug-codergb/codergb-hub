@@ -32,15 +32,20 @@ class SubscriberController{
       const {userId} = ctx.user;
       const {upId=""} = ctx.request.body;
       if(!isEmpty(ctx,upId,"订阅用户ID不能为空")){
-        const sub = await getSubService(ctx,userId,upId)
-        if(sub && sub.length!==0){
-          const result = await cancelService(ctx,upId,userId);
-          if(result){
-            setResponse(ctx,"success",200,{})
-          }
+        if(userId === upId){
+          setResponse(ctx,"error",400,{})
         }else{
-          setResponse(ctx,"您还未订阅",400,{})
+          const sub = await getSubService(ctx,userId,upId)
+          if(sub && sub.length!==0){
+            const result = await cancelService(ctx,userId,upId);
+            if(result){
+              setResponse(ctx,"success",200,{})
+            }
+          }else{
+            setResponse(ctx,"您还未订阅",400,{})
+          }
         }
+
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})

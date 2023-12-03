@@ -1,6 +1,11 @@
 <template>
   <div class="video-table">
-    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
+    <GbHeader
+      :header="header"
+      :isShowRefresh="isShowRefresh"
+      @create="createHandle"
+      :is-show-create="isShowCreate"
+    />
     <GbTable
       :tableData="tableData"
       ref="gbTable"
@@ -38,6 +43,14 @@ const props = defineProps({
   url: {
     type: String,
     default: ''
+  },
+  isShowRefresh: {
+    type: Boolean,
+    default: true
+  },
+  isShowCreate: {
+    type: Boolean,
+    default: true
   },
   excludeHeader: {
     type: Array,
