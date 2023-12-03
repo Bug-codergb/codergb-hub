@@ -15,7 +15,8 @@ interface IVideo{
   createTime:string,
   updateTime:string,
   history?:string,
-  category:ICate,
+  category: ICate,
+  isShort:number,
   tag:ITag[]
 }
 export type {

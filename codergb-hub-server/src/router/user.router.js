@@ -9,7 +9,8 @@ const {
   updateAvatar ,
   userMsg,
   userVideo,
-  getAllUser
+  getAllUser,
+  getUSerLib
 } = require("../controller/user.controller");
 //上传头像
 userRouter.post("/avatar/upload",authVerify,userAvatarUpload,uploadAvatar);
@@ -23,4 +24,6 @@ userRouter.post("/msg/:id",authVerify,userMsg);
 userRouter.post("/video/:id",authVerify,userVideo);
 //获取所有用户
 userRouter.post("/all",authVerify,getAllUser);
+//获取用户媒体库数据
+userRouter.get("/library/:id",authVerify,getUSerLib);
 module.exports = userRouter;

@@ -8,7 +8,8 @@ const {
   getUserMsgService,
   userMsgService,
   userVideoService,
-  getAllUserService
+  getAllUserService,
+  getUSerLibService
 } = require("../service/user.service");
 const {APP_HOST,APP_PORT} = require("../app/config")
 class UserController{
@@ -115,6 +116,17 @@ class UserController{
       const result = await getAllUserService(ctx,offset,limit,isExplore);
       if(result){
         setResponse(ctx,"success",200,result)
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500)
+    }
+  }
+  async getUSerLib(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await getUSerLibService(ctx,id);
+      if(result){
+        setResponse(ctx,"success",200,result);
       }
     }catch (e) {
       setResponse(ctx,e.message,500)

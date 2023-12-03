@@ -143,5 +143,30 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
+  async getUSerLibService(ctx,userId){
+    try{
+      const subSQL=`select count(*) as count
+            from subscriber as sub
+            where sub.userId=?`;
+      const uploadSQL=`select count(*) as count
+            from video as v
+            where v.userId = ?`;
+      const thumbSQL=`
+                select count(*) as count
+          from thumb as t
+          where t.userId = ?`;
+      const subRes  = await connection.execute(subSQL,[userId]);
+      const uploadRes = await connection.execute(uploadSQL,[userId]);
+      const thumbRes = await connection.execute(thumbSQL,[userId]);
+      return {
+        subCount:subRes[0][0].count,
+        uploadCount:uploadRes[0][0].count,
+        thumbCount:thumbRes[0][0].count
+      }
+
+    }catch (e) {
+      setResponse(ctx,e.message,500);
+    }
+  }
 }
 module.exports=new UserService();
