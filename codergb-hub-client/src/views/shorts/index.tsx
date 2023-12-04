@@ -6,12 +6,15 @@ import React, {
   useEffect,
   useRef,
 } from "react";
+import VideoItem from "./childCpn/videoItem";
 import lodash from "lodash";
+
 import { ShortsWrapper } from "./style";
 import { IVideo } from "../../types/video/IVideo";
 import { getAllVideo } from "../../network/video";
 import { IResponseType } from "../../types/responseType";
 import { IPage } from "../../types/IPage";
+
 const Shorts: FC = (): ReactElement => {
   const [video, setVideo] = useState<IVideo[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -33,7 +36,7 @@ const Shorts: FC = (): ReactElement => {
     }
   };
   useEffect(() => {
-    getShortVideoReq(0, 3);
+    getShortVideoReq(4, 3);
   }, []);
 
   const listRef = useRef<any>(null);
@@ -86,26 +89,29 @@ const Shorts: FC = (): ReactElement => {
       console.log(e.deltaY);
     };
   }, []);
+
   return (
     <ShortsWrapper>
-      <div className="outer" ref={listRef}>
-        <ul className="short-video-list">
-          {video &&
-            video.length !== 0 &&
-            video.map((item, index) => {
-              return (
-                <li
-                  key={item.id}
-                  className="item"
-                  ref={index === 1 ? itemRef : null}
-                >
-                  <div className="container">
-                    <img src={item.picUrl} />
-                  </div>
-                </li>
-              );
-            })}
-        </ul>
+      <div className="box">
+        <div className="outer" ref={listRef}>
+          <div className="inner">
+            <ul className="short-video-list">
+              {video &&
+                video.length !== 0 &&
+                video.map((item, index) => {
+                  return (
+                    <li
+                      key={item.id}
+                      className="item"
+                      ref={index === 1 ? itemRef : null}
+                    >
+                      <VideoItem video={item} />
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        </div>
       </div>
     </ShortsWrapper>
   );
