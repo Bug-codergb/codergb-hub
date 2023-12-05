@@ -1,5 +1,6 @@
 import React, { memo, FC, useState } from "react";
 import { Dispatch } from "redux";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { VideoItemWrapper } from "./style";
 import {
@@ -30,6 +31,7 @@ const VideItem: FC<IProps> = (props) => {
   const { video } = props;
   const loginState = useLoginMsg();
 
+  const navigate = useNavigate();
   const isThumb = useThumb("video", video.id);
   const isTread = useTread("video", video.id);
 
@@ -76,6 +78,15 @@ const VideItem: FC<IProps> = (props) => {
       }
     }
   };
+  const userRouter = () => {
+    if (video) {
+      navigate("/home/userDetail", {
+        state: {
+          userId: video.user.userId,
+        },
+      });
+    }
+  };
   return (
     <VideoItemWrapper>
       <div className="container">
@@ -83,7 +94,7 @@ const VideItem: FC<IProps> = (props) => {
         <div className="top-level"></div>
         <div className="bottom-level">
           <div className="user">
-            <div className="img-container">
+            <div className="img-container" onClick={() => userRouter()}>
               <img src={video.user.avatarUrl} />
             </div>
             <div className="user-name">{video.user.userName}</div>

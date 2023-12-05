@@ -77,6 +77,19 @@ class SubscriberService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getSubCountService(ctx,id){
+    try{
+      const sql=`
+                select count(sub.userId) as count
+          from subscriber as sub
+          where upId = ?`;
+      const result = await connection.execute(sql,[id]);
+      console.log(result[0])
+      return result[0][0].count
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 
 module.exports = new SubscriberService();

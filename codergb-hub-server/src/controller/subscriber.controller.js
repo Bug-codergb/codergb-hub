@@ -4,7 +4,8 @@ const {
   createService,
   getSubService,
   cancelService,
-  userSubService
+  userSubService,
+  getSubCountService
 } = require("../service/subscriber.service")
 class SubscriberController{
   async create(ctx,next){
@@ -60,6 +61,17 @@ class SubscriberController{
         setResponse(ctx,"success",200,result)
       }
     }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getSubCount(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await getSubCountService(ctx,id);
+      if(result!==null && result!==undefined){
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e){
       setResponse(ctx,e.message,500,{})
     }
   }

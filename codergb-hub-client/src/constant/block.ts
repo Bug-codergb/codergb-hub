@@ -1,5 +1,5 @@
 const UPLOADED_VIDEO="上传的视频";
-const HOT_VIDEO ="上传的视频";
+const HOT_VIDEO ="热门上传视频";
 const SHORT="短视频";
 const LIVE="正在直播";
 const YESTERDAY_LIVE="过往的直播归档的视频";
