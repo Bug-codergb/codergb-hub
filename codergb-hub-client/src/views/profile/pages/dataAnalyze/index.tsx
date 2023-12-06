@@ -1,9 +1,10 @@
-import React,{memo,FC,ReactElement} from "react";
-const DataAnalyze:FC=()=>{
+import React, { memo, FC, ReactElement } from "react";
+import PlayData from "./childCpn/playData/index";
+const DataAnalyze: FC = () => {
   return (
-      <div>
-        数据分子
-      </div>
-  )
-}
+    <div>
+      <PlayData />
+    </div>
+  );
+};
 export default memo(DataAnalyze);

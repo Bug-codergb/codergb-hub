@@ -14,8 +14,8 @@ class VideoService{
   async createVideoService(ctx,userId,videoId, title, desc, imgId, playlistId, tagIds, cateId,dt){
     try{
       const id = new Date().getTime();
-      const videoSql = `insert into video(id,userId,name,description,cateId,dt) values(?,?,?,?,?,?)`;
-      const result = await connection.execute(videoSql,[id,userId,title,desc,cateId,dt]);
+      const videoSql = `insert into video(id,userId,name,description,cateId,dt,isShort) values(?,?,?,?,?,?,?)`;
+      const result = await connection.execute(videoSql,[id,userId,title,desc,cateId,dt,0]);
       await new VideoService().createVideoFileService(ctx,id,imgId,"cover");
       await new VideoService().createVideoFileService(ctx,id,videoId,"source");
       await new VideoService().createVideoPlaylistService(ctx,id,playlistId);
