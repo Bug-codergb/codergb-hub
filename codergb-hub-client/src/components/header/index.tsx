@@ -7,6 +7,7 @@ import React, {
   useEffect,
   ChangeEvent,
   FormEvent,
+  KeyboardEvent,
 } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Map } from "immutable";
@@ -118,6 +119,11 @@ const Header: FC = (): ReactElement => {
       });
     }
   };
+  const searchKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === "enter" || e.code === "Enter") {
+      searchRouter();
+    }
+  };
   return (
     <HeaderWrapper>
       <LeftContent>
@@ -132,6 +138,7 @@ const Header: FC = (): ReactElement => {
             placeholder="搜索"
             value={searchContent}
             maxLength={30}
+            onKeyUp={(e) => searchKeyDownHandler(e)}
             onInput={(e) => searchInp(e)}
           />
           <div className="search-icon" onClick={(e) => searchRouter()}>
