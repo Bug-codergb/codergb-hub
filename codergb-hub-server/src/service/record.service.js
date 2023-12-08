@@ -45,5 +45,21 @@ class RecordService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getUserVideoThumbService(ctx,userId){
+    try{
+      const sql=`
+                select count(v.id) as count,t.createTime
+                from thumb as t
+                inner join video v on v.id = t.vId
+                where v.userId = ? and
+                      t.tread=0 and t.vId is not null and
+                      DATE_SUB(CURDATE(),INTERVAL 30 day) <= DATE(t.createTime)
+                group by DATE(t.createTime)`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
 }
 module.exports=new RecordService();

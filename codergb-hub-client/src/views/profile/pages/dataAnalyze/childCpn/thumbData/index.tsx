@@ -1,19 +1,20 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo, FC, useRef, useEffect } from "react";
 import * as echarts from "echarts";
-import { PlayDataWrapper } from "./style";
+import { ThumbDataWrapper } from "./style";
+import { getUserRecordThumb } from "../../../../../../network/video";
 import { IResponseType } from "../../../../../../types/responseType";
 import { useLoginMsg } from "../../../../../../hook/useLoginMsg";
-import { getUserRecordVideo } from "../../../../../../network/video";
+
 interface IRecord {
   count: number;
   createTime: string;
 }
-const PlayData = () => {
+const ThumbData: FC = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const login = useLoginMsg();
   useEffect(() => {
     if (divRef.current) {
-      getUserRecordVideo<IResponseType<IRecord[]>>(login.userMsg.userId).then(
+      getUserRecordThumb<IResponseType<IRecord[]>>(login.userMsg.userId).then(
         (res) => {
           if (res.status === 200 && res.data.length !== 0) {
             const key = [];
@@ -26,7 +27,7 @@ const PlayData = () => {
             let myChart = echarts.init(chartDom);
             const option = {
               title: {
-                text: "作品近一个月播放量",
+                text: "作品近一个月作品被点赞数",
                 textAlign: "center",
                 left: "50%",
                 textStyle: {
@@ -59,12 +60,13 @@ const PlayData = () => {
                   data: value,
                   type: "line",
                   smooth: true,
-                  name: "播放量",
+                  name: "点赞数",
+
                   lineStyle: {
-                    color: "#ec5b56",
+                    color: "#61c373",
                   },
                   itemStyle: {
-                    color: "#ec5b56",
+                    color: "#61c373",
                   },
                 },
               ],
@@ -80,9 +82,9 @@ const PlayData = () => {
     }
   }, [divRef, divRef.current]);
   return (
-    <PlayDataWrapper>
+    <ThumbDataWrapper>
       <div className="charts-container" ref={divRef}></div>
-    </PlayDataWrapper>
+    </ThumbDataWrapper>
   );
 };
-export default memo(PlayData);
+export default memo(ThumbData);

@@ -215,6 +215,11 @@ const VideoDetail: FC = (): ReactElement => {
     setVideoSourceType("source");
     playVideo(id);
   };
+  const canPlayHandler = () => {
+    if (videoRef.current) {
+      videoRef.current.volume = 0.6;
+    }
+  };
   return (
     <VideoDetailWrapper>
       <Layout>
@@ -250,6 +255,7 @@ const VideoDetail: FC = (): ReactElement => {
                         ref={videoRef}
                         controls={true}
                         muted={false}
+                        onCanPlay={canPlayHandler}
                         onTimeUpdate={(e) => videoPlayHandle(e)}
                         autoPlay={true}
                       />

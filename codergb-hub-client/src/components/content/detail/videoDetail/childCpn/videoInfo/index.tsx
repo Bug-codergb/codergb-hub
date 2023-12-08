@@ -5,9 +5,11 @@ import React, {
   MouseEvent,
   useEffect,
   useState,
+  useRef,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { Map } from "immutable";
+import Add from "../../../../../content/add/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
   LikeOutlined,
@@ -36,7 +38,11 @@ import { Dispatch } from "redux";
 import { useThumb, useTread } from "../../../../../../hook/useThumb";
 import { IUserMsg } from "../../../../../../types/user/IUserMsg";
 import { IResponseType } from "../../../../../../types/responseType";
-
+import { IAddType } from "../../../../../../constant/addList";
+import { ADD_PLAYLIST } from "../../../../../../constant/addList";
+interface IAdd {
+  liClick: (item: IAddType) => void;
+}
 interface IProps {
   videoInfo?: IVideo;
 }
@@ -49,7 +55,7 @@ const VideoInfo: FC<IProps> = (props) => {
   const isThumb = useThumb("video", videoInfo?.id);
   const isTread = useTread("video", videoInfo?.id);
   const dispatch = useDispatch<Dispatch<any>>();
-
+  const addRef = useRef<IAdd | null>(null);
   const [subCount, setSubCount] = useState<number>(0);
   useEffect(() => {
     if (videoInfo) {
@@ -135,6 +141,14 @@ const VideoInfo: FC<IProps> = (props) => {
       });
     }
   };
+  const openChangeHandle = () => {
+    if (addRef && addRef.current) {
+      addRef.current.liClick({
+        icon: "",
+        name: ADD_PLAYLIST,
+      });
+    }
+  };
   return (
     <VideoInfoWrapper>
       <p className="video-title text-nowrap-mul-line">{videoInfo?.name}</p>
@@ -192,13 +206,14 @@ const VideoInfo: FC<IProps> = (props) => {
               )}
             </div>
           </div>
-          <div className="collection">
+          <div className="collection" onClick={() => openChangeHandle()}>
             <FileAddOutlined className={"collection-icon"} />
             <span className="label">保存</span>
           </div>
         </div>
       </div>
       <div className="desc">{videoInfo?.description}</div>
+      {videoInfo && <Add id={videoInfo.id} ref={addRef} />}
     </VideoInfoWrapper>
   );
 };

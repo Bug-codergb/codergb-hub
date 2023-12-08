@@ -4,7 +4,8 @@ const {
   createService,
   getVideoService,
   updateCountService,
-  getUserVideoRecordService
+  getUserVideoRecordService,
+  getUserVideoThumbService
 }=require("../service/record.service");
 const moment = require("moment");
 class RecordController{
@@ -64,6 +65,35 @@ class RecordController{
           }
           result.sort((a,b)=>new Date(a.createTime).getTime()-new Date(b.createTime).getTime())
         }
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getUserVideoThumb(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await getUserVideoThumbService(ctx,id);
+      if(result){
+        const oneMonth = [];
+        for(let i=0;i<=30;i++){
+          oneMonth.push(moment(new Date).subtract(i,"days").format("yyyy-MM-DD"))
+        }
+        let map = new Map();
+        for(let item of result){
+          item.createTime = moment(item.createTime).format("yyyy-MM-DD")
+          map.set(item.createTime,true);
+        }
+        for(let item of oneMonth){
+          if(!map.get(item)){
+            result.push({
+              createTime:item,
+              count:0
+            })
+          }
+        }
+        result.sort((a,b)=>new Date(a.createTime).getTime()-new Date(b.createTime).getTime());
         setResponse(ctx,"success",200,result);
       }
     }catch (e) {
