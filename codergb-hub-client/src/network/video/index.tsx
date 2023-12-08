@@ -165,3 +165,8 @@ export function recordVideo<T = IResponseType<any>>(id: string) {
     url: "/record/" + id,
   });
 }
+export function getUserRecordVideo<T = IResponseType<any>>(id: string) {
+  return gbRequest.get<T>({
+    url: "/record/user/" + id,
+  });
+}

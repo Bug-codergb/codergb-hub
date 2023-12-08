@@ -3,7 +3,8 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   getVideoService,
-  updateCountService
+  updateCountService,
+  getUserVideoRecordService
 }=require("../service/record.service");
 const moment = require("moment");
 class RecordController{
@@ -11,7 +12,7 @@ class RecordController{
     try{
       const { vId } = ctx.params;
       const {userId} = ctx.user;
-      const time = moment(new Date()).subtract(5,"days").format("yyyy-MM-DD");
+      const time = moment(new Date()).format("yyyy-MM-DD");
       const count = await getVideoService(vId,userId,time);
       let num = 0;
       if(!count||!count[0]){
@@ -33,6 +34,38 @@ class RecordController{
         }
       }
 
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getUserVideoRecord(ctx,next){
+    try{
+      const { id } = ctx.params;
+      let result = await getUserVideoRecordService(ctx,id);
+      if(result){
+        if(result.length!==0){
+          const oneMonth = [];
+          for(let i=0;i<=30;i++){
+            oneMonth.push(moment(new Date).subtract(i,"days").format("yyyy-MM-DD"))
+          }
+          let map = new Map();
+          for(let item of result){
+            item.createTime = moment(item.createTime).format("yyyy-MM-DD")
+            map.set(item.createTime,true);
+          }
+
+          for(let item of oneMonth){
+            if(!map.get(item)){
+              result.push({
+                createTime:item,
+                count:0
+              })
+            }
+          }
+          result.sort((a,b)=>new Date(a.createTime).getTime()-new Date(b.createTime).getTime())
+        }
+        setResponse(ctx,"success",200,result);
+      }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }

@@ -27,7 +27,22 @@ class RecordService{
       const result = await connection.execute(sql,[userId,vId,createTime]);
       return result[0];
     }catch (e) {
-
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getUserVideoRecordService(ctx,userId){
+    try{
+      const sql=`
+              select sum(vr.count) as count,vr.createTime
+        from video_record as vr
+        left join video v on v.id = vr.vId
+        where v.userId = ? and DATE_SUB(CURDATE(),INTERVAL 30 day) <= vr.createTime
+        group by vr.createTime
+        order by vr.createTime`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
     }
   }
 }

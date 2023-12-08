@@ -1,46 +1,79 @@
 import React, { memo, useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { PlayDataWrapper } from "./style";
+import { IResponseType } from "../../../../../../types/responseType";
+import { useLoginMsg } from "../../../../../../hook/useLoginMsg";
+import { getUserRecordVideo } from "../../../../../../network/video";
+interface IRecord {
+  count: number;
+  createTime: string;
+}
 const PlayData = () => {
   const divRef = useRef<HTMLDivElement>(null);
+  const login = useLoginMsg();
   useEffect(() => {
     if (divRef.current) {
-      var chartDom = divRef.current;
-      var myChart = echarts.init(chartDom);
-      var option;
+      getUserRecordVideo<IResponseType<IRecord[]>>(login.userMsg.userId).then(
+        (res) => {
+          if (res.status === 200 && res.data.length !== 0) {
+            const key = [];
+            const value = [];
+            for (let item of res.data) {
+              key.push(item.createTime);
+              value.push(item.count);
+            }
+            let chartDom = divRef.current;
+            let myChart = echarts.init(chartDom);
+            const option = {
+              title: {
+                text: "作品近一个月播放量",
+                textAlign: "center",
+                left: "50%",
+                textStyle: {
+                  fontSize: 12,
+                },
+              },
+              legend: {
+                show: false,
+              },
+              tooltip: {
+                show: true,
+                trigger: "axis",
+              },
+              xAxis: {
+                type: "category",
+                data: key,
+              },
+              yAxis: {
+                type: "value",
+              },
+              grid: {
+                left: "5%",
+                bottom: 0,
+                top: "15%",
+                right: "5%",
+                containLabel: true,
+              },
+              series: [
+                {
+                  data: value,
+                  type: "line",
+                  smooth: true,
+                  name: "播放量",
+                  lineStyle: {
+                    color: "#ec5b56",
+                  },
+                  itemStyle: {
+                    color: "#ec5b56",
+                  },
+                },
+              ],
+            };
 
-      option = {
-        legend: {
-          show: true,
-        },
-        tooltip: {
-          show: true,
-        },
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        grid: {
-          left: 0,
-          bottom: 0,
-          top: "10%",
-          right: 0,
-          containLabel: true,
-        },
-        series: [
-          {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: "line",
-            smooth: true,
-            name: "近一个月作品播放量",
-          },
-        ],
-      };
-
-      option && myChart.setOption(option);
+            option && myChart.setOption(option);
+          }
+        }
+      );
     }
   }, [divRef, divRef.current]);
   return (
