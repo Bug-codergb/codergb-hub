@@ -472,5 +472,14 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
       setResponse(ctx, e.message, 500, {});
     }
   }
+  async addPlayCountService(ctx,id,playCount){
+    try{
+      const sql=`update video set playCount =? where video.id=?`;
+      const result = await connection.execute(sql,[playCount,id]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx, e.message, 500, {});
+    }
+  }
 }
 module.exports  = new VideoService();

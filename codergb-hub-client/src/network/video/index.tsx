@@ -175,3 +175,8 @@ export function getUserRecordThumb<T = IResponseType<any>>(id: string) {
     url: "/record/thumb/" + id,
   });
 }
+export function addPlayCount<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: "video/playCount/" + id,
+  });
+}

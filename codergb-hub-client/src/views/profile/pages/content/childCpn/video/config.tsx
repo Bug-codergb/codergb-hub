@@ -69,6 +69,7 @@ const columns = (navigate: NavigateFunction): ColumnsType<IVideo> => {
     {
       title: "日期",
       dataIndex: "createTime",
+      width: "140",
       sorter: (a, b) =>
         new Date(a.createTime).getTime() - new Date(b.createTime).getTime(),
       render: (time: string) => {

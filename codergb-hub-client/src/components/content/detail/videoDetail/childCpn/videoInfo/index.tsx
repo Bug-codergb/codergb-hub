@@ -17,6 +17,7 @@ import {
   DislikeOutlined,
   DislikeFilled,
   LikeFilled,
+  EyeOutlined,
 } from "@ant-design/icons";
 import { VideoInfoWrapper } from "./style";
 import { IVideo } from "../../../../../../types/video/IVideo";
@@ -47,9 +48,10 @@ interface IAdd {
 interface IProps {
   videoInfo?: IVideo;
   id: string;
+  playCount: string | number;
 }
 const VideoInfo: FC<IProps> = (props) => {
-  const { videoInfo, id: videoId } = props;
+  const { videoInfo, id: videoId, playCount } = props;
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(["loginReducer", "login"]) as ILogin;
   });
@@ -213,6 +215,10 @@ const VideoInfo: FC<IProps> = (props) => {
           )}
         </div>
         <div className="right-content">
+          <div className="collection" onClick={() => openChangeHandle()}>
+            <EyeOutlined />
+            <span className="label">{playCount}</span>
+          </div>
           <div className="thumb">
             <div className="thumb-inner">
               {videoInfo && !isThumb && (

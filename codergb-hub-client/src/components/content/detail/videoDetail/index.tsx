@@ -23,6 +23,7 @@ import {
   getVideoURL,
   getCollectionVideo,
   recordVideo,
+  addPlayCount,
 } from "../../../../network/video";
 import { IResponseType } from "../../../../types/responseType";
 import { IPage } from "../../../../types/IPage";
@@ -110,9 +111,10 @@ const VideoDetail: FC = (): ReactElement => {
         });
       });
 
-      getVideoDetail(vioId).then((data) => {
+      getVideoDetail<IResponseType<IVideo>>(vioId).then((data) => {
         if (data.status === 200) {
           setVideoDetail(data.data);
+          setPlayCount(data.data.playCount);
         }
       });
     }
@@ -215,9 +217,14 @@ const VideoDetail: FC = (): ReactElement => {
     setVideoSourceType("source");
     playVideo(id);
   };
+
+  const [playCount, setPlayCount] = useState<number | string>(0);
   const canPlayHandler = () => {
     if (videoRef.current) {
       videoRef.current.volume = 0.6;
+      addPlayCount<IResponseType<{ playCount: number }>>(vioId).then((res) => {
+        setPlayCount(res.data.playCount);
+      });
     }
   };
   return (
@@ -267,7 +274,11 @@ const VideoDetail: FC = (): ReactElement => {
               <Dm id={vioId} time={currentTime} pub={() => pubSuccess()} />
               <div className="video-info">
                 {videoDetail && videoDetail.user && (
-                  <VideoInfo videoInfo={videoDetail} id={vioId} />
+                  <VideoInfo
+                    videoInfo={videoDetail}
+                    id={vioId}
+                    playCount={playCount}
+                  />
                 )}
               </div>
               <div className="video-comment">

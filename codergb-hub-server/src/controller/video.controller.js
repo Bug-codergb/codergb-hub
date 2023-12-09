@@ -22,7 +22,8 @@ const {
   getVideoSourceService,
   deleteVideoService,
   updateVideoInfoService,
-  cateVideoService
+  cateVideoService,
+  addPlayCountService
 } = require("../service/video.service")
 const {createUploadPath} = require("../middleware/file.middleware");
 
@@ -370,6 +371,22 @@ class VideoController {
       const {id} = ctx.params;
       const res = await cateVideoService(ctx,id,offset,limit);
       if(res){
+        setResponse(ctx, "success", 200, res);
+      }
+    }catch (e) {
+      setResponse(ctx, e.message, 500, {});
+    }
+  }
+  async addPlayCount(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const result = await getVideoDetailService(ctx,id);
+      if(result){
+        const video = result[0]??{playCount:0};
+        let {playCount} = video;
+        playCount++;
+        const res = await addPlayCountService(ctx,id,playCount);
+        res.playCount = playCount;
         setResponse(ctx, "success", 200, res);
       }
     }catch (e) {
