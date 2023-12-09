@@ -267,7 +267,7 @@ const VideoDetail: FC = (): ReactElement => {
               <Dm id={vioId} time={currentTime} pub={() => pubSuccess()} />
               <div className="video-info">
                 {videoDetail && videoDetail.user && (
-                  <VideoInfo videoInfo={videoDetail} />
+                  <VideoInfo videoInfo={videoDetail} id={vioId} />
                 )}
               </div>
               <div className="video-comment">

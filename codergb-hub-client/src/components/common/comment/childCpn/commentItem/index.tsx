@@ -36,6 +36,8 @@ interface IProps {
   propsShowReplyHandle: (index: number) => void;
   propsPublishReplyHandle: (content: string, item: IComment) => void;
   propsShowReply: (index: number) => void;
+
+  thumbHandler: () => void;
 }
 const CommentItem: FC<IProps> = (props) => {
   const {
@@ -47,6 +49,7 @@ const CommentItem: FC<IProps> = (props) => {
     propsShowReplyHandle,
     propsPublishReplyHandle,
     propsShowReply,
+    thumbHandler: propThumber,
   } = props;
   const [tempReplyCount, setReplyCount] = useState<number>(0);
 
@@ -76,12 +79,12 @@ const CommentItem: FC<IProps> = (props) => {
       if (isThumb) {
         const result = await cancelThumb(comment.id, "commentId");
         if (result.status === 200) {
-          console.log(result.data);
+          propThumber();
         }
       } else {
         const result = await thumb(comment.id, "commentId");
         if (result.status === 200) {
-          console.log(result.data);
+          propThumber();
         }
       }
       if (comment && comment.user && loginState && loginState.userMsg) {
@@ -94,12 +97,12 @@ const CommentItem: FC<IProps> = (props) => {
       if (!isTread) {
         const result = await tread(comment.id, "commentId");
         if (result.status === 200) {
-          console.log(result.data);
+          propThumber();
         }
       } else {
         const result = await cancelTread(comment.id, "commentId");
         if (result.status === 200) {
-          console.log(result.data);
+          propThumber();
         }
       }
       if (comment && comment.user && loginState && loginState.userMsg) {
@@ -134,7 +137,7 @@ const CommentItem: FC<IProps> = (props) => {
             <div className="thumb">
               {!isThumb && <LikeOutlined onClick={(e) => thumbHandle()} />}
               {isThumb && <LikeFilled onClick={(e) => thumbHandle()} />}
-              <span className="thumb-count">18w</span>
+              <span className="thumb-count">{comment.thumb ?? 0}</span>
             </div>
             <div className="tread">
               {!isTread && <DislikeOutlined onClick={(e) => treadHandle()} />}

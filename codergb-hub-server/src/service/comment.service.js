@@ -42,7 +42,8 @@ class CommentService{
 			  select count(com.id) as count
        from comment as com
         WHERE FIND_IN_SET(com.id,getAllComment(c.id)) and com.id!=c.id
-			 ) as reply
+			 ) as reply,
+			 (select count(t.userId) from thumb as t where t.commentId = c.id and t.tread=0) as thumb
        from comment as c
        LEFT JOIN user as u on u.userId = c.userId
        where replyId is null and ${alias}=?
@@ -81,7 +82,8 @@ class CommentService{
 				from comment as com
 				LEFT JOIN user as u on u.userId = com.userId
 				WHERE com.id = c.replyId
-			) as reply
+			) as reply,
+			 (select count(t.userId) from thumb as t where t.commentId = c.id and t.tread=0) as thumb
        from comment as c
        WHERE FIND_IN_SET(id,getAllComment(${id})) and id!=?
        limit ?,?`;

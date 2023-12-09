@@ -29,6 +29,7 @@ import {
 import {
   cancelThumb,
   cancelTread,
+  getVideoThumb,
   thumb,
   tread,
 } from "../../../../../../network/thumb";
@@ -45,9 +46,10 @@ interface IAdd {
 }
 interface IProps {
   videoInfo?: IVideo;
+  id: string;
 }
 const VideoInfo: FC<IProps> = (props) => {
-  const { videoInfo } = props;
+  const { videoInfo, id: videoId } = props;
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(["loginReducer", "login"]) as ILogin;
   });
@@ -67,7 +69,23 @@ const VideoInfo: FC<IProps> = (props) => {
         }
       );
     }
-  }, [videoInfo]);
+  }, [videoId]);
+
+  const [videoThumb, setVideoThumb] = useState<number>(0);
+  const getVideoThumbReq = (videoInfo: IVideo) => {
+    getVideoThumb<IResponseType<{ count: number }>>(videoInfo.id).then(
+      (res) => {
+        if (res.status === 200) {
+          setVideoThumb(res.data.count);
+        }
+      }
+    );
+  };
+  useEffect(() => {
+    if (videoInfo) {
+      getVideoThumbReq(videoInfo);
+    }
+  }, [videoInfo, videoId]);
   const subHandle = async () => {
     if (videoInfo && videoInfo.user && !isSub) {
       const result = await sub(videoInfo?.user.userId);
@@ -110,6 +128,9 @@ const VideoInfo: FC<IProps> = (props) => {
       if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
         dispatch(changeUserDetailAction(loginState.userMsg.userId));
       }
+      if (videoInfo) {
+        getVideoThumbReq(videoInfo);
+      }
     }
   };
   const treadHandle = async () => {
@@ -127,6 +148,9 @@ const VideoInfo: FC<IProps> = (props) => {
       }
       if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
         dispatch(changeUserDetailAction(loginState.userMsg.userId));
+      }
+      if (videoInfo) {
+        getVideoThumbReq(videoInfo);
       }
     }
   };
@@ -152,6 +176,20 @@ const VideoInfo: FC<IProps> = (props) => {
   return (
     <VideoInfoWrapper>
       <p className="video-title text-nowrap-mul-line">{videoInfo?.name}</p>
+      <ul className="tag-list">
+        {videoInfo &&
+          videoInfo.tag &&
+          videoInfo.tag.length !== 0 &&
+          videoInfo.tag.map((item, index) => {
+            return (
+              <li key={item.id}>
+                {index == 0 && <span className="icon">#</span>}
+                <span className="name">{item.name}</span>
+                <span className="icon">#</span>
+              </li>
+            );
+          })}
+      </ul>
       <div className="info">
         <div className="left-content">
           <div className="user-msg-container">
@@ -189,7 +227,7 @@ const VideoInfo: FC<IProps> = (props) => {
                   onClick={(e) => thumbHandle()}
                 />
               )}
-              <span className="label">14万</span>
+              <span className="label">{videoThumb}</span>
             </div>
             <div className="tread">
               {videoInfo && !isTread && (

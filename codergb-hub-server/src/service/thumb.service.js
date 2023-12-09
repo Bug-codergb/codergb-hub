@@ -53,5 +53,18 @@ class ThumbService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async getVideoThumbService(ctx,id){
+    try{
+      const sql=`
+                select count(t.userId) as count
+          from thumb as t
+          where t.vId IS NOT NULL AND t.tread =0 and t.vId=?
+          group by t.vId`;
+      const result = await connection.execute(sql,[id]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
 }
 module.exports = new ThumbService();

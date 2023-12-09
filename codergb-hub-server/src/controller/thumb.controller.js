@@ -5,7 +5,8 @@ const {
   getThumbService,
   cancelService,
   createTreadService,
-  cancelTreadService
+  cancelTreadService,
+  getVideoThumbService
 }=require("../service/thumb.service");
 class ThumbController{
   async create(ctx,next){
@@ -95,6 +96,19 @@ class ThumbController{
         }else{
           setResponse(ctx,"未踩",400,{});
         }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async getVideoThumb(ctx,next){
+    try{
+      const {id}=ctx.params;
+      const result = await getVideoThumbService(ctx,id);
+      console.log(result);
+      if(result){
+        const res = result.length==0?{count:0}:result[0];
+        setResponse(ctx,"success",200,res);
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
