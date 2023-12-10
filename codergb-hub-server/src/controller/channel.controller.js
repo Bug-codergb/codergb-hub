@@ -8,7 +8,8 @@ const {
   createChannelService,
   getChannelMsgService,
   uploadAvatarService,
-  userChannelService
+  userChannelService,
+  getAllChannelService
 } = require("../service/channel.service");
 class ChannelController{
   async createChannel(ctx,next){
@@ -75,7 +76,17 @@ class ChannelController{
       setResponse(ctx,e.message,500,{})
     }
   }
-
+  async getAllChannel(ctx,next){
+    try{
+      const { offset="0",limit="30" } = ctx.query;
+      const result = await getAllChannelService(ctx,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 
 module.exports = new ChannelController();

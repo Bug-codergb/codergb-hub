@@ -8,6 +8,7 @@ const VIDEO_DM = HOME_PATH + '/video/dm';
 const VIDEO_COLLECTION = HOME_PATH + '/video/collection';
 
 const USER_PATH = HOME_PATH + '/user';
+const CHANNEL_PATH = HOME_PATH + '/channel';
 const PLAYLIST_PATH = HOME_PATH + '/playlist';
 const COMMENT_PATH = HOME_PATH + '/comment';
 ///detail
@@ -25,5 +26,6 @@ export {
   COLLECTION_DETAIL_PATH,
   VIDEO_SOURCE,
   COMMENT_PATH,
-  CATE_VIDEO_DETAIL_PATH
+  CATE_VIDEO_DETAIL_PATH,
+  CHANNEL_PATH
 };

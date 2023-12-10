@@ -12,6 +12,7 @@ import VideoDict from '../views/videoDict/VideoDict.vue';
 import VideoCollection from '../views/collection/Collection.vue';
 const VideoSource = import('../views/videoSource/VideoSource.vue');
 
+const Channel = import('../views/channel/Channel.vue');
 import {
   HOME_PATH,
   LOGIN_PATH,
@@ -22,7 +23,8 @@ import {
   VIDEO_PATH,
   PLAYLIST_PATH,
   VIDEO_SOURCE,
-  COMMENT_PATH
+  COMMENT_PATH,
+  CHANNEL_PATH
 } from '@/router/constant';
 import * as detailRoutes from './detail/index';
 const routes: Array<RouteRecordRaw> = [
@@ -73,6 +75,11 @@ const routes: Array<RouteRecordRaw> = [
         path: USER_PATH,
         name: 'user',
         component: UserPage
+      },
+      {
+        path: CHANNEL_PATH,
+        name: 'channel',
+        component: Channel
       },
       {
         path: COMMENT_PATH,

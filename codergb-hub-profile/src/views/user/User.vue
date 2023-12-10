@@ -1,18 +1,19 @@
 <template>
   <div class="user-list">
-    <GbTable :tableData="tableData" />
+    <GbHeader :header="header" @create="createHandler" />
+    <CreateUser ref="createUserRef" @refresh="search" />
+    <GbTable :tableData="tableData" ref="gbTable" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, h } from 'vue';
+import { reactive, h, ref } from 'vue';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
-import { getDurationByTimestamp } from '@/utils/time';
-import { ITag } from '@/types/tag/ITag';
+import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import moment from 'moment';
 import { IUserMsg } from '@/types/user/IUserMsg';
-
+import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
 const tableData = reactive({
   url: '/user/all',
   method: 'post',
@@ -20,6 +21,9 @@ const tableData = reactive({
   params: {
     offset: 0,
     limit: 9
+  },
+  data: {
+    keyword: ''
   },
   columns: [
     {
@@ -105,6 +109,34 @@ const tableData = reactive({
     }
   ]
 });
+
+const gbTable = ref<InstanceType<typeof GbHeader>>(null);
+const header = reactive([
+  {
+    type: 'input',
+    hint: '请输入播放频道名称',
+    id: 'name',
+    bingParam: '',
+    attr: {
+      clearable: true
+    },
+    onChange: (e: string) => {
+      tableData.data.keyword = e;
+      if (gbTable.value) gbTable.value.search();
+    }
+  }
+]);
+
+const createUserRef = ref<InstanceType<typeof CreateUser>>(null);
+const createHandler = () => {
+  if (createUserRef.value) {
+    createUserRef.value.showDrawer();
+  }
+};
+const search = () => {
+  debugger;
+  if (gbTable.value) gbTable.value.search();
+};
 </script>
 
 <style scoped lang="less">

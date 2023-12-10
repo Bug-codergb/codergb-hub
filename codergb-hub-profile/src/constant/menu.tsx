@@ -1,4 +1,5 @@
 import {
+  CHANNEL_PATH,
   COMMENT_PATH,
   PLAYLIST_PATH,
   USER_PATH,
@@ -75,6 +76,11 @@ const menu = [
         index: '2-1',
         name: '用户',
         path: USER_PATH
+      },
+      {
+        index: '2-2',
+        name: '频道',
+        path: CHANNEL_PATH
       }
     ]
   }

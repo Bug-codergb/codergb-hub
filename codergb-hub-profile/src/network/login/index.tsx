@@ -9,3 +9,12 @@ export function login<T = IResponseType<any>>(username: string, password: string
     }
   });
 }
+export function register<T = IResponseType<any>>(username: string, password: string): Promise<T> {
+  return gbRequest.post<T>({
+    url: '/register',
+    data: {
+      userName: username,
+      password: password
+    }
+  });
+}

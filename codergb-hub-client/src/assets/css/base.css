@@ -72,6 +72,7 @@ input,textarea,button{
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  word-break: break-all;
 }
 .add-new-playlist{
   display: flex;

@@ -72,6 +72,54 @@ class ChannelService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getAllChannelService(ctx,offset,limit){
+    try{
+      const sql=`
+              SELECT c.id,c.name,c.alias,c.description,JSON_OBJECT(
+              'userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl
+            ) as user,official,c.createTime,c.updateTime,f.picUrl,
+            (
+              select JSON_OBJECT(
+                  'id',v.id,'name',v.name,'playCount',v.playCount,'dt',v.dt,'description',v.description,'createTime',v.createTime,
+                  'updateTime',v.updateTime,'category',(JSON_OBJECT('id',c2.id,'name',c2.name,'createTime',c2.createTime,'updateTime',c2.updateTime)),
+                  'user',(select JSON_OBJECT('userId',u1.userId,'userName',u1.userName,'avatarUrl',u1.avatarUrl) FROM user as u1 where u1.userId = v.userId)
+                  )
+              FROM video as v
+              left join category c2 on v.cateId = c2.id
+              where v.id = c.trailer
+            ) as trailer,
+            (
+              select JSON_OBJECT(
+                  'id',v.id,'name',v.name,'playCount',v.playCount,'dt',v.dt,'description',v.description,'createTime',v.createTime,
+                  'updateTime',v.updateTime,'category',(JSON_OBJECT('id',c2.id,'name',c2.name,'createTime',c2.createTime,'updateTime',c2.updateTime)),
+                  'user',(select JSON_OBJECT('userId',u1.userId,'userName',u1.userName,'avatarUrl',u1.avatarUrl) FROM user as u1 where u1.userId = v.userId)
+                  )
+              FROM video as v
+              left join category c2 on v.cateId = c2.id
+              where v.id = c.featured
+            ) as featured
+        from channel as c
+        left join user u on c.userId = u.userId
+        left join file as f on f.id=banner
+        where f.picUrl is not null
+        limit ?,?`;
+
+      const res = await connection.execute(sql,[offset,limit]);
+      const countSQL=`
+                SELECT COUNT(c.id) AS count
+          from channel as c
+          left join user u on c.userId = u.userId
+          left join file as f on f.id=banner
+          where f.picUrl is not null`;
+      const count = await connection.execute(countSQL);
+      return {
+        list:res[0],
+        count:count[0][0]?count[0][0].count:0
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 
 module.exports = new ChannelService()
