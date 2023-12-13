@@ -23,7 +23,6 @@ const Shorts: FC = (): ReactElement => {
 
   const getShortVideoReq = async (offset: number, limit: number) => {
     if (!pending.current) {
-      pending.current = true;
       const result = await getAllVideo<IResponseType<IPage<IVideo[]>>>(
         offset,
         limit,
@@ -41,54 +40,62 @@ const Shorts: FC = (): ReactElement => {
 
   const listRef = useRef<any>(null);
   const itemRef = useRef<any>(null);
+
+  const moveSubScrollTop = () => {
+    requestAnimationFrame(() => {
+      listRef.current.scrollTop -= 20;
+      if (listRef.current.scrollTop === 0) {
+        pending.current = false;
+      } else {
+        moveSubScrollTop();
+      }
+    });
+  };
+  const moveAddScrollTop = () => {
+    requestAnimationFrame(() => {
+      if (listRef.current.scrollTop < itemRef.current.offsetHeight) {
+        listRef.current.scrollTop += 20;
+        moveAddScrollTop();
+      } else {
+        listRef.current.scrollTop = itemRef.current.offsetHeight;
+        pending.current = false;
+      }
+    });
+  };
+  const scrollEndHandler = (offsetHeight: number) => {
+    pending.current = true;
+    const boundingClientRect = itemRef.current.getBoundingClientRect();
+    const top = boundingClientRect.top - 80;
+    if (top <= offsetHeight / 2) {
+      //滚动超过一半
+      moveAddScrollTop();
+    } else {
+      //不足一半
+      moveSubScrollTop();
+    }
+  };
+  let t: any = null;
   useEffect(() => {
     const offsetHeight = listRef.current.offsetHeight;
-    let beforTop = 0;
-    let direction = "";
     if (listRef && listRef.current && itemRef.current) {
-      listRef.current.onscroll = lodash.throttle(function (e: any) {
-        pending.current = false;
-        let afterTop = listRef.current.scrollTop;
-        if (afterTop - beforTop > 0) {
-          direction = "向上";
-        } else {
-          direction = "向下";
+      listRef.current.onscroll = function (e: any) {
+        if (t) {
+          clearTimeout(t);
         }
-
-        beforTop = afterTop;
-
-        const boundingClientRect = itemRef.current.getBoundingClientRect();
-        const top = boundingClientRect.top - 80;
-        if (top <= offsetHeight / 2) {
-          //滚动超过一半
-          if (listRef.current.scrollTop >= itemRef.current.offsetHeight) {
-            listRef.current.scrollTop = itemRef.current.offsetHeight;
-            console.log("吸顶");
-            //getShortVideoReq(1, 3);
-          } else {
-            requestAnimationFrame(() => {
-              if (listRef.current.scrollTop < itemRef.current.offsetHeight) {
-                listRef.current.scrollTop += 10;
-              }
-            });
-            if (listRef.current.scrollTop === 0) {
-            }
+        t = setTimeout(() => {
+          if (!pending.current) {
+            scrollEndHandler(offsetHeight);
           }
-        } else {
-          //不足一半
-          requestIdleCallback(() => {
-            listRef.current.scrollTop -= 10;
-          });
-        }
-      }, 10);
+        }, 100);
+      };
+      listRef.current.addEventListener("touchstart", () => {
+        console.log("eee");
+      });
+      listRef.current.addEventListener("touchend", () => {
+        console.log("eee");
+      });
     }
   }, [listRef.current, itemRef.current]);
-
-  useEffect(() => {
-    window.onwheel = function (e: any) {
-      console.log(e.deltaY);
-    };
-  }, []);
 
   return (
     <ShortsWrapper>
