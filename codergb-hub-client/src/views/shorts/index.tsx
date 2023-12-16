@@ -24,7 +24,11 @@ interface ICustomVideo extends IVideo {
 interface ICustomHtmlElement extends HTMLDivElement {
   g_flag: boolean;
 }
-
+interface IVideoItem {
+  changeShow: () => void;
+}
+const DOWN = "向下";
+const UP = "向上";
 const Shorts: FC = (): ReactElement => {
   const [video, setVideo] = useState<ICustomVideo[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -55,7 +59,11 @@ const Shorts: FC = (): ReactElement => {
   }, []);
   useEffect(() => {
     if (video.length !== 0) {
-      setCurrentVideo(video[1]);
+      if (dataOffset.current === 0) {
+        setCurrentVideo(video[0]);
+      } else {
+        setCurrentVideo(video[1]);
+      }
     }
   }, [video]);
 
@@ -85,7 +93,8 @@ const Shorts: FC = (): ReactElement => {
     }
     await getShortVideoReq(dataOffset.current, 3);
     setTimeout(() => {
-      listRef.current.scrollTop = itemRef.current.offsetHeight;
+      if (dataOffset.current !== 0)
+        listRef.current.scrollTop = itemRef.current.offsetHeight;
     }, 0);
   };
 
@@ -105,6 +114,8 @@ const Shorts: FC = (): ReactElement => {
     }
   }, [videoRef.current, url]);
   const scrollRef = useRef<ICustomHtmlElement>(null);
+
+  const videoItemRef = useRef<IVideoItem>({ changeShow: () => {} });
   //向上滑动时
   const moveSubScrollTop = () => {
     let fn = () => {
@@ -125,6 +136,7 @@ const Shorts: FC = (): ReactElement => {
         ) {
           listRef.current.scrollTop -= 20;
           setURL("");
+          videoItemRef.current.changeShow();
           fn();
         } else {
           listRef.current.scrollTop =
@@ -160,6 +172,7 @@ const Shorts: FC = (): ReactElement => {
             scrollTop + listRef.current.offsetHeight / 33;
 
           setURL("");
+          videoItemRef.current.changeShow();
           if (scrollTop === listRef.current.scrollTop) {
             //到达最底部
             listRef.current.scrollTop =
@@ -188,6 +201,10 @@ const Shorts: FC = (): ReactElement => {
           scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
 
           setDirection("");
+
+          if (dataOffset.current === 0) {
+            setCurrentVideo(video[1]);
+          }
           setTimeout(() => {
             scrollRef.current!.g_flag = true;
           }, 500);
@@ -198,9 +215,9 @@ const Shorts: FC = (): ReactElement => {
   };
 
   useEffect(() => {
-    if (direction === "向上") {
+    if (direction === UP) {
       moveAddScrollTop();
-    } else if (direction === "向下") {
+    } else if (direction === DOWN) {
       moveSubScrollTop();
     }
   }, [direction]);
@@ -217,9 +234,9 @@ const Shorts: FC = (): ReactElement => {
             scrollRef.current!.g_flag = false;
 
             if (e.deltaY > 0) {
-              setDirection("向上");
+              setDirection(UP);
             } else {
-              setDirection("向下");
+              setDirection(DOWN);
             }
           }
         }
@@ -252,7 +269,7 @@ const Shorts: FC = (): ReactElement => {
                         className="item"
                         ref={index === 0 ? itemRef : null}
                       >
-                        <VideoItem video={item} />
+                        <VideoItem video={item} ref={videoItemRef} />
                         <div className="g-video-container">
                           {url && index === 0 && (
                             <video ref={videoRef} src={url} autoPlay />
