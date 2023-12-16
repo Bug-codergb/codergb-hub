@@ -9,12 +9,13 @@ import React, {
 } from "react";
 import VideoItem from "./childCpn/videoItem";
 import lodash from "lodash";
-
+import Hls from "hls.js";
 import { ShortsWrapper } from "./style";
 import { IVideo } from "../../types/video/IVideo";
-import { getAllVideo } from "../../network/video";
+import { getAllVideo, getVideoURL } from "../../network/video";
 import { IResponseType } from "../../types/responseType";
 import { IPage } from "../../types/IPage";
+import { setTextRange } from "typescript";
 
 interface ICustomVideo extends IVideo {
   ref: any;
@@ -30,10 +31,12 @@ const Shorts: FC = (): ReactElement => {
   const pending = useRef(false);
   const offset = useRef<number>(1);
 
-  const lastScrollTop = useRef<number>(0);
-
   const [direction, setDirection] = useState<string>("");
 
+  const dataOffset = useRef(0);
+  const dataLimit = useRef(3);
+  const [url, setURL] = useState<string>("");
+  const [currentVideo, setCurrentVideo] = useState<IVideo | null>(null);
   const getShortVideoReq = async (offset: number, limit: number) => {
     if (!pending.current) {
       const result = await getAllVideo<IResponseType<IPage<ICustomVideo[]>>>(
@@ -48,130 +51,152 @@ const Shorts: FC = (): ReactElement => {
     }
   };
   useEffect(() => {
-    getShortVideoReq(0, 6);
+    getShortVideoReq(0, 3);
   }, []);
   useEffect(() => {
     if (video.length !== 0) {
-      for (let item of video) {
-        item.ref = createRef();
-      }
+      setCurrentVideo(video[1]);
     }
   }, [video]);
+
+  useEffect(() => {
+    if (currentVideo) {
+      getVideoURL(currentVideo.id).then((res) => {
+        if (res.status === 200) {
+          setURL(res.data.vioUrl);
+        }
+      });
+    }
+  }, [currentVideo]);
 
   const listRef = useRef<any>(null);
   const itemRef = useRef<any>(null);
 
-  // const scrollEndHandler = (offsetHeight: number) => {
-  //   pending.current = true;
-  //   const boundingClientRect = itemRef.current.getBoundingClientRect();
-  //   const top = boundingClientRect.top - 80;
-  //   if (top <= offsetHeight / 2) {
-  //     moveAddScrollTop();
-  //   } else {
-  //     moveSubScrollTop();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const offsetHeight = listRef.current.offsetHeight;
-  //   let lastScrollTop = 0;
-  //   if (listRef && listRef.current) {
-  //     listRef.current.onscroll = lodash.debounce(
-  //       function (e: any) {
-  //         if (t) {
-  //           clearTimeout(t);
-  //         }
-  //         t = setTimeout(() => {
-  //           if (!pending.current) {
-  //             scrollEndHandler(offsetHeight);
-  //           }
-  //         }, 100);
-  //       },
-  //       1000,
-  //       false
-  //     );
-  //   }
-  // }, [listRef.current]);
-
-  const scrollRef = useRef<ICustomHtmlElement>(null);
-  const moveSubScrollTop = () => {
-    console.log("sub sub sub");
-    scrollRef.current!.g_flag = false;
-    console.log(
-      listRef.current.scrollTop,
-      itemRef.current.offsetHeight * (offset.current - 2)
-    );
-    requestAnimationFrame(() => {
-      if (
-        listRef.current.scrollTop >
-        itemRef.current.offsetHeight * (offset.current - 2)
-      ) {
-        let scrollTop = listRef.current.scrollTop;
-        listRef.current.scrollTop -= 20;
-
-        if (scrollTop === listRef.current.scrollTop) {
-          debugger;
-        }
-        moveSubScrollTop();
-      } else {
-        listRef.current.scrollTop =
-          itemRef.current.offsetHeight * (offset.current - 2);
-        offset.current -= 1;
-
-        const scrollHeight = scrollRef.current!.scrollHeight;
-        const clientHeight = scrollRef.current!.clientHeight;
-        scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
-
-        lastScrollTop.current = scrollRef.current!.scrollTop;
-        setDirection("");
-      }
-    });
+  const refreshUp = async () => {
+    console.log("up");
+    dataOffset.current += 1;
+    await getShortVideoReq(dataOffset.current, 3);
+  };
+  const refreshDown = async () => {
+    console.log("down");
+    dataOffset.current -= 1;
+    if (dataOffset.current <= 0) {
+      dataOffset.current = 0;
+    }
+    await getShortVideoReq(dataOffset.current, 3);
+    setTimeout(() => {
+      listRef.current.scrollTop = itemRef.current.offsetHeight;
+    }, 0);
   };
 
-  const moveAddScrollTop = () => {
-    console.log("addd add");
-    scrollRef.current!.g_flag = false;
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-    requestAnimationFrame(() => {
-      if (
-        listRef.current.scrollTop <
-        itemRef.current.offsetHeight * offset.current
+  useEffect(() => {
+    if (videoRef.current) {
+      if (Hls.isSupported()) {
+        let hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(videoRef.current);
+      } else if (
+        videoRef.current.canPlayType("application/vnd.apple.mpegurl")
       ) {
-        let scrollTop = listRef.current.scrollTop;
-        listRef.current.scrollTop =
-          scrollTop + listRef.current.offsetHeight / 33;
+        videoRef.current.src = url;
+      }
+    }
+  }, [videoRef.current, url]);
+  const scrollRef = useRef<ICustomHtmlElement>(null);
+  //向上滑动时
+  const moveSubScrollTop = () => {
+    let fn = () => {
+      requestAnimationFrame(() => {
+        if (listRef.current.scrollTop === 0) {
+          const scrollHeight = scrollRef.current!.scrollHeight;
+          const clientHeight = scrollRef.current!.clientHeight;
+          scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
+          setDirection("");
+          refreshDown();
+          offset.current = 1;
+          setTimeout(() => {
+            scrollRef.current!.g_flag = true;
+          }, 500);
+        } else if (
+          listRef.current.scrollTop >
+          itemRef.current.offsetHeight * (offset.current - 2)
+        ) {
+          listRef.current.scrollTop -= 20;
+          setURL("");
+          fn();
+        } else {
+          listRef.current.scrollTop =
+            itemRef.current.offsetHeight * (offset.current - 2);
+          if (offset.current <= 0) {
+            offset.current = 0;
+          } else {
+            offset.current -= 1;
+          }
 
-        if (scrollTop === listRef.current.scrollTop) {
-          //到达最底部
+          const scrollHeight = scrollRef.current!.scrollHeight;
+          const clientHeight = scrollRef.current!.clientHeight;
+          scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
+          setDirection("");
+          setTimeout(() => {
+            scrollRef.current!.g_flag = true;
+          }, 500);
+        }
+      });
+    };
+    fn();
+  };
+  //向下滑动时
+  const moveAddScrollTop = () => {
+    let fn = () => {
+      requestAnimationFrame(() => {
+        if (
+          listRef.current.scrollTop <
+          itemRef.current.offsetHeight * offset.current
+        ) {
+          let scrollTop = listRef.current.scrollTop;
+          listRef.current.scrollTop =
+            scrollTop + listRef.current.offsetHeight / 33;
+
+          setURL("");
+          if (scrollTop === listRef.current.scrollTop) {
+            //到达最底部
+            listRef.current.scrollTop =
+              itemRef.current.offsetHeight * offset.current;
+
+            offset.current = 2;
+            const scrollHeight = scrollRef.current!.scrollHeight;
+            const clientHeight = scrollRef.current!.offsetHeight;
+            scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
+            refreshUp();
+            setDirection("");
+            setTimeout(() => {
+              scrollRef.current!.g_flag = true;
+            }, 500);
+          } else {
+            fn();
+          }
+        } else {
           listRef.current.scrollTop =
             itemRef.current.offsetHeight * offset.current;
-          offset.current += 1;
-
-          console.log(offset.current);
+          if (offset.current < dataLimit.current) {
+            offset.current += 1;
+          }
           const scrollHeight = scrollRef.current!.scrollHeight;
           const clientHeight = scrollRef.current!.offsetHeight;
           scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
 
-          lastScrollTop.current = scrollRef.current!.scrollTop;
-
           setDirection("");
-        } else {
-          moveAddScrollTop();
+          setTimeout(() => {
+            scrollRef.current!.g_flag = true;
+          }, 500);
         }
-      } else {
-        listRef.current.scrollTop =
-          itemRef.current.offsetHeight * offset.current;
-        offset.current += 1;
-
-        const scrollHeight = scrollRef.current!.scrollHeight;
-        const clientHeight = scrollRef.current!.offsetHeight;
-        scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
-
-        lastScrollTop.current = scrollRef.current!.scrollTop;
-        setDirection("");
-      }
-    });
+      });
+    };
+    fn();
   };
+
   useEffect(() => {
     if (direction === "向上") {
       moveAddScrollTop();
@@ -180,34 +205,32 @@ const Shorts: FC = (): ReactElement => {
     }
   }, [direction]);
 
-  let t: any = null;
+  let lastScrollTopTime = 0;
   useEffect(() => {
     if (scrollRef.current) {
-      lastScrollTop.current = 0;
       scrollRef.current.g_flag = true;
-      scrollRef.current.addEventListener("scroll", function (e) {
-        if (t) {
-          clearTimeout(t);
-        }
-        t = setTimeout(() => {
-          scrollRef.current!.g_flag = true;
-          console.log("end");
-        }, 66);
-        if (scrollRef.current!.g_flag) {
-          let scrollTop = scrollRef.current!.scrollTop;
-          console.log(lastScrollTop.current, scrollTop);
-          console.log((this as any).scrollTop);
-          console.log((e.target! as any).scrollTop);
-          if (scrollTop < lastScrollTop.current) {
-            setDirection("向下");
-            console.log("向下");
-          } else if (scrollTop > lastScrollTop.current) {
-            setDirection("向上");
-            console.log("向上");
+      const handler = (e: any) => {
+        let time = new Date().getTime();
+
+        if (time - lastScrollTopTime > 40) {
+          if (scrollRef.current!.g_flag) {
+            scrollRef.current!.g_flag = false;
+
+            if (e.deltaY > 0) {
+              setDirection("向上");
+            } else {
+              setDirection("向下");
+            }
           }
-          lastScrollTop.current = scrollTop;
         }
-      });
+        lastScrollTopTime = time;
+      };
+      scrollRef.current.onmouseover = function (e) {
+        window.addEventListener("wheel", handler);
+      };
+      scrollRef.current.onmouseleave = function (e) {
+        window.removeEventListener("wheel", handler);
+      };
     }
   }, [scrollRef, scrollRef.current]);
   return (
@@ -215,7 +238,7 @@ const Shorts: FC = (): ReactElement => {
       <div className="box">
         <div className="box-inner">
           <div className="scroll-container" ref={scrollRef}>
-            <div className="scroll-inner">1111111</div>
+            <div className="scroll-inner"></div>
           </div>
           <div className="outer" ref={listRef}>
             <div className="inner">
@@ -230,6 +253,11 @@ const Shorts: FC = (): ReactElement => {
                         ref={index === 0 ? itemRef : null}
                       >
                         <VideoItem video={item} />
+                        <div className="g-video-container">
+                          {url && index === 0 && (
+                            <video ref={videoRef} src={url} autoPlay />
+                          )}
+                        </div>
                       </li>
                     );
                   })}

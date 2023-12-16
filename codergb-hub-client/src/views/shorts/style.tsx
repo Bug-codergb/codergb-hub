@@ -12,6 +12,21 @@ export const ShortsWrapper = styled.div`
         width: 0px;
       }
       scrollbar-width: none;
+
+      .g-video-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: ${500 / 40}rem;
+        height: 87vh;
+        z-index: 999;
+        video {
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0);
+          object-fit: contain;
+        }
+      }
     }
     .box-inner {
       position: relative;
@@ -19,17 +34,16 @@ export const ShortsWrapper = styled.div`
     .scroll-container {
       height: 87vh;
       width: ${500 / 40}rem;
-      background-color: pink;
+
       position: absolute;
-      z-index: 999;
-      left: 100%;
+      z-index: 99999999;
+      left: 0;
       top: 0;
       overflow-y: scroll;
+      opacity: 0;
       .scroll-inner {
         width: 100%;
         height: 130%;
-        background-color: skyblue;
-        background-image: url(${chat});
       }
     }
   }

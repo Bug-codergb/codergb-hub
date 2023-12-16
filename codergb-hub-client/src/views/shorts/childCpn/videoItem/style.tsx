@@ -4,7 +4,7 @@ export const VideoItemWrapper = styled.div`
   align-items: flex-end;
   .container {
     height: 87vh;
-    width: ${600 / 40}rem;
+    width: ${500 / 40}rem;
     background-color: #333;
     position: relative;
     img {
