@@ -29,13 +29,14 @@ export function loginAction(userName:string,password:string,navigate:NavigateFun
   return async(dispatch:any)=>{
     try{
       const data=await login<IResponseType<IUserMsg>>(userName,password);
-      if(data.status===200){
+      if (data.status === 200) {
+        localCache.setCache("userMsg",data.data);
+        localCache.setCache("loginType",1)
         await dispatch(changeUserMsg(data.data));
         await dispatch(changeUserDetailAction(data.data.userId));
         await dispatch(changeLoginType(1));
         await dispatch(changeChannelAction(data.data.userId))
-        localCache.setCache("userMsg",data.data);
-        localCache.setCache("loginType",1)
+        
         navigate("/Home",{
           replace:true,
         })
