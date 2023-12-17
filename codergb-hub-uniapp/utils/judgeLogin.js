@@ -9,6 +9,6 @@ export function judgeLogin(){
 	}else{
 		uni.navigateTo({
 			url:"/pages/index/index"
-		})
+		}) 
 	}
 }

@@ -21,3 +21,14 @@ export function getVideoDetail(id){
 		method:"post"
 	})
 }
+export function getSimilarVideo(
+  id,
+  offset,
+  limit
+) {
+  return gbRequest.request({
+    url: "/video/similar/" + id+`?offset=${offset}&limit=${limit}`,
+		method:"post",
+    
+  });
+}

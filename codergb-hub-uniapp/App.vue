@@ -14,4 +14,7 @@
 
 <style>
 	/*每个页面公共css */
+	.uni-collapse-item__title{
+		align-items: flex-start!important;
+	}
 </style>
