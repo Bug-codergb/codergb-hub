@@ -4,7 +4,7 @@ export function judgeLogin(){
 	const res = storage.getItem("user");
 	if(res){
 		uni.switchTab({
-			url:"/pages/home/Home",
+			url:"/pages/profile/Profile",
 		})
 	}else{
 		uni.navigateTo({
