@@ -1,13 +1,13 @@
 <template>
-	<div class="home-container">
+	<div class="home-container"> 
 		<scroll-view :scroll-y="true" height="100vh">
 			<ul class="video-list">
 				<li v-for="item in videoData.list" :key="item.id" class="item">
 					<image class="img-item" mode="widthFix" :src="item.picUrl" @click="videoRouter(item)"/>
 					<view class="name-container">
 						<view class="name">{{item.name}}</view>
-					</view>
-					<view class="creator">{{item.user.userName}}</view>
+					</view> 
+					<view class="creator">{{item.user.userName}} </view>
 				</li>
 			</ul>
 		</scroll-view>
@@ -26,7 +26,6 @@ getAllVideo(0,8).then((data)=>{
 	videoData.list = data.data.list;
 })	
 const videoRouter=(item)=>{
-	console.log(item);
 	uni.navigateTo({
 		url:`/pages/detail/videoDetail/VideoDetail?id=${item.id}`,
 	})

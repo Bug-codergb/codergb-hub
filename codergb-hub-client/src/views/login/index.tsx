@@ -17,8 +17,15 @@ const Login: FC = (): ReactElement => {
   }, []);
   return (
     <LoginWrappers>
-      <div className="codergb-hub-title">
-        <span className="label">coderhub</span>
+      <div className="login-bgc">
+        <div className="signup-space">
+          <div className="signup-stars"></div>
+          <div className="signup-stars"></div>
+          <div className="signup-stars"></div>
+          <div className="signup-stars"></div>
+          <div className="signup-stars"></div>
+          <div className="signup-stars"></div>
+        </div>
       </div>
       <div className="login-inner">
         <Form

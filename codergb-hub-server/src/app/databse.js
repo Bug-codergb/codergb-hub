@@ -21,4 +21,9 @@ connection.getConnection((err,conn)=>{
     console.log("数据库连接失败")
   }
 })
-module.exports=connection.promise();
+let c = connection.promise();
+let initSQL=` SET @@GLOBAL.sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION";`
+c.execute(initSQL);
+initSQL = `SET sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION";`;
+c.execute(initSQL)
+module.exports=c;

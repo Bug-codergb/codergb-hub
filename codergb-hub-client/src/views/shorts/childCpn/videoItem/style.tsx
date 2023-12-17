@@ -124,6 +124,7 @@ export const VideoItemWrapper = styled.div`
     background-color: #fff;
     z-index: 9;
     opacity: 0;
+
     &.show-comment {
       transform: rotateY(0);
       width: ${600 / 40}rem;

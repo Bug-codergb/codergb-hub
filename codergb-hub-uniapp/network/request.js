@@ -31,6 +31,17 @@ uni.addInterceptor("request",{
 			...args.header,
 			'Authorization':res.token
 		}
+	},
+	fail() {
+		console.log("失败")
+	},
+	complete(){
+		console.log("完成")  
+	}
+})
+uni.addInterceptor("response",{
+	invoke(args){
+		console.log(args)
 	}
 })
 

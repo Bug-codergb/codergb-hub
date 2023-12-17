@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
   FormEvent,
+  useRef,
 } from "react";
 import moment from "moment";
 import {
@@ -121,6 +122,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
   const thumbHandler = () => {
     getAllCommentHandle(id, 0, 10, alias);
   };
+
   return (
     <CommentWrapper>
       <div className={`publish-outer ${isFocus ? "publish-outer-start" : ""}`}>

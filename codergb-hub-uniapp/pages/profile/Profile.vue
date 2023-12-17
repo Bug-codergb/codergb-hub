@@ -15,6 +15,8 @@
 				<view>{{item.label}}</view>
 			</view>
 		</view>
+		<view @click="logoutHandler">退出登录</view>
+		<view @click="uploadHandler">上传视频</view>
 	</view>
 </template>
 
@@ -42,6 +44,21 @@
 			type:"hand-up"
 		},
 	])
+	const logoutHandler=()=>{
+		uni.navigateTo({   
+			url:"/pages/login/Login"  
+		}) 
+	}
+	const uploadHandler=()=>{
+		uni.chooseVideo({
+			success(e) {
+				console.log(e);
+			},
+			fail(e){
+				
+			}
+		})
+	}
 </script>
 <style scoped lang="less">
 	.profile-header{

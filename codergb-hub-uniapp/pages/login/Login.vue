@@ -15,7 +15,14 @@
 		</view>
 	</view>
 </template>
-
+<script>
+	import {judgeLogin} from "../../utils/judgeLogin.js"
+	export default{
+		onLoad() {
+			judgeLogin()
+		}
+	}
+</script>
 <script setup>
 import {reactive,computed,ref} from "vue";
 import {loginReq} from "../../network/login/index.js";
@@ -31,7 +38,7 @@ const loginHandler=()=>{
 		login.password.trim().length!==0
 	){
 		loginReq(login.account,login.password).then((data)=>{
-			if(data.status===200){
+			if(data.status===200){  
 				let storage = new LocalStorage(false);
 				storage.setItem("user",data.data)
 				uni.switchTab({

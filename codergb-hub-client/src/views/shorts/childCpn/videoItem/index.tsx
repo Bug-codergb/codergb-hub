@@ -5,6 +5,8 @@ import React, {
   forwardRef,
   Ref,
   useImperativeHandle,
+  useRef,
+  useEffect,
 } from "react";
 import { Dispatch } from "redux";
 import { useNavigate } from "react-router-dom";
@@ -108,6 +110,9 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>(
         });
       }
     };
+
+    const commentRef = useRef<HTMLDivElement>(null);
+
     return (
       <VideoItemWrapper>
         <div className="container">
@@ -154,6 +159,7 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>(
         </div>
         <div
           className={`comment-container ${isShowComment ? "show-comment" : ""}`}
+          ref={commentRef}
         >
           <div className="close-handler">
             <CloseOutlined

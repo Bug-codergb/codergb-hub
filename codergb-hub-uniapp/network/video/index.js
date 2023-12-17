@@ -15,3 +15,9 @@ export function getVideoURL(id){
 		methods:"get"
 	})
 }
+export function getVideoDetail(id){
+	return gbRequest.request({
+		url:"/video/detail/"+id,
+		method:"post"
+	})
+}
