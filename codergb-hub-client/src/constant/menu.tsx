@@ -17,6 +17,8 @@ import LaterShadowIcon from "../assets/html/later/laterShadowIcon";
 import ThumbIcon from "../assets/html/thumb/thumbIcon";
 import ThumbShadowIcon from "../assets/html/thumb/thumbShadowIcon";
 import MineVideoIcon from "../assets/html/mineVideo/mineVideoIcon";
+import VideoIcon from "../assets/html/video/videoIcon";
+import VideoShadowIcon from "../assets/html/video/videoShadowIcon";
 interface MainMenuType {
   name: string;
   path: string;
@@ -41,6 +43,12 @@ const mainMenu: MainMenuType[] = [
     path: "/home/shorts",
     icon: <ShortsIcon />,
     shadowIcon: <ShortsShadowIcon />,
+  },
+  {
+    name: "分类",
+    path: "/home/cate",
+    icon: <VideoIcon />,
+    shadowIcon: <VideoShadowIcon />,
   },
   {
     name: "订阅内容",

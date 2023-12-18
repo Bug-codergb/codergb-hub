@@ -35,7 +35,10 @@ const tableData = reactive({
     {
       prop: 'name',
       label: '名称',
-      'min-width': 150
+      'min-width': 150,
+      formatter: (scope: IPlaylist) => {
+        return <span class="text-mul-line">{scope.name}</span>;
+      }
     },
     {
       prop: 'isPublic',
@@ -85,24 +88,7 @@ const tableData = reactive({
         return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
-    {
-      prop: 'history',
-      label: '是否存储历史记录',
-      'min-width': 120,
-      formatter: (row: IPlaylist) => {
-        const { history } = row;
-        return history === 1 ? '是' : '否';
-      }
-    },
-    {
-      prop: 'isExplore',
-      label: '是否为探索模块',
-      'min-width': 120,
-      formatter: (row: IPlaylist) => {
-        const { isExplore } = row;
-        return isExplore === 1 ? '是' : '否';
-      }
-    },
+
     {
       label: '操作',
       'min-width': 200,

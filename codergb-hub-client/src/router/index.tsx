@@ -14,7 +14,7 @@ import UserPlaylist from "../views/user-playlist";
 
 const LoginRoute = lazy(() => import("../views/login/index"));
 const HomeRoute = lazy(() => import("../views/home/index"));
-
+const Cate = lazy(() => import("../views/all/index"));
 //home页主要内容
 const ChannelRoute = lazy(() => import("../views/profile/pages/content/index"));
 const ExploreRoute = lazy(() => import("../views/explore/index"));
@@ -104,6 +104,14 @@ const routes: RouteObject[] = [
         element: (
           <Suspense>
             <ShortsRoute />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/home/cate",
+        element: (
+          <Suspense>
+            <Cate />
           </Suspense>
         ),
       },

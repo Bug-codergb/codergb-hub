@@ -3,7 +3,8 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   channelMomentService,
-  momentDetailService
+  momentDetailService,
+  getAllMomentService
 }=require("../service/moment.service");
 class MomentController{
   async create(ctx,next){
@@ -43,9 +44,22 @@ class MomentController{
     try{
       const {id} = ctx.params;
       const result = await momentDetailService(ctx,id);
-      console.log(result);
       if(result){
         setResponse(ctx,"success",200,result[0]);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async getAllMoment(ctx,next){
+    try{
+      const { offset="0",limit="12" } = ctx.query;
+      const result = await getAllMomentService(ctx,offset,limit);
+
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }else{
+        setResponse(ctx,"error",500,{});
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

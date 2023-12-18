@@ -7,7 +7,11 @@ import {
   VIDEO_DICT,
   VIDEO_DM,
   VIDEO_PATH,
-  VIDEO_SOURCE
+  VIDEO_SOURCE,
+  MOMENT_PATH,
+  SETTING_PATH,
+  OVERVIEW_PATH,
+  MESSAGE_PATH
 } from '@/router/constant';
 
 const menu = [
@@ -68,6 +72,18 @@ const menu = [
     ]
   },
   {
+    index: '5',
+    name: '动态管理',
+    icon: 'Postcard',
+    children: [
+      {
+        index: '5-1',
+        name: '动态信息',
+        path: MOMENT_PATH
+      }
+    ]
+  },
+  {
     index: '2',
     name: '用户管理',
     icon: 'user',
@@ -81,6 +97,42 @@ const menu = [
         index: '2-2',
         name: '频道',
         path: CHANNEL_PATH
+      }
+    ]
+  },
+  {
+    index: '8',
+    name: '消息通知',
+    icon: 'Message',
+    children: [
+      {
+        index: '8-1',
+        name: '消息通知',
+        path: MESSAGE_PATH
+      }
+    ]
+  },
+  {
+    index: '7',
+    name: '系统看板',
+    icon: 'DataAnalysis',
+    children: [
+      {
+        index: '7-1',
+        name: '看板',
+        path: OVERVIEW_PATH
+      }
+    ]
+  },
+  {
+    index: '6',
+    name: '系统设置',
+    icon: 'Setting',
+    children: [
+      {
+        index: '6-1',
+        name: '设置',
+        path: SETTING_PATH
       }
     ]
   }

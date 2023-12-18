@@ -11,6 +11,10 @@ const USER_PATH = HOME_PATH + '/user';
 const CHANNEL_PATH = HOME_PATH + '/channel';
 const PLAYLIST_PATH = HOME_PATH + '/playlist';
 const COMMENT_PATH = HOME_PATH + '/comment';
+const MOMENT_PATH = HOME_PATH + '/moment';
+const SETTING_PATH = HOME_PATH + '/setting';
+const OVERVIEW_PATH = HOME_PATH + '/overview';
+const MESSAGE_PATH = HOME_PATH + '/message';
 ///detail
 const COLLECTION_DETAIL_PATH = HOME_PATH + '/collection-detail';
 const CATE_VIDEO_DETAIL_PATH = HOME_PATH + '/video-cate-detail';
@@ -27,5 +31,9 @@ export {
   VIDEO_SOURCE,
   COMMENT_PATH,
   CATE_VIDEO_DETAIL_PATH,
-  CHANNEL_PATH
+  CHANNEL_PATH,
+  MOMENT_PATH,
+  SETTING_PATH,
+  OVERVIEW_PATH,
+  MESSAGE_PATH
 };

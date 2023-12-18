@@ -73,8 +73,47 @@ class MomentService{
        LEFT JOIN file as f on f.id = vf.fileId
        where vf.mark="cover" and m.id=?`;
       const result = await connection.execute(sql,[id]);
-      console.log(result);
+
       return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async getAllMomentService(ctx,offset,limit){
+    try{
+      const sql=`
+                  select m.id,m.title,m.content,m.createTime,m.updateTime,m.cId as cId,
+                   JSON_OBJECT(
+                    'id',v.id,'name',v.name,'playCount',v.playCount,v.description,v.dt
+                   ) AS video,
+                JSON_OBJECT(
+                 'userId',m.userId,'userName',user.userName,'avatarUrl',user.avatarUrl
+                ) AS user,
+                JSON_OBJECT("id",m.cId,'name',c.name) as channel
+            from moment as m
+            left join video v on m.vid = v.id
+            left join video_file as vf on vf.videoId = v.id
+            left join file as f on f.id = vf.fileId
+            left join user on user.userId =m.userId
+            left join channel c on m.cId = c.id
+            where vf.mark="cover"
+            limit ?,?`;
+      const count = `
+                select count(distinct (m.id)) as count
+          from moment as m
+          left join video v on m.vid = v.id
+          left join video_file as vf on vf.videoId = v.id
+          left join file as f on f.id = vf.fileId
+          left join user on user.userId =m.userId
+          left join channel c on m.cId = c.id  
+          where vf.mark="cover"`;
+      const result = await connection.execute(sql,[offset,limit]);
+
+      const countRes = await connection.execute(count);
+      return {
+        list:result[0],
+        count:countRes[0][0]?countRes[0][0].count:0
+      }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }
