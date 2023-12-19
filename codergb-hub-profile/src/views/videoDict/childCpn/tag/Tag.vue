@@ -8,6 +8,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { deleteCate, getAllCate } from '@/network/category';
@@ -18,7 +19,9 @@ import GbTable from '@/components/common/gbTable/GbTable.vue';
 import CreateTag from './childCpn/CreateTag';
 import { ElMessage } from 'element-plus';
 import { deleteTag } from '@/network/tag';
+import { TAG_DETAIL_PATH } from '@/router/constant';
 
+const router = useRouter();
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createTagRef = ref<InstanceType<typeof CreateTag>>();
 const tableData = reactive({
@@ -65,7 +68,9 @@ const tableData = reactive({
           text: '查看',
           type: 'primary',
           onClick: (row: ICate, index: number) => {
-            console.log(row);
+            router.push({
+              path: TAG_DETAIL_PATH + '/' + row.id
+            });
           }
         },
         {

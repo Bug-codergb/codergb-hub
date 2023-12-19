@@ -3,7 +3,8 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   getAllTagService,
-  deleteTagService
+  deleteTagService,
+  getTagVideoService
 } = require("../service/tag.service");
 class TagController{
   async create(ctx,next){
@@ -39,6 +40,20 @@ class TagController{
       console.log(id);
       const result = await deleteTagService(ctx,id);
       setResponse(ctx,"success",200,result)
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getTagVideo(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const { offset="0",limit="30" } = ctx.query;
+      const result = await getTagVideoService(ctx,id,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result)
+      }else{
+        setResponse(ctx,'error',500,{})
+      }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }

@@ -18,6 +18,8 @@ const MESSAGE_PATH = HOME_PATH + '/message';
 ///detail
 const COLLECTION_DETAIL_PATH = HOME_PATH + '/collection-detail';
 const CATE_VIDEO_DETAIL_PATH = HOME_PATH + '/video-cate-detail';
+const PLAYLIST_DETAIL_PATH = HOME_PATH + '/playlist-detail';
+const TAG_DETAIL_PATH = HOME_PATH + '/tag-detail';
 export {
   HOME_PATH,
   LOGIN_PATH,
@@ -35,5 +37,7 @@ export {
   MOMENT_PATH,
   SETTING_PATH,
   OVERVIEW_PATH,
-  MESSAGE_PATH
+  MESSAGE_PATH,
+  PLAYLIST_DETAIL_PATH,
+  TAG_DETAIL_PATH
 };

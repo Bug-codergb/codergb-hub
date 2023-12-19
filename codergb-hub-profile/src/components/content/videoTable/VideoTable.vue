@@ -11,6 +11,7 @@
       ref="gbTable"
       :isOperate="isOperate"
       @selectionChange="selectionChange"
+      v-bind="$attrs"
     >
       <template v-slot:end>
         <slot name="video-end"></slot>

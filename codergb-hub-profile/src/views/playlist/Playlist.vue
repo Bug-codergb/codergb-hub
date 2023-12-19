@@ -8,6 +8,7 @@
 
 <script lang="tsx" setup>
 import { reactive, ref, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
@@ -15,7 +16,8 @@ import { IPlaylist } from '../../types/playlist';
 import { IUserMsg } from '@/types/user/IUserMsg';
 import CreatePlaylist from './childCpn/createPlaylist/CreatePlaylist.vue';
 import { View, Hide } from '@element-plus/icons-vue';
-
+import { PLAYLIST_DETAIL_PATH } from '@/router/constant';
+const router = useRouter();
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createPlaylist = ref<InstanceType<typeof CreatePlaylist>>();
 const keyIndex = ref(0);
@@ -99,6 +101,9 @@ const tableData = reactive({
           type: 'primary',
           onClick: (row: IPlaylist, index: number) => {
             console.log(row);
+            router.push({
+              path: PLAYLIST_DETAIL_PATH + '/' + row.id
+            });
           }
         },
         {

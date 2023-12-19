@@ -22,3 +22,12 @@ export function createTag<T = IResponseType<any>>(name: string) {
     }
   });
 }
+export function getTagVideo<T = IResponseType<any>>(id: string, offset: number, limit: number) {
+  return gbRequest.post<T>({
+    url: '/tag/video/' + id,
+    params: {
+      offset,
+      limit
+    }
+  });
+}

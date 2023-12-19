@@ -8,6 +8,7 @@
       :height="tableData.height"
       @select="selectionChange"
       @select-all="selectionChange"
+      v-bind="$attrs"
     >
       <template v-for="item in tableData.columns" :key="item.prop">
         <template v-if="!item.btns">

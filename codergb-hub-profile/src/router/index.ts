@@ -116,7 +116,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/message/Message.vue')
       },
       detailRoutes.collectionRoute,
-      detailRoutes.cateVideoRoute
+      detailRoutes.cateVideoRoute,
+      detailRoutes.playlistRoute,
+      detailRoutes.tagRoute
     ]
   }
 ];
