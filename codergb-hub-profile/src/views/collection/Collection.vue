@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { reactive, ref } from 'vue';
 import moment from 'moment';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
@@ -41,12 +41,20 @@ const tableData = reactive({
     {
       prop: 'id',
       label: '分类编号',
-      'min-width': 180
+      'min-width': 140
     },
     {
       prop: 'name',
       label: '集合名称',
       'min-width': 180
+    },
+    {
+      prop: 'description',
+      label: '简介',
+      'min-width': 180,
+      formatter: (scope: ICollection) => {
+        return <span class="text-mul-line">{scope.description}</span>;
+      }
     },
     {
       prop: 'user',
@@ -62,7 +70,7 @@ const tableData = reactive({
       label: '创建时间',
       'min-width': 160,
       formatter: (row: ICollection) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
@@ -70,12 +78,13 @@ const tableData = reactive({
       label: '更新时间',
       'min-width': 160,
       formatter: (row: ICollection) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
       label: '操作',
       'min-width': 230,
+      fixed: 'right',
       btns: [
         {
           text: '查看',
@@ -96,7 +105,11 @@ const tableData = reactive({
         {
           text: '编辑',
           type: 'primary',
-          onClick: (row: ICollection, index: number) => {}
+          onClick: (row: ICollection, index: number) => {
+            if (createColRef.value) {
+              createColRef.value.showDrawer(row);
+            }
+          }
         },
         {
           text: '删除',

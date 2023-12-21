@@ -20,14 +20,20 @@
             <el-col :span="12">
               <span class="key">创建时间</span>
               <span class="value">{{
-                moment(colDetail.detail.createTime).format('yyyy-MM-DD HH:mm:ss')
+                moment(colDetail.detail.createTime).format('yyyy-MM-DD HH:mm')
               }}</span>
             </el-col>
             <el-col :span="12">
               <span class="key">更新时间</span>
               <span class="value">{{
-                moment(colDetail.detail.updateTime).format('yyyy-MM-DD HH:mm:ss')
+                moment(colDetail.detail.updateTime).format('yyyy-MM-DD HH:mm')
               }}</span>
+            </el-col>
+          </el-row>
+          <el-row class="item">
+            <el-col :span="24">
+              <span class="key">简介:</span>
+              <span class="value">{{ colDetail.detail.description }}</span>
             </el-col>
           </el-row>
         </el-col>
@@ -36,7 +42,7 @@
     <div class="detail-body">
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
         <el-tab-pane label="集合视频" name="first">
-          <VideoTable :key="keyIndex" :url="url" :isOperate="false">
+          <VideoTable :key="keyIndex" :url="url" :isOperate="false" :is-show-create="false">
             <template v-slot:video-end>
               <el-table-column label="操作" fixed="right">
                 <template #default="scope">

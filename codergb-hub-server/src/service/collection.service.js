@@ -11,6 +11,15 @@ class CollectionService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async updateColService(ctx,id,name,cover,userId,description){
+    try{
+      const sql=`update collection set name =?,cover=?,userId=?,description=? where id=?`;
+      const result = await connection.execute(sql,[name,cover,userId,description,id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
   async addVideoService(ctx,vId,cId){
     try{
       const delSQL=`delete from collection_video where cId=?`;
@@ -48,7 +57,7 @@ class CollectionService{
   async allCollectionService(ctx,offset,limit,keyword){
     try{
       const sql=`
-      select c.id,c.name,c.createTime,c.updateTime,f.picUrl,
+      select c.id,c.name,c.createTime,c.updateTime,f.picUrl,c.description,c.cover as imgId,
 			 JSON_OBJECT('userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
       from collection as c
       LEFT JOIN user as u on u.userId = c.userId
@@ -69,7 +78,7 @@ class CollectionService{
   async getColDetailService(ctx,id){
     try{
       const sql=`
-      select c.id,c.name,c.createTime,c.updateTime,f.picUrl,
+      select c.id,c.name,c.createTime,c.updateTime,f.picUrl,c.description,
 			 JSON_OBJECT('userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
        from collection as c
        LEFT JOIN user as u on u.userId = c.userId

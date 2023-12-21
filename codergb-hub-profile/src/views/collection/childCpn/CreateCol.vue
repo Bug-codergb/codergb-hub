@@ -13,20 +13,32 @@ import Create from '@/components/content/create/Create.vue';
 import { ICate } from '@/types/category/ICate';
 import { createPlaylist } from '@/network/playlist';
 import { ElMessage } from 'element-plus';
-import { createCol } from '@/network/collection';
+import { createCol, updateCol } from '@/network/collection';
 import useLoginStore from '@/views/login/store/index';
+import { ICollection } from '@/types/collection/ICollection';
 const userMsg = useLoginStore();
 const emit = defineEmits(['refresh']);
 const drawer = ref(false);
 const title = ref('新增集合');
 const create = ref<InstanceType<typeof Create>>();
-const showDrawer = (data: ICate | null) => {
+
+const isUpdate = ref(false);
+const showDrawer = (data: ICollection | null) => {
   drawer.value = true;
   if (!data) {
+    isUpdate.value = false;
     formData.data.name = '';
     formData.data.cover = '';
     formData.data.desc = '';
+  } else {
+    formData.data.name = data.name;
+    formData.data.desc = data.description;
+    isUpdate.value = true;
+    formData.data.imgURL = data.picUrl;
+    formData.data.cover = data.imgId ?? '';
+    formData.data.id = data.id;
   }
+  console.log(data);
 };
 defineExpose({
   showDrawer
@@ -35,7 +47,10 @@ const formData = reactive({
   data: {
     name: '',
     cover: '',
-    desc: ''
+    desc: '',
+    imgURL: '',
+    imgId: '',
+    id: ''
   }
 });
 const tableConstructor = reactive([
@@ -92,18 +107,26 @@ const confirmHandle = () => {
   if (create.value && create.value.ruleFormRef) {
     create.value.ruleFormRef.validate(async (e: boolean) => {
       if (e) {
-        const result = await createCol(
-          formData.data.name,
-          formData.data.cover,
-          userMsg.userMsg.userId,
-          formData.data.desc
-        );
+        const result = isUpdate.value
+          ? await updateCol(
+              formData.data.id,
+              formData.data.name,
+              formData.data.cover,
+              userMsg.userMsg.userId,
+              formData.data.desc
+            )
+          : await createCol(
+              formData.data.name,
+              formData.data.cover,
+              userMsg.userMsg.userId,
+              formData.data.desc
+            );
         if (result.status === 200) {
           drawer.value = false;
           emit('refresh');
           ElMessage({
             type: 'success',
-            message: '集合创建成功'
+            message: `集合${isUpdate.value ? '更新' : '创建'}成功`
           });
         }
       }

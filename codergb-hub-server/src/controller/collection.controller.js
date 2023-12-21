@@ -7,7 +7,8 @@ const {
   getColDetailService,
   delColVideoService,
   getUserColService,
-  deleteColService
+  deleteColService,
+  updateColService
 } = require("../service/collection.service");
 const {
   getColVideoCountService
@@ -21,6 +22,23 @@ class CollectionController{
           !isEmpty(ctx,userId,"用户ID不能为空") &&
       !isEmpty(ctx,description,'简介不能为空')){
         const result = await createService(ctx,name,cover,userId,description);
+        if(result){
+          setResponse(ctx,"success",200,result);
+        }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async updateCol(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const { name,cover,userId,description } = ctx.request.body;
+      if(!isEmpty(ctx,name,"名称不能为空") &&
+        !isEmpty(ctx,cover,"封面不能为空") &&
+        !isEmpty(ctx,userId,"用户ID不能为空") &&
+        !isEmpty(ctx,description,'简介不能为空')){
+        const result = await updateColService(ctx,id,name,cover,userId,description);
         if(result){
           setResponse(ctx,"success",200,result);
         }

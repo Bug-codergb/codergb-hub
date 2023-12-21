@@ -10,9 +10,11 @@ const {
   getColDetail,
   delColVideo,
   getUserCol,
-  deleteCol
+  deleteCol,
+  updateCol
 } = require("../controller/collection.controller");
 collectionRouter.post("/",authVerify,create);
+collectionRouter.post("/update/:id",authVerify,updateCol);
 collectionRouter.post("/video",authVerify,addVideo);//将视频添加至集合
 collectionRouter.get("/all",authVerify,allCollection);
 collectionRouter.post("/detail/:id",authVerify,getColDetail);//获取集合详情

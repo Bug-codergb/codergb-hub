@@ -30,6 +30,23 @@ export function createCol<T = IResponseType<any>>(
     }
   });
 }
+export function updateCol<T = IResponseType<any>>(
+  id: string,
+  name: string,
+  cover: string,
+  userId: string,
+  desc: string
+) {
+  return gbRequest.post<T>({
+    url: '/collection/update/' + id,
+    data: {
+      name,
+      cover,
+      userId,
+      description: desc
+    }
+  });
+}
 export function addVideoToCol<T = IResponseType<any>>(vId: IVCol[], cId: string) {
   return gbRequest.post<T>({
     url: '/collection/video',
