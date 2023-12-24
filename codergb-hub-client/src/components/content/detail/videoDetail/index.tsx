@@ -9,9 +9,15 @@ import React, {
   SyntheticEvent,
   createRef,
 } from "react";
+import {
+  PauseCircleOutlined,
+  PlayCircleOutlined,
+  ExpandOutlined,
+  CompressOutlined,
+} from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
-import { Layout } from "antd";
+import { Layout, Slider } from "antd";
 import {
   VideoDetailWrapper,
   CenterContent,
@@ -39,6 +45,7 @@ import Dm from "./childCpn/dm";
 import { IDm } from "../../../../types/dm/IDm";
 import { getVideoDm } from "../../../../network/dm";
 import { getRandom, getRandomStr } from "../../../../utils/getRandom";
+import { getDurationByTimestamp } from "../../../../utils/time";
 import Similar from "./childCpn/similar";
 import HeaderTop from "../../../header";
 import CollectionVideo from "./childCpn/collectionVideo";
@@ -80,8 +87,15 @@ const VideoDetail: FC = (): ReactElement => {
   }, [type, cId]);
 
   useEffect(() => {
+    if (screenRef.current) {
+      screenRef.current.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        return false;
+      });
+    }
+  }, [screenRef.current]);
+  useEffect(() => {
     if (vioId) {
-      console.log(vioId, "----------------");
       recordVideo(vioId);
     }
   }, [vioId]);
@@ -153,7 +167,15 @@ const VideoDetail: FC = (): ReactElement => {
       }
     });
   };
+
+  const [timestamp, setTimeStamp] = useState<number>(0);
+  const isController = useRef<boolean>(false);
   const videoPlayHandle = (e: SyntheticEvent<HTMLVideoElement>) => {
+    if (videoDetail && !isController.current) {
+      const precent =
+        ((e.currentTarget.currentTime * 1000) / Number(videoDetail.dt)) * 100;
+      setTimeStamp(precent);
+    }
     if (videoDm) {
       setCurrentTime(
         moment(e.currentTarget.currentTime * 1000).format("mm:ss")
@@ -212,6 +234,7 @@ const VideoDetail: FC = (): ReactElement => {
   };
   const playVideo = (id: string) => {
     setVioId(id);
+    setIsPlay(true);
   };
   const changeVideoType = (id: string) => {
     setVideoSourceType("source");
@@ -227,6 +250,87 @@ const VideoDetail: FC = (): ReactElement => {
       });
     }
   };
+
+  const dmInner = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (dmInner.current) {
+      dmInner.current.addEventListener("fullscreenchange", (e) => {
+        if (document.fullscreenElement) {
+          if (screenRef.current) {
+            screenRef.current.style.width = "100vw";
+            screenRef.current.style.height = "100vh";
+          }
+          //进入全屏
+        } else {
+          //退出全屏幕
+          if (screenRef.current) {
+            screenRef.current.style.width = `${1190 / 40}rem`;
+            screenRef.current.style.height = `${640 / 40}rem`;
+          }
+        }
+      });
+    }
+  }, [dmInner, dmInner.current]);
+
+  const [isFull, setIsFull] = useState<boolean>(false);
+  const fullHandler = () => {
+    if (dmInner.current) {
+      if (isFull) {
+        document.exitFullscreen();
+        setIsFull(false);
+      } else {
+        dmInner.current?.requestFullscreen();
+        setIsFull(true);
+      }
+    }
+  };
+
+  const [isPlay, setIsPlay] = useState<boolean>(true);
+  const playHandler = () => {
+    setIsPlay(!isPlay);
+    if (videoRef.current) {
+      if (isPlay) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+    }
+  };
+  const onAfterChange = (e: number) => {
+    if (videoDetail && videoRef.current) {
+      const precent = e / 100;
+      const current = (Number(videoDetail.dt) * precent) / 1000;
+      console.log(current);
+      videoRef.current.currentTime = current;
+    }
+    isController.current = false;
+  };
+  const silderChange = (e: number) => {
+    setTimeStamp(e);
+    if (!isController.current) isController.current = true;
+  };
+  const endHandler = () => {
+    setIsPlay(false);
+  };
+
+  useEffect(() => {
+    document.onkeydown = (e) => {
+      e.preventDefault();
+    };
+    document.onkeyup = (e) => {
+      if (e.code === "space" || e.code === "Space") {
+        e.preventDefault();
+        playHandler();
+      } else if (e.code.toLocaleLowerCase() === "keyf") {
+        dmInner.current?.requestFullscreen();
+        setIsFull(true);
+      } else if (e.code.toLocaleLowerCase() === "escape") {
+        document.exitFullscreen();
+        setIsFull(false);
+      }
+    };
+  }, [videoRef.current, isPlay]);
+
   return (
     <VideoDetailWrapper>
       <Layout>
@@ -236,7 +340,7 @@ const VideoDetail: FC = (): ReactElement => {
         <Content>
           <CenterContent>
             <LeftContentWrapper videoRef={videoRef}>
-              <div className="video-dm-container">
+              <div className="video-dm-container" ref={dmInner}>
                 <div className="inner">
                   <div className="start">
                     <ul ref={contentRef}>
@@ -257,15 +361,61 @@ const VideoDetail: FC = (): ReactElement => {
                     </ul>
                   </div>
                   <div className="video-container" ref={screenRef}>
-                    {vioURL && (
+                    {vioURL && videoDetail && (
                       <video
                         ref={videoRef}
-                        controls={true}
+                        poster={videoDetail.picUrl}
+                        controls={false}
                         muted={false}
                         onCanPlay={canPlayHandler}
                         onTimeUpdate={(e) => videoPlayHandle(e)}
                         autoPlay={true}
+                        onEnded={() => endHandler()}
                       />
+                    )}
+                    {videoDetail && (
+                      <div className="controller-container">
+                        <Slider
+                          defaultValue={0}
+                          value={timestamp}
+                          step={0.1}
+                          tooltip={{ open: false }}
+                          onChange={(e) => silderChange(e)}
+                          onAfterChange={(e) => onAfterChange(e)}
+                        />
+                        <div className="container">
+                          <div className="left">
+                            <div
+                              className="play-pause"
+                              onClick={() => playHandler()}
+                            >
+                              {!isPlay && (
+                                <PlayCircleOutlined
+                                  style={{ color: "#ffffff" }}
+                                />
+                              )}
+                              {isPlay && (
+                                <PauseCircleOutlined
+                                  style={{ color: "#ffffff" }}
+                                />
+                              )}
+                            </div>
+                            <div className="dt">
+                              {currentTime} /{" "}
+                              {getDurationByTimestamp(videoDetail.dt)}
+                            </div>
+                          </div>
+                          <div className="right">
+                            <div className="volume">
+                              <Slider defaultValue={30} />
+                            </div>
+                            <div className="full" onClick={() => fullHandler()}>
+                              {!isFull && <ExpandOutlined />}
+                              {isFull && <CompressOutlined />}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     )}
                   </div>
                   <div className="end"> </div>

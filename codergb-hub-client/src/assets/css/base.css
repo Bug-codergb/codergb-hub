@@ -123,3 +123,18 @@ input,textarea,button{
 #root{
   height: 100%;
 }
+.ant-slider-track {
+  background-color: #ea3323;
+}
+.ant-slider:hover .ant-slider-track {
+  background-color: #ea3323;
+}
+.ant-slider-handle {
+  border: solid 2px #ea3323;
+}
+.ant-slider:hover .ant-slider-handle:not(.ant-tooltip-open) {
+  border-color: #ea3323;
+}
+.ant-slider{
+  margin: 5px 10px;
+}
