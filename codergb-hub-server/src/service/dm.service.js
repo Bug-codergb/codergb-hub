@@ -21,7 +21,46 @@ class DmService{
       const result = await connection.execute(sql,[vId]);
       return result[0];
     }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async allDmService(ctx,offset,limit){
+    try{
+      const sql=`
+            select d.id,d.text,d.time,
+             JSON_OBJECT('id',d.vId,'name',v.name) as video,
+             JSON_OBJECT('userId',d.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user,
+             d.createTime,d.updateTime
+      from dm as d
+      left join video v on d.vId = v.id 
+      left join user u on d.userId = u.userId
+      order by v.id,d.createTime asc
+      limit ?,?`;
 
+      const countSQL=`
+              select COUNT(d.id) as count
+        from dm as d
+        left join video v on d.vId = v.id
+        left join user u on d.userId = u.userId
+        order by v.id,d.createTime asc`;
+
+      const res = await connection.execute(sql,[offset,limit]);
+      const count = await connection.execute(countSQL);
+      return {
+        list:res[0],
+        count:count[0][0].count
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteDmService(ctx,id){
+    try{
+      const sql=`delete from dm where id=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
     }
   }
 }

@@ -3,7 +3,9 @@ const { addTime } = require("../utils/addTime")
 const {setResponse} = require("../utils/setResponse");
 const {
   createService,
-  videoDmService
+  videoDmService,
+  allDmService,
+  deleteDmService
 } = require("../service/dm.service");
 class DmController{
   async create(ctx,next){
@@ -28,6 +30,26 @@ class DmController{
       const result = await videoDmService(ctx,vId);
       if(result){
         setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async allDm(ctx,next){
+    try{
+      const { offset="0",limit="30" } = ctx.query;
+      const result = await allDmService(ctx,offset,limit);
+      setResponse(ctx,'success',200,result);
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteDm(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await deleteDmService(ctx,id);
+      if(result){
+        setResponse(ctx,'success',200,{});
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

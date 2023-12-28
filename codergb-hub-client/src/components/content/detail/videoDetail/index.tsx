@@ -315,7 +315,13 @@ const VideoDetail: FC = (): ReactElement => {
 
   useEffect(() => {
     document.onkeydown = (e) => {
-      e.preventDefault();
+      if (
+        e.code.toLocaleLowerCase() === "space" ||
+        e.code.toLocaleLowerCase() === "keyf" ||
+        e.code.toLocaleUpperCase() === "escape"
+      ) {
+        e.preventDefault();
+      }
     };
     document.onkeyup = (e) => {
       if (e.code === "space" || e.code === "Space") {
