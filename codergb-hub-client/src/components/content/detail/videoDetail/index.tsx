@@ -8,6 +8,7 @@ import React, {
   MutableRefObject,
   SyntheticEvent,
   createRef,
+  useCallback,
 } from "react";
 import {
   PauseCircleOutlined,
@@ -259,6 +260,7 @@ const VideoDetail: FC = (): ReactElement => {
           if (screenRef.current) {
             screenRef.current.style.width = "100vw";
             screenRef.current.style.height = "100vh";
+            setIsFull(true);
           }
           //进入全屏
         } else {
@@ -266,6 +268,7 @@ const VideoDetail: FC = (): ReactElement => {
           if (screenRef.current) {
             screenRef.current.style.width = `${1190 / 40}rem`;
             screenRef.current.style.height = `${640 / 40}rem`;
+            setIsFull(false);
           }
         }
       });
@@ -277,10 +280,8 @@ const VideoDetail: FC = (): ReactElement => {
     if (dmInner.current) {
       if (isFull) {
         document.exitFullscreen();
-        setIsFull(false);
       } else {
         dmInner.current?.requestFullscreen();
-        setIsFull(true);
       }
     }
   };
@@ -415,7 +416,7 @@ const VideoDetail: FC = (): ReactElement => {
                             <div className="volume">
                               <Slider defaultValue={30} />
                             </div>
-                            <div className="full" onClick={() => fullHandler()}>
+                            <div className="full" onClick={fullHandler}>
                               {!isFull && <ExpandOutlined />}
                               {isFull && <CompressOutlined />}
                             </div>
