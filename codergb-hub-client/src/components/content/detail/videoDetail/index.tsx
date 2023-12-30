@@ -361,6 +361,7 @@ const VideoDetail: FC = (): ReactElement => {
                         onTimeUpdate={(e) => videoPlayHandle(e)}
                         autoPlay={true}
                         onEnded={() => endHandler()}
+                        onClick={() => playHandler()}
                       />
                     )}
                     {videoDetail && (
