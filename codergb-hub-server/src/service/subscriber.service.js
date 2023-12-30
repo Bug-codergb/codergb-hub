@@ -90,6 +90,29 @@ class SubscriberService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getFansService(ctx,userId,offset,limit){
+    try{
+      const sql=`
+              select sub.userId as userId, u.userName,u.avatarUrl
+              from subscriber as sub
+              left join user as u on u.userId = sub.userId
+              where upId=?
+              limit ?,?`;
+      const result = await connection.execute(sql,[userId,offset,limit]);
+      const countSQL = `
+            select count(sub.userId) as count
+            from subscriber as sub
+            left join user as u on u.userId = sub.userId
+            where upId=?`;
+      const count = await connection.execute(countSQL,[userId]);
+      return {
+        list:result[0],
+        count:count[0][0].count
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
+  }
 }
 
 module.exports = new SubscriberService();

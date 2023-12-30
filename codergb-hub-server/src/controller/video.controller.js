@@ -26,7 +26,8 @@ const {
   addPlayCountService
 } = require("../service/video.service")
 const {createUploadPath} = require("../middleware/file.middleware");
-
+const { getFansService } = require("../service/subscriber.service")
+const { createService:insertNotify } = require("../service/notify.service")
 class VideoController {
   async uploadVideo(ctx, next) {
     try {
@@ -113,6 +114,13 @@ class VideoController {
         !isEmpty(ctx, cateId, "视频分类不能为空")) {
         const result = await createVideoService(ctx, userId, videoId, title, desc, imgId, playlistId, tagIds, cateId, dt);
         if (result) {
+          const fans = await getFansService(ctx, userId,'0','1000000');
+          console.log(fans);
+          if(fans && fans.list && fans.list.length!==0){
+            for(let item of fans.list){
+              await insertNotify(ctx,"发布了",item.userId,userId,"upload",videoId);
+            }
+          }
           setResponse(ctx, "success", 200, {});
         }
       }

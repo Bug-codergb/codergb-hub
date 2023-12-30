@@ -138,3 +138,6 @@ input,textarea,button{
 .ant-slider{
   margin: 5px 10px;
 }
+.ant-slider-handle:focus {
+  border-color: #ea3323;
+}

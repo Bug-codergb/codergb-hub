@@ -5,8 +5,13 @@ const {
   getSubService,
   cancelService,
   userSubService,
-  getSubCountService
-} = require("../service/subscriber.service")
+  getSubCountService,
+  getFansService
+} = require("../service/subscriber.service");
+const { deleteNotifyByMsg } = require("../service/notify.service")
+const {
+  createService:insertNotify
+} = require("../service/notify.service")
 class SubscriberController{
   async create(ctx,next){
     try{
@@ -17,6 +22,7 @@ class SubscriberController{
         if(sub && sub.length===0){
           const result = await createService(ctx,upId,userId);
           if(result){
+            await insertNotify(ctx,"关注了",upId,userId,'sub',null);
             setResponse(ctx,"success",200,{})
           }
         }else{
@@ -41,6 +47,7 @@ class SubscriberController{
             const result = await cancelService(ctx,userId,upId);
             if(result){
               setResponse(ctx,"success",200,{})
+              deleteNotifyByMsg(ctx,userId,upId,"sub",'userId')
             }
           }else{
             setResponse(ctx,"您还未订阅",400,{})
@@ -73,6 +80,18 @@ class SubscriberController{
       }
     }catch (e){
       setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getFans(ctx,next){
+    try{
+      const {userId} = ctx.params;
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await getFansService(ctx,userId,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+
     }
   }
 }

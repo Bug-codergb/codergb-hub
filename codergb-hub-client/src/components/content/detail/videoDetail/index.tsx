@@ -321,6 +321,12 @@ const VideoDetail: FC = (): ReactElement => {
     };
   }, [videoRef.current, isPlay]);
 
+  const volumeChangeHandler = (e: number) => {
+    console.log(e);
+    if (videoRef.current) {
+      videoRef.current.volume = e / 100;
+    }
+  };
   return (
     <VideoDetailWrapper>
       <Layout>
@@ -398,7 +404,10 @@ const VideoDetail: FC = (): ReactElement => {
                           </div>
                           <div className="right">
                             <div className="volume">
-                              <Slider defaultValue={30} />
+                              <Slider
+                                defaultValue={60}
+                                onChange={(e) => volumeChangeHandler(e)}
+                              />
                             </div>
                             <div className="full" onClick={fullHandler}>
                               {!isFull && <ExpandOutlined />}
