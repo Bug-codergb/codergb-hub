@@ -50,6 +50,7 @@ import { getDurationByTimestamp } from "../../../../utils/time";
 import Similar from "./childCpn/similar";
 import HeaderTop from "../../../header";
 import CollectionVideo from "./childCpn/collectionVideo";
+import { generateAnimation } from "../../../../utils/dom";
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
@@ -149,7 +150,7 @@ const VideoDetail: FC = (): ReactElement => {
     }
   }, [videoRef.current, vioURL]);
   useEffect(() => {
-    document.title = videoDetail?.name ?? "youtube";
+    document.title = videoDetail?.name ?? "codergbhub";
   }, [videoDetail]);
   const pubSuccess = () => {
     getVideoDm<IResponseType<IDm[]>>(vioId).then((data) => {
@@ -171,6 +172,8 @@ const VideoDetail: FC = (): ReactElement => {
 
   const [timestamp, setTimeStamp] = useState<number>(0);
   const isController = useRef<boolean>(false);
+
+  const dmGenerateHandler = () => {};
   const videoPlayHandle = (e: SyntheticEvent<HTMLVideoElement>) => {
     if (videoDetail && !isController.current) {
       const precent =
@@ -189,38 +192,17 @@ const VideoDetail: FC = (): ReactElement => {
               item.time &&
             item.contentRef.current
           ) {
-            let r = getRandom(
-              -screenRef.current.offsetHeight +
-                index * item.contentRef.current.offsetHeight +
-                item.contentRef.current.offsetHeight,
-              index * item.contentRef.current.offsetHeight
+            generateAnimation(
+              screenRef.current,
+              item.contentRef.current,
+              index
             );
-            let anName = getRandomStr(10);
-            let keyframes = `
-        @keyframes ${anName}{
-          0%{
-            transform :translateX(0) translateY(${r}px);
-          }  
-          100%{
-            transform :translateX(${
-              screenRef.current.offsetWidth +
-              30 +
-              item.contentRef.current.offsetWidth
-            }px) translateY(${r}px);
-          }
-        }
-        `;
-            let style = document.createElement("style");
-            style.innerHTML = keyframes;
-            let head = document.getElementsByTagName("head")[0];
-            head.appendChild(style);
-            item.contentRef.current.style.animation = `${anName} 16s normal`;
-            item.contentRef.current.style.animationFillMode = `forwards`;
           }
         }
       }
     }
   };
+
   const pauseHandle = (
     item: IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }
   ) => {
@@ -276,6 +258,7 @@ const VideoDetail: FC = (): ReactElement => {
   }, [dmInner, dmInner.current]);
 
   const [isFull, setIsFull] = useState<boolean>(false);
+  useEffect(() => {}, [isFull]);
   const fullHandler = () => {
     if (dmInner.current) {
       if (isFull) {
