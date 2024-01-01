@@ -20,7 +20,9 @@ class VideoService{
       await new VideoService().createVideoFileService(ctx,id,videoId,"source");
       await new VideoService().createVideoPlaylistService(ctx,id,playlistId);
       await new VideoService().createVideoTagService(ctx,id,tagIds);
-      return result[0];
+      return {
+        id:id
+      };
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }

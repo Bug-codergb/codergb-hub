@@ -118,7 +118,7 @@ class VideoController {
           console.log(fans);
           if(fans && fans.list && fans.list.length!==0){
             for(let item of fans.list){
-              await insertNotify(ctx,"发布了",item.userId,userId,"upload",videoId);
+              await insertNotify(ctx,"发布了",item.userId,userId,"upload",result.id);
             }
           }
           setResponse(ctx, "success", 200, {});

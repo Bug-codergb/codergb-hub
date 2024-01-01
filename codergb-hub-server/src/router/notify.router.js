@@ -4,7 +4,9 @@ const {
   authVerify
 } = require("../middleware/login.middleware");
 const {
-  create
+  create,
+  allNotify
 } = require("../controller/notify.controller");
 notifyRouter.post("/",authVerify,create);
+notifyRouter.get("/all/:id",authVerify,allNotify)
 module.exports = notifyRouter;
