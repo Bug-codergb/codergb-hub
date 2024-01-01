@@ -25,7 +25,7 @@ const Message: FC = () => {
     getAllNotify<IResponseType<IPage<INotify[]>>>(
       login.userMsg.userId,
       0,
-      4
+      6
     ).then((data) => {
       if (data.status === 200) {
         setNotify(data.data.list);
@@ -42,8 +42,8 @@ const Message: FC = () => {
     getAllNotify<IResponseType<IPage<INotify[]>>>(
       login.userMsg.userId,
 
-      (e - 1) * 4,
-      4
+      (e - 1) * 6,
+      6
     ).then((data) => {
       if (data.status === 200) {
         setNotify(data.data.list);
@@ -63,7 +63,7 @@ const Message: FC = () => {
           columns={columns(navigate)}
           dataSource={nofity}
           pagination={{
-            pageSize: 4,
+            pageSize: 6,
             total: count,
             onChange: (e) => pageChangeHandle(e),
           }}

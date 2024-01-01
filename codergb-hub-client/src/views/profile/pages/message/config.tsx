@@ -4,46 +4,54 @@ import moment from "moment";
 
 import { NavigateFunction } from "react-router-dom";
 import { INotify } from "../../../../types/message";
-
+import { NotifyWrapper } from "./style";
 const videoRouter = (item: INotify, navigate: NavigateFunction) => {};
 const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
   return [
     {
-      title: "视频",
+      title: "内容",
       dataIndex: "name",
-      render: (text: string, item) => {
+      width: "100",
+      render: (text: string, item: INotify) => {
         return (
-          <div>
-            <div className="left-container">
-              <div
-                className="img-container"
-                onClick={() => videoRouter(item, navigate)}
-              ></div>
-            </div>
-            <div className="right-container">
-              <div className="right-msg">
-                <p className="name" onClick={() => videoRouter(item, navigate)}>
-                  {item.content}
-                </p>
-                <p className="desc">{item.content}</p>
-              </div>
-            </div>
-          </div>
+          <NotifyWrapper>
+            {item.type === "sub" && (
+              <span className="user-name">
+                {item.operation.userName}关注了你
+              </span>
+            )}
+            {item.type === "upload" && (
+              <span>
+                您关注的
+                <span className="user-name">{item.operation.userName}</span>
+                发布了视频
+                <span className="info">{item.video?.name}</span>
+              </span>
+            )}
+            {item.type === "thumb-vId" && (
+              <span>
+                <span className="user-name">{item.operation.userName}</span>
+                点赞了您的视频<span className="info">{item.video?.name}</span>
+              </span>
+            )}
+            {item.type === "thumb-commentId" && (
+              <span>
+                <span className="user-name">{item.operation.userName}</span>
+                点赞了您的评论
+                <span className="info text-nowrap-mul-line">
+                  {item.comment?.content}
+                </span>
+              </span>
+            )}
+          </NotifyWrapper>
         );
       },
     },
     {
-      title: "分类",
-      dataIndex: "category",
-      render: (cate: INotify) => {
-        return <Tag color={"green"}>1</Tag>;
-      },
-    },
-    {
-      title: "标签",
-      dataIndex: "tag",
-      render: (_, item) => {
-        return <div>1</div>;
+      title: "是否已读",
+      dataIndex: "isRead",
+      render: (item: INotify) => {
+        return <Tag color={"green"}>{item.isRead === 0 ? "已读" : "未读"}</Tag>;
       },
     },
     {
