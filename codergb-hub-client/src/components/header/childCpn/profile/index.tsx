@@ -1,9 +1,9 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { ProfileWrapper } from './style';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../../../types/login/ILogin';
+import { type ILogin } from '../../../../types/login/ILogin';
 import { profileMenu } from '../../../../constant/profileMenu';
 import UserIcon from '../../../../assets/html/user/userIcon';
 
@@ -42,7 +42,12 @@ const Profile: FC = () => {
             profileMenu.length !== 0 &&
             profileMenu.map((item) => {
               return (
-                <li key={item.name} onClick={(e) => profileMenuHandle(item)}>
+                <li
+                  key={item.name}
+                  onClick={(e) => {
+                    profileMenuHandle(item);
+                  }}
+                >
                   <div className="icon">{item.icon}</div>
                   <div className="name">{item.name}</div>
                 </li>

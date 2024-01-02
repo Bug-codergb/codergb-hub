@@ -1,13 +1,13 @@
-import React, { memo, FC, ReactElement, MouseEvent, useState, useRef } from 'react';
+import React, { memo, type FC, type ReactElement, type MouseEvent, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { VideoItemWrapper } from './style';
 import { MoreOutlined } from '@ant-design/icons';
-import { IUserMsg } from '../../types/user/IUserMsg';
+import { type IUserMsg } from '../../types/user/IUserMsg';
 import { Dropdown, Menu } from 'antd';
 import Add from '../content/add';
 import { getDurationByTimestamp } from '../../utils/time';
-import { IAddType, addList } from '../../constant/addList';
+import { type IAddType, addList } from '../../constant/addList';
 interface IAdd {
   liClick: (item: IAddType) => void;
 }
@@ -90,10 +90,15 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
     >
       {!isShowVideo && img}
       {isShowVideo && <div className="video-container">{video}</div>}
-      <div className="dt-pos">{getDurationByTimestamp(dt ? dt : '0')}</div>
+      <div className="dt-pos">{getDurationByTimestamp(dt || '0')}</div>
       <div className="msg-info">
         {isShowUser && (
-          <div className="left-container" onClick={(e) => userRouter(e)}>
+          <div
+            className="left-container"
+            onClick={(e) => {
+              userRouter(e);
+            }}
+          >
             <img src={user.avatarUrl} />
           </div>
         )}
@@ -102,7 +107,12 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
             <div className="state">
               <div className="video-name">{state}</div>
               {isShowMore && (
-                <div className="more" onClick={(e) => moreOperatorHandle(e)}>
+                <div
+                  className="more"
+                  onClick={(e) => {
+                    moreOperatorHandle(e);
+                  }}
+                >
                   <Dropdown
                     trigger={['click']}
                     overlay={
@@ -127,7 +137,12 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
             </div>
             <div className={isPosUser ? 'pos-user-container' : ''}>
               {isPosUser && (
-                <div className="pos-user-container-avatar" onClick={(e) => userRouter(e)}>
+                <div
+                  className="pos-user-container-avatar"
+                  onClick={(e) => {
+                    userRouter(e);
+                  }}
+                >
                   <img src={user.avatarUrl} />
                 </div>
               )}

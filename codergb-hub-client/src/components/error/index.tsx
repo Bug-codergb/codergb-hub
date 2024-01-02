@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import { Button, Result } from 'antd';
 import withRouter from '../../hook/withRouter/withRouter';
 
@@ -23,11 +23,12 @@ class ErrorBoundary extends React.PureComponent<IProps, IState> {
     console.log(error, errorInfo);
   }
 
-  loginRouter() {
+  loginRouter(): void {
     const { navigate } = this.props.router;
     navigate('/home/recommend');
     window.location.reload();
   }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -36,7 +37,12 @@ class ErrorBoundary extends React.PureComponent<IProps, IState> {
           title="错误"
           subTitle="抱歉，页面好像出现了一个未知错误，请点击下方按钮跳转至首页"
           extra={
-            <Button type="primary" onClick={() => this.loginRouter()}>
+            <Button
+              type="primary"
+              onClick={() => {
+                this.loginRouter();
+              }}
+            >
               首页
             </Button>
           }

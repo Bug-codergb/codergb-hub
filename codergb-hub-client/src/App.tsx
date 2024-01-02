@@ -13,7 +13,6 @@ import { CommonWrapper } from './assets/css/common';
 const { Header } = Layout;
 
 function App() {
-  console.log(1);
   function RouteElement() {
     return useRoutes(routes);
   }

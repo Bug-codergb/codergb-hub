@@ -1,23 +1,22 @@
 import React, {
   memo,
-  FC,
-  ReactElement,
+  type FC,
+  type ReactElement,
   useState,
-  FormEvent,
+  type FormEvent,
   useImperativeHandle,
   forwardRef,
-  Ref,
-  MouseEvent
+  type Ref,
+  type MouseEvent
 } from 'react';
 import { Modal, Input, Select, notification, Menu } from 'antd';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import type { NotificationPlacement } from 'antd/es/notification';
 import { AddWrapper } from './style';
-import { ADD_PLAYLIST, ADD_WATCH_LATER, addList, IAddType } from '../../../constant/addList';
+import { ADD_PLAYLIST, ADD_WATCH_LATER, addList, type IAddType } from '../../../constant/addList';
 import Playlist from '../playlist';
-import { PlusOutlined } from '@ant-design/icons';
 import { addVideoPlaylist, createPlaylist } from '../../../network/playlist';
-import { IPlaylist } from '../../../types/playlist/IPlaylist';
+import { type IPlaylist } from '../../../types/playlist/IPlaylist';
 import { addLater } from '../../../network/later';
 
 const { Option } = Select;
@@ -75,7 +74,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
   const selectPublicHandle = (value: number) => {
     setIsPublic(value);
   };
-  //创建播放列表
+  // 创建播放列表
   const createHandle = () => {
     if (name) {
       createPlaylist(name, name, isPublic).then((data) => {
@@ -106,7 +105,11 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
   };
   return (
     <AddWrapper>
-      <div onClick={(e) => e.stopPropagation()}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <Modal
           key={id}
           title="保存到..."
@@ -114,13 +117,20 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
           destroyOnClose={true}
           maskClosable={false}
           open={isShowAddPlay}
-          onCancel={(e) => cancelHandle()}
+          onCancel={(e) => {
+            cancelHandle();
+          }}
           footer={
             !isCreate
               ? [
                   <div className="add-new-playlist">
                     <PlusOutlined />
-                    <div className="add-label" onClick={(e) => createPlaylistHandler(e)}>
+                    <div
+                      className="add-label"
+                      onClick={(e) => {
+                        createPlaylistHandler(e);
+                      }}
+                    >
                       新建播放列表
                     </div>
                   </div>
@@ -132,7 +142,9 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
                       placeholder="请输入播放列表名称"
                       showCount
                       maxLength={20}
-                      onInput={(e) => nameInpHandle(e)}
+                      onInput={(e) => {
+                        nameInpHandle(e);
+                      }}
                     />
                     <p>隐私设置</p>
                     <Select
@@ -157,7 +169,12 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
                         </div>
                       </Option>
                     </Select>
-                    <div className="create-label" onClick={(e) => createHandle()}>
+                    <div
+                      className="create-label"
+                      onClick={(e) => {
+                        createHandle();
+                      }}
+                    >
                       创建
                     </div>
                   </div>
@@ -165,7 +182,12 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
           }
         >
           {isShowAddPlay && (
-            <Playlist key={keyIndex} select={(checked, item) => checkHandle(checked, item)} />
+            <Playlist
+              key={keyIndex}
+              select={(checked, item) => {
+                checkHandle(checked, item);
+              }}
+            />
           )}
         </Modal>
       </div>

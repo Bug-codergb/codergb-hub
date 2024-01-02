@@ -43,24 +43,26 @@ const Header: FC = (): ReactElement => {
     if (videoRef.current && videoRef.current.videoId && videoRef.current.imgId) {
       const { videoId, title, desc, playlist, tag, cate, imgId, file } = videoRef.current;
       if (file) {
-        getVideoDuration(file).then((data) => {
-          createVideo(videoId, title, desc, imgId, playlist, tag, cate, data).then((data) => {
-            if (data.status == 200) {
-              console.log(data.data);
-              setIsModelOpen(false);
-            }
+        try {
+          getVideoDuration(file).then((data) => {
+            createVideo(videoId, title, desc, imgId, playlist, tag, cate, data).then((data) => {
+              if (data.status == 200) {
+                console.log(data.data);
+                setIsModelOpen(false);
+              }
+            });
           });
-        });
+        } catch (e) {}
       }
     }
   }, [keyIndex]);
-  const handleOk = async () => {
+  const handleOk = async (): void => {
     setKeyIndex(keyIndex + 1);
   };
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setIsModelOpen(false);
   };
-  const login = () => {
+  const login = (): void => {
     navigate('/login', {
       replace: false
     });

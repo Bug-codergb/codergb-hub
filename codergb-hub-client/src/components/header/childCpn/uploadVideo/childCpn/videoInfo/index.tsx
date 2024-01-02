@@ -1,7 +1,7 @@
 import React, {
   memo,
-  FC,
-  ChangeEvent,
+  type FC,
+  type ChangeEvent,
   useState,
   useRef,
   useEffect,
@@ -10,7 +10,7 @@ import React, {
   RefAttributes,
   ForwardRefExoticComponent,
   PropsWithoutRef,
-  Ref,
+  type Ref,
   MutableRefObject
 } from 'react';
 import { CloudUploadOutlined, RocketOutlined } from '@ant-design/icons';
@@ -19,16 +19,16 @@ import { VideoInfoWrapper, LeftContent, RightContent } from './style';
 
 import CustomizeUpload from '../../../../../customizeUpload';
 import { deleteImage, uploadImage } from '../../../../../../network/image';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IImage } from '../../../../../../types/upload/image';
-import { IPlaylist } from '../../../../../../types/playlist/IPlaylist';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IImage } from '../../../../../../types/upload/image';
+import { type IPlaylist } from '../../../../../../types/playlist/IPlaylist';
 import { getAllPlaylist, getUserPlaylist } from '../../../../../../network/playlist';
-import { IPage } from '../../../../../../types/IPage';
-import { ITag } from '../../../../../../types/tag/ITag';
+import { type IPage } from '../../../../../../types/IPage';
+import { type ITag } from '../../../../../../types/tag/ITag';
 import { getAllTag } from '../../../../../../network/tag';
-import { ICate } from '../../../../../../types/category/ICate';
+import { type ICate } from '../../../../../../types/category/ICate';
 import { getAllCate } from '../../../../../../network/category';
-import { IUploadVideo } from '../../../../../../types/imperative/uploadVideo';
+import { type IUploadVideo } from '../../../../../../types/imperative/uploadVideo';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const { TextArea } = Input;
 const { Option } = Select;
@@ -47,15 +47,15 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
   const [imgURL, setImgURL] = useState<string>('');
   const [imgID, setImgID] = useState<string>('');
   const login = useLoginMsg();
-  //播放列表
+  // 播放列表
   const [playlist, setPlaylist] = useState<IPlaylist[]>([]);
   const uploadRef = useRef<any>(null);
-  //标签
+  // 标签
   const [tag, setTag] = useState<ITag[]>([]);
-  //分类
+  // 分类
   const [cate, setCate] = useState<ICate[]>([]);
 
-  //创建视频时传的参数
+  // 创建视频时传的参数
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [playlistParam, setPlaylistParam] = useState<string>('2');
@@ -68,8 +68,8 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
       return {
         videoId: '',
         imgId: imgID,
-        title: title,
-        desc: desc,
+        title,
+        desc,
         playlist: playlistParam,
         tag: tagParam,
         cate: cateParam,
@@ -107,7 +107,7 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
   };
   const handleOk = async () => {
     const file = await uploadRef.current.getCropperFile();
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('file', file);
     const result = await uploadImage<IResponseType<IImage>>(formData, () => {});
     if (result.status === 200) {
@@ -119,7 +119,7 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
     }
   };
   const handleCancel = () => {};
-  //删除缩略图
+  // 删除缩略图
   const deleteAbb = async () => {
     const result = await deleteImage(imgID);
     if (result.status === 200) {
@@ -127,24 +127,24 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
       setIsShowAbbreviation(true);
     }
   };
-  //选择播放列表
+  // 选择播放列表
   const selectPlaylistHandle = (e: string) => {
     setPlaylistParam(e);
   };
-  //选择标签
+  // 选择标签
   const selectTagHandle = (e: string[]) => {
     setTagParam(e);
   };
-  //选择分类
+  // 选择分类
   const selectCateHandle = (e: string) => {
     setCateParam(e);
   };
-  //视频title
+  // 视频title
   const titleChangeHandle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     console.log(e.currentTarget.value);
     setTitle(e.currentTarget.value);
   };
-  //视频内容
+  // 视频内容
   const contentChangeHandle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setDesc(e.currentTarget.value);
   };
@@ -157,14 +157,18 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
           placeholder="请输入标题"
           maxLength={100}
           showCount
-          onChange={(e) => titleChangeHandle(e)}
+          onChange={(e) => {
+            titleChangeHandle(e);
+          }}
         />
         <TextArea
           rows={4}
           placeholder="向观众介绍您的视频"
           maxLength={500}
           showCount
-          onChange={(e) => contentChangeHandle(e)}
+          onChange={(e) => {
+            contentChangeHandle(e);
+          }}
         />
         <p className="abbreviation">缩略图</p>
         <p className="desc">
@@ -172,7 +176,14 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
         </p>
         <div className="abbreviation-upload-outer">
           <div className="abbreviation-upload">
-            {isShowAbbreviation && <input type="file" onChange={(e) => abbreviationHandle(e)} />}
+            {isShowAbbreviation && (
+              <input
+                type="file"
+                onChange={(e) => {
+                  abbreviationHandle(e);
+                }}
+              />
+            )}
             {isShowAbbreviation && <CloudUploadOutlined />}
             {!isShowAbbreviation && <img src={imgURL} alt="缩略图" />}
             <Modal
@@ -193,15 +204,21 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
                   aspectRatio={1.95}
                   isCircle={false}
                   realWidth={300}
-                  //@ts-ignore
+                  // @ts-expect-error
                   ref={uploadRef}
                 />
               )}
             </Modal>
           </div>
-          {/*删除缩略图*/}
+          {/* 删除缩略图 */}
           {!isShowAbbreviation && (
-            <div className="delete-abb" title={'删除缩略图'} onClick={(e) => deleteAbb()}>
+            <div
+              className="delete-abb"
+              title={'删除缩略图'}
+              onClick={async (e) => {
+                await deleteAbb();
+              }}
+            >
               <RocketOutlined />
             </div>
           )}
@@ -215,7 +232,9 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
           placeholder="请选择播放列表"
           className="playlist"
           optionFilterProp="children"
-          onChange={(e) => selectPlaylistHandle(e)}
+          onChange={(e) => {
+            selectPlaylistHandle(e);
+          }}
         >
           {playlist &&
             playlist.length !== 0 &&
@@ -235,7 +254,9 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
           className="playlist"
           optionFilterProp="children"
           mode="multiple"
-          onChange={(e) => selectTagHandle(e)}
+          onChange={(e) => {
+            selectTagHandle(e);
+          }}
         >
           {tag &&
             tag.length !== 0 &&
@@ -254,7 +275,9 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
           placeholder="请选择分类"
           className="playlist"
           optionFilterProp="children"
-          onChange={(e) => selectCateHandle(e)}
+          onChange={(e) => {
+            selectCateHandle(e);
+          }}
         >
           {cate &&
             cate.length !== 0 &&
