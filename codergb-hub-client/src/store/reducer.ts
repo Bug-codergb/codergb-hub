@@ -5,5 +5,4 @@ const reducer = combineReducers({
   loginReducer,
   channelReducer
 });
-
 export default reducer;

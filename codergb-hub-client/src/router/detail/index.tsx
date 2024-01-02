@@ -1,45 +1,65 @@
-import {lazy,Suspense} from "react";
-import {RouteObject} from "react-router-dom";
-const VideoDetail = lazy(()=>import("../../components/content/detail/videoDetail/index"));
-const UserDetail=lazy(()=>import("../../components/content/detail/userDetail/index"));
-const ChatDetail=lazy(()=>import("../../components/content/detail/chatDetail/index"));
-const SearchDetail=lazy(()=>import("../../components/content/detail/searchDetail/index"));
-const MomentDetail=lazy(()=>import("../../components/content/detail/momentDetail/index"));
+import React, { lazy, Suspense } from "react";
+import { RouteObject } from "react-router-dom";
+const VideoDetail = lazy(
+  () => import("../../components/content/detail/videoDetail/index")
+);
+const UserDetail = lazy(
+  () => import("../../components/content/detail/userDetail/index")
+);
+const ChatDetail = lazy(
+  () => import("../../components/content/detail/chatDetail/index")
+);
+const SearchDetail = lazy(
+  () => import("../../components/content/detail/searchDetail/index")
+);
+const MomentDetail = lazy(
+  () => import("../../components/content/detail/momentDetail/index")
+);
 
-const videoDetailRoute:RouteObject={
-    path:"/videoDetail",
-    element:<Suspense>
-      <VideoDetail/>
+const videoDetailRoute: RouteObject = {
+  path: "/videoDetail",
+  element: (
+    <Suspense>
+      <VideoDetail />
     </Suspense>
-  }
-const userDetailRoute:RouteObject={
-  path:"/home/userDetail",
-  element:<Suspense>
-    <UserDetail/>
-  </Suspense>
-}
-const chatDetailRoute:RouteObject={
-  path:"/chatDetail",
-  element:<Suspense>
-    <ChatDetail/>
-  </Suspense>
-}
-const searchDetailRoute:RouteObject={
-  path:"/home/search",
-  element:<Suspense>
-    <SearchDetail/>
-  </Suspense>
-}
-const momentDetailRoute:RouteObject={
-  path:"/home/moment",
-  element:<Suspense>
-    <MomentDetail/>
-  </Suspense>
-}
+  ),
+};
+const userDetailRoute: RouteObject = {
+  path: "/home/userDetail",
+  element: (
+    <Suspense>
+      <UserDetail />
+    </Suspense>
+  ),
+};
+const chatDetailRoute: RouteObject = {
+  path: "/chatDetail",
+  element: (
+    <Suspense>
+      <ChatDetail />
+    </Suspense>
+  ),
+};
+const searchDetailRoute: RouteObject = {
+  path: "/home/search",
+  element: (
+    <Suspense>
+      <SearchDetail />
+    </Suspense>
+  ),
+};
+const momentDetailRoute: RouteObject = {
+  path: "/home/moment",
+  element: (
+    <Suspense>
+      <MomentDetail />
+    </Suspense>
+  ),
+};
 export {
   videoDetailRoute,
   userDetailRoute,
   chatDetailRoute,
   searchDetailRoute,
-  momentDetailRoute
+  momentDetailRoute,
 };

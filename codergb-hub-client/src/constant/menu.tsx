@@ -1,3 +1,4 @@
+import React from "react";
 import HomeIcon from "../assets/html/home/homeIcon";
 import HomeShadowIcon from "../assets/html/home/homeShadowIcon";
 import ExploreIcon from "../assets/html/explore/exploreIcon";
