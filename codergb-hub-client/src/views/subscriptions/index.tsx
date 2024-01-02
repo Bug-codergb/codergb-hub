@@ -1,41 +1,29 @@
-import React, {
-  memo,
-  FC,
-  ReactElement,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
-import { useNavigate } from "react-router-dom";
-import { Map } from "immutable";
-import { SubscriptionsWrapper } from "./style";
-import { getSubUserVideo, getVideoURL } from "../../network/video";
-import { useSelector } from "react-redux";
-import { ILogin } from "../../types/login/ILogin";
-import { IVideo } from "../../types/video/IVideo";
-import { IResponseType } from "../../types/responseType";
-import { IPage } from "../../types/IPage";
-import VideoItem from "../../components/videoItem";
-import HolderCpn from "../../components/holder";
-import Hls from "hls.js";
-import MoreVideo from "./childCpn/more";
+import React, { memo, FC, ReactElement, useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Map } from 'immutable';
+import { SubscriptionsWrapper } from './style';
+import { getSubUserVideo, getVideoURL } from '../../network/video';
+import { useSelector } from 'react-redux';
+import { ILogin } from '../../types/login/ILogin';
+import { IVideo } from '../../types/video/IVideo';
+import { IResponseType } from '../../types/responseType';
+import { IPage } from '../../types/IPage';
+import VideoItem from '../../components/videoItem';
+import HolderCpn from '../../components/holder';
+import Hls from 'hls.js';
+import MoreVideo from './childCpn/more';
 
 const Subscriptions: FC = (): ReactElement => {
   const navigate = useNavigate();
   const [weekVideo, setWeekVideo] = useState<IVideo[]>([]);
-  const [videoURL, setVideoURL] = useState<string>("");
+  const [videoURL, setVideoURL] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const vioRef = useRef<HTMLVideoElement>(null);
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(["loginReducer", "login"]) as ILogin;
+    return state.getIn(['loginReducer', 'login']) as ILogin;
   });
   useEffect(() => {
-    getSubUserVideo<IResponseType<IPage<IVideo[]>>>(
-      login.userMsg.userId,
-      0,
-      10,
-      1
-    ).then((data) => {
+    getSubUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId, 0, 10, 1).then((data) => {
       if (data.status === 200) {
         setWeekVideo(data.data.list);
       }
@@ -47,23 +35,23 @@ const Subscriptions: FC = (): ReactElement => {
         let hls = new Hls();
         hls.loadSource(videoURL);
         hls.attachMedia(vioRef.current);
-      } else if (vioRef.current.canPlayType("application/vnd.apple.mpegurl")) {
+      } else if (vioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         vioRef.current.src = videoURL;
       }
     }
   }, [vioRef.current]);
   const manageRouteHandle = () => {
-    navigate("/home/sub-manage", {
-      replace: true,
+    navigate('/home/sub-manage', {
+      replace: true
     });
   };
 
   const videoRouterHandle = (item: IVideo) => {
-    navigate("/videoDetail", {
+    navigate('/videoDetail', {
       replace: true,
       state: {
-        id: item.id,
-      },
+        id: item.id
+      }
     });
   };
   const mouseImgHandle = async (item: IVideo, index: number) => {
@@ -92,7 +80,7 @@ const Subscriptions: FC = (): ReactElement => {
               <li
                 key={item.id}
                 onClick={(e) => videoRouterHandle(item)}
-                className={currentIndex === index ? "active" : ""}
+                className={currentIndex === index ? 'active' : ''}
               >
                 <VideoItem
                   img={

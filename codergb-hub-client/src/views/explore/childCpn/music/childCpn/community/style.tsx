@@ -1,2 +1,2 @@
-import styled from "styled-components";
-export const CommunityWrapper=styled.div``
+import styled from 'styled-components';
+export const CommunityWrapper = styled.div``;

@@ -1,14 +1,12 @@
-import gbRequest from "../index";
-import { IResponseType } from "../../types/responseType";
-export function uploadVideo<T = IResponseType<any>>(
-  formData: FormData
-): Promise<T> {
+import gbRequest from '../index';
+import { IResponseType } from '../../types/responseType';
+export function uploadVideo<T = IResponseType<any>>(formData: FormData): Promise<T> {
   return gbRequest.post<T>({
-    url: "/video/upload",
+    url: '/video/upload',
     data: formData,
     headers: {
-      "Content-type": "multipart/form-data",
-    },
+      'Content-type': 'multipart/form-data'
+    }
   });
 }
 //视频合并
@@ -20,14 +18,14 @@ export function mergeVideo<T = IResponseType<any>>(
   total: number
 ): Promise<T> {
   return gbRequest.post<T>({
-    url: "/video/merge",
+    url: '/video/merge',
     data: {
       dest: path,
       hash,
       originalname: name,
       type,
-      total,
-    },
+      total
+    }
   });
 }
 //创建video
@@ -42,7 +40,7 @@ export function createVideo<T = IResponseType<any>>(
   dt: number
 ) {
   return gbRequest.post<T>({
-    url: "/video/create",
+    url: '/video/create',
     data: {
       videoId,
       title,
@@ -51,8 +49,8 @@ export function createVideo<T = IResponseType<any>>(
       playlistId,
       tagIds,
       cateId,
-      dt,
-    },
+      dt
+    }
   });
 }
 //获取所有视频
@@ -62,25 +60,25 @@ export function getAllVideo<T = IResponseType<any>>(
   keyword: string
 ) {
   return gbRequest.post<T>({
-    url: "/video/all",
+    url: '/video/all',
     params: {
       offset,
-      limit,
+      limit
     },
     data: {
-      keyword,
-    },
+      keyword
+    }
   });
 }
 //获取视频URL
 export function getVideoURL<T = IResponseType<any>>(id: string) {
   return gbRequest.get<T>({
-    url: `/video/url/${id}`,
+    url: `/video/url/${id}`
   });
 }
 export function getVideoDetail<T = IResponseType<any>>(id: string) {
   return gbRequest.post<T>({
-    url: `/video/detail/${id}`,
+    url: `/video/detail/${id}`
   });
 }
 //获取用户视频
@@ -94,11 +92,11 @@ export function getUserVideo<T = IResponseType<any>>(
     url: `/user/video/${id}`,
     params: {
       offset,
-      limit,
+      limit
     },
     data: {
-      keyword,
-    },
+      keyword
+    }
   });
 }
 //获取订阅用户视频
@@ -112,11 +110,11 @@ export function getSubUserVideo<T = IResponseType<any>>(
     url: `/video/sub/user/${userId}`,
     params: {
       offset,
-      limit,
+      limit
     },
     data: {
-      isMonth,
-    },
+      isMonth
+    }
   });
 }
 //获取用户点赞视频
@@ -126,25 +124,21 @@ export function getThumbUserVideo<T = IResponseType<any>>(
   limit: number
 ) {
   return gbRequest.post<T>({
-    url: "/video/thumb/user/" + userId,
+    url: '/video/thumb/user/' + userId,
     params: {
       offset,
-      limit,
-    },
+      limit
+    }
   });
 }
 //获取相关视频
-export function getSimilarVideo<T = IResponseType<any>>(
-  id: string,
-  offset: number,
-  limit: number
-) {
+export function getSimilarVideo<T = IResponseType<any>>(id: string, offset: number, limit: number) {
   return gbRequest.post<T>({
-    url: "/video/similar/" + id,
+    url: '/video/similar/' + id,
     params: {
       offset,
-      limit,
-    },
+      limit
+    }
   });
 }
 export function getCollectionVideo<T = IResponseType<any>>(
@@ -153,30 +147,30 @@ export function getCollectionVideo<T = IResponseType<any>>(
   limit: number
 ) {
   return gbRequest.post<T>({
-    url: "/video/collection/" + id,
+    url: '/video/collection/' + id,
     params: {
       offset,
-      limit,
-    },
+      limit
+    }
   });
 }
 export function recordVideo<T = IResponseType<any>>(id: string) {
   return gbRequest.post<T>({
-    url: "/record/" + id,
+    url: '/record/' + id
   });
 }
 export function getUserRecordVideo<T = IResponseType<any>>(id: string) {
   return gbRequest.get<T>({
-    url: "/record/user/" + id,
+    url: '/record/user/' + id
   });
 }
 export function getUserRecordThumb<T = IResponseType<any>>(id: string) {
   return gbRequest.get<T>({
-    url: "/record/thumb/" + id,
+    url: '/record/thumb/' + id
   });
 }
 export function addPlayCount<T = IResponseType<any>>(id: string) {
   return gbRequest.post<T>({
-    url: "video/playCount/" + id,
+    url: 'video/playCount/' + id
   });
 }

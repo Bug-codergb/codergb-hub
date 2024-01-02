@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const PlaylistWrapper = styled.div`
-  .search-container{
+  .search-container {
     display: flex;
     align-items: center;
-    .user-self,.video-lib{
+    .user-self,
+    .video-lib {
       flex: 1;
     }
   }
-`
+`;

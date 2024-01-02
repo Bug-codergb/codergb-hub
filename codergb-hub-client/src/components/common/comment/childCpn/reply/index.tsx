@@ -1,14 +1,14 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from "react";
-import { ReplyWrapper } from "./style";
-import { getAllReply, replyComment } from "../../../../../network/comment";
-import { IResponseType } from "../../../../../types/responseType";
-import { IPage } from "../../../../../types/IPage";
-import { IComment } from "../../../../../types/comment/IComment";
-import moment from "moment";
-import { DislikeOutlined, LikeOutlined } from "@ant-design/icons";
-import Publish from "../../../publish";
-import { IUserMsg } from "../../../../../types/user/IUserMsg";
-import ReplyItem from "./childCpn/replyItem";
+import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import { ReplyWrapper } from './style';
+import { getAllReply, replyComment } from '../../../../../network/comment';
+import { IResponseType } from '../../../../../types/responseType';
+import { IPage } from '../../../../../types/IPage';
+import { IComment } from '../../../../../types/comment/IComment';
+import moment from 'moment';
+import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
+import Publish from '../../../publish';
+import { IUserMsg } from '../../../../../types/user/IUserMsg';
+import ReplyItem from './childCpn/replyItem';
 interface IProps {
   id: string;
   user: IUserMsg;
@@ -22,16 +22,8 @@ const Reply: FC<IProps> = (props) => {
   useEffect(() => {
     getAllReplyHandle(id, 0, 10);
   }, [id]);
-  const getAllReplyHandle = async (
-    id: string,
-    offset: number,
-    limit: number
-  ) => {
-    const data = await getAllReply<IResponseType<IPage<IComment[]>>>(
-      id,
-      offset,
-      limit
-    );
+  const getAllReplyHandle = async (id: string, offset: number, limit: number) => {
+    const data = await getAllReply<IResponseType<IPage<IComment[]>>>(id, offset, limit);
     if (data.status === 200) {
       setReply(data.data.list);
       setCount(data.data.count);
@@ -71,9 +63,7 @@ const Reply: FC<IProps> = (props) => {
                   user={user}
                   thubmHandler={() => thubmHandler()}
                   propsShowReplyHandle={(index) => showReplyHandle(index)}
-                  propsReplyReplyHandle={(content, item) =>
-                    replyReplyHandle(content, item)
-                  }
+                  propsReplyReplyHandle={(content, item) => replyReplyHandle(content, item)}
                 />
               </li>
             );

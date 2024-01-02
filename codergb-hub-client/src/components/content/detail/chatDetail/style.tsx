@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import chatWindow from "../../../../assets/img/chat-window.jpg";
+import styled from 'styled-components';
+import chatWindow from '../../../../assets/img/chat-window.jpg';
 
 export const ChatWrapper = styled.div`
   .gb-content {
@@ -21,6 +21,5 @@ export const ChatWrapper = styled.div`
         margin: 0 0 ${15 / 40}rem;
       }
     }
-
   }
-`
+`;

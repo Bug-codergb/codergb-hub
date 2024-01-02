@@ -1,11 +1,11 @@
-import React, { memo, FC, useState, useEffect } from "react";
-import { PauseOutlined } from "@ant-design/icons";
-import { CollectionVideoWrapper } from "./style";
-import { IVideo } from "../../../../../../types/video/IVideo";
-import { getDurationByTimestamp } from "../../../../../../utils/time";
-import { ICollection } from "../../../../../../types/collection/ICollection";
-import { getCollectionDetail } from "../../../../../../network/collection/index";
-import { IResponseType } from "../../../../../../types/responseType";
+import React, { memo, FC, useState, useEffect } from 'react';
+import { PauseOutlined } from '@ant-design/icons';
+import { CollectionVideoWrapper } from './style';
+import { IVideo } from '../../../../../../types/video/IVideo';
+import { getDurationByTimestamp } from '../../../../../../utils/time';
+import { ICollection } from '../../../../../../types/collection/ICollection';
+import { getCollectionDetail } from '../../../../../../network/collection/index';
+import { IResponseType } from '../../../../../../types/responseType';
 interface IProps {
   videoList: IVideo[];
   cId: string;
@@ -40,22 +40,16 @@ const CollectionVideo: FC<IProps> = (props) => {
           videoList.length !== 0 &&
           videoList.map((item, index) => {
             return (
-              <li
-                key={item.id}
-                className="item"
-                onClick={() => videoClick(item, index)}
-              >
+              <li key={item.id} className="item" onClick={() => videoClick(item, index)}>
                 {currentIndex === index && (
                   <PauseOutlined
                     className="gb-play"
                     spin={false}
-                    style={{ color: index === currentIndex ? "" : "#f1f2f3" }}
+                    style={{ color: index === currentIndex ? '' : '#f1f2f3' }}
                   />
                 )}
                 {currentIndex !== index && (
-                  <span className="sort">
-                    {(index + 1).toString().padStart(2, "0")}
-                  </span>
+                  <span className="sort">{(index + 1).toString().padStart(2, '0')}</span>
                 )}
                 <div className="img-container">
                   <img src={item.picUrl} />

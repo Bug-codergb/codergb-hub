@@ -1,23 +1,20 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from "react";
-import { BlockListWrapper } from "./style";
-import {
-  getAllBlock,
-  userAddBlock,
-} from "../../../../../../../../../../network/block";
-import { IResponseType } from "../../../../../../../../../../types/responseType";
-import { IBlock } from "../../../../../../../../../../types/block/IBlock";
-import UploadVideo from "../../../../../../../../../../components/header/childCpn/uploadVideo";
-import { Modal } from "antd";
+import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import { BlockListWrapper } from './style';
+import { getAllBlock, userAddBlock } from '../../../../../../../../../../network/block';
+import { IResponseType } from '../../../../../../../../../../types/responseType';
+import { IBlock } from '../../../../../../../../../../types/block/IBlock';
+import UploadVideo from '../../../../../../../../../../components/header/childCpn/uploadVideo';
+import { Modal } from 'antd';
 import {
   CREATED_PLAYLIST,
   HOT_VIDEO,
   SINGLE_PLAYLIST,
   SUB_CHANNEL,
   UPLOADED_VIDEO,
-  WONDER_CHANNEL,
-} from "../../../../../../../../../../constant/block";
-import { set } from "immutable";
-import Playlist from "./childCpn/playlist";
+  WONDER_CHANNEL
+} from '../../../../../../../../../../constant/block';
+import { set } from 'immutable';
+import Playlist from './childCpn/playlist';
 interface IProps {
   addBlock: () => void;
 }
@@ -83,13 +80,13 @@ const BlockList: FC<IProps> = (props): ReactElement => {
       </ul>
       <Modal
         title="选择播放列表"
-        cancelText={"取消"}
-        okText={"确定"}
+        cancelText={'取消'}
+        okText={'确定'}
         open={isShowPlay}
         onOk={confirmHandle}
         maskClosable={false}
         destroyOnClose={true}
-        width={"60%"}
+        width={'60%'}
         onCancel={cancelHandle}
       >
         {isShowPlay && <Playlist />}

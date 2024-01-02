@@ -1,4 +1,2 @@
-const centerWidth = 1780
-export {
-  centerWidth
-}
+const centerWidth = 1780;
+export { centerWidth };

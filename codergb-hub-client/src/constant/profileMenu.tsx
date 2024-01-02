@@ -1,29 +1,29 @@
-import React from "react";
-import Channel from "../assets/html/profile/channel/channel";
-import Studio from "../assets/html/profile/studio/studio";
-import Change from "../assets/html/profile/change";
-import Exit from "../assets/html/profile/exit/exit";
+import React from 'react';
+import Channel from '../assets/html/profile/channel/channel';
+import Studio from '../assets/html/profile/studio/studio';
+import Change from '../assets/html/profile/change';
+import Exit from '../assets/html/profile/exit/exit';
 
 const profileMenu = [
   {
-    name: "您的频道",
+    name: '您的频道',
     icon: <Channel />,
-    path: "/home/myChannel",
+    path: '/home/myChannel'
   },
   {
-    name: "YouTuBe工作室",
+    name: 'YouTuBe工作室',
     icon: <Studio />,
-    path: "/studio",
+    path: '/studio'
   },
   {
-    name: "切换账号",
+    name: '切换账号',
     icon: <Change />,
-    path: "/studio",
+    path: '/studio'
   },
   {
-    name: "退出账号",
+    name: '退出账号',
     icon: <Exit />,
-    path: "/login",
-  },
+    path: '/login'
+  }
 ];
 export { profileMenu };

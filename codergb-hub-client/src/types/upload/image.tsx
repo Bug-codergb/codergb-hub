@@ -1,7 +1,5 @@
-interface IImage{
-  picUrl:string,
-  id:string
+interface IImage {
+  picUrl: string;
+  id: string;
 }
-export type{
-  IImage
-}
+export type { IImage };

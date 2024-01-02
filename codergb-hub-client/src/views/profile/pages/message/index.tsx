@@ -1,32 +1,26 @@
-import React, { memo, FC, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Map } from "immutable";
-import { Divider, Radio, Table } from "antd";
-import { MessageWrapper } from "./style";
-import { INotify } from "../../../../types/message";
-import { ILogin } from "../../../../types/login/ILogin";
-import { useSelector } from "react-redux";
-import { getAllNotify } from "../../../../network/notify";
-import { IResponseType } from "../../../../types/responseType";
-import { IPage } from "../../../../types/IPage";
-import { columns } from "./config";
+import React, { memo, FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Map } from 'immutable';
+import { Divider, Radio, Table } from 'antd';
+import { MessageWrapper } from './style';
+import { INotify } from '../../../../types/message';
+import { ILogin } from '../../../../types/login/ILogin';
+import { useSelector } from 'react-redux';
+import { getAllNotify } from '../../../../network/notify';
+import { IResponseType } from '../../../../types/responseType';
+import { IPage } from '../../../../types/IPage';
+import { columns } from './config';
 const Message: FC = () => {
-  const [selectionType, setSelectionType] = useState<"checkbox" | "radio">(
-    "checkbox"
-  );
+  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   const [nofity, setNotify] = useState<INotify[]>([]);
   const [count, setCount] = useState<number>(0);
   const navigate = useNavigate();
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(["loginReducer", "login"]) as ILogin;
+    return state.getIn(['loginReducer', 'login']) as ILogin;
   });
 
   useEffect(() => {
-    getAllNotify<IResponseType<IPage<INotify[]>>>(
-      login.userMsg.userId,
-      0,
-      6
-    ).then((data) => {
+    getAllNotify<IResponseType<IPage<INotify[]>>>(login.userMsg.userId, 0, 6).then((data) => {
       if (data.status === 200) {
         setNotify(data.data.list);
         setCount(data.data.count);
@@ -35,8 +29,8 @@ const Message: FC = () => {
   }, []);
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: INotify[]) => {
-      console.log("selectedRows: ", selectedRows);
-    },
+      console.log('selectedRows: ', selectedRows);
+    }
   };
   const pageChangeHandle = (e: number) => {
     getAllNotify<IResponseType<IPage<INotify[]>>>(
@@ -57,15 +51,15 @@ const Message: FC = () => {
         <Table
           rowSelection={{
             type: selectionType,
-            ...rowSelection,
+            ...rowSelection
           }}
-          rowKey={"id"}
+          rowKey={'id'}
           columns={columns(navigate)}
           dataSource={nofity}
           pagination={{
             pageSize: 6,
             total: count,
-            onChange: (e) => pageChangeHandle(e),
+            onChange: (e) => pageChangeHandle(e)
           }}
         />
       )}

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const AddWrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 0 ${15 / 40}rem rgba(0, 0, 0, 0.18);

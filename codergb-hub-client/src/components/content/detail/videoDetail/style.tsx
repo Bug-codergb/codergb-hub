@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { centerWidth } from "../../../../constant/centerWidth";
+import styled from 'styled-components';
+import { centerWidth } from '../../../../constant/centerWidth';
 
 export const VideoDetailWrapper = styled.div``;
 export const CenterContent = styled.div`
@@ -79,11 +79,7 @@ export const LeftContentWrapper: any = styled.div`
       padding: 20px 0 15px 0;
       transform: translate(0, -100%);
       color: #fff;
-      background: linear-gradient(
-        to top,
-        rgba(33, 33, 33, 0.9) 1%,
-        rgba(0, 0, 0, 0) 99%
-      );
+      background: linear-gradient(to top, rgba(33, 33, 33, 0.9) 1%, rgba(0, 0, 0, 0) 99%);
       .container {
         display: flex;
         align-items: center;

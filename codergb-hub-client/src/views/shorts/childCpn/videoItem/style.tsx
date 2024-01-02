@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const VideoItemWrapper = styled.div`
   display: flex;
   align-items: flex-end;
@@ -19,11 +19,7 @@ export const VideoItemWrapper = styled.div`
       position: absolute;
       transform: translate(0, -100%);
       padding: ${16 / 40}rem ${18 / 40}rem;
-      background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.1)
-      );
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
       .user {
         display: flex;
         align-items: center;
@@ -119,7 +115,9 @@ export const VideoItemWrapper = styled.div`
     padding: 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
-    transition: width 0.5s, opacity 0.3s;
+    transition:
+      width 0.5s,
+      opacity 0.3s;
     transform-origin: left;
     background-color: #fff;
     z-index: 9;

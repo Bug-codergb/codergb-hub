@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const HomeWrapper = styled.div`
   padding: 0 0 ${20 / 40}rem 0;
   .col-list {

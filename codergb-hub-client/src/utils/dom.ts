@@ -1,10 +1,8 @@
-import { getRandom, getRandomStr } from "./getRandom";
+import { getRandom, getRandomStr } from './getRandom';
 
-function generateAnimation(container:HTMLElement,item:HTMLElement,index:number) {
+function generateAnimation(container: HTMLElement, item: HTMLElement, index: number) {
   let r = getRandom(
-    -container.offsetHeight +
-      index * item.offsetHeight +
-      item.offsetHeight,
+    -container.offsetHeight + index * item.offsetHeight + item.offsetHeight,
     index * item.offsetHeight
   );
   let anName = getRandomStr(10);
@@ -15,19 +13,15 @@ function generateAnimation(container:HTMLElement,item:HTMLElement,index:number) 
           }  
           100%{
             transform :translateX(${
-              window.innerWidth +
-              30 +
-              item.offsetWidth
+              window.innerWidth + 30 + item.offsetWidth
             }px) translateY(${r}px);
           }
         }
         `;
-  
+
   const style = document.styleSheets[0];
   style.insertRule(keyframes);
   item.style.animation = `${anName} 16s normal`;
   item.style.animationFillMode = `forwards`;
 }
-export {
-  generateAnimation
-}
+export { generateAnimation };

@@ -1,16 +1,14 @@
-import {IUserMsg} from "./IUserMsg";
-interface idString{
-  id:string
+import { IUserMsg } from './IUserMsg';
+interface idString {
+  id: string;
 }
-interface IUserOperator{
-  video:idString[],
-  comment:idString[]
+interface IUserOperator {
+  video: idString[];
+  comment: idString[];
 }
-interface IUserDetail extends IUserMsg{
-  subscriber:IUserMsg[],
-  thumb:IUserOperator,
-  tread:IUserOperator
+interface IUserDetail extends IUserMsg {
+  subscriber: IUserMsg[];
+  thumb: IUserOperator;
+  tread: IUserOperator;
 }
-export type{
-  IUserDetail
-}
+export type { IUserDetail };

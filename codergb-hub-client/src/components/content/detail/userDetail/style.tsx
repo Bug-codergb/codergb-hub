@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const UserDetailWrapper = styled.div`
   width: 100%;
@@ -8,8 +8,8 @@ export const UserDetailWrapper = styled.div`
   img {
     width: 100%;
   }
-  .banner{
-    min-height: ${200/40}rem;
+  .banner {
+    min-height: ${200 / 40}rem;
   }
   .user-info {
     display: flex;
@@ -38,12 +38,12 @@ export const UserDetailWrapper = styled.div`
         }
       }
     }
-    .control-btn{
+    .control-btn {
       display: flex;
       align-items: center;
-      .sub-btn{
-        margin: 0 0 0 ${10/40}rem;
+      .sub-btn {
+        margin: 0 0 0 ${10 / 40}rem;
       }
     }
   }
-`
+`;

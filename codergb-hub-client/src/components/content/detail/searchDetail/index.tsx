@@ -1,12 +1,12 @@
-import React, { memo, FC, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { SearchDetailWrapper } from "./style";
-import { IVideo } from "../../../../types/video/IVideo";
-import { getAllVideo } from "../../../../network/video";
-import { IResponseType } from "../../../../types/responseType";
-import { IPage } from "../../../../types/IPage";
-import VideoItem from "../../../videoItem";
+import React, { memo, FC, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { SearchDetailWrapper } from './style';
+import { IVideo } from '../../../../types/video/IVideo';
+import { getAllVideo } from '../../../../network/video';
+import { IResponseType } from '../../../../types/responseType';
+import { IPage } from '../../../../types/IPage';
+import VideoItem from '../../../videoItem';
 const SearchDetail: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,25 +14,23 @@ const SearchDetail: FC = () => {
   const [video, setVideo] = useState<IVideo[]>([]);
   const [total, setTotal] = useState<number>(0);
   const getAllVideoReq = (offset: number, limit: number, keyword: string) => {
-    getAllVideo<IResponseType<IPage<IVideo[]>>>(offset, limit, keyword).then(
-      (data) => {
-        if (data.status === 200) {
-          setVideo(data.data.list);
-          setTotal(data.data.count);
-        }
+    getAllVideo<IResponseType<IPage<IVideo[]>>>(offset, limit, keyword).then((data) => {
+      if (data.status === 200) {
+        setVideo(data.data.list);
+        setTotal(data.data.count);
       }
-    );
+    });
   };
   useEffect(() => {
     getAllVideoReq(0, 15, keyword);
   }, [keyword]);
 
   const videoRouter = (item: IVideo) => {
-    navigate("/videoDetail", {
+    navigate('/videoDetail', {
       replace: true,
       state: {
-        id: item.id,
-      },
+        id: item.id
+      }
     });
   };
   return (
@@ -44,13 +42,7 @@ const SearchDetail: FC = () => {
             return (
               <li key={item.id}>
                 <VideoItem
-                  img={
-                    <img
-                      src={item.picUrl}
-                      alt={item.name}
-                      onClick={() => videoRouter(item)}
-                    />
-                  }
+                  img={<img src={item.picUrl} alt={item.name} onClick={() => videoRouter(item)} />}
                   isFlex={true}
                   state={item.name}
                   createTime={item.createTime}

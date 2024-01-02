@@ -1,37 +1,25 @@
-import React, {
-  memo,
-  FC,
-  ReactElement,
-  useEffect,
-  useState,
-  FormEvent,
-  useRef,
-} from "react";
-import moment from "moment";
+import React, { memo, FC, ReactElement, useEffect, useState, FormEvent, useRef } from 'react';
+import moment from 'moment';
 import {
   LikeOutlined,
   DislikeOutlined,
   CaretUpOutlined,
   CaretDownOutlined,
   LikeFilled,
-  DislikeFilled,
-} from "@ant-design/icons";
-import { Map } from "immutable";
-import { CommentWrapper } from "./style";
-import { IUserMsg } from "../../../types/user/IUserMsg";
-import {
-  getAllComment,
-  publishComment,
-  replyComment,
-} from "../../../network/comment";
-import { IResponseType } from "../../../types/responseType";
-import { IPage } from "../../../types/IPage";
-import { IComment } from "../../../types/comment/IComment";
-import Reply from "./childCpn/reply";
-import Publish from "../publish";
-import { useThumb, useTread } from "../../../hook/useThumb";
-import CommentItem from "./childCpn/commentItem";
-import EmptyHolder from "../emptyHolder";
+  DislikeFilled
+} from '@ant-design/icons';
+import { Map } from 'immutable';
+import { CommentWrapper } from './style';
+import { IUserMsg } from '../../../types/user/IUserMsg';
+import { getAllComment, publishComment, replyComment } from '../../../network/comment';
+import { IResponseType } from '../../../types/responseType';
+import { IPage } from '../../../types/IPage';
+import { IComment } from '../../../types/comment/IComment';
+import Reply from './childCpn/reply';
+import Publish from '../publish';
+import { useThumb, useTread } from '../../../hook/useThumb';
+import CommentItem from './childCpn/commentItem';
+import EmptyHolder from '../emptyHolder';
 
 interface IProps {
   user: IUserMsg;
@@ -45,7 +33,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
   const [commentCount, setCommentCount] = useState<number>(0);
   const [isShowReply, setIsShowReply] = useState<boolean>(false);
   const [isFocus, setIsFocus] = useState<boolean>(false);
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>('');
   const [comIndex, setComIndex] = useState<number>(-1);
   const [replyIndex, setReplyIndex] = useState<number>(-1);
   useEffect(() => {
@@ -53,18 +41,8 @@ const Comment: FC<IProps> = (props): ReactElement => {
   }, [id]);
   const isThumb = useThumb;
   const isTread = useTread;
-  const getAllCommentHandle = (
-    id: string,
-    offset: number,
-    limit: number,
-    alias: string
-  ) => {
-    getAllComment<IResponseType<IPage<IComment[]>>>(
-      id,
-      offset,
-      limit,
-      alias
-    ).then((data) => {
+  const getAllCommentHandle = (id: string, offset: number, limit: number, alias: string) => {
+    getAllComment<IResponseType<IPage<IComment[]>>>(id, offset, limit, alias).then((data) => {
       if (data.status === 200) {
         setComment(data.data.list);
         setCommentCount(data.data.count);
@@ -82,14 +60,14 @@ const Comment: FC<IProps> = (props): ReactElement => {
   };
   const cancelHandle = () => {
     setIsFocus(false);
-    setContent("");
+    setContent('');
   };
   //发表评论
   const publishHandle = () => {
     publishComment(id, alias, content).then((data) => {
       console.log(data);
       if (data.status === 200) {
-        setContent("");
+        setContent('');
         setIsFocus(false);
         getAllCommentHandle(id, 0, 10, alias);
       }
@@ -125,14 +103,14 @@ const Comment: FC<IProps> = (props): ReactElement => {
 
   return (
     <CommentWrapper>
-      <div className={`publish-outer ${isFocus ? "publish-outer-start" : ""}`}>
+      <div className={`publish-outer ${isFocus ? 'publish-outer-start' : ''}`}>
         <div className="user-msg">
           <img src={user.avatarUrl} />
         </div>
         <div className="right-input">
-          <div className={`input-container ${isFocus ? "input-focus" : ""}`}>
+          <div className={`input-container ${isFocus ? 'input-focus' : ''}`}>
             <input
-              type={"text"}
+              type={'text'}
               placeholder="添加评论..."
               value={content}
               onFocus={(e) => inpFocusHandle()}
@@ -168,9 +146,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
                   index={index}
                   comIndex={comIndex}
                   replyIndex={replyIndex}
-                  propsPublishReplyHandle={(content, item) =>
-                    publishReplyHandle(content, item)
-                  }
+                  propsPublishReplyHandle={(content, item) => publishReplyHandle(content, item)}
                   propsShowReply={(index) => showReply(index)}
                   thumbHandler={() => thumbHandler()}
                   propsShowReplyHandle={(index) => showReplyHandle(index)}
@@ -179,7 +155,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
             );
           })}
         {(!comment || (comment && comment.length === 0)) && (
-          <EmptyHolder padding={200} msg={"暂无评论，快来发布您的第一条评论"} />
+          <EmptyHolder padding={200} msg={'暂无评论，快来发布您的第一条评论'} />
         )}
       </ul>
     </CommentWrapper>

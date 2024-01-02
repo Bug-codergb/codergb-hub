@@ -7,23 +7,18 @@ import React, {
   useImperativeHandle,
   forwardRef,
   Ref,
-  MouseEvent,
-} from "react";
-import { Modal, Input, Select, notification, Menu } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import type { NotificationPlacement } from "antd/es/notification";
-import { AddWrapper } from "./style";
-import {
-  ADD_PLAYLIST,
-  ADD_WATCH_LATER,
-  addList,
-  IAddType,
-} from "../../../constant/addList";
-import Playlist from "../playlist";
-import { PlusOutlined } from "@ant-design/icons";
-import { addVideoPlaylist, createPlaylist } from "../../../network/playlist";
-import { IPlaylist } from "../../../types/playlist/IPlaylist";
-import { addLater } from "../../../network/later";
+  MouseEvent
+} from 'react';
+import { Modal, Input, Select, notification, Menu } from 'antd';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import type { NotificationPlacement } from 'antd/es/notification';
+import { AddWrapper } from './style';
+import { ADD_PLAYLIST, ADD_WATCH_LATER, addList, IAddType } from '../../../constant/addList';
+import Playlist from '../playlist';
+import { PlusOutlined } from '@ant-design/icons';
+import { addVideoPlaylist, createPlaylist } from '../../../network/playlist';
+import { IPlaylist } from '../../../types/playlist/IPlaylist';
+import { addLater } from '../../../network/later';
 
 const { Option } = Select;
 interface IAdd {
@@ -39,14 +34,14 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
   const [isCreate, setIsCreate] = useState<boolean>(false);
   const [keyIndex, setKeyIndex] = useState<number>(1);
 
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>('');
   const [isPublic, setIsPublic] = useState<number>(0);
 
   const openNotification = (placement: NotificationPlacement) => {
     notification.info({
       message: `已成功添加至稍后观看`,
       description: '在"稍后观看"查看您添加的视频',
-      placement,
+      placement
     });
   };
 
@@ -59,7 +54,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
         .then((data) => {
           console.log(data);
           if (data.status === 200) {
-            openNotification("bottomLeft");
+            openNotification('bottomLeft');
           }
         })
         .catch((err) => {});
@@ -68,7 +63,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
 
   useImperativeHandle<IAdd, IAdd>(propsRef, () => {
     return {
-      liClick,
+      liClick
     };
   });
   const cancelHandle = () => {
@@ -98,7 +93,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
           notification.info({
             message: `已成功添加至${item.name}`,
             description: `在"${item.name}"查看您添加的视频`,
-            placement: "bottomLeft",
+            placement: 'bottomLeft'
           });
         }
       });
@@ -115,7 +110,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
         <Modal
           key={id}
           title="保存到..."
-          width={"30%"}
+          width={'30%'}
           destroyOnClose={true}
           maskClosable={false}
           open={isShowAddPlay}
@@ -125,13 +120,10 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
               ? [
                   <div className="add-new-playlist">
                     <PlusOutlined />
-                    <div
-                      className="add-label"
-                      onClick={(e) => createPlaylistHandler(e)}
-                    >
+                    <div className="add-label" onClick={(e) => createPlaylistHandler(e)}>
                       新建播放列表
                     </div>
-                  </div>,
+                  </div>
                 ]
               : [
                   <div className="create-playlist">
@@ -146,7 +138,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
                     <Select
                       onChange={selectPublicHandle}
                       value={isPublic}
-                      placeholder={"请选择播放列表属性"}
+                      placeholder={'请选择播放列表属性'}
                     >
                       <Option value={0}>
                         <div className="private">
@@ -165,21 +157,15 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
                         </div>
                       </Option>
                     </Select>
-                    <div
-                      className="create-label"
-                      onClick={(e) => createHandle()}
-                    >
+                    <div className="create-label" onClick={(e) => createHandle()}>
                       创建
                     </div>
-                  </div>,
+                  </div>
                 ]
           }
         >
           {isShowAddPlay && (
-            <Playlist
-              key={keyIndex}
-              select={(checked, item) => checkHandle(checked, item)}
-            />
+            <Playlist key={keyIndex} select={(checked, item) => checkHandle(checked, item)} />
           )}
         </Modal>
       </div>

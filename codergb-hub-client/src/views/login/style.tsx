@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import bgc from "../../assets/img/login.svg";
+import styled from 'styled-components';
+import bgc from '../../assets/img/login.svg';
 export const LoginWrappers = styled.div`
   background-color: #060d20;
   position: relative;
@@ -52,11 +52,7 @@ export const LoginWrappers = styled.div`
     animation-delay: 2.5s;
   }
   .signup-stars:nth-child(5) {
-    background-image: radial-gradient(
-        2px 2px at 10px 100px,
-        #eee,
-        rgba(0, 0, 0, 0)
-      ),
+    background-image: radial-gradient(2px 2px at 10px 100px, #eee, rgba(0, 0, 0, 0)),
       radial-gradient(2px 2px at 20px 10px, #fff, rgba(0, 0, 0, 0)),
       radial-gradient(3px 4px at 150px 40px, #ddd, rgba(0, 0, 0, 0));
     background-position: 80% 30%;
@@ -67,11 +63,7 @@ export const LoginWrappers = styled.div`
     animation-delay: 6s;
   }
   .signup-stars {
-    background-image: radial-gradient(
-        2px 2px at 50px 200px,
-        #eee,
-        rgba(0, 0, 0, 0)
-      ),
+    background-image: radial-gradient(2px 2px at 50px 200px, #eee, rgba(0, 0, 0, 0)),
       radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
       radial-gradient(3px 4px at 120px 40px, #ddd, rgba(0, 0, 0, 0));
     background-repeat: repeat;

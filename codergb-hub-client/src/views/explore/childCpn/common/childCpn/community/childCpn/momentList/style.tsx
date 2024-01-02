@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MomentListWrapper = styled.div`
   margin: ${30 / 40}rem ${30 / 40}rem 0 0;
@@ -100,7 +100,9 @@ export const MomentListWrapper = styled.div`
           padding: ${9 / 40}rem ${18 / 40}rem ${5 / 40}rem;
           border-radius: ${20 / 40}rem;
 
-          .thumb-icon, .collection-icon, .tread-icon {
+          .thumb-icon,
+          .collection-icon,
+          .tread-icon {
             svg {
               font-size: ${24 / 40}rem;
             }
@@ -119,9 +121,9 @@ export const MomentListWrapper = styled.div`
       }
     }
   }
-  .page{
+  .page {
     display: flex;
     justify-content: center;
-    padding: ${20/40}rem 0 ${30/40}rem 0;
+    padding: ${20 / 40}rem 0 ${30 / 40}rem 0;
   }
-`
+`;

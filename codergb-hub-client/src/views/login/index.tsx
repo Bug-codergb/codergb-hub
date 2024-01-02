@@ -1,10 +1,10 @@
-import React, { memo, FC, ReactElement, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, Input } from "antd";
-import { LoginWrappers } from "./style";
-import { useDispatch } from "react-redux";
-import { loginAction } from "./store/actionCreators";
-import { Dispatch } from "redux";
+import React, { memo, FC, ReactElement, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { LoginWrappers } from './style';
+import { useDispatch } from 'react-redux';
+import { loginAction } from './store/actionCreators';
+import { Dispatch } from 'redux';
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
@@ -13,7 +13,7 @@ const Login: FC = (): ReactElement => {
     dispatch(loginAction(username, password, navigate));
   }, []);
   const onFinishFailed = useCallback((errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   }, []);
   return (
     <LoginWrappers>
@@ -40,7 +40,7 @@ const Login: FC = (): ReactElement => {
           <Form.Item
             label="用户名"
             name="username"
-            rules={[{ required: true, message: "请输入您的用户名" }]}
+            rules={[{ required: true, message: '请输入您的用户名' }]}
           >
             <Input />
           </Form.Item>
@@ -48,7 +48,7 @@ const Login: FC = (): ReactElement => {
           <Form.Item
             label="密码"
             name="password"
-            rules={[{ required: true, message: "请输入您的密码" }]}
+            rules={[{ required: true, message: '请输入您的密码' }]}
           >
             <Input.Password />
           </Form.Item>

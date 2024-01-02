@@ -1,39 +1,39 @@
-import styled from "styled-components";
-export const SubWrapper =styled.div`
-  padding: ${20/40}rem 0;
-.sub-list{
-    &>li{
+import styled from 'styled-components';
+export const SubWrapper = styled.div`
+  padding: ${20 / 40}rem 0;
+  .sub-list {
+    & > li {
       display: flex;
       align-items: flex-start;
-      margin: 0 0 ${26/40}rem 0;
-      .left-container{
-        width: ${140/40}rem;
-        height: ${140/40}rem;
-        img{
+      margin: 0 0 ${26 / 40}rem 0;
+      .left-container {
+        width: ${140 / 40}rem;
+        height: ${140 / 40}rem;
+        img {
           width: 100%;
           border-radius: 50%;
         }
       }
-      .center-container{
+      .center-container {
         flex: 8;
-        margin: 0 0 0 ${20/40}rem;
-        .channel-name{
-          font-size: ${28/40}rem;
+        margin: 0 0 0 ${20 / 40}rem;
+        .channel-name {
+          font-size: ${28 / 40}rem;
         }
-        .count{
-          &>span{
-            font-size: ${18/40}rem;
+        .count {
+          & > span {
+            font-size: ${18 / 40}rem;
             color: #606060;
-            &:nth-child(1){
-              margin: 0 ${5/40}rem 0 0;
+            &:nth-child(1) {
+              margin: 0 ${5 / 40}rem 0 0;
             }
           }
         }
       }
-      .right-container{
+      .right-container {
         flex: 1;
-        padding: 0 ${40/40}rem 0;
+        padding: 0 ${40 / 40}rem 0;
       }
     }
   }
-`
+`;

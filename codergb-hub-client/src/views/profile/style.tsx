@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const ProfileWrapper = styled.div`
   background-color: #fff;
-  .ant-layout-content{
+  .ant-layout-content {
     background-color: white;
   }
-`
+`;

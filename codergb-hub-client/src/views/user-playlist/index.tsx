@@ -1,16 +1,16 @@
-import React, { memo, FC, useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { Map } from "immutable";
-import { UserPlaylistWrapper, LeftContent, RightContent } from "./style";
-import { IPlaylist } from "../../types/playlist/IPlaylist";
-import { IVideo } from "../../types/video/IVideo";
-import { getPlaylistDetail, getPlaylistVideo } from "../../network/playlist";
-import { IResponseType } from "../../types/responseType";
-import { IPage } from "../../types/IPage";
-import moment from "moment";
-import { useSelector } from "react-redux";
+import React, { memo, FC, useState, useEffect } from 'react';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Map } from 'immutable';
+import { UserPlaylistWrapper, LeftContent, RightContent } from './style';
+import { IPlaylist } from '../../types/playlist/IPlaylist';
+import { IVideo } from '../../types/video/IVideo';
+import { getPlaylistDetail, getPlaylistVideo } from '../../network/playlist';
+import { IResponseType } from '../../types/responseType';
+import { IPage } from '../../types/IPage';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
 
-import { ILogin } from "../../types/login/ILogin";
+import { ILogin } from '../../types/login/ILogin';
 interface IProps {
   id?: string;
 }
@@ -21,7 +21,7 @@ const UserPlaylist: FC<IProps> = (props) => {
   const [video, setVideo] = useState<IVideo[]>([]);
   const [count, setCount] = useState<number>(0);
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(["loginReducer", "login"]) as ILogin;
+    return state.getIn(['loginReducer', 'login']) as ILogin;
   });
   const navigate = useNavigate();
   useEffect(() => {
@@ -36,32 +36,22 @@ const UserPlaylist: FC<IProps> = (props) => {
     });
   }, [id]);
   const videoRouterHandle = (item: IVideo) => {
-    navigate("/videoDetail", {
+    navigate('/videoDetail', {
       replace: true,
       state: {
-        id: item.id,
-      },
+        id: item.id
+      }
     });
   };
   return (
     <UserPlaylistWrapper>
       {playlist && (
-        <LeftContent
-          bgc={
-            video && video.length !== 0
-              ? video[0].picUrl
-              : login.userMsg.avatarUrl
-          }
-        >
+        <LeftContent bgc={video && video.length !== 0 ? video[0].picUrl : login.userMsg.avatarUrl}>
           <div className="img-container">
             {video && (
               <img
                 alt="gb-codergb"
-                src={
-                  video && video.length !== 0
-                    ? video[0].picUrl
-                    : login.userMsg.avatarUrl
-                }
+                src={video && video.length !== 0 ? video[0].picUrl : login.userMsg.avatarUrl}
               />
             )}
           </div>
@@ -70,7 +60,7 @@ const UserPlaylist: FC<IProps> = (props) => {
           <div className="vio-info">
             <div className="vio-count">{count}个视频</div>
             <div className="update-time">
-              {moment(playlist.updateTime).format("yyyy-MM-DD HH:MM")}更新
+              {moment(playlist.updateTime).format('yyyy-MM-DD HH:MM')}更新
             </div>
           </div>
           <div className="mask"></div>
@@ -83,10 +73,7 @@ const UserPlaylist: FC<IProps> = (props) => {
             video.map((item) => {
               return (
                 <li key={item.id}>
-                  <div
-                    className="cover-container"
-                    onClick={(e) => videoRouterHandle(item)}
-                  >
+                  <div className="cover-container" onClick={(e) => videoRouterHandle(item)}>
                     <img src={item.picUrl} />
                   </div>
                   <div className="later-right-info">
@@ -99,9 +86,7 @@ const UserPlaylist: FC<IProps> = (props) => {
                     <div className="desc">
                       <div className="user-name">{item.user.userName}.</div>
                       <div className="play-count">{item.playCount}次观看.</div>
-                      <div className="create-time">
-                        {moment(item.createTime).fromNow()}加入
-                      </div>
+                      <div className="create-time">{moment(item.createTime).fromNow()}加入</div>
                     </div>
                   </div>
                 </li>

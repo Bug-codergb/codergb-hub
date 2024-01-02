@@ -1,7 +1,5 @@
-interface IPage<T=any>{
-  count:number,
-  list:T
+interface IPage<T = any> {
+  count: number;
+  list: T;
 }
-export type {
-  IPage
-}
+export type { IPage };

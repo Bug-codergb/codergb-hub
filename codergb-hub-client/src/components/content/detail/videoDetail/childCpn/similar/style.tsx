@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const SimilarWrapper = styled.div`
   padding: ${16 / 40}rem 0;
   .bar {

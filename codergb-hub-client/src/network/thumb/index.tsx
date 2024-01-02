@@ -1,47 +1,47 @@
-import gbRequest from "../index";
-import { IResponseType } from "../../types/responseType";
+import gbRequest from '../index';
+import { IResponseType } from '../../types/responseType';
 //点赞
 export function thumb<T = IResponseType<any>>(id: string, alias: string) {
   return gbRequest.post<T>({
-    url: "/thumb",
+    url: '/thumb',
     data: {
       id,
-      alias,
-    },
+      alias
+    }
   });
 }
 //取消点赞
 export function cancelThumb<T = IResponseType<any>>(id: string, alias: string) {
   return gbRequest.post<T>({
-    url: "/thumb/cancel",
+    url: '/thumb/cancel',
     data: {
       id,
-      alias,
-    },
+      alias
+    }
   });
 }
 //踩
 export function tread<T = IResponseType<any>>(id: string, alias: string) {
   return gbRequest.post<T>({
-    url: "/tread",
+    url: '/tread',
     data: {
       id,
-      alias,
-    },
+      alias
+    }
   });
 }
 export function cancelTread<T = IResponseType<any>>(id: string, alias: string) {
   return gbRequest.post<T>({
-    url: "/tread/cancel",
+    url: '/tread/cancel',
     data: {
       id,
-      alias,
-    },
+      alias
+    }
   });
 }
 //获取视频点赞数
 export function getVideoThumb<T = IResponseType<any>>(id: string) {
   return gbRequest.get<T>({
-    url: "thumb/video/" + id,
+    url: 'thumb/video/' + id
   });
 }

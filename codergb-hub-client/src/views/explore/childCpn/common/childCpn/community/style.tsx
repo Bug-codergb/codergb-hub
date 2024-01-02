@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const CommunityWrapper = styled.div`
-  .img-container{
+  .img-container {
     width: 100%;
-    height: ${180/40}rem;
+    height: ${180 / 40}rem;
     display: flex;
     justify-content: center;
     background-color: var(--line-color);
-    img{
+    img {
       height: 100%;
     }
   }
-`
+`;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const UserPlaylistWrapper = styled.div`
   display: flex;
   align-items: flex-start;

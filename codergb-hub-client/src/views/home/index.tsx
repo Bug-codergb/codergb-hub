@@ -1,32 +1,29 @@
-import React,{memo,FC,ReactElement} from "react";
-import {Outlet} from "react-router-dom"
+import React, { memo, FC, ReactElement } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
-import HeaderTop from "../../components/header";
-import {
-  HomeWrapper
-} from "./style";
-import NavList from "../../components/navList";
+import HeaderTop from '../../components/header';
+import { HomeWrapper } from './style';
+import NavList from '../../components/navList';
 const { Header, Footer, Sider, Content } = Layout;
-const Home:FC=():ReactElement=>{
+const Home: FC = (): ReactElement => {
   return (
-      <HomeWrapper>
+    <HomeWrapper>
+      <Layout>
         <Layout>
+          <Header>
+            <HeaderTop />
+          </Header>
           <Layout>
-            <Header>
-              <HeaderTop/>
-            </Header>
-            <Layout>
-              <Sider className={'codergb-sider'}>
-                <NavList isHome={true}/>
-              </Sider>
-              <Content>
-                <Outlet/>
-              </Content>
-            </Layout>
-
+            <Sider className={'codergb-sider'}>
+              <NavList isHome={true} />
+            </Sider>
+            <Content>
+              <Outlet />
+            </Content>
           </Layout>
         </Layout>
-      </HomeWrapper>
-  )
-}
-export default memo(Home)
+      </Layout>
+    </HomeWrapper>
+  );
+};
+export default memo(Home);

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const SubBtnWrapper = styled.div`
   background-color: #f2f2f2;
   color: #0f0f0f;

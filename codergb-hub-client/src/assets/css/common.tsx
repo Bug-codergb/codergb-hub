@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CommonWrapper = styled.div`
   height: 100%;
@@ -11,7 +11,7 @@ export const CommonWrapper = styled.div`
     border-radius: ${24 / 40}rem;
     margin: 0 0 0 ${40 / 40}rem;
   }
-  .App{
+  .App {
     height: 100%;
   }
-`
+`;

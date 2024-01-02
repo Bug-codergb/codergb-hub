@@ -1,28 +1,24 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Tabs, notification } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
-import { UserDetailWrapper } from "./style";
-import { IChannel } from "../../../../types/channel/IChannel";
-import { getUserChannel } from "../../../../network/channel";
-import { sub, cancelSub } from "../../../../network/subscriber";
-import { IResponseType } from "../../../../types/responseType";
+import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Tabs, notification } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserDetailWrapper } from './style';
+import { IChannel } from '../../../../types/channel/IChannel';
+import { getUserChannel } from '../../../../network/channel';
+import { sub, cancelSub } from '../../../../network/subscriber';
+import { IResponseType } from '../../../../types/responseType';
 
-import { tabs } from "./config";
-import { getUserBlock } from "../../../../network/block";
-import { IBlock } from "../../../../types/block/IBlock";
-import {
-  CREATED_PLAYLIST,
-  SUB_CHANNEL,
-  UPLOADED_VIDEO,
-} from "../../../../constant/block";
-import UploadedVideo from "./childCpn/uploadedVideo";
-import { useLoginMsg } from "../../../../hook/useLoginMsg";
-import CreatePlaylist from "./childCpn/playlist";
-import Subscriber from "./childCpn/subscriber";
-import { useSub } from "../../../../hook/useSub";
-import { Dispatch } from "redux";
-import { changeUserDetailAction } from "../../../../views/login/store/actionCreators";
+import { tabs } from './config';
+import { getUserBlock } from '../../../../network/block';
+import { IBlock } from '../../../../types/block/IBlock';
+import { CREATED_PLAYLIST, SUB_CHANNEL, UPLOADED_VIDEO } from '../../../../constant/block';
+import UploadedVideo from './childCpn/uploadedVideo';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
+import CreatePlaylist from './childCpn/playlist';
+import Subscriber from './childCpn/subscriber';
+import { useSub } from '../../../../hook/useSub';
+import { Dispatch } from 'redux';
+import { changeUserDetailAction } from '../../../../views/login/store/actionCreators';
 
 const UserDetail: FC = (): ReactElement => {
   const location = useLocation();
@@ -59,21 +55,21 @@ const UserDetail: FC = (): ReactElement => {
                 tabList.push({
                   key: item.id,
                   label: item.name,
-                  children: <UploadedVideo userId={userId} />,
+                  children: <UploadedVideo userId={userId} />
                 });
               }
               if (item.name === CREATED_PLAYLIST) {
                 tabList.push({
                   key: item.id,
                   label: item.name,
-                  children: <CreatePlaylist userId={userId} />,
+                  children: <CreatePlaylist userId={userId} />
                 });
               }
               if (item.name === SUB_CHANNEL) {
                 tabList.push({
                   key: item.id,
                   label: item.name,
-                  children: <Subscriber userId={userId} />,
+                  children: <Subscriber userId={userId} />
                 });
               }
             }
@@ -85,11 +81,11 @@ const UserDetail: FC = (): ReactElement => {
   }, [keyIndex]);
   const chatRouter = () => {
     if (userId && userChannel && userChannel.user) {
-      navigate("/chatDetail", {
+      navigate('/chatDetail', {
         state: {
           userId: userId,
-          userName: userChannel!.user.userName,
-        },
+          userName: userChannel!.user.userName
+        }
       });
     }
   };
@@ -100,7 +96,7 @@ const UserDetail: FC = (): ReactElement => {
         notification.info({
           message: `订阅成功`,
           description: `在“订阅内容中”查看您添加的视频`,
-          placement: "bottomLeft",
+          placement: 'bottomLeft'
         });
       }
     } else {
@@ -114,7 +110,7 @@ const UserDetail: FC = (): ReactElement => {
   };
   return (
     <UserDetailWrapper>
-      <div className={"banner"}>
+      <div className={'banner'}>
         <img src={userChannel?.picUrl} />
       </div>
       <div className="user-info">
@@ -129,7 +125,7 @@ const UserDetail: FC = (): ReactElement => {
         <div className="control-btn">
           {loginMsg.userMsg.userId !== userId && (
             <div className="sub-btn" onClick={() => subHandler()}>
-              {isSub ? "已订阅" : "订阅"}
+              {isSub ? '已订阅' : '订阅'}
             </div>
           )}
           {loginMsg.userMsg.userId !== userId && (
@@ -139,9 +135,7 @@ const UserDetail: FC = (): ReactElement => {
           )}
         </div>
       </div>
-      {userTabs && userTabs.length !== 0 && (
-        <Tabs defaultActiveKey="1" items={userTabs} />
-      )}
+      {userTabs && userTabs.length !== 0 && <Tabs defaultActiveKey="1" items={userTabs} />}
     </UserDetailWrapper>
   );
 };

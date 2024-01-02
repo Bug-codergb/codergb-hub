@@ -1,12 +1,12 @@
-import React, { memo, FC, ReactElement } from "react";
-import { notification } from "antd";
-import { SubBtnWrapper } from "./style";
-import { useSub } from "../../../hook/useSub";
-import { useLoginMsg } from "../../../hook/useLoginMsg";
-import { Dispatch } from "redux";
-import { useDispatch } from "react-redux";
-import { sub, cancelSub } from "../../../network/subscriber";
-import { changeUserDetailAction } from "../../../views/login/store/actionCreators";
+import React, { memo, FC, ReactElement } from 'react';
+import { notification } from 'antd';
+import { SubBtnWrapper } from './style';
+import { useSub } from '../../../hook/useSub';
+import { useLoginMsg } from '../../../hook/useLoginMsg';
+import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
+import { sub, cancelSub } from '../../../network/subscriber';
+import { changeUserDetailAction } from '../../../views/login/store/actionCreators';
 interface IProps {
   userId: string;
 }
@@ -22,7 +22,7 @@ const SubBtn: FC<IProps> = (props): ReactElement => {
         notification.info({
           message: `订阅成功`,
           description: `在“订阅内容中”查看您添加的视频`,
-          placement: "bottomLeft",
+          placement: 'bottomLeft'
         });
       }
     } else {
@@ -37,7 +37,7 @@ const SubBtn: FC<IProps> = (props): ReactElement => {
   return (
     <SubBtnWrapper>
       <div className="inner" onClick={() => subHandler()}>
-        {isSub ? "已订阅" : "订阅"}
+        {isSub ? '已订阅' : '订阅'}
       </div>
     </SubBtnWrapper>
   );

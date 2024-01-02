@@ -1,20 +1,13 @@
-import React, {
-  memo,
-  FC,
-  ReactElement,
-  MouseEvent,
-  useState,
-  useRef,
-} from "react";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
-import { VideoItemWrapper } from "./style";
-import { MoreOutlined } from "@ant-design/icons";
-import { IUserMsg } from "../../types/user/IUserMsg";
-import { Dropdown, Menu } from "antd";
-import Add from "../content/add";
-import { getDurationByTimestamp } from "../../utils/time";
-import { IAddType, addList } from "../../constant/addList";
+import React, { memo, FC, ReactElement, MouseEvent, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import { VideoItemWrapper } from './style';
+import { MoreOutlined } from '@ant-design/icons';
+import { IUserMsg } from '../../types/user/IUserMsg';
+import { Dropdown, Menu } from 'antd';
+import Add from '../content/add';
+import { getDurationByTimestamp } from '../../utils/time';
+import { IAddType, addList } from '../../constant/addList';
 interface IAdd {
   liClick: (item: IAddType) => void;
 }
@@ -57,7 +50,7 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
     scale,
     video,
     isShowVideo,
-    isShowImg,
+    isShowImg
   } = props;
   const [isShowDrop, setIsShowDrop] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -70,19 +63,19 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
   const openChangeHandle = (a: any) => {
     if (addRef && addRef.current) {
       addRef.current.liClick({
-        icon: "",
-        name: a.key,
+        icon: '',
+        name: a.key
       });
     }
   };
   const userRouter = (e: MouseEvent<HTMLDivElement>) => {
     if (user) {
       e.stopPropagation();
-      navigate("/home/userDetail", {
+      navigate('/home/userDetail', {
         state: {
-          userId: user.userId,
+          userId: user.userId
         },
-        replace: false,
+        replace: false
       });
     }
   };
@@ -97,7 +90,7 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
     >
       {!isShowVideo && img}
       {isShowVideo && <div className="video-container">{video}</div>}
-      <div className="dt-pos">{getDurationByTimestamp(dt ? dt : "0")}</div>
+      <div className="dt-pos">{getDurationByTimestamp(dt ? dt : '0')}</div>
       <div className="msg-info">
         {isShowUser && (
           <div className="left-container" onClick={(e) => userRouter(e)}>
@@ -111,13 +104,13 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
               {isShowMore && (
                 <div className="more" onClick={(e) => moreOperatorHandle(e)}>
                   <Dropdown
-                    trigger={["click"]}
+                    trigger={['click']}
                     overlay={
                       <Menu onClick={openChangeHandle}>
                         {addList.map((item) => {
                           return (
                             <Menu.Item key={item.name}>
-                              <div style={{ display: "flex" }}>
+                              <div style={{ display: 'flex' }}>
                                 <div>{item.icon}</div>
                                 <div>{item.name}</div>
                               </div>
@@ -132,12 +125,9 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
                 </div>
               )}
             </div>
-            <div className={isPosUser ? "pos-user-container" : ""}>
+            <div className={isPosUser ? 'pos-user-container' : ''}>
               {isPosUser && (
-                <div
-                  className="pos-user-container-avatar"
-                  onClick={(e) => userRouter(e)}
-                >
+                <div className="pos-user-container-avatar" onClick={(e) => userRouter(e)}>
                   <img src={user.avatarUrl} />
                 </div>
               )}
@@ -145,11 +135,7 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
             </div>
             <div className="play-count">
               <span>{playCount}次观看</span>
-              <span>
-                {moment(new Date(createTime).getTime())
-                  .locale("zh-CN")
-                  .fromNow()}
-              </span>
+              <span>{moment(new Date(createTime).getTime()).locale('zh-CN').fromNow()}</span>
             </div>
           </div>
           <div className="more"></div>

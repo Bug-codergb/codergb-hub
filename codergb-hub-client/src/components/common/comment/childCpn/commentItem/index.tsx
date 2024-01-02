@@ -1,32 +1,27 @@
-import React, { memo, FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { memo, type FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   CaretDownOutlined,
   CaretUpOutlined,
   DislikeFilled,
   DislikeOutlined,
   LikeFilled,
-  LikeOutlined,
-} from "@ant-design/icons";
-import { CommentItemWrapper } from "./style";
-import moment from "moment";
-import Publish from "../../../publish";
+  LikeOutlined
+} from '@ant-design/icons';
+import { CommentItemWrapper } from './style';
+import moment from 'moment';
+import Publish from '../../../publish';
 
-import Reply from "../reply";
-import { IComment } from "../../../../../types/comment/IComment";
-import { IUserMsg } from "../../../../../types/user/IUserMsg";
-import { useThumb, useTread } from "../../../../../hook/useThumb";
-import {
-  cancelThumb,
-  cancelTread,
-  thumb,
-  tread,
-} from "../../../../../network/thumb";
-import { changeUserDetailAction } from "../../../../../views/login/store/actionCreators";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
-import { Map } from "immutable";
-import { ILogin } from "../../../../../types/login/ILogin";
+import Reply from '../reply';
+import { type IComment } from '../../../../../types/comment/IComment';
+import { type IUserMsg } from '../../../../../types/user/IUserMsg';
+import { useThumb, useTread } from '../../../../../hook/useThumb';
+import { cancelThumb, cancelTread, thumb, tread } from '../../../../../network/thumb';
+import { changeUserDetailAction } from '../../../../../views/login/store/actionCreators';
+import { useDispatch, useSelector } from 'react-redux';
+import { type Dispatch } from 'redux';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../../../../types/login/ILogin';
 interface IProps {
   comment: IComment;
   comIndex: number;
@@ -49,16 +44,16 @@ const CommentItem: FC<IProps> = (props) => {
     propsShowReplyHandle,
     propsPublishReplyHandle,
     propsShowReply,
-    thumbHandler: propThumber,
+    thumbHandler: propThumber
   } = props;
   const [tempReplyCount, setReplyCount] = useState<number>(0);
 
   const navigate = useNavigate();
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(["loginReducer", "login"]) as ILogin;
+    return state.getIn(['loginReducer', 'login']) as ILogin;
   });
-  const isThumb = useThumb("comment", comment.id);
-  const isTread = useTread("comment", comment.id);
+  const isThumb = useThumb('comment', comment.id);
+  const isTread = useTread('comment', comment.id);
   const dispatch = useDispatch<Dispatch<any>>();
   const showReplyHandle = (index: number) => {
     propsShowReplyHandle(index);
@@ -77,12 +72,12 @@ const CommentItem: FC<IProps> = (props) => {
     if (comment) {
       console.log(isThumb);
       if (isThumb) {
-        const result = await cancelThumb(comment.id, "commentId");
+        const result = await cancelThumb(comment.id, 'commentId');
         if (result.status === 200) {
           propThumber();
         }
       } else {
-        const result = await thumb(comment.id, "commentId");
+        const result = await thumb(comment.id, 'commentId');
         if (result.status === 200) {
           propThumber();
         }
@@ -95,12 +90,12 @@ const CommentItem: FC<IProps> = (props) => {
   const treadHandle = async () => {
     if (comment) {
       if (!isTread) {
-        const result = await tread(comment.id, "commentId");
+        const result = await tread(comment.id, 'commentId');
         if (result.status === 200) {
           propThumber();
         }
       } else {
-        const result = await cancelTread(comment.id, "commentId");
+        const result = await cancelTread(comment.id, 'commentId');
         if (result.status === 200) {
           propThumber();
         }
@@ -112,40 +107,71 @@ const CommentItem: FC<IProps> = (props) => {
   };
   const userRouter = () => {
     if (comment) {
-      navigate("/home/userDetail", {
+      navigate('/home/userDetail', {
         state: {
-          userId: comment.user.userId,
-        },
+          userId: comment.user.userId
+        }
       });
     }
   };
   return (
     <CommentItemWrapper>
       <div className="comment-content">
-        <div className="left-container" onClick={() => userRouter()}>
+        <div
+          className="left-container"
+          onClick={() => {
+            userRouter();
+          }}
+        >
           <img src={comment.user.avatarUrl} />
         </div>
         <div className="right-container">
           <div className="user-name-time">
             <span className="user-name">{comment.user.userName}</span>
             <span className="create-time">
-              {moment(comment.createTime).locale("zh-CN").fromNow()}
+              {moment(comment.createTime).locale('zh-CN').fromNow()}
             </span>
           </div>
           <div className="content">{comment.content}</div>
           <div className="reply-controller-btn">
             <div className="thumb">
-              {!isThumb && <LikeOutlined onClick={(e) => thumbHandle()} />}
-              {isThumb && <LikeFilled onClick={(e) => thumbHandle()} />}
+              {!isThumb && (
+                <LikeOutlined
+                  onClick={async (e) => {
+                    await thumbHandle();
+                  }}
+                />
+              )}
+              {isThumb && (
+                <LikeFilled
+                  onClick={async (e) => {
+                    await thumbHandle();
+                  }}
+                />
+              )}
               <span className="thumb-count">{comment.thumb ?? 0}</span>
             </div>
             <div className="tread">
-              {!isTread && <DislikeOutlined onClick={(e) => treadHandle()} />}
-              {isTread && <DislikeFilled onClick={(e) => treadHandle()} />}
+              {!isTread && (
+                <DislikeOutlined
+                  onClick={async (e) => {
+                    await treadHandle();
+                  }}
+                />
+              )}
+              {isTread && (
+                <DislikeFilled
+                  onClick={async (e) => {
+                    await treadHandle();
+                  }}
+                />
+              )}
             </div>
             <div
               className="reply-label"
-              onClick={(e) => showReplyHandle(index)}
+              onClick={(e) => {
+                showReplyHandle(index);
+              }}
             >
               回复
             </div>
@@ -156,31 +182,38 @@ const CommentItem: FC<IProps> = (props) => {
               <Publish
                 isShowAt={false}
                 user={user}
-                publish={(content: string) =>
-                  publishReplyHandle(content, comment)
-                }
+                publish={(content: string) => {
+                  publishReplyHandle(content, comment);
+                }}
               />
             </div>
           )}
-          {typeof comment.reply === "number" && comment.reply !== 0 && (
-            <div className="reply-count-btn" onClick={(e) => showReply(index)}>
+          {typeof comment.reply === 'number' && comment.reply !== 0 && (
+            <div
+              className="reply-count-btn"
+              onClick={(e) => {
+                showReply(index);
+              }}
+            >
               {index !== comIndex && <CaretDownOutlined />}
               {index === comIndex && <CaretUpOutlined />}
-              <span className={"count"}>
+              <span className={'count'}>
                 {tempReplyCount === 0
-                  ? typeof comment.reply === "number"
+                  ? typeof comment.reply === 'number'
                     ? comment.reply
-                    : ""
+                    : ''
                   : tempReplyCount}
               </span>
-              <span className={"label"}>条回复</span>
+              <span className={'label'}>条回复</span>
             </div>
           )}
           {index === comIndex && (
             <Reply
               id={comment.id}
               user={user}
-              replyHandle={(count) => changeReplyCount(count)}
+              replyHandle={(count) => {
+                changeReplyCount(count);
+              }}
             />
           )}
         </div>

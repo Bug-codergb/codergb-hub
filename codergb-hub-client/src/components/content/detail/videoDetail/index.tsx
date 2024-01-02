@@ -1,96 +1,92 @@
 import React, {
   memo,
-  FC,
-  ReactElement,
+  type FC,
+  type ReactElement,
   useState,
   useEffect,
   useRef,
-  MutableRefObject,
-  SyntheticEvent,
+  type MutableRefObject,
+  type SyntheticEvent,
   createRef,
-  useCallback,
-} from "react";
+  useCallback
+} from 'react';
 import {
   PauseCircleOutlined,
   PlayCircleOutlined,
   ExpandOutlined,
-  CompressOutlined,
-} from "@ant-design/icons";
-import { useLocation } from "react-router-dom";
-import moment from "moment";
-import { Layout, Slider } from "antd";
+  CompressOutlined
+} from '@ant-design/icons';
+import { useLocation } from 'react-router-dom';
+import moment from 'moment';
+import { Layout, Slider } from 'antd';
 import {
   VideoDetailWrapper,
   CenterContent,
   LeftContentWrapper,
-  RightContentWrapper,
-} from "./style";
+  RightContentWrapper
+} from './style';
 import {
   getVideoDetail,
   getVideoURL,
   getCollectionVideo,
   recordVideo,
-  addPlayCount,
-} from "../../../../network/video";
-import { IResponseType } from "../../../../types/responseType";
-import { IPage } from "../../../../types/IPage";
-import Hls from "hls.js";
-import { IVideo } from "../../../../types/video/IVideo";
-import VideoInfo from "./childCpn/videoInfo";
-import Comment from "../../../common/comment";
-import { useSelector } from "react-redux";
-import { Map } from "immutable";
-import { ILogin } from "../../../../types/login/ILogin";
-import { addHistory } from "../../../../network/history";
-import Dm from "./childCpn/dm";
-import { IDm } from "../../../../types/dm/IDm";
-import { getVideoDm } from "../../../../network/dm";
-import { getRandom, getRandomStr } from "../../../../utils/getRandom";
-import { getDurationByTimestamp } from "../../../../utils/time";
-import Similar from "./childCpn/similar";
-import HeaderTop from "../../../header";
-import CollectionVideo from "./childCpn/collectionVideo";
-import { generateAnimation } from "../../../../utils/dom";
+  addPlayCount
+} from '../../../../network/video';
+import { type IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
+import Hls from 'hls.js';
+import { type IVideo } from '../../../../types/video/IVideo';
+import VideoInfo from './childCpn/videoInfo';
+import Comment from '../../../common/comment';
+import { useSelector } from 'react-redux';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../../../types/login/ILogin';
+import { addHistory } from '../../../../network/history';
+import Dm from './childCpn/dm';
+import { type IDm } from '../../../../types/dm/IDm';
+import { getVideoDm } from '../../../../network/dm';
+import { getRandom, getRandomStr } from '../../../../utils/getRandom';
+import { getDurationByTimestamp } from '../../../../utils/time';
+import Similar from './childCpn/similar';
+import HeaderTop from '../../../header';
+import CollectionVideo from './childCpn/collectionVideo';
+import { generateAnimation } from '../../../../utils/dom';
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
-  const { id, type = "source", cId } = location.state;
+  const { id, type = 'source', cId } = location.state;
   const [videoSourceType, setVideoSourceType] = useState<string>(type);
-  const [currentTime, setCurrentTime] = useState("");
-  const [vioURL, setVioURL] = useState<string>("");
+  const [currentTime, setCurrentTime] = useState('');
+  const [vioURL, setVioURL] = useState<string>('');
   const [vioId, setVioId] = useState<string>(id);
   const [videoDetail, setVideoDetail] = useState<IVideo>();
   const [videoDm, setVideoDm] =
-    useState<
-      (IDm & { contentRef: MutableRefObject<HTMLLIElement | null> })[]
-    >();
+    useState<Array<IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }>>();
   const [dmTotal, setDmTotal] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(["loginReducer", "login"]) as ILogin;
+    return state.getIn(['loginReducer', 'login']) as ILogin;
   });
   const contentRef = useRef<HTMLUListElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
 
   const [collectionVideo, setCollectionVideo] = useState<IVideo[]>([]);
   useEffect(() => {
-    if (type === "collection") {
-      getCollectionVideo<IResponseType<IPage<IVideo[]>>>(cId, 0, 10000).then(
-        (res) => {
-          if (res.status === 200) {
-            if (res.data.list && res.data.list.length !== 0) {
-              setCollectionVideo(res.data.list);
-              setVioId(res.data.list[0].id);
-            }
+    if (type === 'collection') {
+      getCollectionVideo<IResponseType<IPage<IVideo[]>>>(cId, 0, 10000).then((res) => {
+        if (res.status === 200) {
+          if (res.data.list && res.data.list.length !== 0) {
+            setCollectionVideo(res.data.list);
+            setVioId(res.data.list[0].id);
           }
         }
-      );
+      });
     }
   }, [type, cId]);
 
   useEffect(() => {
     if (screenRef.current) {
-      screenRef.current.addEventListener("contextmenu", (e) => {
+      screenRef.current.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         return false;
       });
@@ -107,12 +103,14 @@ const VideoDetail: FC = (): ReactElement => {
       getVideoDm<IResponseType<IDm[]>>(vioId).then((data) => {
         if (data.data.length !== 0) {
           setDmTotal(data.data.length);
-          let list: (IDm & {
-            contentRef: MutableRefObject<HTMLLIElement | null>;
-          })[] = data.data.map((item, index) => {
+          const list: Array<
+            IDm & {
+              contentRef: MutableRefObject<HTMLLIElement | null>;
+            }
+          > = data.data.map((item, index) => {
             return {
               ...item,
-              contentRef: createRef<HTMLLIElement>(),
+              contentRef: createRef<HTMLLIElement>()
             };
           });
           setVideoDm(list);
@@ -138,29 +136,29 @@ const VideoDetail: FC = (): ReactElement => {
   useEffect(() => {
     if (videoRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(vioURL);
         hls.attachMedia(videoRef.current);
         addHistory(vioId);
-      } else if (
-        videoRef.current.canPlayType("application/vnd.apple.mpegurl")
-      ) {
+      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         videoRef.current.src = vioURL;
       }
     }
   }, [videoRef.current, vioURL]);
   useEffect(() => {
-    document.title = videoDetail?.name ?? "codergbhub";
+    document.title = videoDetail?.name ?? 'codergbhub';
   }, [videoDetail]);
   const pubSuccess = () => {
     getVideoDm<IResponseType<IDm[]>>(vioId).then((data) => {
       if (data.data.length !== 0) {
-        let list: (IDm & {
-          contentRef: MutableRefObject<HTMLLIElement | null>;
-        })[] = data.data.map((item, index) => {
+        const list: Array<
+          IDm & {
+            contentRef: MutableRefObject<HTMLLIElement | null>;
+          }
+        > = data.data.map((item, index) => {
           return {
             ...item,
-            contentRef: createRef<HTMLLIElement>(),
+            contentRef: createRef<HTMLLIElement>()
           };
         });
         setVideoDm(list);
@@ -176,51 +174,37 @@ const VideoDetail: FC = (): ReactElement => {
   const dmGenerateHandler = () => {};
   const videoPlayHandle = (e: SyntheticEvent<HTMLVideoElement>) => {
     if (videoDetail && !isController.current) {
-      const precent =
-        ((e.currentTarget.currentTime * 1000) / Number(videoDetail.dt)) * 100;
+      const precent = ((e.currentTarget.currentTime * 1000) / Number(videoDetail.dt)) * 100;
       setTimeStamp(precent);
     }
     if (videoDm) {
-      setCurrentTime(
-        moment(e.currentTarget.currentTime * 1000).format("mm:ss")
-      );
-      for (let index = 0; index < videoDm!.length; index++) {
+      setCurrentTime(moment(e.currentTarget.currentTime * 1000).format('mm:ss'));
+      for (let index = 0; index < videoDm.length; index++) {
         if (videoDm && screenRef.current) {
-          let item = videoDm[index];
+          const item = videoDm[index];
           if (
-            moment(e.currentTarget.currentTime * 1000).format("mm:ss") ===
-              item.time &&
+            moment(e.currentTarget.currentTime * 1000).format('mm:ss') === item.time &&
             item.contentRef.current
           ) {
-            generateAnimation(
-              screenRef.current,
-              item.contentRef.current,
-              index
-            );
+            generateAnimation(screenRef.current, item.contentRef.current, index);
           }
         }
       }
     }
   };
 
-  const pauseHandle = (
-    item: IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }
-  ) => {
-    if (item.contentRef.current)
-      item.contentRef.current.style.animationPlayState = "paused";
+  const pauseHandle = (item: IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }) => {
+    if (item.contentRef.current) item.contentRef.current.style.animationPlayState = 'paused';
   };
-  const playHandle = (
-    item: IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }
-  ) => {
-    if (item.contentRef.current)
-      item.contentRef.current.style.animationPlayState = "running";
+  const playHandle = (item: IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }) => {
+    if (item.contentRef.current) item.contentRef.current.style.animationPlayState = 'running';
   };
   const playVideo = (id: string) => {
     setVioId(id);
     setIsPlay(true);
   };
   const changeVideoType = (id: string) => {
-    setVideoSourceType("source");
+    setVideoSourceType('source');
     playVideo(id);
   };
 
@@ -237,16 +221,16 @@ const VideoDetail: FC = (): ReactElement => {
   const dmInner = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (dmInner.current) {
-      dmInner.current.addEventListener("fullscreenchange", (e) => {
+      dmInner.current.addEventListener('fullscreenchange', (e) => {
         if (document.fullscreenElement) {
           if (screenRef.current) {
-            screenRef.current.style.width = "100vw";
-            screenRef.current.style.height = "100vh";
+            screenRef.current.style.width = '100vw';
+            screenRef.current.style.height = '100vh';
             setIsFull(true);
           }
-          //进入全屏
+          // 进入全屏
         } else {
-          //退出全屏幕
+          // 退出全屏幕
           if (screenRef.current) {
             screenRef.current.style.width = `${1190 / 40}rem`;
             screenRef.current.style.height = `${640 / 40}rem`;
@@ -300,21 +284,21 @@ const VideoDetail: FC = (): ReactElement => {
   useEffect(() => {
     document.onkeydown = (e) => {
       if (
-        e.code.toLocaleLowerCase() === "space" ||
-        e.code.toLocaleLowerCase() === "keyf" ||
-        e.code.toLocaleUpperCase() === "escape"
+        e.code.toLocaleLowerCase() === 'space' ||
+        e.code.toLocaleLowerCase() === 'keyf' ||
+        e.code.toLocaleUpperCase() === 'escape'
       ) {
         e.preventDefault();
       }
     };
     document.onkeyup = (e) => {
-      if (e.code === "space" || e.code === "Space") {
+      if (e.code === 'space' || e.code === 'Space') {
         e.preventDefault();
         playHandler();
-      } else if (e.code.toLocaleLowerCase() === "keyf") {
+      } else if (e.code.toLocaleLowerCase() === 'keyf') {
         dmInner.current?.requestFullscreen();
         setIsFull(true);
-      } else if (e.code.toLocaleLowerCase() === "escape") {
+      } else if (e.code.toLocaleLowerCase() === 'escape') {
         document.exitFullscreen();
         setIsFull(false);
       }
@@ -340,20 +324,23 @@ const VideoDetail: FC = (): ReactElement => {
                 <div className="inner">
                   <div className="start">
                     <ul ref={contentRef}>
-                      {videoDm &&
-                        videoDm.map((item, index) => {
-                          return (
-                            <li
-                              key={item.id}
-                              className="text"
-                              ref={item.contentRef}
-                              onMouseEnter={(e) => pauseHandle(item)}
-                              onMouseLeave={(e) => playHandle(item)}
-                            >
-                              {item.text}
-                            </li>
-                          );
-                        })}
+                      {videoDm?.map((item, index) => {
+                        return (
+                          <li
+                            key={item.id}
+                            className="text"
+                            ref={item.contentRef}
+                            onMouseEnter={(e) => {
+                              pauseHandle(item);
+                            }}
+                            onMouseLeave={(e) => {
+                              playHandle(item);
+                            }}
+                          >
+                            {item.text}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                   <div className="video-container" ref={screenRef}>
@@ -364,10 +351,16 @@ const VideoDetail: FC = (): ReactElement => {
                         controls={false}
                         muted={false}
                         onCanPlay={canPlayHandler}
-                        onTimeUpdate={(e) => videoPlayHandle(e)}
+                        onTimeUpdate={(e) => {
+                          videoPlayHandle(e);
+                        }}
                         autoPlay={true}
-                        onEnded={() => endHandler()}
-                        onClick={() => playHandler()}
+                        onEnded={() => {
+                          endHandler();
+                        }}
+                        onClick={() => {
+                          playHandler();
+                        }}
                       />
                     )}
                     {videoDetail && (
@@ -377,36 +370,35 @@ const VideoDetail: FC = (): ReactElement => {
                           value={timestamp}
                           step={0.1}
                           tooltip={{ open: false }}
-                          onChange={(e) => silderChange(e)}
-                          onAfterChange={(e) => onAfterChange(e)}
+                          onChange={(e) => {
+                            silderChange(e);
+                          }}
+                          onAfterChange={(e) => {
+                            onAfterChange(e);
+                          }}
                         />
                         <div className="container">
                           <div className="left">
                             <div
                               className="play-pause"
-                              onClick={() => playHandler()}
+                              onClick={() => {
+                                playHandler();
+                              }}
                             >
-                              {!isPlay && (
-                                <PlayCircleOutlined
-                                  style={{ color: "#ffffff" }}
-                                />
-                              )}
-                              {isPlay && (
-                                <PauseCircleOutlined
-                                  style={{ color: "#ffffff" }}
-                                />
-                              )}
+                              {!isPlay && <PlayCircleOutlined style={{ color: '#ffffff' }} />}
+                              {isPlay && <PauseCircleOutlined style={{ color: '#ffffff' }} />}
                             </div>
                             <div className="dt">
-                              {currentTime} /{" "}
-                              {getDurationByTimestamp(videoDetail.dt)}
+                              {currentTime} / {getDurationByTimestamp(videoDetail.dt)}
                             </div>
                           </div>
                           <div className="right">
                             <div className="volume">
                               <Slider
                                 defaultValue={60}
-                                onChange={(e) => volumeChangeHandler(e)}
+                                onChange={(e) => {
+                                  volumeChangeHandler(e);
+                                }}
                               />
                             </div>
                             <div className="full" onClick={fullHandler}>
@@ -421,42 +413,44 @@ const VideoDetail: FC = (): ReactElement => {
                   <div className="end"> </div>
                 </div>
               </div>
-              <Dm id={vioId} time={currentTime} pub={() => pubSuccess()} />
+              <Dm
+                id={vioId}
+                time={currentTime}
+                pub={() => {
+                  pubSuccess();
+                }}
+              />
               <div className="video-info">
-                {videoDetail && videoDetail.user && (
-                  <VideoInfo
-                    videoInfo={videoDetail}
-                    id={vioId}
-                    playCount={playCount}
-                  />
+                {videoDetail?.user && (
+                  <VideoInfo videoInfo={videoDetail} id={vioId} playCount={playCount} />
                 )}
               </div>
               <div className="video-comment">
                 {loginState && loginState.userMsg && videoDetail && (
-                  <Comment
-                    user={loginState.userMsg}
-                    id={videoDetail.id}
-                    alias={"vId"}
-                  />
+                  <Comment user={loginState.userMsg} id={videoDetail.id} alias={'vId'} />
                 )}
               </div>
             </LeftContentWrapper>
             <RightContentWrapper>
-              {videoSourceType === "collection" && (
+              {videoSourceType === 'collection' && (
                 <CollectionVideo
                   videoList={collectionVideo}
                   cId={cId}
-                  onClick={(item, index) => playVideo(item.id)}
+                  onClick={(item, index) => {
+                    playVideo(item.id);
+                  }}
                 />
               )}
-              {videoDetail && videoDetail.user && (
+              {videoDetail?.user && (
                 <Similar
                   id={videoDetail?.category.id}
                   key={vioId}
                   videoId={videoDetail?.id}
                   userId={videoDetail?.user.userId}
                   userName={videoDetail?.user.userName}
-                  play={(id: string) => changeVideoType(id)}
+                  play={(id: string) => {
+                    changeVideoType(id);
+                  }}
                 />
               )}
             </RightContentWrapper>

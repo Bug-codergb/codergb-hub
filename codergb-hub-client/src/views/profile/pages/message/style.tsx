@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const MessageWrapper = styled.div``;
 export const NotifyWrapper = styled.div`
   width: ${400 / 40}rem;

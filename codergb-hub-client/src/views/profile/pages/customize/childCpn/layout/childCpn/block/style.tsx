@@ -1,34 +1,34 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const BlockPageWrapper = styled.div`
-  margin: ${20/40}rem ${10/40}rem ${20/40}rem 0;
+  margin: ${20 / 40}rem ${10 / 40}rem ${20 / 40}rem 0;
   width: 90%;
-  .block-header{
+  .block-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .header-left{
-      .name{
-        margin:0 0 ${8/40}rem 0;
+    .header-left {
+      .name {
+        margin: 0 0 ${8 / 40}rem 0;
       }
-      .desc{
-        font-size: ${16/40}rem;
+      .desc {
+        font-size: ${16 / 40}rem;
       }
     }
-    .header-right{
+    .header-right {
       display: flex;
       align-items: center;
-      
-      .add{
+
+      .add {
         cursor: pointer;
-        svg{
+        svg {
           color: #065fd4;
         }
       }
-      .add-label{
+      .add-label {
         cursor: pointer;
         color: #065fd4;
-        margin: 0 0 0 ${10/40}rem;
+        margin: 0 0 0 ${10 / 40}rem;
       }
     }
   }
-`
+`;

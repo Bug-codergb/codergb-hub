@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import cate from "../../assets/img/cate.png";
+import styled from 'styled-components';
+import cate from '../../assets/img/cate.png';
 export const AllWrapper = styled.div`
   .cate-list {
     display: flex;

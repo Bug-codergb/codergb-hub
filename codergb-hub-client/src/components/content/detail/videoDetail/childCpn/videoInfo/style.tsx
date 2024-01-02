@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 export const VideoInfoWrapper = styled.div`
   padding: ${30 / 40}rem 0 ${40 / 40}rem;
   .video-title {

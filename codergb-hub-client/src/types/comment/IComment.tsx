@@ -1,6 +1,6 @@
-import { IUserMsg } from "../user/IUserMsg";
-import { IVideo } from "../video/IVideo";
-import { IMoment } from "../moment";
+import { IUserMsg } from '../user/IUserMsg';
+import { IVideo } from '../video/IVideo';
+import { IMoment } from '../moment';
 
 interface IComment {
   id: string;

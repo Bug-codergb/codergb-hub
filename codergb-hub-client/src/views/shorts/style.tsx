@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import chat from "../../assets/img/chat-window.jpg";
+import styled from 'styled-components';
+import chat from '../../assets/img/chat-window.jpg';
 export const ShortsWrapper = styled.div`
   .box {
     display: flex;

@@ -1,4 +1,2 @@
-import styled from "styled-components";
-export const DescWrapper =styled.div`
-
-`
+import styled from 'styled-components';
+export const DescWrapper = styled.div``;

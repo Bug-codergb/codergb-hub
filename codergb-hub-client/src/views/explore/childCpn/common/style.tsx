@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CommonWrapper = styled.div`
   height: 80vh;
@@ -34,12 +34,13 @@ export const CommonWrapper = styled.div`
         & > img {
           width: 100%;
         }
-        .ant-avatar-circle ,.anticon-user{
+        .ant-avatar-circle,
+        .anticon-user {
           display: flex;
           align-items: center;
           justify-content: center;
         }
-        svg{
+        svg {
           width: ${40 / 40}rem;
           height: ${40 / 40}rem;
         }
@@ -69,4 +70,4 @@ export const CommonWrapper = styled.div`
       margin: 0 0 0 ${40 / 40}rem;
     }
   }
-`
+`;
