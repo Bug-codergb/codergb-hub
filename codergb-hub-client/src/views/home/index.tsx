@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement } from 'react';
+import React, { memo, type FC, type ReactElement } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import HeaderTop from '../../components/header';

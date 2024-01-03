@@ -5,7 +5,6 @@ import { HashRouter, useRoutes } from 'react-router-dom';
 import { routes } from './router';
 import store from './store';
 import './store/actionCreators';
-import HeaderTop from './components/header/index';
 import { Layout } from 'antd';
 import ErrorBoundary from './components/error';
 import { CommonWrapper } from './assets/css/common';
@@ -16,7 +15,6 @@ function App() {
   function RouteElement() {
     return useRoutes(routes);
   }
-
   return (
     <CommonWrapper>
       <div className="App">

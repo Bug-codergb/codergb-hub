@@ -1,16 +1,16 @@
-import React, { memo, FC, ReactElement, useState, useEffect } from 'react';
+import React, { memo, type FC, ReactElement, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { ThumbWrapper } from './style';
-import { IThumb } from '../../types/thumb/IThumb';
+import { type IThumb } from '../../types/thumb/IThumb';
 import { getThumbUserVideo } from '../../network/video';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type ILogin } from '../../types/login/ILogin';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import { LeftContent, RightContent } from '../user-playlist/style';
 import moment from 'moment';
-import { IVideo } from '../../types/video/IVideo';
+import { type IVideo } from '../../types/video/IVideo';
 const Thumb: FC = () => {
   const [count, setCount] = useState<number>(0);
   const [videoThumb, setVideoThumb] = useState<IThumb[]>([]);
@@ -79,13 +79,20 @@ const Thumb: FC = () => {
             videoThumb.map((item) => {
               return (
                 <li key={item.id}>
-                  <div className="cover-container" onClick={(e) => videoRouterHandle(item.video)}>
+                  <div
+                    className="cover-container"
+                    onClick={(e) => {
+                      videoRouterHandle(item.video);
+                    }}
+                  >
                     <img src={item.video.picUrl} />
                   </div>
                   <div className="later-right-info">
                     <p
                       className="vio-name text-nowrap-mul-line"
-                      onClick={(e) => videoRouterHandle(item.video)}
+                      onClick={(e) => {
+                        videoRouterHandle(item.video);
+                      }}
                     >
                       {item.video.name}
                     </p>

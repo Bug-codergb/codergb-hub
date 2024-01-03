@@ -1,16 +1,16 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
-import { ISubscriber } from '../../../../types/subscriber/ISubscriber';
+import { type Map } from 'immutable';
+import { type ISubscriber } from '../../../../types/subscriber/ISubscriber';
 import { SubManageWrapper } from './style';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../../../types/login/ILogin';
+import { type ILogin } from '../../../../types/login/ILogin';
 import { getUserSub } from '../../../../network/subscriber';
-import { IResponseType } from '../../../../types/responseType';
-import { IPage } from '../../../../types/IPage';
+import { type IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
 import { useSub } from '../../../../hook/useSub';
 import SubBtn from '../../../../components/common/subBtn';
-import { IUserMsg } from '../../../../types/user/IUserMsg';
+import { type IUserMsg } from '../../../../types/user/IUserMsg';
 const SubManage = () => {
   const [up, setUp] = useState<ISubscriber[]>([]);
   const [count, setCount] = useState<number>(0);
@@ -42,11 +42,21 @@ const SubManage = () => {
           up.map((item) => {
             return (
               <li key={item.id}>
-                <div className="left-container" onClick={() => userRouter(item.up)}>
+                <div
+                  className="left-container"
+                  onClick={() => {
+                    userRouter(item.up);
+                  }}
+                >
                   <img src={item.up.avatarUrl} />
                 </div>
                 <div className="center-container">
-                  <div className="channel-name" onClick={() => userRouter(item.up)}>
+                  <div
+                    className="channel-name"
+                    onClick={() => {
+                      userRouter(item.up);
+                    }}
+                  >
                     {item.up.userName}
                   </div>
                   <div className="count">

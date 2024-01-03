@@ -1,12 +1,12 @@
-import React, { memo, FC, useState, useRef, useEffect } from 'react';
+import React, { memo, type FC, useState, useRef, useEffect } from 'react';
 import { MoreVideoWrapper } from './style';
-import { IVideo } from '../../../../types/video/IVideo';
+import { type IVideo } from '../../../../types/video/IVideo';
 import { useSelector } from 'react-redux';
-import { Map } from 'immutable';
-import { ILogin } from '../../../../types/login/ILogin';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../../../types/login/ILogin';
 import { getSubUserVideo, getVideoURL } from '../../../../network/video';
-import { IResponseType } from '../../../../types/responseType';
-import { IPage } from '../../../../types/IPage';
+import { type IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
 import Hls from 'hls.js';
 import { useNavigate } from 'react-router-dom';
 import VideoItem from '../../../../components/videoItem';
@@ -29,7 +29,7 @@ const MoreVideo: FC = () => {
   useEffect(() => {
     if (vioRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(videoURL);
         hls.attachMedia(vioRef.current);
       } else if (vioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
@@ -71,15 +71,21 @@ const MoreVideo: FC = () => {
             return (
               <li
                 key={item.id}
-                onClick={(e) => videoRouterHandle(item)}
+                onClick={(e) => {
+                  videoRouterHandle(item);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <VideoItem
                   img={
                     <img
                       src={item.picUrl}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
-                      onMouseEnter={(e) => mouseImgHandle(item, index)}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
+                      onMouseEnter={async (e) => {
+                        await mouseImgHandle(item, index);
+                      }}
                     />
                   }
                   video={
@@ -87,7 +93,9 @@ const MoreVideo: FC = () => {
                       src={videoURL}
                       ref={vioRef}
                       autoPlay={true}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
                       muted={true}
                     />
                   }
