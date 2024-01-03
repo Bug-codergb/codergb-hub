@@ -1,10 +1,10 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-export function userUploadAvatar<T = IResponseType<any>>(
+import { type IResponseType } from '../../types/responseType';
+export async function userUploadAvatar<T = IResponseType<any>>(
   formData: FormData,
   getProgress: (e: any) => void
 ): Promise<T> {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/user/avatar/upload',
     data: formData,
     headers: {
@@ -13,13 +13,13 @@ export function userUploadAvatar<T = IResponseType<any>>(
     onUploadProgress: getProgress
   });
 }
-//更换用户头像
-export function updateAvatar<T = IResponseType<any>>(
+// 更换用户头像
+export async function updateAvatar<T = IResponseType<any>>(
   id: string,
   formData: FormData,
   getProgress: (e: any) => void
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/user/avatar/update/' + id,
     data: formData,
     headers: {
@@ -28,15 +28,15 @@ export function updateAvatar<T = IResponseType<any>>(
     onUploadProgress: getProgress
   });
 }
-//获取userMsg
-export function getUserMsg<T = IResponseType<any>>(userId: string) {
-  return gbRequest.post<T>({
+// 获取userMsg
+export async function getUserMsg<T = IResponseType<any>>(userId: string) {
+  return await gbRequest.post<T>({
     url: `/user/msg/${userId}`
   });
 }
-//获取用户媒体库
-export function getUserLibrary<T = IResponseType<any>>(id: string) {
-  return gbRequest.get<T>({
+// 获取用户媒体库
+export async function getUserLibrary<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
     url: `/user/library/` + id
   });
 }

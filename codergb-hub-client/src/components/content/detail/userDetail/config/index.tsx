@@ -1,7 +1,8 @@
+import React from 'react';
 import Home from '../childCpn/home';
 import Community from '../childCpn/community';
 import Desc from '../childCpn/desc';
-import { IChannel } from '../../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../../types/channel/IChannel';
 
 const tabs = (userId: string, channel?: IChannel) => {
   return [

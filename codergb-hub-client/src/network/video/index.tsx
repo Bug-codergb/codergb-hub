@@ -1,7 +1,7 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-export function uploadVideo<T = IResponseType<any>>(formData: FormData): Promise<T> {
-  return gbRequest.post<T>({
+import { type IResponseType } from '../../types/responseType';
+export async function uploadVideo<T = IResponseType<any>>(formData: FormData): Promise<T> {
+  return await gbRequest.post<T>({
     url: '/video/upload',
     data: formData,
     headers: {
@@ -9,15 +9,15 @@ export function uploadVideo<T = IResponseType<any>>(formData: FormData): Promise
     }
   });
 }
-//视频合并
-export function mergeVideo<T = IResponseType<any>>(
+// 视频合并
+export async function mergeVideo<T = IResponseType<any>>(
   path: string,
   hash: string,
   name: string,
   type: string,
   total: number
 ): Promise<T> {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/video/merge',
     data: {
       dest: path,
@@ -28,8 +28,8 @@ export function mergeVideo<T = IResponseType<any>>(
     }
   });
 }
-//创建video
-export function createVideo<T = IResponseType<any>>(
+// 创建video
+export async function createVideo<T = IResponseType<any>>(
   videoId: string,
   title: string,
   desc: string,
@@ -39,7 +39,7 @@ export function createVideo<T = IResponseType<any>>(
   cateId: string,
   dt: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/video/create',
     data: {
       videoId,
@@ -53,13 +53,13 @@ export function createVideo<T = IResponseType<any>>(
     }
   });
 }
-//获取所有视频
-export function getAllVideo<T = IResponseType<any>>(
+// 获取所有视频
+export async function getAllVideo<T = IResponseType<any>>(
   offset: number,
   limit: number,
   keyword: string
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/video/all',
     params: {
       offset,
@@ -70,25 +70,25 @@ export function getAllVideo<T = IResponseType<any>>(
     }
   });
 }
-//获取视频URL
-export function getVideoURL<T = IResponseType<any>>(id: string) {
-  return gbRequest.get<T>({
+// 获取视频URL
+export async function getVideoURL<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
     url: `/video/url/${id}`
   });
 }
-export function getVideoDetail<T = IResponseType<any>>(id: string) {
-  return gbRequest.post<T>({
+export async function getVideoDetail<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
     url: `/video/detail/${id}`
   });
 }
-//获取用户视频
-export function getUserVideo<T = IResponseType<any>>(
+// 获取用户视频
+export async function getUserVideo<T = IResponseType<any>>(
   id: string,
   keyword: string,
   offset: number,
   limit: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: `/user/video/${id}`,
     params: {
       offset,
@@ -99,14 +99,14 @@ export function getUserVideo<T = IResponseType<any>>(
     }
   });
 }
-//获取订阅用户视频
-export function getSubUserVideo<T = IResponseType<any>>(
+// 获取订阅用户视频
+export async function getSubUserVideo<T = IResponseType<any>>(
   userId: string,
   offset: number,
   limit: number,
   isMonth: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: `/video/sub/user/${userId}`,
     params: {
       offset,
@@ -117,13 +117,13 @@ export function getSubUserVideo<T = IResponseType<any>>(
     }
   });
 }
-//获取用户点赞视频
-export function getThumbUserVideo<T = IResponseType<any>>(
+// 获取用户点赞视频
+export async function getThumbUserVideo<T = IResponseType<any>>(
   userId: string,
   offset: number,
   limit: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/video/thumb/user/' + userId,
     params: {
       offset,
@@ -131,9 +131,13 @@ export function getThumbUserVideo<T = IResponseType<any>>(
     }
   });
 }
-//获取相关视频
-export function getSimilarVideo<T = IResponseType<any>>(id: string, offset: number, limit: number) {
-  return gbRequest.post<T>({
+// 获取相关视频
+export async function getSimilarVideo<T = IResponseType<any>>(
+  id: string,
+  offset: number,
+  limit: number
+) {
+  return await gbRequest.post<T>({
     url: '/video/similar/' + id,
     params: {
       offset,
@@ -141,12 +145,12 @@ export function getSimilarVideo<T = IResponseType<any>>(id: string, offset: numb
     }
   });
 }
-export function getCollectionVideo<T = IResponseType<any>>(
+export async function getCollectionVideo<T = IResponseType<any>>(
   id: string,
   offset: number,
   limit: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/video/collection/' + id,
     params: {
       offset,
@@ -154,23 +158,23 @@ export function getCollectionVideo<T = IResponseType<any>>(
     }
   });
 }
-export function recordVideo<T = IResponseType<any>>(id: string) {
-  return gbRequest.post<T>({
+export async function recordVideo<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
     url: '/record/' + id
   });
 }
-export function getUserRecordVideo<T = IResponseType<any>>(id: string) {
-  return gbRequest.get<T>({
+export async function getUserRecordVideo<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
     url: '/record/user/' + id
   });
 }
-export function getUserRecordThumb<T = IResponseType<any>>(id: string) {
-  return gbRequest.get<T>({
+export async function getUserRecordThumb<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
     url: '/record/thumb/' + id
   });
 }
-export function addPlayCount<T = IResponseType<any>>(id: string) {
-  return gbRequest.post<T>({
+export async function addPlayCount<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
     url: 'video/playCount/' + id
   });
 }

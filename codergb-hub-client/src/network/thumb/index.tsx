@@ -1,8 +1,8 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-//点赞
-export function thumb<T = IResponseType<any>>(id: string, alias: string) {
-  return gbRequest.post<T>({
+import { type IResponseType } from '../../types/responseType';
+// 点赞
+export async function thumb<T = IResponseType<any>>(id: string, alias: string) {
+  return await gbRequest.post<T>({
     url: '/thumb',
     data: {
       id,
@@ -10,9 +10,9 @@ export function thumb<T = IResponseType<any>>(id: string, alias: string) {
     }
   });
 }
-//取消点赞
-export function cancelThumb<T = IResponseType<any>>(id: string, alias: string) {
-  return gbRequest.post<T>({
+// 取消点赞
+export async function cancelThumb<T = IResponseType<any>>(id: string, alias: string) {
+  return await gbRequest.post<T>({
     url: '/thumb/cancel',
     data: {
       id,
@@ -20,9 +20,9 @@ export function cancelThumb<T = IResponseType<any>>(id: string, alias: string) {
     }
   });
 }
-//踩
-export function tread<T = IResponseType<any>>(id: string, alias: string) {
-  return gbRequest.post<T>({
+// 踩
+export async function tread<T = IResponseType<any>>(id: string, alias: string) {
+  return await gbRequest.post<T>({
     url: '/tread',
     data: {
       id,
@@ -30,8 +30,8 @@ export function tread<T = IResponseType<any>>(id: string, alias: string) {
     }
   });
 }
-export function cancelTread<T = IResponseType<any>>(id: string, alias: string) {
-  return gbRequest.post<T>({
+export async function cancelTread<T = IResponseType<any>>(id: string, alias: string) {
+  return await gbRequest.post<T>({
     url: '/tread/cancel',
     data: {
       id,
@@ -39,9 +39,9 @@ export function cancelTread<T = IResponseType<any>>(id: string, alias: string) {
     }
   });
 }
-//获取视频点赞数
-export function getVideoThumb<T = IResponseType<any>>(id: string) {
-  return gbRequest.get<T>({
+// 获取视频点赞数
+export async function getVideoThumb<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
     url: 'thumb/video/' + id
   });
 }
