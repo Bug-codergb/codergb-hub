@@ -1,6 +1,6 @@
-import React, { memo, FC, ReactElement, MouseEvent, useEffect, useState, useRef } from 'react';
+import React, { memo, type FC, ReactElement, MouseEvent, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import Add from '../../../../../content/add/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,8 +12,8 @@ import {
   EyeOutlined
 } from '@ant-design/icons';
 import { VideoInfoWrapper } from './style';
-import { IVideo } from '../../../../../../types/video/IVideo';
-import { ILogin } from '../../../../../../types/login/ILogin';
+import { type IVideo } from '../../../../../../types/video/IVideo';
+import { type ILogin } from '../../../../../../types/login/ILogin';
 import { cancelSub, getUserSubCount, sub } from '../../../../../../network/subscriber';
 import {
   cancelThumb,
@@ -24,12 +24,11 @@ import {
 } from '../../../../../../network/thumb';
 import { useSub } from '../../../../../../hook/useSub';
 import { changeUserDetailAction } from '../../../../../../views/login/store/actionCreators';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 import { useThumb, useTread } from '../../../../../../hook/useThumb';
-import { IUserMsg } from '../../../../../../types/user/IUserMsg';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IAddType } from '../../../../../../constant/addList';
-import { ADD_PLAYLIST } from '../../../../../../constant/addList';
+import { type IUserMsg } from '../../../../../../types/user/IUserMsg';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IAddType, ADD_PLAYLIST } from '../../../../../../constant/addList';
 interface IAdd {
   liClick: (item: IAddType) => void;
 }
@@ -73,18 +72,18 @@ const VideoInfo: FC<IProps> = (props) => {
     }
   }, [videoInfo, videoId]);
   const subHandle = async () => {
-    if (videoInfo && videoInfo.user && !isSub) {
+    if (videoInfo?.user && !isSub) {
       const result = await sub(videoInfo?.user.userId);
       if (result.status === 200) {
         console.log(result.data);
       }
-    } else if (videoInfo && videoInfo.user && isSub) {
+    } else if (videoInfo?.user && isSub) {
       const result = await cancelSub(videoInfo.user.userId);
       if (result.status === 200) {
         console.log(result.data);
       }
     }
-    if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
+    if (videoInfo?.user && loginState && loginState.userMsg) {
       dispatch(changeUserDetailAction(loginState.userMsg.userId));
     }
     if (videoInfo) {
@@ -161,8 +160,7 @@ const VideoInfo: FC<IProps> = (props) => {
     <VideoInfoWrapper>
       <p className="video-title text-nowrap-mul-line">{videoInfo?.name}</p>
       <ul className="tag-list">
-        {videoInfo &&
-          videoInfo.tag &&
+        {videoInfo?.tag &&
           videoInfo.tag.length !== 0 &&
           videoInfo.tag.map((item, index) => {
             return (
@@ -178,7 +176,12 @@ const VideoInfo: FC<IProps> = (props) => {
         <div className="left-content">
           <div className="user-msg-container">
             {videoInfo && (
-              <div className="img-container" onClick={(e) => userRouter(videoInfo?.user)}>
+              <div
+                className="img-container"
+                onClick={(e) => {
+                  userRouter(videoInfo?.user);
+                }}
+              >
                 <img src={videoInfo?.user.avatarUrl} />
               </div>
             )}
@@ -188,36 +191,71 @@ const VideoInfo: FC<IProps> = (props) => {
             </div>
           </div>
           {videoInfo && loginState.userMsg.userId !== videoInfo.user.userId && (
-            <div className="sub-btn" onClick={(e) => subHandle()}>
+            <div
+              className="sub-btn"
+              onClick={async (e) => {
+                await subHandle();
+              }}
+            >
               {isSub ? '已订阅' : '订阅'}
             </div>
           )}
         </div>
         <div className="right-content">
-          <div className="collection" onClick={() => openChangeHandle()}>
+          <div
+            className="collection"
+            onClick={() => {
+              openChangeHandle();
+            }}
+          >
             <EyeOutlined />
             <span className="label">{playCount}</span>
           </div>
           <div className="thumb">
             <div className="thumb-inner">
               {videoInfo && !isThumb && (
-                <LikeOutlined className={`thumb-icon`} onClick={(e) => thumbHandle()} />
+                <LikeOutlined
+                  className={`thumb-icon`}
+                  onClick={async (e) => {
+                    await thumbHandle();
+                  }}
+                />
               )}
               {videoInfo && isThumb && (
-                <LikeFilled className={`thumb-icon`} onClick={(e) => thumbHandle()} />
+                <LikeFilled
+                  className={`thumb-icon`}
+                  onClick={async (e) => {
+                    await thumbHandle();
+                  }}
+                />
               )}
               <span className="label">{videoThumb}</span>
             </div>
             <div className="tread">
               {videoInfo && !isTread && (
-                <DislikeOutlined className="tread-icon" onClick={(e) => treadHandle()} />
+                <DislikeOutlined
+                  className="tread-icon"
+                  onClick={async (e) => {
+                    await treadHandle();
+                  }}
+                />
               )}
               {videoInfo && isTread && (
-                <DislikeFilled className="tread-icon" onClick={(e) => treadHandle()} />
+                <DislikeFilled
+                  className="tread-icon"
+                  onClick={async (e) => {
+                    await treadHandle();
+                  }}
+                />
               )}
             </div>
           </div>
-          <div className="collection" onClick={() => openChangeHandle()}>
+          <div
+            className="collection"
+            onClick={() => {
+              openChangeHandle();
+            }}
+          >
             <FileAddOutlined className={'collection-icon'} />
             <span className="label">保存</span>
           </div>

@@ -1,7 +1,7 @@
-import React, { memo, FC, useState, useRef, useEffect } from 'react';
+import React, { memo, type FC, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { VideoListWrapper } from './style';
-import { IVideo } from '../../../../types/video/IVideo';
+import { type IVideo } from '../../../../types/video/IVideo';
 import HeaderTitle from '../headerTitle';
 import VideoItem from '../../../../components/videoItem';
 import { getVideoURL } from '../../../../network/video';
@@ -31,7 +31,7 @@ const VideoList: FC<IProp> = (props) => {
   useEffect(() => {
     if (vioRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(videoURL);
         hls.attachMedia(vioRef.current);
       } else if (vioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
@@ -51,7 +51,13 @@ const VideoList: FC<IProp> = (props) => {
   };
   return (
     <VideoListWrapper>
-      <HeaderTitle title={title} more={more} moreHandle={() => moreClickHandle()} />
+      <HeaderTitle
+        title={title}
+        more={more}
+        moreHandle={() => {
+          moreClickHandle();
+        }}
+      />
       <ul className="vio-list">
         {video &&
           video.length !== 0 &&
@@ -59,15 +65,21 @@ const VideoList: FC<IProp> = (props) => {
             return (
               <li
                 key={item.id}
-                onClick={(e) => videoRouterHandle(item)}
+                onClick={(e) => {
+                  videoRouterHandle(item);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <VideoItem
                   img={
                     <img
                       src={item.picUrl}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
-                      onMouseEnter={(e) => mouseImgHandle(item, index)}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
+                      onMouseEnter={async (e) => {
+                        await mouseImgHandle(item, index);
+                      }}
                     />
                   }
                   video={
@@ -75,7 +87,9 @@ const VideoList: FC<IProp> = (props) => {
                       src={videoURL}
                       ref={vioRef}
                       autoPlay={true}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
                       muted={true}
                     />
                   }

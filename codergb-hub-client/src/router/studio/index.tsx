@@ -1,16 +1,18 @@
-import { RouteObject, Navigate } from 'react-router-dom';
+import { type RouteObject, Navigate } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-const AudioLibRoute = lazy(() => import('../../views/profile/pages/audioLib/index'));
-const CommentRoute = lazy(() => import('../../views/profile/pages/comment/index'));
-const ContentRoute = lazy(() => import('../../views/profile/pages/content/index'));
-const CopyrightRoute = lazy(() => import('../../views/profile/pages/copyright/index'));
-const CustomizeRoute = lazy(() => import('../../views/profile/pages/customize/index'));
-const DataAnalyzeRouter = lazy(() => import('../../views/profile/pages/dataAnalyze/index'));
-const IncomeRoute = lazy(() => import('../../views/profile/pages/income/index'));
-const MessageRoute = lazy(() => import('../../views/profile/pages/message/index'));
-const PlaylistRoute = lazy(() => import('../../views/profile/pages/playlist/index'));
-const SettingRoute = lazy(() => import('../../views/profile/pages/setting/index'));
-const SubtitleRoute = lazy(() => import('../../views/profile/pages/subtitle/index'));
+const AudioLibRoute = lazy(async () => await import('../../views/profile/pages/audioLib/index'));
+const CommentRoute = lazy(async () => await import('../../views/profile/pages/comment/index'));
+const ContentRoute = lazy(async () => await import('../../views/profile/pages/content/index'));
+const CopyrightRoute = lazy(async () => await import('../../views/profile/pages/copyright/index'));
+const CustomizeRoute = lazy(async () => await import('../../views/profile/pages/customize/index'));
+const DataAnalyzeRouter = lazy(
+  async () => await import('../../views/profile/pages/dataAnalyze/index')
+);
+const IncomeRoute = lazy(async () => await import('../../views/profile/pages/income/index'));
+const MessageRoute = lazy(async () => await import('../../views/profile/pages/message/index'));
+const PlaylistRoute = lazy(async () => await import('../../views/profile/pages/playlist/index'));
+const SettingRoute = lazy(async () => await import('../../views/profile/pages/setting/index'));
+const SubtitleRoute = lazy(async () => await import('../../views/profile/pages/subtitle/index'));
 const routes: RouteObject[] = [
   {
     path: '/studio',

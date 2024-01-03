@@ -1,7 +1,7 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-export function getExplore<T = IResponseType<any>>() {
-  return gbRequest.post<T>({
+import { type IResponseType } from '../../types/responseType';
+export async function getExplore<T = IResponseType<any>>() {
+  return await gbRequest.post<T>({
     url: '/user/all',
     params: {
       isExplore: 1

@@ -1,9 +1,9 @@
-import React, { memo, FC, ReactElement } from 'react';
+import React, { memo, type FC, type ReactElement } from 'react';
 import { notification } from 'antd';
 import { SubBtnWrapper } from './style';
 import { useSub } from '../../../hook/useSub';
 import { useLoginMsg } from '../../../hook/useLoginMsg';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { sub, cancelSub } from '../../../network/subscriber';
 import { changeUserDetailAction } from '../../../views/login/store/actionCreators';
@@ -36,7 +36,12 @@ const SubBtn: FC<IProps> = (props): ReactElement => {
   };
   return (
     <SubBtnWrapper>
-      <div className="inner" onClick={() => subHandler()}>
+      <div
+        className="inner"
+        onClick={async () => {
+          await subHandler();
+        }}
+      >
         {isSub ? '已订阅' : '订阅'}
       </div>
     </SubBtnWrapper>

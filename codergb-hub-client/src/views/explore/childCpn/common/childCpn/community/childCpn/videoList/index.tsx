@@ -1,11 +1,11 @@
-import React, { memo, FC, useState, useImperativeHandle, forwardRef, Ref } from 'react';
-import { IVideo } from '../../../../../../../../types/video/IVideo';
+import React, { memo, type FC, useState, useImperativeHandle, forwardRef, type Ref } from 'react';
+import { type IVideo } from '../../../../../../../../types/video/IVideo';
 import { Input, Pagination, Space } from 'antd';
 import { VideoListWrapper } from './style';
 import { getAllVideo, getUserVideo } from '../../../../../../../../network/video';
 import { useLoginMsg } from '../../../../../../../../hook/useLoginMsg';
-import { IResponseType } from '../../../../../../../../types/responseType';
-import { IPage } from '../../../../../../../../types/IPage';
+import { type IResponseType } from '../../../../../../../../types/responseType';
+import { type IPage } from '../../../../../../../../types/IPage';
 import HolderCpn from '../../../../../../../../components/holder';
 interface IVideoListRef {
   videoSource: IVideo | null;
@@ -77,7 +77,9 @@ const VideoList: FC<IProps> = forwardRef<IVideoListRef, IProps>((props, propsRef
             return (
               <li
                 key={item.id}
-                onClick={(e) => selectVideo(item, index)}
+                onClick={(e) => {
+                  selectVideo(item, index);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <div className="img-container">
@@ -98,7 +100,9 @@ const VideoList: FC<IProps> = forwardRef<IVideoListRef, IProps>((props, propsRef
             defaultCurrent={1}
             pageSize={8}
             total={total}
-            onChange={(e) => pageChange(e)}
+            onChange={async (e) => {
+              await pageChange(e);
+            }}
           />
         </div>
       )}

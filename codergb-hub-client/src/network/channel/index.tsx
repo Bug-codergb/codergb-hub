@@ -1,11 +1,11 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-//上传频道头像
-export function uploadAvatar<T = IResponseType<any>>(
+import { type IResponseType } from '../../types/responseType';
+// 上传频道头像
+export async function uploadAvatar<T = IResponseType<any>>(
   formData: FormData,
   getProgress: (progress: any) => void
 ): Promise<T> {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/channel/avatar/upload',
     data: formData,
     headers: {
@@ -16,15 +16,15 @@ export function uploadAvatar<T = IResponseType<any>>(
     }
   });
 }
-export function updateChannel<T = IResponseType<any>>(id: string, params: object) {
-  return gbRequest.post<T>({
+export async function updateChannel<T = IResponseType<any>>(id: string, params: object) {
+  return await gbRequest.post<T>({
     url: `/channel/${id}`,
     data: params
   });
 }
-//获取用户频道
-export function getUserChannel<T = IResponseType<any>>(id: string) {
-  return gbRequest.get<T>({
+// 获取用户频道
+export async function getUserChannel<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
     url: '/channel/user/' + id
   });
 }

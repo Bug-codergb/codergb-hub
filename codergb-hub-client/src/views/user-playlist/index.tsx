@@ -1,16 +1,16 @@
-import React, { memo, FC, useState, useEffect } from 'react';
+import React, { memo, type FC, useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { UserPlaylistWrapper, LeftContent, RightContent } from './style';
-import { IPlaylist } from '../../types/playlist/IPlaylist';
-import { IVideo } from '../../types/video/IVideo';
+import { type IPlaylist } from '../../types/playlist/IPlaylist';
+import { type IVideo } from '../../types/video/IVideo';
 import { getPlaylistDetail, getPlaylistVideo } from '../../network/playlist';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { ILogin } from '../../types/login/ILogin';
+import { type ILogin } from '../../types/login/ILogin';
 interface IProps {
   id?: string;
 }
@@ -73,13 +73,20 @@ const UserPlaylist: FC<IProps> = (props) => {
             video.map((item) => {
               return (
                 <li key={item.id}>
-                  <div className="cover-container" onClick={(e) => videoRouterHandle(item)}>
+                  <div
+                    className="cover-container"
+                    onClick={(e) => {
+                      videoRouterHandle(item);
+                    }}
+                  >
                     <img src={item.picUrl} />
                   </div>
                   <div className="later-right-info">
                     <p
                       className="vio-name text-nowrap-mul-line"
-                      onClick={(e) => videoRouterHandle(item)}
+                      onClick={(e) => {
+                        videoRouterHandle(item);
+                      }}
                     >
                       {item.name}
                     </p>

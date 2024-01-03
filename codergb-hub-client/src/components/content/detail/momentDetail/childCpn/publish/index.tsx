@@ -1,9 +1,9 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { PublishWrapper } from './style';
 import Comment from '../../../../../common/comment';
 import { useSelector } from 'react-redux';
-import { Map } from 'immutable';
-import { ILogin } from '../../../../../../types/login/ILogin';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../../../../../types/login/ILogin';
 
 interface IProps {
   id: string;

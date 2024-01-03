@@ -1,6 +1,6 @@
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
+import { type ILogin } from '../../types/login/ILogin';
 
 export const useLoginMsg = (): ILogin => {
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {

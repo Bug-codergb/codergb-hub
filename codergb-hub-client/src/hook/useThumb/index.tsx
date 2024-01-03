@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { Map } from 'immutable';
-import { ILogin } from '../../types/login/ILogin';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../types/login/ILogin';
 
 export const useThumb = (alias: 'video' | 'comment', id?: string): boolean => {
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {

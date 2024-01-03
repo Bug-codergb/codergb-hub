@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, useEffect, useState, useRef } from 'react';
+import React, { type ChangeEvent, type FC, memo, useEffect, useState, useRef } from 'react';
 import { Input, Layout } from 'antd';
 import { ChatWindowWrapper } from './style';
 import {
@@ -8,10 +8,10 @@ import {
   CommonWebSocket
 } from '../../../../../../network/websocket/chat';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
-import { IChatQueue } from '../../../../../../types/chat/IChat';
-import { IPage } from '../../../../../../types/IPage';
+import { type IChatQueue } from '../../../../../../types/chat/IChat';
+import { type IPage } from '../../../../../../types/IPage';
 import moment from 'moment';
-import { IResponseType } from '../../../../../../types/responseType';
+import { type IResponseType } from '../../../../../../types/responseType';
 
 const { Header, Footer, Sider, Content } = Layout;
 const { TextArea } = Input;
@@ -20,8 +20,8 @@ interface IProps {
   userName: string;
 }
 const ChatWindow: FC<IProps> = (props) => {
-  const { userName, userId } = props; //目标用户
-  //目标聊天用户
+  const { userName, userId } = props; // 目标用户
+  // 目标聊天用户
   const [targetUser, setTargetUser] = useState<string>(userId);
   const [targetUserName, setTargetUserName] = useState<string>(userName);
 
@@ -31,14 +31,14 @@ const ChatWindow: FC<IProps> = (props) => {
   const [chatContent, setContent] = useState<string>('');
   const login = useLoginMsg();
 
-  const [chatWebSocket, setChatWebSocket] = useState<CommonWebSocket | null>(null); //发布聊天
-  const [historyWebSocket, setHistoryWebSocket] = useState<CommonWebSocket | null>(null); //聊天记录
-  const [queueWebSocket, setQueueWebSocket] = useState<CommonWebSocket | null>(null); //聊天队列
+  const [chatWebSocket, setChatWebSocket] = useState<CommonWebSocket | null>(null); // 发布聊天
+  const [historyWebSocket, setHistoryWebSocket] = useState<CommonWebSocket | null>(null); // 聊天记录
+  const [queueWebSocket, setQueueWebSocket] = useState<CommonWebSocket | null>(null); // 聊天队列
   useEffect(() => {
-    //获取聊天队列(当前登陆人)
-    let params = {
-      targetUser: login.userMsg.userId, //当前登陆人
-      targetChatUser: targetUser //目标聊天用户是否再聊天队列里
+    // 获取聊天队列(当前登陆人)
+    const params = {
+      targetUser: login.userMsg.userId, // 当前登陆人
+      targetChatUser: targetUser // 目标聊天用户是否再聊天队列里
     };
     const webSocket = new CommonWebSocket(CHAT_QUEUE, params);
     setQueueWebSocket(webSocket);
@@ -50,14 +50,14 @@ const ChatWindow: FC<IProps> = (props) => {
       }
     };
   }, [login.userMsg.userId]);
-  //聊天发布(交互socket)
+  // 聊天发布(交互socket)
   useEffect(() => {
     if (targetUser && login.userMsg.userId) {
-      let params = {
-        targetUser: targetUser,
+      const params = {
+        targetUser,
         sourceUser: login.userMsg.userId
       };
-      let webSocket = new CommonWebSocket(CHAT, params);
+      const webSocket = new CommonWebSocket(CHAT, params);
       setChatWebSocket(webSocket);
       webSocket.websocket.onmessage = function (e) {
         if (historyWebSocket) {
@@ -72,17 +72,17 @@ const ChatWindow: FC<IProps> = (props) => {
       };
     }
   }, [targetUser, login.userMsg.userId, historyWebSocket]);
-  //聊天记录
+  // 聊天记录
   const [contentHistory, setContentHistory] = useState<IChatQueue[]>([]);
   const [contentHistoryTotal, setContentHistoryTotal] = useState<number>(0);
   useEffect(() => {
     if (targetUser) {
-      let params = {
-        targetUser: targetUser,
+      const params = {
+        targetUser,
         sourceUser: login.userMsg.userId,
         limit: 30000
       };
-      let webSocket = new CommonWebSocket(CHAT_CONTENT, params);
+      const webSocket = new CommonWebSocket(CHAT_CONTENT, params);
       setHistoryWebSocket(webSocket);
       webSocket.websocket.onmessage = function (e) {
         const data: IResponseType<IPage<IChatQueue[]>> = JSON.parse(e.data);
@@ -98,7 +98,7 @@ const ChatWindow: FC<IProps> = (props) => {
       };
     }
   }, [targetUser, queueWebSocket]);
-  //聊天输入
+  // 聊天输入
   const chatInp = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget && e.currentTarget.value !== undefined && e.currentTarget.value !== null) {
       setContent(e.currentTarget.value);
@@ -121,7 +121,7 @@ const ChatWindow: FC<IProps> = (props) => {
   useEffect(() => {
     console.log(contentRef.current?.offsetHeight, contentRef.current?.scrollHeight);
     if (contentRef.current && contentRef.current.offsetHeight <= contentRef.current.scrollHeight) {
-      contentRef.current.scrollTop = contentRef.current.scrollHeight; //-contentRef.current.offsetHeight
+      contentRef.current.scrollTop = contentRef.current.scrollHeight; // -contentRef.current.offsetHeight
     }
   }, [contentRef.current, contentHistory.length]);
   return (
@@ -136,7 +136,9 @@ const ChatWindow: FC<IProps> = (props) => {
                 return (
                   <li
                     key={item.id}
-                    onClick={(e) => userClick(item, index)}
+                    onClick={(e) => {
+                      userClick(item, index);
+                    }}
                     className={currentIndex === index ? 'active' : ''}
                   >
                     <div className="img-container">
@@ -177,10 +179,22 @@ const ChatWindow: FC<IProps> = (props) => {
           </Content>
           <Footer className="gb-chat-footer">
             <div className="chat-inp">
-              <TextArea rows={3} maxLength={500} value={chatContent} onChange={(e) => chatInp(e)} />
+              <TextArea
+                rows={3}
+                maxLength={500}
+                value={chatContent}
+                onChange={(e) => {
+                  chatInp(e);
+                }}
+              />
             </div>
             <div className="publish-container">
-              <div className="publish-btn" onClick={(e) => publishContent()}>
+              <div
+                className="publish-btn"
+                onClick={(e) => {
+                  publishContent();
+                }}
+              >
                 发布
               </div>
             </div>

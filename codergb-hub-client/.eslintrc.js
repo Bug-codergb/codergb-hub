@@ -21,6 +21,8 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "react/display-name": "off",
+    "@typescript-eslint/no-floating-promises":"off"
   }
 };

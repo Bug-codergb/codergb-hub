@@ -1,16 +1,16 @@
-import React, { memo, FC, ReactElement, useEffect, useState, FormEvent } from 'react';
+import React, { memo, type FC, ReactElement, useEffect, useState, type FormEvent } from 'react';
 import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { SearchOutlined } from '@ant-design/icons';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { HistoryWrapper, LeftContentWrapper, RightContentWrapper } from './style';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
+import { type ILogin } from '../../types/login/ILogin';
 import { deleteAllHistory, getUserHistory } from '../../network/history';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
-import { IVideo } from '../../types/video/IVideo';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
+import { type IVideo } from '../../types/video/IVideo';
 import VideoItem from '../../components/videoItem';
 const History: FC = () => {
   const [video, setVideo] = useState<IVideo[]>([]);
@@ -72,7 +72,12 @@ const History: FC = () => {
             video.length !== 0 &&
             video.map((item, index) => {
               return (
-                <li key={item.id} onClick={(e) => videoRouterHandle(item)}>
+                <li
+                  key={item.id}
+                  onClick={(e) => {
+                    videoRouterHandle(item);
+                  }}
+                >
                   <p className="time">
                     {moment().format('yyyy-MM-DD') === moment(item.history).format('yyyy-MM-DD')
                       ? moment(item.history).fromNow()
@@ -102,17 +107,33 @@ const History: FC = () => {
       </LeftContentWrapper>
       <RightContentWrapper isBolderBorder={isBolderBorder}>
         <div className="search-outer">
-          <SearchOutlined onClick={(e) => confirmSearch()} />
+          <SearchOutlined
+            onClick={async (e) => {
+              await confirmSearch();
+            }}
+          />
           <input
             type={'input'}
             placeholder="搜索观看记录"
-            onInput={(e) => searchHistory(e)}
-            onFocus={(e) => setIsBolderBorder(true)}
-            onBlur={(e) => setIsBolderBorder(false)}
+            onInput={(e) => {
+              searchHistory(e);
+            }}
+            onFocus={(e) => {
+              setIsBolderBorder(true);
+            }}
+            onBlur={(e) => {
+              setIsBolderBorder(false);
+            }}
           />
         </div>
         <ul className="operate">
-          <li onClick={(e) => setIsShowDelHisModal(true)}>清除所有历史记录</li>
+          <li
+            onClick={(e) => {
+              setIsShowDelHisModal(true);
+            }}
+          >
+            清除所有历史记录
+          </li>
           <li>暂停观看记录</li>
           <li>管理所有历史记录</li>
         </ul>

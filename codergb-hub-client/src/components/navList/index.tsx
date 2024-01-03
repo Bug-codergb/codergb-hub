@@ -1,25 +1,33 @@
-import React, { memo, FC, ReactElement, useState, ChangeEvent, useEffect, Suspense } from 'react';
+import React, {
+  memo,
+  type FC,
+  type ReactElement,
+  useState,
+  type ChangeEvent,
+  useEffect,
+  Suspense
+} from 'react';
 import { useNavigate } from 'react-router';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { NavListWrapper } from './style';
 import {
   HOME_PATH,
   mainMenu,
-  MainMenuType,
+  type MainMenuType,
   profileMenu,
   studioMenu,
   USER_PLAYLIST
 } from '../../constant/menu';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
+import { type ILogin } from '../../types/login/ILogin';
 import UserIcon from '../../assets/html/user/userIcon';
 
 import ImgUpload from '../common/imgUpload';
 import { userUploadAvatar } from '../../network/user';
 import { getUserPlaylist } from '../../network/playlist';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
-import { IPlaylist } from '../../types/playlist/IPlaylist';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
+import { type IPlaylist } from '../../types/playlist/IPlaylist';
 import PlaylistIcon from '../../assets/html/playlist/playlistIcon';
 import PlaylistShadowIcon from '../../assets/html/playlist/playlistShadowIcon';
 import { routes } from '../../router';
@@ -32,7 +40,7 @@ const NavList: FC<IProps> = (props): ReactElement => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [homeMain, setHomeMain] = useState<MainMenuType[]>(profileMenu);
-  //const [progress,setProgress]=useState<number>(0);
+  // const [progress,setProgress]=useState<number>(0);
   const navigate = useNavigate();
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
@@ -55,7 +63,7 @@ const NavList: FC<IProps> = (props): ReactElement => {
                 };
               });
               if (list.length !== 0) {
-                /*for(let item of list){
+                /* for(let item of list){
                 const childrenRoute = routes.find((it)=>{
                   return it.path === HOME_PATH
                 })
@@ -69,8 +77,8 @@ const NavList: FC<IProps> = (props): ReactElement => {
                     )
                   })
                 }
-              }*/
-                let newMenu = profileMenu.concat(list);
+              } */
+                const newMenu = profileMenu.concat(list);
                 setHomeMain(newMenu);
               }
             }
@@ -112,7 +120,13 @@ const NavList: FC<IProps> = (props): ReactElement => {
             )}
             {login.userMsg && !login.userMsg.avatarUrl && <UserIcon />}
             {login.userMsg && !login.userMsg.avatarUrl && (
-              <input type={'file'} onChange={(e) => fileChange(e)} className="upload-avatar-icon" />
+              <input
+                type={'file'}
+                onChange={(e) => {
+                  fileChange(e);
+                }}
+                className="upload-avatar-icon"
+              />
             )}
             <ImgUpload
               isShow={isAvatarModalOpen}
@@ -120,8 +134,12 @@ const NavList: FC<IProps> = (props): ReactElement => {
               realWidth={200}
               fileSource={file}
               aspectRatio={1}
-              handleOk={(file?: File) => handleAvatarOk(file)}
-              handleCancel={() => setIsAvatarModalOpen(false)}
+              handleOk={(file?: File) => {
+                handleAvatarOk(file);
+              }}
+              handleCancel={() => {
+                setIsAvatarModalOpen(false);
+              }}
               uploadName={'avatar'}
               network={userUploadAvatar}
             />
@@ -136,7 +154,9 @@ const NavList: FC<IProps> = (props): ReactElement => {
             return (
               <li
                 key={item.name}
-                onClick={(e) => navClickHandle(item, index)}
+                onClick={(e) => {
+                  navClickHandle(item, index);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <div className="nav-icon">
@@ -153,7 +173,9 @@ const NavList: FC<IProps> = (props): ReactElement => {
             return (
               <li
                 key={item.name}
-                onClick={(e) => navClickHandle(item, index)}
+                onClick={(e) => {
+                  navClickHandle(item, index);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <div className="nav-icon">
@@ -170,7 +192,12 @@ const NavList: FC<IProps> = (props): ReactElement => {
           homeMain &&
           homeMain.map((item, index) => {
             return (
-              <li key={item.name} onClick={(e) => navClickHandle(item, index + mainMenu.length)}>
+              <li
+                key={item.name}
+                onClick={(e) => {
+                  navClickHandle(item, index + mainMenu.length);
+                }}
+              >
                 <div className="nav-icon">
                   {currentIndex === index + mainMenu.length ? item.shadowIcon : item.icon}
                 </div>

@@ -1,6 +1,6 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import CommunityPro from '../../../../../../views/explore/childCpn/common/childCpn/community';
-import { IChannel } from '../../../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../../../types/channel/IChannel';
 interface IProps {
   userId: string;
   channel?: IChannel;

@@ -1,9 +1,9 @@
-import React, { memo, FC, useState, useEffect } from 'react';
+import React, { memo, type FC, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IPlaylist } from '../../../../../../types/playlist/IPlaylist';
+import { type IPlaylist } from '../../../../../../types/playlist/IPlaylist';
 import { getUserPlaylist } from '../../../../../../network/playlist';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IPage } from '../../../../../../types/IPage';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IPage } from '../../../../../../types/IPage';
 import HolderCpn from '../../../../../holder';
 import moment from 'moment';
 import { PlaylistWrapper } from './style';
@@ -39,7 +39,12 @@ const CreatePlaylist: FC<IProps> = (props) => {
           playlist.map((item) => {
             return (
               <li key={item.id}>
-                <div className={'cover'} onClick={(e) => playlistRouter(item)}>
+                <div
+                  className={'cover'}
+                  onClick={(e) => {
+                    playlistRouter(item);
+                  }}
+                >
                   <img src={item.picUrl} />
                 </div>
                 <div className="state">

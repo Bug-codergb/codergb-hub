@@ -1,7 +1,7 @@
 import React, {
   memo,
-  FC,
-  ReactElement,
+  type FC,
+  type ReactElement,
   useState,
   useEffect,
   useRef,
@@ -27,13 +27,13 @@ const CustomizeUpload: FC<IProps> = forwardRef((props, propsRef): ReactElement =
     if (file) {
       if (imgRef && imgRef.current) {
         console.log(cropper);
-        let url = URL.createObjectURL(file);
-        let cropperContainer = new Cropper(imgRef.current, {
+        const url = URL.createObjectURL(file);
+        const cropperContainer = new Cropper(imgRef.current, {
           ready: function () {
             console.log('ready');
           },
           dragMode: 'move',
-          aspectRatio: aspectRatio,
+          aspectRatio,
           viewMode: 1,
           background: false,
           zoomable: false,
@@ -45,9 +45,9 @@ const CustomizeUpload: FC<IProps> = forwardRef((props, propsRef): ReactElement =
     }
   }, [file]);
   const getCropperFile = async () => {
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       if (cropper) {
-        let canvasFile = cropper.getCroppedCanvas({
+        const canvasFile = cropper.getCroppedCanvas({
           imageSmoothingQuality: 'high',
           width: realWidth,
           imageSmoothingEnabled: false,
@@ -70,7 +70,7 @@ const CustomizeUpload: FC<IProps> = forwardRef((props, propsRef): ReactElement =
   };
   useImperativeHandle(propsRef, () => {
     return {
-      getCropperFile: getCropperFile
+      getCropperFile
     };
   });
   return (

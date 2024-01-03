@@ -1,9 +1,9 @@
-import React, { memo, FC, useEffect, useState } from 'react';
+import React, { memo, type FC, useEffect, useState } from 'react';
 import { SimilarWrapper } from './style';
 import { getSimilarVideo, getUserVideo } from '../../../../../../network/video';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IPage } from '../../../../../../types/IPage';
-import { IVideo } from '../../../../../../types/video/IVideo';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IPage } from '../../../../../../types/IPage';
+import { type IVideo } from '../../../../../../types/video/IVideo';
 import moment from 'moment';
 import { getDurationByTimestamp } from '../../../../../../utils/time';
 interface IProps {
@@ -65,7 +65,9 @@ const Similar: FC<IProps> = (props) => {
               <li
                 key={item}
                 className={currentIndex === index ? 'active' : ''}
-                onClick={(e) => liClick(item, index)}
+                onClick={(e) => {
+                  liClick(item, index);
+                }}
               >
                 {item}
               </li>
@@ -80,7 +82,12 @@ const Similar: FC<IProps> = (props) => {
             return (
               videoId !== item.id && (
                 <li key={item.id}>
-                  <div className="vio-img-container" onClick={(e) => videoClick(item)}>
+                  <div
+                    className="vio-img-container"
+                    onClick={(e) => {
+                      videoClick(item);
+                    }}
+                  >
                     <img src={item.picUrl} alt={item.name} />
                     <div className="dt">{getDurationByTimestamp(item.dt ? item.dt : '0')}</div>
                   </div>

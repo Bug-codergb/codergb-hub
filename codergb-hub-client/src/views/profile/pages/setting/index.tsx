@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement } from 'react';
+import React, { memo, type FC, ReactElement } from 'react';
 const Setting: FC = () => {
   return <div>设置</div>;
 };

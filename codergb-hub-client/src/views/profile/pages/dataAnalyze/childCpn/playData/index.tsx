@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { PlayDataWrapper } from './style';
-import { IResponseType } from '../../../../../../types/responseType';
+import { type IResponseType } from '../../../../../../types/responseType';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 import { getUserRecordVideo } from '../../../../../../network/video';
 interface IRecord {
@@ -17,12 +17,12 @@ const PlayData = () => {
         if (res.status === 200 && res.data.length !== 0) {
           const key = [];
           const value = [];
-          for (let item of res.data) {
+          for (const item of res.data) {
             key.push(item.createTime);
             value.push(item.count);
           }
-          let chartDom = divRef.current;
-          let myChart = echarts.init(chartDom);
+          const chartDom = divRef.current;
+          const myChart = echarts.init(chartDom);
           const option = {
             title: {
               text: '作品近一个月播放量',

@@ -1,11 +1,10 @@
-import React, { memo, FC, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import React, { memo, type FC, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { SearchDetailWrapper } from './style';
-import { IVideo } from '../../../../types/video/IVideo';
+import { type IVideo } from '../../../../types/video/IVideo';
 import { getAllVideo } from '../../../../network/video';
-import { IResponseType } from '../../../../types/responseType';
-import { IPage } from '../../../../types/IPage';
+import { type IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
 import VideoItem from '../../../videoItem';
 const SearchDetail: FC = () => {
   const location = useLocation();
@@ -42,7 +41,15 @@ const SearchDetail: FC = () => {
             return (
               <li key={item.id}>
                 <VideoItem
-                  img={<img src={item.picUrl} alt={item.name} onClick={() => videoRouter(item)} />}
+                  img={
+                    <img
+                      src={item.picUrl}
+                      alt={item.name}
+                      onClick={() => {
+                        videoRouter(item);
+                      }}
+                    />
+                  }
                   isFlex={true}
                   state={item.name}
                   createTime={item.createTime}

@@ -1,12 +1,12 @@
-import React, { memo, FC, ReactElement, useState, useEffect } from 'react';
-import { Map } from 'immutable';
+import React, { memo, type FC, type ReactElement, useState, useEffect } from 'react';
+import { type Map } from 'immutable';
 import { MoreOutlined } from '@ant-design/icons';
 import { UserBlockListWrapper } from './style';
-import { IBlock } from '../../../../../../../../../../types/block/IBlock';
+import { type IBlock } from '../../../../../../../../../../types/block/IBlock';
 import { getUserBlock } from '../../../../../../../../../../network/block';
-import { IResponseType } from '../../../../../../../../../../types/responseType';
+import { type IResponseType } from '../../../../../../../../../../types/responseType';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../../../../../../../../../types/login/ILogin';
+import { type ILogin } from '../../../../../../../../../../types/login/ILogin';
 import EmptyHolder from '../../../../../../../../../../components/common/emptyHolder';
 const UserBlockList: FC = (): ReactElement => {
   const [block, setBlock] = useState<IBlock[]>([]);

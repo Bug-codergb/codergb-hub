@@ -1,13 +1,13 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import React, { memo, type FC, ReactElement, useEffect, useState } from 'react';
 import { ReplyWrapper } from './style';
 import { getAllReply, replyComment } from '../../../../../network/comment';
-import { IResponseType } from '../../../../../types/responseType';
-import { IPage } from '../../../../../types/IPage';
-import { IComment } from '../../../../../types/comment/IComment';
+import { type IResponseType } from '../../../../../types/responseType';
+import { type IPage } from '../../../../../types/IPage';
+import { type IComment } from '../../../../../types/comment/IComment';
 import moment from 'moment';
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import Publish from '../../../publish';
-import { IUserMsg } from '../../../../../types/user/IUserMsg';
+import { type IUserMsg } from '../../../../../types/user/IUserMsg';
 import ReplyItem from './childCpn/replyItem';
 interface IProps {
   id: string;
@@ -61,9 +61,15 @@ const Reply: FC<IProps> = (props) => {
                   reply={item}
                   id={id}
                   user={user}
-                  thubmHandler={() => thubmHandler()}
-                  propsShowReplyHandle={(index) => showReplyHandle(index)}
-                  propsReplyReplyHandle={(content, item) => replyReplyHandle(content, item)}
+                  thubmHandler={async () => {
+                    await thubmHandler();
+                  }}
+                  propsShowReplyHandle={(index) => {
+                    showReplyHandle(index);
+                  }}
+                  propsReplyReplyHandle={async (content, item) => {
+                    await replyReplyHandle(content, item);
+                  }}
                 />
               </li>
             );

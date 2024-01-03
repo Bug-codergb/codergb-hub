@@ -1,7 +1,11 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-export function getUserCol<T = IResponseType<any>>(id: string, offset: number, limit: number) {
-  return gbRequest.post<T>({
+import { type IResponseType } from '../../types/responseType';
+export async function getUserCol<T = IResponseType<any>>(
+  id: string,
+  offset: number,
+  limit: number
+) {
+  return await gbRequest.post<T>({
     url: '/collection/user/' + id,
     params: {
       offset,
@@ -9,8 +13,8 @@ export function getUserCol<T = IResponseType<any>>(id: string, offset: number, l
     }
   });
 }
-export function getCollectionDetail<T = IResponseType<any>>(id: string) {
-  return gbRequest.post<T>({
+export async function getCollectionDetail<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
     url: '/collection/detail/' + id
   });
 }

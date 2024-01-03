@@ -1,13 +1,13 @@
-import React, { memo, FC, ReactElement, FormEvent, useState } from 'react';
-import { Map } from 'immutable';
+import React, { memo, type FC, type ReactElement, type FormEvent, useState } from 'react';
+import { type Map } from 'immutable';
 import { Input, notification } from 'antd';
 import { BasicWrapper } from './style';
 import { useDispatch, useSelector } from 'react-redux';
-import { IChannel } from '../../../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../../../types/channel/IChannel';
 import { updateChannel } from '../../../../../../network/channel';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 import { changeChannelAction } from '../../store/actionCreators';
-import { ILogin } from '../../../../../../types/login/ILogin';
+import { type ILogin } from '../../../../../../types/login/ILogin';
 const { TextArea } = Input;
 const Basic: FC = (): ReactElement => {
   const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
@@ -28,7 +28,7 @@ const Basic: FC = (): ReactElement => {
   const updateChannelHandle = async () => {
     const result = await updateChannel(channel.id, {
       description: desc,
-      name: name
+      name
     });
     if (result.status === 200) {
       dispatch(changeChannelAction(login.userMsg.userId));
@@ -44,19 +44,29 @@ const Basic: FC = (): ReactElement => {
       <div className="publish-outer">
         <button
           disabled={!name || name.trim().length === 0 || !desc || desc.trim().length === 0}
-          onClick={(e) => updateChannelHandle()}
+          onClick={async (e) => {
+            await updateChannelHandle();
+          }}
         >
           发布
         </button>
       </div>
       <div className="name-label-first">名称</div>
       <p className="desc-label">选用的频道名称要能反映您的身份和内容。</p>
-      <Input placeholder="请输入人频道名称" value={name} onInput={(e) => channelNameInp(e)} />
+      <Input
+        placeholder="请输入人频道名称"
+        value={name}
+        onInput={(e) => {
+          channelNameInp(e);
+        }}
+      />
       <div className="name-label-second">说明</div>
       <p className="desc-label">请介绍您的频道，方便大家认识你</p>
       <TextArea
         rows={4}
-        onInput={(e) => channelDescInp(e)}
+        onInput={(e) => {
+          channelDescInp(e);
+        }}
         value={desc}
         placeholder="请输入简介"
         maxLength={200}

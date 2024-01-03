@@ -1,9 +1,9 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import React, { memo, type FC, type ReactElement, useEffect, useState } from 'react';
 import { getAllCate } from '../../network/category';
-import { ICate } from '../../types/category/ICate';
-import { IResponseType } from '../../types/responseType';
+import { type ICate } from '../../types/category/ICate';
+import { type IResponseType } from '../../types/responseType';
 import { AllWrapper } from './style';
-import { IPage } from '../../types/IPage';
+import { type IPage } from '../../types/IPage';
 const AllVideo: FC = (): ReactElement => {
   const [cate, setCate] = useState<ICate[]>([]);
   const [count, setCount] = useState<number>(0);
@@ -29,7 +29,9 @@ const AllVideo: FC = (): ReactElement => {
             return (
               <li
                 className={`item ${currentIndex === index ? 'active' : ''}`}
-                onClick={() => liClick(item, index)}
+                onClick={() => {
+                  liClick(item, index);
+                }}
                 key={item.id}
               >
                 {item.name}

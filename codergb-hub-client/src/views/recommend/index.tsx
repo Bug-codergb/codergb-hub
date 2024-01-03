@@ -1,20 +1,20 @@
 import React, {
   memo,
-  FC,
-  ReactElement,
+  type FC,
+  type ReactElement,
   useEffect,
   useState,
   useRef,
   createRef,
-  RefObject,
+  type RefObject,
   useMemo
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RecommendWrapper } from './style';
-import { IVideo } from '../../types/video/IVideo';
+import { type IVideo } from '../../types/video/IVideo';
 import { getAllVideo, getVideoURL } from '../../network/video';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import VideoItem from '../../components/videoItem';
 import HolderCpn from '../../components/holder';
 import Hls from 'hls.js';
@@ -39,7 +39,7 @@ const Recommend: FC = (): ReactElement => {
     getAllVideo<IResponseType<IPage<IRecommendVideo[]>>>(0, 50, '').then((data) => {
       if (data.status === 200) {
         if (data.data.list && data.data.list.length !== 0) {
-          for (let item of data.data.list) {
+          for (const item of data.data.list) {
             item.vioRef = createRef<HTMLLIElement>();
           }
           setVideo(data.data.list);
@@ -51,7 +51,7 @@ const Recommend: FC = (): ReactElement => {
   useEffect(() => {
     if (vioRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(videoURL);
         hls.attachMedia(vioRef.current);
       } else if (vioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
@@ -73,7 +73,7 @@ const Recommend: FC = (): ReactElement => {
     itemOffset: number,
     boundary: 'left' | 'right' | 'top'
   ): boolean => {
-    //console.log(containerWidth,itemOffset,itemWidth)
+    // console.log(containerWidth,itemOffset,itemWidth)
     if (boundary === 'right') {
       if (containerWidth - itemOffset - 16 <= itemWidth) {
         return true;
@@ -123,7 +123,7 @@ const Recommend: FC = (): ReactElement => {
       setIsTop(isT);
     }
     if (timer) clearTimeout(timer);
-    let timeoutTimer = setTimeout(async () => {
+    const timeoutTimer = setTimeout(async () => {
       setCurrentIndex(index);
       const res = await getVideoURL(item.id);
       if (res.status === 200) {
@@ -145,7 +145,9 @@ const Recommend: FC = (): ReactElement => {
             return (
               <li
                 key={item.id}
-                onClick={(e) => videoRouterHandle(item)}
+                onClick={(e) => {
+                  videoRouterHandle(item);
+                }}
                 className={currentIndex === index ? 'active' : ''}
                 ref={item.vioRef}
               >
@@ -153,8 +155,12 @@ const Recommend: FC = (): ReactElement => {
                   img={
                     <img
                       src={item.picUrl}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
-                      onMouseEnter={(e) => mouseImgHandle(item, index)}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
+                      onMouseEnter={async (e) => {
+                        await mouseImgHandle(item, index);
+                      }}
                     />
                   }
                   video={
@@ -162,7 +168,9 @@ const Recommend: FC = (): ReactElement => {
                       src={videoURL}
                       ref={vioRef}
                       autoPlay={true}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
                       muted={true}
                     />
                   }

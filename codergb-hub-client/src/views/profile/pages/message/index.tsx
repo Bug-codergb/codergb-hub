@@ -1,14 +1,14 @@
-import React, { memo, FC, useEffect, useState } from 'react';
+import React, { memo, type FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { Divider, Radio, Table } from 'antd';
 import { MessageWrapper } from './style';
-import { INotify } from '../../../../types/message';
-import { ILogin } from '../../../../types/login/ILogin';
+import { type INotify } from '../../../../types/message';
+import { type ILogin } from '../../../../types/login/ILogin';
 import { useSelector } from 'react-redux';
 import { getAllNotify } from '../../../../network/notify';
-import { IResponseType } from '../../../../types/responseType';
-import { IPage } from '../../../../types/IPage';
+import { type IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
 import { columns } from './config';
 const Message: FC = () => {
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
@@ -59,7 +59,9 @@ const Message: FC = () => {
           pagination={{
             pageSize: 6,
             total: count,
-            onChange: (e) => pageChangeHandle(e)
+            onChange: (e) => {
+              pageChangeHandle(e);
+            }
           }}
         />
       )}

@@ -1,7 +1,7 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-export function getAllCate<T = IResponseType<any>>(offset: number, limit: number) {
-  return gbRequest.get<T>({
+import { type IResponseType } from '../../types/responseType';
+export async function getAllCate<T = IResponseType<any>>(offset: number, limit: number) {
+  return await gbRequest.get<T>({
     url: '/cate/all',
     params: {
       offset,
@@ -9,8 +9,8 @@ export function getAllCate<T = IResponseType<any>>(offset: number, limit: number
     }
   });
 }
-export function getCateExplore<T = IResponseType<any>>() {
-  return gbRequest.get<T>({
+export async function getCateExplore<T = IResponseType<any>>() {
+  return await gbRequest.get<T>({
     url: '/cate/explore'
   });
 }

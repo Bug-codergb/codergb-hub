@@ -2,7 +2,7 @@ import React from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import { Tag } from 'antd';
 import moment from 'moment';
-import { IComment } from '../../../../types/comment/IComment';
+import { type IComment } from '../../../../types/comment/IComment';
 import { CommentItemWrapper } from './style';
 
 const columns: ColumnsType<IComment> = [

@@ -3,8 +3,8 @@ import { Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 
-import { NavigateFunction } from 'react-router-dom';
-import { INotify } from '../../../../types/message';
+import { type NavigateFunction } from 'react-router-dom';
+import { type INotify } from '../../../../types/message';
 import { NotifyWrapper } from './style';
 const videoRouter = (item: INotify, navigate: NavigateFunction) => {};
 const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {

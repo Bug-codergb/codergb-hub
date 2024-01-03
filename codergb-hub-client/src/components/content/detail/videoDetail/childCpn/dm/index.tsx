@@ -1,4 +1,4 @@
-import React, { memo, FC, useState, FormEvent } from 'react';
+import React, { memo, type FC, useState, type FormEvent } from 'react';
 import { DmWrapper } from './style';
 import { pubDm } from '../../../../../../network/dm';
 import moment from 'moment';
@@ -28,10 +28,17 @@ const Dm: FC<IProps> = (props) => {
         <input
           type={'text'}
           value={content}
-          onInput={(e) => dmInp(e)}
+          onInput={(e) => {
+            dmInp(e);
+          }}
           placeholder={'发个弹幕,见证当下'}
         />
-        <div className="pub" onClick={(e) => pubHandle()}>
+        <div
+          className="pub"
+          onClick={(e) => {
+            pubHandle();
+          }}
+        >
           发送
         </div>
       </div>

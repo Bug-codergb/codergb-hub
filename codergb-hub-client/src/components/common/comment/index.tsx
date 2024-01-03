@@ -1,4 +1,12 @@
-import React, { memo, FC, ReactElement, useEffect, useState, FormEvent, useRef } from 'react';
+import React, {
+  memo,
+  type FC,
+  type ReactElement,
+  useEffect,
+  useState,
+  type FormEvent,
+  useRef
+} from 'react';
 import moment from 'moment';
 import {
   LikeOutlined,
@@ -10,11 +18,11 @@ import {
 } from '@ant-design/icons';
 import { Map } from 'immutable';
 import { CommentWrapper } from './style';
-import { IUserMsg } from '../../../types/user/IUserMsg';
+import { type IUserMsg } from '../../../types/user/IUserMsg';
 import { getAllComment, publishComment, replyComment } from '../../../network/comment';
-import { IResponseType } from '../../../types/responseType';
-import { IPage } from '../../../types/IPage';
-import { IComment } from '../../../types/comment/IComment';
+import { type IResponseType } from '../../../types/responseType';
+import { type IPage } from '../../../types/IPage';
+import { type IComment } from '../../../types/comment/IComment';
 import Reply from './childCpn/reply';
 import Publish from '../publish';
 import { useThumb, useTread } from '../../../hook/useThumb';
@@ -53,7 +61,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
     setIsFocus(true);
   };
   const inpBlurHandle = () => {
-    //setIsFocus(false);
+    // setIsFocus(false);
   };
   const inpChangeHandle = (e: FormEvent<HTMLInputElement>) => {
     setContent(e.currentTarget.value);
@@ -62,7 +70,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
     setIsFocus(false);
     setContent('');
   };
-  //发表评论
+  // 发表评论
   const publishHandle = () => {
     publishComment(id, alias, content).then((data) => {
       console.log(data);
@@ -73,7 +81,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
       }
     });
   };
-  //显示回复评论内容
+  // 显示回复评论内容
   const showReply = (index: number) => {
     if (index === comIndex) {
       setComIndex(-1);
@@ -81,7 +89,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
       setComIndex(index);
     }
   };
-  //显示回复发布框
+  // 显示回复发布框
   const showReplyHandle = (index: number) => {
     if (index === replyIndex) {
       setReplyIndex(-1);
@@ -89,7 +97,7 @@ const Comment: FC<IProps> = (props): ReactElement => {
       setReplyIndex(index);
     }
   };
-  //回复评论
+  // 回复评论
   const publishReplyHandle = async (content: string, item: IComment) => {
     console.log(content, item);
     const result = await replyComment(item.id, content);
@@ -113,20 +121,33 @@ const Comment: FC<IProps> = (props): ReactElement => {
               type={'text'}
               placeholder="添加评论..."
               value={content}
-              onFocus={(e) => inpFocusHandle()}
-              onBlur={(e) => inpBlurHandle()}
-              onInput={(e) => inpChangeHandle(e)}
+              onFocus={(e) => {
+                inpFocusHandle();
+              }}
+              onBlur={(e) => {
+                inpBlurHandle();
+              }}
+              onInput={(e) => {
+                inpChangeHandle(e);
+              }}
             />
           </div>
           {isFocus && (
             <div className="btn-controller">
-              <button className="cancel" onClick={(e) => cancelHandle()}>
+              <button
+                className="cancel"
+                onClick={(e) => {
+                  cancelHandle();
+                }}
+              >
                 取消
               </button>
               <button
                 className="confirm"
                 disabled={content.length === 0}
-                onClick={(e) => publishHandle()}
+                onClick={(e) => {
+                  publishHandle();
+                }}
               >
                 评论
               </button>
@@ -146,10 +167,18 @@ const Comment: FC<IProps> = (props): ReactElement => {
                   index={index}
                   comIndex={comIndex}
                   replyIndex={replyIndex}
-                  propsPublishReplyHandle={(content, item) => publishReplyHandle(content, item)}
-                  propsShowReply={(index) => showReply(index)}
-                  thumbHandler={() => thumbHandler()}
-                  propsShowReplyHandle={(index) => showReplyHandle(index)}
+                  propsPublishReplyHandle={async (content, item) => {
+                    await publishReplyHandle(content, item);
+                  }}
+                  propsShowReply={(index) => {
+                    showReply(index);
+                  }}
+                  thumbHandler={() => {
+                    thumbHandler();
+                  }}
+                  propsShowReplyHandle={(index) => {
+                    showReplyHandle(index);
+                  }}
                 />
               </li>
             );

@@ -1,12 +1,12 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
+import { type IResponseType } from '../../types/responseType';
 
-export function getUserLater<T = IResponseType<any>>(
+export async function getUserLater<T = IResponseType<any>>(
   userId: string,
   offset: number,
   limit: number
 ): Promise<T> {
-  return gbRequest.get<T>({
+  return await gbRequest.get<T>({
     url: '/later/user/' + userId,
     params: {
       offset,
@@ -14,9 +14,9 @@ export function getUserLater<T = IResponseType<any>>(
     }
   });
 }
-//添加至稍后观看
-export function addLater<T = IResponseType<any>>(id: string) {
-  return gbRequest.post<T>({
+// 添加至稍后观看
+export async function addLater<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
     url: '/later/' + id
   });
 }

@@ -1,8 +1,8 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-//获取所有播放列表
-export function getAllPlaylist<T = IResponseType<any>>(offset: number, limit: number) {
-  return gbRequest.post<T>({
+import { type IResponseType } from '../../types/responseType';
+// 获取所有播放列表
+export async function getAllPlaylist<T = IResponseType<any>>(offset: number, limit: number) {
+  return await gbRequest.post<T>({
     url: '/playlist/all',
     params: {
       offset,
@@ -10,13 +10,13 @@ export function getAllPlaylist<T = IResponseType<any>>(offset: number, limit: nu
     }
   });
 }
-//获取用户播放列表
-export function getUserPlaylist<T = IResponseType<any>>(
-  userId: String,
+// 获取用户播放列表
+export async function getUserPlaylist<T = IResponseType<any>>(
+  userId: string,
   offset: number,
   limit: number
 ): Promise<T> {
-  return gbRequest.get<T>({
+  return await gbRequest.get<T>({
     url: '/playlist/user/' + userId,
     params: {
       offset,
@@ -24,13 +24,13 @@ export function getUserPlaylist<T = IResponseType<any>>(
     }
   });
 }
-//创建播放列表
-export function createPlaylist<T = IResponseType<any>>(
+// 创建播放列表
+export async function createPlaylist<T = IResponseType<any>>(
   name: string,
   description: string,
   isPublic: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/playlist',
     data: {
       name,
@@ -39,9 +39,9 @@ export function createPlaylist<T = IResponseType<any>>(
     }
   });
 }
-//将视频添加到播放列表
-export function addVideoPlaylist<T = IResponseType<any>>(vId: string, pId: string) {
-  return gbRequest.post<T>({
+// 将视频添加到播放列表
+export async function addVideoPlaylist<T = IResponseType<any>>(vId: string, pId: string) {
+  return await gbRequest.post<T>({
     url: '/playlist/video',
     data: {
       vId,
@@ -49,18 +49,18 @@ export function addVideoPlaylist<T = IResponseType<any>>(vId: string, pId: strin
     }
   });
 }
-//获取播放列表详情
-export function getPlaylistDetail<T = IResponseType<any>>(id: string) {
-  return gbRequest.post<T>({
+// 获取播放列表详情
+export async function getPlaylistDetail<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
     url: '/playlist/' + id
   });
 }
-export function getPlaylistVideo<T = IResponseType<any>>(
+export async function getPlaylistVideo<T = IResponseType<any>>(
   id: string,
   offset: number,
   limit: number
 ) {
-  return gbRequest.post<T>({
+  return await gbRequest.post<T>({
     url: '/playlist/video/' + id,
     params: {
       offset,

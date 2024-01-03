@@ -1,17 +1,17 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { ReplyItemWrapper } from './style';
 import moment from 'moment';
 import { DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined } from '@ant-design/icons';
 import Publish from '../../../../../publish';
-import { IComment } from '../../../../../../../types/comment/IComment';
-import { IUserMsg } from '../../../../../../../types/user/IUserMsg';
+import { type IComment } from '../../../../../../../types/comment/IComment';
+import { type IUserMsg } from '../../../../../../../types/user/IUserMsg';
 import { useThumb, useTread } from '../../../../../../../hook/useThumb';
 import { cancelThumb, cancelTread, thumb, tread } from '../../../../../../../network/thumb';
 import { changeUserDetailAction } from '../../../../../../../views/login/store/actionCreators';
 import { useDispatch, useSelector } from 'react-redux';
-import { Map } from 'immutable';
-import { ILogin } from '../../../../../../../types/login/ILogin';
-import { Dispatch } from 'redux';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../../../../../../types/login/ILogin';
+import { type Dispatch } from 'redux';
 interface IProps {
   reply: IComment;
   id: string;
@@ -108,26 +108,57 @@ const ReplyItem: FC<IProps> = (props) => {
           )}
         <div className="reply-controller-btn">
           <div className="thumb">
-            {!isThumb && <LikeOutlined onClick={(e) => thumbHandle()} />}
-            {isThumb && <LikeFilled onClick={(e) => thumbHandle()} />}
+            {!isThumb && (
+              <LikeOutlined
+                onClick={async (e) => {
+                  await thumbHandle();
+                }}
+              />
+            )}
+            {isThumb && (
+              <LikeFilled
+                onClick={async (e) => {
+                  await thumbHandle();
+                }}
+              />
+            )}
             <span className="thumb-count">{reply.thumb ?? 0}</span>
           </div>
           <div className="tread">
-            {!isTread && <DislikeOutlined onClick={(e) => treadHandle()} />}
-            {isTread && <DislikeFilled onClick={(e) => treadHandle()} />}
+            {!isTread && (
+              <DislikeOutlined
+                onClick={async (e) => {
+                  await treadHandle();
+                }}
+              />
+            )}
+            {isTread && (
+              <DislikeFilled
+                onClick={async (e) => {
+                  await treadHandle();
+                }}
+              />
+            )}
           </div>
-          <div className="reply-label" onClick={(e) => showReplyHandle(index)}>
+          <div
+            className="reply-label"
+            onClick={(e) => {
+              showReplyHandle(index);
+            }}
+          >
             回复
           </div>
         </div>
-        {/*回复评论的回复*/}
+        {/* 回复评论的回复 */}
         {index === replyIndex && (
           <div className="reply-reply">
             <Publish
               user={user}
               isShowAt={true}
               atUser={reply.user}
-              publish={(content) => replyReplyHandle(content, reply)}
+              publish={(content) => {
+                replyReplyHandle(content, reply);
+              }}
             />
           </div>
         )}

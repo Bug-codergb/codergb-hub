@@ -1,6 +1,6 @@
-import React, { memo, FC, ReactElement, useState, FormEvent } from 'react';
+import React, { memo, type FC, type ReactElement, useState, type FormEvent } from 'react';
 import { PublishWrapper } from './style';
-import { IUserMsg } from '../../../types/user/IUserMsg';
+import { type IUserMsg } from '../../../types/user/IUserMsg';
 interface IProps {
   user: IUserMsg;
   publish: (content: string) => void;
@@ -16,7 +16,7 @@ const Publish: FC<IProps> = (props): ReactElement => {
     setIsFocus(true);
   };
   const inpBlurHandle = () => {
-    //setIsFocus(false);
+    // setIsFocus(false);
   };
   const inpChangeHandle = (e: FormEvent<HTMLInputElement>) => {
     setContent(e.currentTarget.value);
@@ -48,20 +48,33 @@ const Publish: FC<IProps> = (props): ReactElement => {
               type={'text'}
               placeholder="添加回复..."
               value={content}
-              onFocus={(e) => inpFocusHandle()}
-              onBlur={(e) => inpBlurHandle()}
-              onInput={(e) => inpChangeHandle(e)}
+              onFocus={(e) => {
+                inpFocusHandle();
+              }}
+              onBlur={(e) => {
+                inpBlurHandle();
+              }}
+              onInput={(e) => {
+                inpChangeHandle(e);
+              }}
             />
           </div>
           {isFocus && (
             <div className="btn-controller">
-              <button className="cancel" onClick={(e) => cancelHandle()}>
+              <button
+                className="cancel"
+                onClick={(e) => {
+                  cancelHandle();
+                }}
+              >
                 取消
               </button>
               <button
                 className="confirm"
                 disabled={content.length === 0}
-                onClick={(e) => publishHandle()}
+                onClick={(e) => {
+                  publishHandle();
+                }}
               >
                 评论
               </button>

@@ -1,20 +1,20 @@
 import gbRequest from '../index';
-import { IResponseType } from '../../types/responseType';
-export function getAllBlock<T = IResponseType<any>>() {
-  return gbRequest.get<T>({
+import { type IResponseType } from '../../types/responseType';
+export async function getAllBlock<T = IResponseType<any>>() {
+  return await gbRequest.get<T>({
     url: '/block/all'
   });
 }
-export function userAddBlock<T = IResponseType<any>>(blockId: string) {
-  return gbRequest.post<T>({
+export async function userAddBlock<T = IResponseType<any>>(blockId: string) {
+  return await gbRequest.post<T>({
     url: '/block/user/add',
     data: {
       blockId
     }
   });
 }
-export function getUserBlock<T = IResponseType<any>>(userId: string) {
-  return gbRequest.get<T>({
+export async function getUserBlock<T = IResponseType<any>>(userId: string) {
+  return await gbRequest.get<T>({
     url: `/block/user/${userId}`
   });
 }

@@ -1,15 +1,15 @@
-import React, { memo, FC, ReactElement, useState, useEffect } from 'react';
+import React, { memo, type FC, type ReactElement, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import moment from 'moment';
 import { PlaylistWrapper, LeftContainer, RightContainer } from './style';
-import { ILater } from '../../types/later/ILater';
+import { type ILater } from '../../types/later/ILater';
 import { getUserLater } from '../../network/later';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
-import { IVideo } from '../../types/video/IVideo';
+import { type ILogin } from '../../types/login/ILogin';
+import { type IVideo } from '../../types/video/IVideo';
 const Playlist: FC = (): ReactElement => {
   const [userLater, setUserLater] = useState<ILater[]>([]);
   const [count, setCount] = useState<number>(0);
@@ -59,13 +59,20 @@ const Playlist: FC = (): ReactElement => {
             userLater.map((item) => {
               return (
                 <li key={item.id}>
-                  <div className="cover-container" onClick={(e) => videoRouterHandle(item.video)}>
+                  <div
+                    className="cover-container"
+                    onClick={(e) => {
+                      videoRouterHandle(item.video);
+                    }}
+                  >
                     <img src={item.video.picUrl} />
                   </div>
                   <div className="later-right-info">
                     <p
                       className="vio-name text-nowrap-mul-line"
-                      onClick={(e) => videoRouterHandle(item.video)}
+                      onClick={(e) => {
+                        videoRouterHandle(item.video);
+                      }}
                     >
                       {item.video.name}
                     </p>

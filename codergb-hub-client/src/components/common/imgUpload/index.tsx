@@ -1,9 +1,17 @@
-import React, { memo, FC, ReactElement, useState, ChangeEvent, useEffect, useRef } from 'react';
+import React, {
+  memo,
+  type FC,
+  type ReactElement,
+  useState,
+  type ChangeEvent,
+  useEffect,
+  useRef
+} from 'react';
 import { ImgUploadWrapper } from './style';
 import { Modal, Progress } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import CustomizeUpload from '../../customizeUpload';
-import { IResponseType } from '../../../types/responseType';
+import { type IResponseType } from '../../../types/responseType';
 interface IProps {
   realWidth: number;
   isShow: boolean;
@@ -43,7 +51,7 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
     }
   };
   const handleAvatarOk = async () => {
-    let formData = new FormData();
+    const formData = new FormData();
     if (uploadRef.current) {
       const f = await uploadRef.current.getCropperFile();
       formData.append(uploadName, f);
@@ -76,7 +84,12 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
           <div className="global-upload-outer-cpn-style">
             {!isShowCropper && !isCustom && (
               <div className="input-container">
-                <input type="file" onChange={(e) => fileChange(e)} />
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    fileChange(e);
+                  }}
+                />
                 <div className="msg-tip">
                   <p className="tip">请选择图片</p>
                   <PictureOutlined className="img-icon" />
@@ -91,7 +104,7 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
                 aspectRatio={aspectRatio}
                 isCircle={false}
                 realWidth={realWidth}
-                //@ts-ignore
+                // @ts-expect-error
                 ref={uploadRef}
               />
             )}

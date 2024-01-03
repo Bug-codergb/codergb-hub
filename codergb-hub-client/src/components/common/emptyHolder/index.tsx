@@ -1,4 +1,4 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { Empty } from 'antd';
 import { EmptyHolderWrapper } from './style';
 interface IProps {
@@ -9,7 +9,7 @@ const EmptyHolder: FC<IProps> = (props) => {
   const { msg, padding } = props;
   return (
     <EmptyHolderWrapper padding={padding}>
-      <Empty description={msg ? msg : '暂无数据'} />
+      <Empty description={msg || '暂无数据'} />
     </EmptyHolderWrapper>
   );
 };

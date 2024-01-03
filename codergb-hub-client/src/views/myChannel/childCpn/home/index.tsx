@@ -1,9 +1,9 @@
-import React, { memo, FC, ReactElement } from 'react';
+import React, { memo, type FC, ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { HomeWrapper } from './style';
-import { IChannel } from '../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../types/channel/IChannel';
 interface IProps {
   userId: string;
 }
@@ -15,9 +15,7 @@ const Home: FC<IProps> = (props) => {
     <HomeWrapper>
       <div className="trailer">
         <div className="left-container">
-          {channel && channel.trailer && (
-            <img src={channel.trailer?.picUrl} alt={channel.trailer.name} />
-          )}
+          {channel?.trailer && <img src={channel.trailer?.picUrl} alt={channel.trailer.name} />}
         </div>
         <div className="right-container">
           <p className="video-name">{channel.trailer?.name}</p>

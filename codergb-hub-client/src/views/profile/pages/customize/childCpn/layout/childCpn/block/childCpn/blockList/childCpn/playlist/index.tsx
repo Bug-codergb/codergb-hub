@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement, useState } from 'react';
+import React, { memo, type FC, type ReactElement, useState } from 'react';
 import { PlaylistWrapper } from './style';
 import { Input } from 'antd';
 const { Search } = Input;
@@ -14,11 +14,18 @@ const Playlist: FC = (): ReactElement => {
         <div className="user-self">
           <Search
             placeholder="搜索您的播放列表"
-            onSearch={(value, event) => onSearchUserSelf(value)}
+            onSearch={async (value, event) => {
+              await onSearchUserSelf(value);
+            }}
           />
         </div>
         <div className="video-lib">
-          <Search placeholder="搜索整站的播放列表" onSearch={(e) => onSearchOther()} />
+          <Search
+            placeholder="搜索整站的播放列表"
+            onSearch={(e) => {
+              onSearchOther();
+            }}
+          />
         </div>
       </div>
     </PlaylistWrapper>

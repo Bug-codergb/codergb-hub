@@ -1,14 +1,14 @@
 import React, {
   memo,
-  FC,
+  type FC,
   useState,
   forwardRef,
-  Ref,
+  type Ref,
   useImperativeHandle,
   useRef,
   useEffect
 } from 'react';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { VideoItemWrapper } from './style';
@@ -23,7 +23,7 @@ import {
 } from '@ant-design/icons';
 import { changeUserDetailAction } from '../../../login/store/actionCreators';
 import Comment from '../../../../components/common/comment';
-import { IVideo } from '../../../../types/video/IVideo';
+import { type IVideo } from '../../../../types/video/IVideo';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
 import { useThumb, useTread } from '../../../../hook/useThumb';
 import { cancelThumb, cancelTread, thumb, tread } from '../../../../network/thumb';
@@ -55,7 +55,7 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
   };
   useImperativeHandle<IVideoItem, IVideoItem>(propsRef, () => {
     return {
-      changeShow: changeShow
+      changeShow
     };
   });
 
@@ -114,7 +114,12 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
         <div className="top-level"></div>
         <div className="bottom-level">
           <div className="user">
-            <div className="img-container" onClick={() => userRouter()}>
+            <div
+              className="img-container"
+              onClick={() => {
+                userRouter();
+              }}
+            >
               <img src={video.user.avatarUrl} />
             </div>
             <div className="user-name">{video.user.userName}</div>
@@ -126,19 +131,34 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
       <div className={`control ${isShowComment ? 'move-control' : ''}`}>
         <ul className="control-list">
           <li className="item">
-            <div className="icon" onClick={() => thumbClick()}>
+            <div
+              className="icon"
+              onClick={async () => {
+                await thumbClick();
+              }}
+            >
               <LikeFilled className={`thumb-icon ${isThumb ? 'thumb-active' : ''}`} />
             </div>
             <div className="label">134万</div>
           </li>
           <li className="item">
-            <div className="icon" onClick={() => threadHandler()}>
+            <div
+              className="icon"
+              onClick={async () => {
+                await threadHandler();
+              }}
+            >
               <DislikeFilled className={`un-thumb-icon ${isTread ? 'un-thumb-active' : ''}`} />
             </div>
             <div className="label">踩</div>
           </li>
           <li className="item">
-            <div className="icon" onClick={() => showComment()}>
+            <div
+              className="icon"
+              onClick={() => {
+                showComment();
+              }}
+            >
               <MessageFilled className="msg-icon" />
             </div>
             <div className="label">1233</div>
@@ -147,7 +167,12 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
       </div>
       <div className={`comment-container ${isShowComment ? 'show-comment' : ''}`} ref={commentRef}>
         <div className="close-handler">
-          <CloseOutlined className="close-outlined" onClick={() => setIsShowComment(false)} />
+          <CloseOutlined
+            className="close-outlined"
+            onClick={() => {
+              setIsShowComment(false);
+            }}
+          />
         </div>
         {video && <Comment alias="vId" id={video.id} user={loginState.userMsg} />}
       </div>

@@ -1,8 +1,8 @@
-import React, { memo, FC, useRef, useEffect } from 'react';
+import React, { memo, type FC, useRef, useEffect } from 'react';
 import * as echarts from 'echarts';
 import { ThumbDataWrapper } from './style';
 import { getUserRecordThumb } from '../../../../../../network/video';
-import { IResponseType } from '../../../../../../types/responseType';
+import { type IResponseType } from '../../../../../../types/responseType';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 
 interface IRecord {
@@ -18,12 +18,12 @@ const ThumbData: FC = () => {
         if (res.status === 200 && res.data.length !== 0) {
           const key = [];
           const value = [];
-          for (let item of res.data) {
+          for (const item of res.data) {
             key.push(item.createTime);
             value.push(item.count);
           }
-          let chartDom = divRef.current;
-          let myChart = echarts.init(chartDom);
+          const chartDom = divRef.current;
+          const myChart = echarts.init(chartDom);
           const option = {
             title: {
               text: '作品近一个月作品被点赞数',

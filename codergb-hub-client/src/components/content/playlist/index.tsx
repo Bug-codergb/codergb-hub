@@ -1,15 +1,15 @@
-import React, { memo, FC, useState, useEffect } from 'react';
+import React, { memo, type FC, useState, useEffect } from 'react';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PlaylistWrapper } from './style';
 import { Checkbox } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { IPlaylist } from '../../../types/playlist/IPlaylist';
+import { type IPlaylist } from '../../../types/playlist/IPlaylist';
 import { useSelector } from 'react-redux';
-import { Map } from 'immutable';
-import { ILogin } from '../../../types/login/ILogin';
+import { type Map } from 'immutable';
+import { type ILogin } from '../../../types/login/ILogin';
 import { getUserPlaylist } from '../../../network/playlist';
-import { IResponseType } from '../../../types/responseType';
-import { IPage } from '../../../types/IPage';
+import { type IResponseType } from '../../../types/responseType';
+import { type IPage } from '../../../types/IPage';
 interface IProps {
   select: (checked: boolean, item: IPlaylist) => void;
 }
@@ -42,7 +42,11 @@ const Playlist: FC<IProps> = (props) => {
               <li key={item.id}>
                 <div className="left-container">
                   <div className="check">
-                    <Checkbox onChange={(e) => selectChangeHandle(e, item)} />
+                    <Checkbox
+                      onChange={(e) => {
+                        selectChangeHandle(e, item);
+                      }}
+                    />
                   </div>
                   <div className="play-list-name">{item.name}</div>
                 </div>
