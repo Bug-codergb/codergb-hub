@@ -150,13 +150,13 @@ const VideoDetail: FC = (): ReactElement => {
     document.title = videoDetail?.name ?? 'codergbhub';
   }, [videoDetail]);
   const pubSuccess = () => {
-    getVideoDm<IResponseType<IDm[]>>(vioId).then((data) => {
-      if (data.data.length !== 0) {
+    getVideoDm<IResponseType<IPage<IDm[]>>>(vioId).then((res) => {
+      if (res.data.list.length !== 0) {
         const list: Array<
           IDm & {
             contentRef: MutableRefObject<HTMLLIElement | null>;
           }
-        > = data.data.map((item, index) => {
+        > = res.data.list.map((item, index) => {
           return {
             ...item,
             contentRef: createRef<HTMLLIElement>()
