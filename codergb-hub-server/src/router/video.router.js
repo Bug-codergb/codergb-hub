@@ -18,7 +18,8 @@ const {
   deleteVideoSource,
   updateVideo,
   cateVideo,
-  addPlayCount
+  addPlayCount,
+  getVideoChunk
 } = require("../controller/video.controller")
 //视频上传文件信息
 videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
@@ -41,6 +42,8 @@ videoRouter.post("/similar/:id",authVerify,getSimilarVideo);
 videoRouter.post("/collection/:id",authVerify,getColVideo);
 //获取视频源文件
 videoRouter.post("/source",authVerify,getVideoSource);
+//获取视频切片
+videoRouter.get("/chunk/:id",authVerify,getVideoChunk);
 //删除
 videoRouter.post("/delete/:id",authVerify,deleteVideo);
 //删除文件切片

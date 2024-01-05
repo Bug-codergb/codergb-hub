@@ -203,3 +203,8 @@ export function getCateVideo<T = IResponseType<any>>(id: string, offset: number,
     }
   });
 }
+export function getVideoChunks<T = IResponseType<any>>(id: string) {
+  return gbRequest.get<T>({
+    url: '/video/chunk/' + id
+  });
+}

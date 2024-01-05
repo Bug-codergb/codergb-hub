@@ -1,10 +1,20 @@
 import React, { lazy, Suspense } from 'react';
-import { RouteObject } from 'react-router-dom';
-const VideoDetail = lazy(() => import('../../components/content/detail/videoDetail/index'));
-const UserDetail = lazy(() => import('../../components/content/detail/userDetail/index'));
-const ChatDetail = lazy(() => import('../../components/content/detail/chatDetail/index'));
-const SearchDetail = lazy(() => import('../../components/content/detail/searchDetail/index'));
-const MomentDetail = lazy(() => import('../../components/content/detail/momentDetail/index'));
+import { type RouteObject } from 'react-router-dom';
+const VideoDetail = lazy(
+  async () => await import('../../components/content/detail/videoDetail/index')
+);
+const UserDetail = lazy(
+  async () => await import('../../components/content/detail/userDetail/index')
+);
+const ChatDetail = lazy(
+  async () => await import('../../components/content/detail/chatDetail/index')
+);
+const SearchDetail = lazy(
+  async () => await import('../../components/content/detail/searchDetail/index')
+);
+const MomentDetail = lazy(
+  async () => await import('../../components/content/detail/momentDetail/index')
+);
 
 const videoDetailRoute: RouteObject = {
   path: '/videoDetail',

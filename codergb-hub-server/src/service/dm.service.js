@@ -11,15 +11,21 @@ class DmService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async videoDmService(ctx,vId){
+  async videoDmService(ctx,vId,offset,limit){
     try{
       const sql=`select id,text,time,dm.createTime,dm.updateTime,
        JSON_OBJECT('userId',dm.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) AS user
       from dm
       LEFT JOIN user as u on u.userId= dm.userId
-      where vId=?`;
-      const result = await connection.execute(sql,[vId]);
-      return result[0];
+      where vId=?
+      limit ?,?`;
+      const countSQL = `select count(id) as count from dm where vId=?`
+      const result = await connection.execute(sql,[vId,offset,limit]);
+      const count = await connection.execute(countSQL,[vId]);
+      return {
+        list:result[0],
+        count:count[0][0].count
+      }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }

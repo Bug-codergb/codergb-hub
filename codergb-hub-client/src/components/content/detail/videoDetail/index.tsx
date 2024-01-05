@@ -100,14 +100,14 @@ const VideoDetail: FC = (): ReactElement => {
 
   useEffect(() => {
     if (vioId) {
-      getVideoDm<IResponseType<IDm[]>>(vioId).then((data) => {
-        if (data.data.length !== 0) {
-          setDmTotal(data.data.length);
+      getVideoDm<IResponseType<IPage<IDm[]>>>(vioId).then((res) => {
+        if (res.data.list.length !== 0) {
+          setDmTotal(res.data.count);
           const list: Array<
             IDm & {
               contentRef: MutableRefObject<HTMLLIElement | null>;
             }
-          > = data.data.map((item, index) => {
+          > = res.data.list.map((item, index) => {
             return {
               ...item,
               contentRef: createRef<HTMLLIElement>()
@@ -138,6 +138,7 @@ const VideoDetail: FC = (): ReactElement => {
       if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(vioURL);
+        // hls.loadSource('http://localhost:8888/video/0718294d1c07ee39c7ebb9cb93b0f9580.ts');
         hls.attachMedia(videoRef.current);
         addHistory(vioId);
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {

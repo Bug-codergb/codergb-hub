@@ -4,6 +4,7 @@
       <ul class="chunk-list">
         <li v-for="(item, index) in videoSource" :key="item">
           <span>{{ item }}</span>
+
           <el-button link type="primary" @click="deleteHandle(item, index)">删除</el-button>
         </li>
       </ul>
@@ -11,7 +12,7 @@
   </GbDialog>
 </template>
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue';
+import { ref, defineExpose, nextTick } from 'vue';
 import GbDialog from '@/components/common/gbDialog/GbDialog.vue';
 import { IVideoSource } from '@/types/video/IVideo';
 import { ElMessage, ElMessageBox } from 'element-plus';
@@ -51,7 +52,7 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &:nth-child(even) {
+    &:nth-child(odd) {
       background-color: #f5f7fa;
     }
   }

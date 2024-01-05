@@ -23,7 +23,8 @@ const {
   deleteVideoService,
   updateVideoInfoService,
   cateVideoService,
-  addPlayCountService
+  addPlayCountService,
+  getVideoChunkService
 } = require("../service/video.service")
 const {createUploadPath} = require("../middleware/file.middleware");
 const { getFansService } = require("../service/subscriber.service")
@@ -232,7 +233,28 @@ class VideoController {
       setResponse(ctx, e.message, 500, {})
     }
   }
-
+  async getVideoChunk(ctx,next){
+    try{
+      const { id } =ctx.params;
+      const res = await getVideoChunkService(ctx,id);
+      if(res && res[0]){
+        const files = await fsPromise.readdir(path.resolve(__dirname, "../../", `./upload/video`))
+        const videoFile = res[0].filename;
+        let chunk = []
+        for(let file of files){
+          const fileName = getFileName(videoFile);
+          if(file.includes(fileName) && !file.includes(".m3u8")){
+            chunk.push(file);
+          }
+        }
+        setResponse(ctx,"success",200,chunk);
+      }else{
+        setResponse(ctx,"error",400,{})
+      }
+    }catch (e) {
+      setResponse(ctx,"error",500,{})
+    }
+  }
   async getVideoSource(ctx, next) {
     try {
       const {offset = "0", limit = "30", keyword = '', isNull = 0} = ctx.query;

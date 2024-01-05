@@ -66,5 +66,28 @@ class ThumbService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async getThumbUserService(ctx,id,alias,offset,limit){
+    try{
+      const sql=`
+      select u.userId,u.userName,u.avatarUrl,t.createTime
+      from thumb as t
+      LEFT JOIN user u on u.userId = t.userId
+      where t.${alias} is not null and t.tread!=1 and t.vId=?
+      limit ?,?`;
+      const countSQL=`
+      select count(t.vId) as count
+      from thumb as t
+      where t.${alias} is not null and t.tread!=1 and t.vId=?`;
+
+      const result = await connection.execute(sql,[id,offset,limit]);
+      const count = await connection.execute(countSQL,[id]);
+      return {
+        list:result[0],
+        count:count[0][0].count
+      }
+    }catch (e) {
+      setResponse(ctx,'error',500,{});
+    }
+  }
 }
 module.exports = new ThumbService();

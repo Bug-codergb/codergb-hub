@@ -23,6 +23,7 @@
 <script lang="tsx" setup>
 import moment from 'moment';
 import { reactive, ref, defineProps, defineEmits, defineExpose, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
@@ -36,6 +37,8 @@ import { getAllTag } from '@/network/tag';
 import { getRandColor } from '@/constant/color';
 import { deleteVideo } from '@/network/video';
 import { ElMessage } from 'element-plus';
+import { VIDEO_DETAIL_PATH } from '@/router/constant';
+const router = useRouter();
 const props = defineProps({
   isOperate: {
     type: Boolean,
@@ -159,7 +162,9 @@ const tableData = reactive({
           text: '查看',
           type: 'primary',
           onClick: (row: IVideo, index: number) => {
-            console.log(row);
+            router.push({
+              path: VIDEO_DETAIL_PATH + '/' + row.id
+            });
           }
         },
         {

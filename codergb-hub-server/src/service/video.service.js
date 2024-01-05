@@ -375,10 +375,40 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
 
     }
   }
+  async getVideoChunkService(ctx,id){
+    try{
+      const sql=`select f.id,f.originalname,f.mimetype,f.dest,f.filename,vf.videoId as vid,v.name
+      from file as f
+      LEFT JOIN video_file as vf on vf.fileId = f.id
+      LEFT JOIN video as v on v.id = vf.videoId
+      where vf.mark='source' and v.id=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,"server error",500,{})
+    }
+  }
   async deleteVideoService(ctx,id){
     try{
       const sql=`delete from video where id=?`;
       const result = await connection.execute(sql,[id]);
+
+
+
+      const infoSQL= `select * from video_file where videoId=?`;
+      const info = await connection.execute(infoSQL,[id]);
+
+      if(info && info[0] && info[0].length!==0){
+        let exec=[]
+        for(let item of info[0]){
+          exec.push(item.fileId);
+        }
+        console.log(exec)
+        const sql=`delete from file where id in (${exec.join(",")})`;
+        await connection.execute(sql,exec);
+      }
+      const fSql=`delete from video_file where videoId=?`;
+      await connection.execute(fSql,[id])
       return result[0];
     }catch (e) {
 

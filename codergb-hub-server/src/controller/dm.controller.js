@@ -27,7 +27,8 @@ class DmController{
   async videoDm(ctx,next){
     try{
       const {vId} = ctx.params;
-      const result = await videoDmService(ctx,vId);
+      const { offset="0",limit="20" } = ctx.query;
+      const result = await videoDmService(ctx,vId,offset,limit);
       if(result){
         setResponse(ctx,"success",200,result);
       }

@@ -1,5 +1,5 @@
 <template>
-  <GbDialog v-model="isShow" title="评论详情">
+  <GbDialog v-model="isShow" title="评论详情" :is-show-footer="false">
     <template v-if="comment">
       <div class="comment-content">
         <div class="comment">
@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="line"></div>
-        <div class="tip-from">
+        <div class="tip-from" v-if="isShowSource">
           <p class="tip">评论来自于</p>
           <el-tag
             :type="
@@ -48,9 +48,16 @@
   </GbDialog>
 </template>
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue';
+import { ref, defineExpose, defineProps, withDefaults } from 'vue';
 import GbDialog from '@/components/common/gbDialog/GbDialog.vue';
 import { IComment } from '@/types/comment/IComment';
+
+interface IProps {
+  isShowSource: boolean;
+}
+const prop = withDefaults(defineProps<IProps>(), {
+  isShowSource: true
+});
 const isShow = ref(false);
 const comment = ref<IComment | null>();
 const showDialog = (row: IComment) => {

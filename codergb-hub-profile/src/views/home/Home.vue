@@ -40,5 +40,6 @@ loginInit.userMsg = localCache.getCache('userMsg');
   height: 89vh;
   overflow-y: scroll;
   background-color: #fff;
+  padding: 15px;
 }
 </style>

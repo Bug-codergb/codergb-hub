@@ -6,7 +6,8 @@ const {
   cancelService,
   createTreadService,
   cancelTreadService,
-  getVideoThumbService
+  getVideoThumbService,
+  getThumbUserService
 }=require("../service/thumb.service");
 const {
   createService:insertService,
@@ -117,6 +118,26 @@ class ThumbController{
       if(result){
         const res = result.length==0?{count:0}:result[0];
         setResponse(ctx,"success",200,res);
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async getThumbUser(ctx,next){
+    try{
+      const { id } = ctx.params;
+      let { alias="video",offset="0",limit="30" } = ctx.query;
+      if(alias === "video"){
+        alias = "vId"
+      } else if(alias === "comment"){
+        alias = "commentId";
+      }else{
+        setResponse(ctx,"error",400,{});
+        return;
+      }
+      const result = await getThumbUserService(ctx,id,alias,offset,limit);
+      if(result){
+        setResponse(ctx,"success",200,result);
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

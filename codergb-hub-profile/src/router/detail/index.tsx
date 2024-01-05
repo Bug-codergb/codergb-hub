@@ -5,7 +5,8 @@ import {
   VIDEO_PATH,
   PLAYLIST_DETAIL_PATH,
   CATE_VIDEO_DETAIL_PATH,
-  TAG_DETAIL_PATH
+  TAG_DETAIL_PATH,
+  VIDEO_DETAIL_PATH
 } from '@/router/constant';
 import CollectionDetail from '@/views/detail/collectionDetail/CollectionDetail.vue';
 import CateVideoDetail from '@/views/detail/cateVideoDetail/CateVideoDetail.vue';
@@ -26,4 +27,8 @@ const tagRoute: RouteRecordRaw = {
   path: TAG_DETAIL_PATH + '/:id',
   component: () => import('@/views/detail/tagVideoDetail/TagVideo.vue')
 };
-export { collectionRoute, cateVideoRoute, playlistRoute, tagRoute };
+const videoRoute: RouteRecordRaw = {
+  path: VIDEO_DETAIL_PATH + '/:id',
+  component: () => import('@/views/detail/videoDetail/VideoDetail.vue')
+};
+export { collectionRoute, cateVideoRoute, playlistRoute, tagRoute, videoRoute };
