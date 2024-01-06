@@ -4,7 +4,8 @@ const {
   createService,
   getAllCateService,
   getExploreService,
-  deleteCateService
+  deleteCateService,
+  updateService
 } = require("../service/category.service");
 class CategoryController{
   async create(ctx,next){
@@ -15,6 +16,18 @@ class CategoryController{
         if(result){
           setResponse(ctx,"success",200,{});
         }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{});
+    }
+  }
+  async update(ctx,next){
+    try{
+      const { name="" } = ctx.request.body;
+      if(!isEmpty(ctx,name,"分类名称不能为空")){
+        const {id} = ctx.params;
+        const result = await updateService(ctx,id,name);
+        setResponse(ctx,"success",200,{});
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});

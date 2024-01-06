@@ -44,8 +44,15 @@
         <el-tab-pane label="集合视频" name="first">
           <VideoTable :key="keyIndex" :url="url" :isOperate="false" :is-show-create="false">
             <template v-slot:video-end>
-              <el-table-column label="操作" fixed="right">
+              <el-table-column label="操作" fixed="right" width="120">
                 <template #default="scope">
+                  <el-button
+                    type="primary"
+                    style="font-size: 13px; padding: 5px"
+                    text
+                    @click="detailHandle(scope.row)"
+                    >详情</el-button
+                  >
                   <el-button
                     type="danger"
                     style="font-size: 13px; padding: 5px"
@@ -65,7 +72,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ICollection } from '@/types/collection/ICollection';
 import { delColVideo, getColDetail } from '@/network/collection';
 import { IResponseType } from '@/types/responseType';
@@ -73,8 +80,10 @@ import moment from 'moment';
 import VideoTable from '@/components/content/videoTable/VideoTable.vue';
 import { IVideo } from '@/types/video/IVideo';
 import { ElMessageBox, ElMessage } from 'element-plus';
+import { VIDEO_DETAIL_PATH } from '@/router/constant';
 
 const route = useRoute();
+const router = useRouter();
 const { id } = route.params;
 const url = ref('');
 const activeName = 'first';
@@ -106,6 +115,11 @@ const delHandle = (item: IVideo) => {
       }
     })
     .catch(() => {});
+};
+const detailHandle = (item: IVideo) => {
+  router.push({
+    path: `${VIDEO_DETAIL_PATH}/${item.id}`
+  });
 };
 </script>
 

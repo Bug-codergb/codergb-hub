@@ -11,6 +11,16 @@ class TagService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async updateService(ctx,id,name){
+    console.log(id,name)
+    try{
+      const sql=`update tag set name = ? where id=?`;
+      const result = await connection.execute(sql,[name,id]);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
   async getTagCountService(ctx,keyword){
     try{
       const sql = `select count(*) as count from tag ${keyword.length!==0 ? `where name like '%${keyword}%'`:''}`;
@@ -22,7 +32,7 @@ class TagService{
   }
   async getAllTagService(ctx,offset,limit,keyword){
     try{
-      const sql=`select * from tag ${keyword.length!==0 ? `where name like '%${keyword}%'`:''} limit ?,?`;
+      const sql=`select * from tag ${keyword.length!==0 ? `where name like '%${keyword}%'`:''} order by createTime desc limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
       const count = await new TagService().getTagCountService(ctx,keyword);
       return {

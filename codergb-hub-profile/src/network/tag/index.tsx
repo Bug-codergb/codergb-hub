@@ -22,6 +22,14 @@ export function createTag<T = IResponseType<any>>(name: string) {
     }
   });
 }
+export function updateTag<T = IResponseType<any>>(id: string, name: string) {
+  return gbRequest.post<T>({
+    url: '/tag/update/' + id,
+    data: {
+      name
+    }
+  });
+}
 export function getTagVideo<T = IResponseType<any>>(id: string, offset: number, limit: number) {
   return gbRequest.post<T>({
     url: '/tag/video/' + id,

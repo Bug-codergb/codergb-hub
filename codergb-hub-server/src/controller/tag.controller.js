@@ -4,7 +4,8 @@ const {
   createService,
   getAllTagService,
   deleteTagService,
-  getTagVideoService
+  getTagVideoService,
+  updateService
 } = require("../service/tag.service");
 class TagController{
   async create(ctx,next){
@@ -21,6 +22,23 @@ class TagController{
      }catch (e) {
         setResponse(ctx,e.message,500,{})
      }
+  }
+  async update(ctx,next){
+    try{
+      const { name } = ctx.request.body;
+      const {id} = ctx.params;
+      console.log(name);
+      if(!isEmpty(ctx,name,"标签名称不能为空")){
+        const result = await updateService(ctx,id,name);
+        if(result){
+          setResponse(ctx,"success",200,{})
+        }else{
+
+        }
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500,{})
+    }
   }
   //获取所有tag
   async getAllTag(ctx,next){

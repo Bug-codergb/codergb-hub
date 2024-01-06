@@ -11,7 +11,7 @@ import { ref, defineExpose, reactive, defineEmits } from 'vue';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
 import { ICate } from '@/types/category/ICate';
 import Create from '@/components/content/create/Create.vue';
-import { createCate } from '@/network/category';
+import { createCate, updateCate } from '@/network/category';
 import { ElMessage } from 'element-plus';
 
 const emit = defineEmits<{
@@ -22,10 +22,20 @@ const drawer = ref(false);
 const title = ref('新增分类');
 const formData = reactive({
   data: {
-    name: ''
+    name: '',
+    id: ''
   }
 });
-const showDrawer = (data: ICate) => {
+const isUpdate = ref(false);
+const showDrawer = (data: ICate | undefined) => {
+  isUpdate.value = Boolean(data);
+  if (isUpdate.value) {
+    formData.data.id = data!.id ?? '';
+    formData.data.name = data!.name ?? '';
+  } else {
+    formData.data.name = '';
+    formData.data.id = '';
+  }
   drawer.value = true;
 };
 const tableConstructor = reactive([
@@ -50,13 +60,15 @@ const confirmHandle = () => {
   if (create.value && create.value.ruleFormRef) {
     create.value.ruleFormRef.validate(async (e: boolean) => {
       if (e) {
-        const result = await createCate(formData.data.name);
+        const result = isUpdate.value
+          ? await updateCate(formData.data.id, formData.data.name)
+          : await createCate(formData.data.name);
         if (result.status === 200) {
           drawer.value = false;
           emit('refresh');
           ElMessage({
             type: 'success',
-            message: '新增成功'
+            message: `${isUpdate.value ? '更新' : '新增'}成功`
           });
           formData.data.name = '';
         }

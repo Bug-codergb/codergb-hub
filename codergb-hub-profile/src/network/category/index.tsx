@@ -28,3 +28,11 @@ export function createCate<T = IResponseType<any>>(name: string) {
     }
   });
 }
+export function updateCate<T = IResponseType<any>>(id: string, name: string) {
+  return gbRequest.post<T>({
+    url: '/cate/update/' + id,
+    data: {
+      name
+    }
+  });
+}

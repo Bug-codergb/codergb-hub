@@ -11,8 +11,9 @@ import { ref, defineExpose, defineEmits, reactive } from 'vue';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
 import { ICate } from '@/types/category/ICate';
 import { ElMessage } from 'element-plus';
-import { createTag } from '@/network/tag';
+import { createTag, updateTag } from '@/network/tag';
 import Create from '@/components/content/create/Create.vue';
+import { updateCate } from '@/network/category';
 const drawer = ref(false);
 const title = ref('新增标签');
 
@@ -21,10 +22,20 @@ const emit = defineEmits<{
 }>();
 const formData = reactive({
   data: {
-    name: ''
+    name: '',
+    id: ''
   }
 });
-const showDrawer = (data: ICate) => {
+const isUpdate = ref(false);
+const showDrawer = (data: ICate | undefined) => {
+  isUpdate.value = Boolean(data);
+  if (isUpdate.value) {
+    formData.data.name = data!.name;
+    formData.data.id = data!.id;
+  } else {
+    formData.data.name = '';
+    formData.data.id = '';
+  }
   drawer.value = true;
 };
 const tableConstructor = reactive([
@@ -49,13 +60,15 @@ const confirmHandle = () => {
   if (create.value && create.value.ruleFormRef) {
     create.value.ruleFormRef.validate(async (e: boolean) => {
       if (e) {
-        const result = await createTag(formData.data.name);
+        const result = isUpdate.value
+          ? await updateTag(formData.data.id, formData.data.name)
+          : await createTag(formData.data.name);
         if (result.status === 200) {
           drawer.value = false;
           emit('refresh');
           ElMessage({
             type: 'success',
-            message: '新增成功'
+            message: `${isUpdate.value ? '更新' : '新增'}成功`
           });
           formData.data.name = '';
         }

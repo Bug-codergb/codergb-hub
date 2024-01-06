@@ -11,6 +11,15 @@ class CategoryService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async updateService(ctx,id,name){
+    try{
+      const sql=`update category set name = ? where id=?`;
+      const result = await connection.execute(sql,[name,id]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,'server error',500,{})
+    }
+  }
   async getCateCount(ctx,keyword){
     try{
       const sql=`select count(*) as count from category ${keyword.length!==0 ? `where name like '%${keyword}%'`:''}`;
@@ -22,7 +31,7 @@ class CategoryService{
   }
   async getAllCateService(ctx,offset,limit,keyword){
     try{
-      const sql=`select * from category ${keyword.length!==0 ? `where name like '%${keyword}%'`:''} limit ?,?`;
+      const sql=`select * from category ${keyword.length!==0 ? `where name like '%${keyword}%'`:''} order by createTime desc limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
       const count = await new CategoryService().getCateCount(ctx,keyword);
       console.log(count)
