@@ -54,6 +54,9 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { IResponseType } from '@/types/responseType';
 import { IPage } from '@/types/IPage';
 import gbRequest from '@/network';
+const emit = defineEmits<{
+  (e: 'selectionChange', row: any): void;
+}>();
 const props = defineProps({
   tableData: {
     type: Object,
@@ -64,9 +67,12 @@ const props = defineProps({
   isOperate: {
     type: Boolean,
     default: true
+  },
+  dataCallback: {
+    type: Function
   }
 });
-const emit = defineEmits(['selectionChange']);
+
 let tableList = reactive<{ list: any[] }>({
   list: []
 });
@@ -83,9 +89,14 @@ const getTableDataReq = async (offset: number, limit: number, data: any, params:
     }
   });
   if (result.status === 200) {
-    tableList.list = result.data.list;
-    total.value = result.data.count;
-    //console.log(tableList.list, total.value);
+    if (props.dataCallback) {
+      const res = (await props.dataCallback(result.data.list)) ?? [];
+      tableList.list = res;
+      total.value = result.data.count;
+    } else {
+      tableList.list = result.data.list;
+      total.value = result.data.count;
+    }
   }
 };
 //初始化调用
@@ -100,7 +111,6 @@ const selectMap = ref(new Map());
 
 const currentPage = ref(1);
 const currentChange = async (e: number) => {
-  console.log(11);
   currentPage.value = e;
   await getTableDataReq(
     (e - 1) * (props.tableData.pageSize ? props.tableData.pageSize : 10),
@@ -110,7 +120,7 @@ const currentChange = async (e: number) => {
   );
   await nextTick();
   const rows = selectMap.value.get(e) ?? [];
-  console.log(rows, 109);
+
   if (rows.length !== 0) {
     for (let item of rows) {
       tableRef.value.toggleRowSelection(
@@ -120,7 +130,27 @@ const currentChange = async (e: number) => {
     }
   }
 };
-const search = () => {
+let selectRows: any[] = [];
+const initSelectRow = (rows: any[], rowKey: string) => {
+  nextTick(() => {
+    selectRows = [];
+    if (rows.length !== 0 && tableList.list && tableList.list.length !== 0) {
+      for (let item of tableList.list) {
+        const index = rows.findIndex((it) => {
+          return it[rowKey] === item[rowKey];
+        });
+        if (index !== -1) {
+          tableRef.value.toggleRowSelection(item, true);
+          selectRows.push(item);
+        }
+      }
+    }
+    if (selectRows.length !== 0) {
+      selectionChange(selectRows);
+    }
+  });
+};
+const search = async () => {
   getTableDataReq(
     0,
     props.tableData.pageSize ? props.tableData.pageSize : 10,
@@ -143,14 +173,15 @@ const btnClick = (it: any, scope: any) => {
     it.onClick(scope.row, scope.$index);
   }
 };
+
 const selectionChange = (row: unknown) => {
-  console.log(row, 143);
   selectMap.value.set(currentPage.value, row);
   emit('selectionChange', row);
 };
 defineExpose({
   search,
-  selectMap: selectMap.value
+  selectMap: selectMap.value,
+  initSelectRow
 });
 </script>
 

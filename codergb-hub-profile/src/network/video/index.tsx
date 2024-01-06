@@ -208,3 +208,16 @@ export function getVideoChunks<T = IResponseType<any>>(id: string) {
     url: '/video/chunk/' + id
   });
 }
+export async function getCollectionVideo<T = IResponseType<any>>(
+  id: string,
+  offset: number,
+  limit: number
+) {
+  return await gbRequest.post<T>({
+    url: '/video/collection/' + id,
+    params: {
+      offset,
+      limit
+    }
+  });
+}

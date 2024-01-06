@@ -38,8 +38,8 @@ class DmController{
   }
   async allDm(ctx,next){
     try{
-      const { offset="0",limit="30" } = ctx.query;
-      const result = await allDmService(ctx,offset,limit);
+      const { offset="0",limit="30",keyword="" } = ctx.query;
+      const result = await allDmService(ctx,offset,limit,keyword);
       setResponse(ctx,'success',200,result);
     }catch (e) {
       setResponse(ctx,e.message,500,{});

@@ -12,6 +12,7 @@
       :isOperate="isOperate"
       @selectionChange="selectionChange"
       v-bind="$attrs"
+      :data-callback="dataCallback"
     >
       <template v-slot:end>
         <slot name="video-end"></slot>
@@ -61,6 +62,9 @@ const props = defineProps({
     default() {
       return [];
     }
+  },
+  dataCallback: {
+    type: Function
   }
 });
 const emit = defineEmits(['selectionChange', 'create', 'edit']);

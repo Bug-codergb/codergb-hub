@@ -14,20 +14,26 @@
         url="/video/all"
         :is-show-refresh="false"
         :is-show-create="false"
+        :data-callback="dataCallback"
       />
     </div>
   </GbDrawer>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineExpose, reactive } from 'vue';
+import { ref, defineExpose, defineEmits, reactive } from 'vue';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
 import VideoTable from '@/components/content/videoTable/VideoTable.vue';
 import { ICollection } from '@/types/collection/ICollection';
 import { IVideo } from '@/types/video/IVideo';
 import { ElMessage } from 'element-plus';
 import { addVideoToCol, IVCol } from '@/network/collection';
-
+import { IPage } from '@/types/IPage';
+import { getCollectionVideo } from '@/network/video';
+import { IResponseType } from '@/types/responseType';
+const emit = defineEmits<{
+  (e: 'refresh'): void;
+}>();
 const videoTable = ref<InstanceType<typeof VideoTable>>(null);
 const drawer = ref(false);
 const title = ref('添加视频');
@@ -50,7 +56,21 @@ const selectionChange = (item: IVideo[]) => {
   //console.log(item);
   //selectVideo.list = item;
 };
+const dataCallback = async (res: any) => {
+  getCollectionVideo<IResponseType<IPage<IVideo[]>>>(collection.item!.id, 0, 100000).then(
+    (result) => {
+      let rows: any[] = [];
+      if (result.status === 200) {
+        rows = result.data.list ?? {};
+      }
+      videoTable.value.gbTable.initSelectRow(rows, 'id');
+    }
+  );
+
+  return res;
+};
 const showDrawer = (data: ICollection) => {
+  console.log(data);
   drawer.value = true;
   collection.item = data;
 };
@@ -81,6 +101,7 @@ const confirmHandle = async (close) => {
           type: 'success',
           message: '添加成功'
         });
+        emit('refresh');
         close();
       }
     }

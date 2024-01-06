@@ -30,7 +30,7 @@ class DmService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async allDmService(ctx,offset,limit){
+  async allDmService(ctx,offset,limit,keyword){
     try{
       const sql=`
             select d.id,d.text,d.time,
@@ -40,14 +40,15 @@ class DmService{
       from dm as d
       left join video v on d.vId = v.id 
       left join user u on d.userId = u.userId
-      order by v.id,d.createTime asc
+      ${keyword.trim().length!==0?`where d.text like '%${keyword}%'`:''}
+      order by v.id,d.createTime desc 
       limit ?,?`;
-
       const countSQL=`
               select COUNT(d.id) as count
         from dm as d
         left join video v on d.vId = v.id
         left join user u on d.userId = u.userId
+        ${keyword.trim().length!==0?`where d.text like '%${keyword}%'`:''}
         order by v.id,d.createTime asc`;
 
       const res = await connection.execute(sql,[offset,limit]);

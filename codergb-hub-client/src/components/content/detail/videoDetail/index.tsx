@@ -134,7 +134,7 @@ const VideoDetail: FC = (): ReactElement => {
     }
   }, [vioId]);
   useEffect(() => {
-    if (videoRef.current) {
+    if (videoRef.current !== null) {
       if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(vioURL);

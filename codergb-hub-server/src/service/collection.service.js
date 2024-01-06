@@ -58,7 +58,10 @@ class CollectionService{
     try{
       const sql=`
       select c.id,c.name,c.createTime,c.updateTime,f.picUrl,c.description,c.cover as imgId,
-			 JSON_OBJECT('userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
+			 JSON_OBJECT('userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user,
+			 (select count(cv.vId)
+       from collection_video as cv 
+       left join video as v on v.id=cv.vId where v.id is not null and cv.cId = c.id) as count
       from collection as c
       LEFT JOIN user as u on u.userId = c.userId
       LEFT JOIN file as f on f.id = c.cover

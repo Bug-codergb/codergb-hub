@@ -60,7 +60,9 @@ const deleteHandler = (item: string, index: number) => {
   <div class="video-info">
     <el-row>
       <el-col :span="8">
-        <video class="vio" controls ref="videoRef" @canplay="canplayHandler" />
+        <div class="video-container">
+          <video class="vio" controls ref="videoRef" @canplay="canplayHandler" />
+        </div>
       </el-col>
       <el-col :span="14">
         <el-alert
@@ -83,8 +85,16 @@ const deleteHandler = (item: string, index: number) => {
 <style scoped lang="less">
 .video-info {
   width: 100%;
+
+  .video-container {
+    width: 100%;
+    aspect-ratio: 1.8;
+  }
   .vio {
     width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: #000;
   }
   .el-col {
     margin: 0 15px 0 0;

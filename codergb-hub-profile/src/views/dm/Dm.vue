@@ -7,12 +7,22 @@
 
 <script lang="tsx" setup>
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { IChannel } from '@/types/channel/IChannel';
 import moment from 'moment/moment';
 import { deleteDm } from '@/network/dm';
 import { ElMessage } from 'element-plus';
+import { IVideo } from '@/types/video/IVideo';
+import { VIDEO_DETAIL_PATH } from '@/router/constant';
+const router = useRouter();
+
+const videoRouter = (video: IVideo) => {
+  router.push({
+    path: `${VIDEO_DETAIL_PATH}/${video.id}`
+  });
+};
 const tableData = reactive({
   url: '/dm/all',
   method: 'get',
@@ -45,7 +55,11 @@ const tableData = reactive({
       prop: '',
       'min-width': 220,
       formatter: (row: any) => {
-        return <span class="text-mul-line">{row.video.name}</span>;
+        return (
+          <span class="text-mul-line g-vio-name" onClick={() => videoRouter(row.video)}>
+            {row.video.name}
+          </span>
+        );
       }
     },
     {
@@ -99,4 +113,9 @@ const header = reactive([
 ]);
 </script>
 
-<style scoped></style>
+<style lang="less">
+.g-vio-name {
+  cursor: pointer;
+  color: #5a9cf8 !important;
+}
+</style>

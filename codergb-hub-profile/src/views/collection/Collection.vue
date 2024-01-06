@@ -3,7 +3,7 @@
     <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCol ref="createColRef" @refresh="refresh" />
-    <AddVideo ref="addVideo" />
+    <AddVideo ref="addVideo" @refresh="refreshHandler" />
   </div>
 </template>
 
@@ -11,10 +11,6 @@
 import { reactive, ref } from 'vue';
 import moment from 'moment';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
-import { getAllCate } from '@/network/category';
-import { IResponseType } from '@/types/responseType';
-import { ICate } from '@/types/category/ICate';
-import { IPage } from '@/types/IPage';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import CreateCol from './childCpn/CreateCol.vue';
 import AddVideo from './childCpn/AddVideo.vue';
@@ -39,14 +35,13 @@ const tableData = reactive({
   },
   columns: [
     {
-      prop: 'id',
-      label: '分类编号',
-      'min-width': 140
-    },
-    {
       prop: 'name',
       label: '集合名称',
       'min-width': 180
+    },
+    {
+      prop: 'count',
+      label: '视频数'
     },
     {
       prop: 'description',
@@ -126,6 +121,9 @@ const tableData = reactive({
     }
   ]
 });
+const refreshHandler = () => {
+  gbTable.value?.search();
+};
 const header = reactive([
   {
     type: 'input',
