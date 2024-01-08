@@ -293,22 +293,24 @@ const VideoDetail: FC = (): ReactElement => {
 
   useEffect(() => {
     document.onkeydown = (e) => {
+      console.log(e);
       if (
-        e.code.toLocaleLowerCase() === 'space' ||
-        e.code.toLocaleLowerCase() === 'keyf' ||
-        e.code.toLocaleUpperCase() === 'escape'
+        e.code !== undefined &&
+        (e.code.toLocaleLowerCase() === 'space' ||
+          e.code.toLocaleLowerCase() === 'keyf' ||
+          e.code.toLocaleUpperCase() === 'escape')
       ) {
         e.preventDefault();
       }
     };
     document.onkeyup = (e) => {
-      if (e.code === 'space' || e.code === 'Space') {
+      if (e.code && (e.code === 'space' || e.code === 'Space')) {
         e.preventDefault();
         playHandler();
-      } else if (e.code.toLocaleLowerCase() === 'keyf') {
+      } else if (e.code && e.code.toLocaleLowerCase() === 'keyf') {
         dmInner.current?.requestFullscreen();
         setIsFull(true);
-      } else if (e.code.toLocaleLowerCase() === 'escape') {
+      } else if (e.code && e.code.toLocaleLowerCase() === 'escape') {
         document.exitFullscreen();
         setIsFull(false);
       }

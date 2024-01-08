@@ -14,6 +14,7 @@
 /upload/image/
 /upload/user/avatar/
 /upload/video/
+/upload/dist
 /upload_temp/
 # misc
 .DS_Store
