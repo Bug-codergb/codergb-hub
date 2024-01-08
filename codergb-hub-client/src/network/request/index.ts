@@ -16,18 +16,18 @@ class GBRequest {
   constructor(config: GBRequestConfig) {
     this.instance = axios.create(config);
     this.interceptor = config.interceptors;
-    //请求拦截器
+    // 请求拦截器
     this.instance.interceptors.request.use(
       this.interceptor?.requestInterceptor,
       this.interceptor?.requestInterceptorCatch
     );
-    //响应拦截器
+    // 响应拦截器
     this.instance.interceptors.response.use(
       this.interceptor?.responseInterceptor,
       this.interceptor?.responseInterceptorCatch
     );
 
-    //实例拦截器
+    // 实例拦截器
     this.instance.interceptors.request.use(
       (config) => {
         return config;
@@ -47,8 +47,9 @@ class GBRequest {
       }
     );
   }
-  request<T>(config: GBRequestConfig<T>): Promise<T> {
-    return new Promise((resolve, reject) => {
+
+  async request<T>(config: GBRequestConfig<T>): Promise<T> {
+    return await new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config);
       }
@@ -65,11 +66,13 @@ class GBRequest {
         });
     });
   }
-  get<T>(config: GBRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: 'get' });
+
+  async get<T>(config: GBRequestConfig<T>): Promise<T> {
+    return await this.request<T>({ ...config, method: 'get' });
   }
-  post<T>(config: GBRequestConfig<T>): Promise<T> {
-    return this.request<T>({ ...config, method: 'post' });
+
+  async post<T>(config: GBRequestConfig<T>): Promise<T> {
+    return await this.request<T>({ ...config, method: 'post' });
   }
 }
 export default GBRequest;

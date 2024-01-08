@@ -1,6 +1,5 @@
-import React, { memo, type FC, type ReactElement, type MouseEvent, useState, useRef } from 'react';
+import { memo, type FC, type ReactElement, type MouseEvent, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import { VideoItemWrapper } from './style';
 import { MoreOutlined } from '@ant-design/icons';
 import { type IUserMsg } from '../../types/user/IUserMsg';

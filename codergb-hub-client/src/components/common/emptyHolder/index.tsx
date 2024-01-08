@@ -1,11 +1,11 @@
-import React, { memo, type FC } from 'react';
+import React, { memo, type FC, type ReactElement } from 'react';
 import { Empty } from 'antd';
 import { EmptyHolderWrapper } from './style';
 interface IProps {
   msg?: string;
   padding: number;
 }
-const EmptyHolder: FC<IProps> = (props) => {
+const EmptyHolder: FC<IProps> = (props): ReactElement => {
   const { msg, padding } = props;
   return (
     <EmptyHolderWrapper padding={padding}>

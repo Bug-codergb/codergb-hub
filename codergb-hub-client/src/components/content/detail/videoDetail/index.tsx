@@ -16,7 +16,7 @@ import {
   ExpandOutlined,
   CompressOutlined
 } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Layout, Slider } from 'antd';
 import {
@@ -55,6 +55,7 @@ const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
   const { id, type = 'source', cId } = location.state;
+  console.log(id);
   const [videoSourceType, setVideoSourceType] = useState<string>(type);
   const [currentTime, setCurrentTime] = useState('');
   const [vioURL, setVioURL] = useState<string>('');
@@ -119,8 +120,14 @@ const VideoDetail: FC = (): ReactElement => {
         }
         getVideoURL<IResponseType<{ vioUrl: string }>>(vioId).then((data) => {
           if (data.status === 200) {
-            console.log(data.data.vioUrl);
-            setVioURL(data.data.vioUrl);
+            let url = data.data.vioUrl;
+            if (process.env.NODE_ENV === 'development') {
+              url = url.replace(
+                `${process.env.SERVER_PORT}`,
+                `${process.env.WEBPACK_SERVER_PORT}/gb`
+              );
+            }
+            setVioURL(url);
           }
         });
       });
@@ -207,6 +214,8 @@ const VideoDetail: FC = (): ReactElement => {
   const changeVideoType = (id: string) => {
     setVideoSourceType('source');
     playVideo(id);
+    location.state.id = id;
+    setVioId(id);
   };
 
   const [playCount, setPlayCount] = useState<number | string>(0);

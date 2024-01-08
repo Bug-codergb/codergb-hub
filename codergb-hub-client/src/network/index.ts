@@ -11,8 +11,8 @@ const openNotification = (placement: NotificationPlacement, message: string) => 
   });
 };
 const gbRequest = new GBRequest({
-  baseURL: HOST_NAME,
-  timeout: 1000000,
+  baseURL: `${HOST_NAME}${process.env.NODE_ENV === 'development' ? '/gb/' : ''}`,
+  timeout: 5000,
   interceptors: {
     requestInterceptor: (config) => {
       if (localCache.getCache('userMsg') && config.headers) {

@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement } from 'react';
+import React, { memo, type FC, ReactElement } from 'react';
 import { FoldWrapper } from './style';
 const Fold: FC = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
 import HeaderTop from '../../../../components/header/index';

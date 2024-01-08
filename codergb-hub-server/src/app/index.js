@@ -10,7 +10,6 @@ const app = new Koa();
 const webApp = KoaWebsocket(app);
 app.use(koaBodyparser());
 app.use(async(ctx,next)=>{
-  ctx.set("Access-Control-Allow-Origin", "*")
   ctx.set('Access-Control-Allow-Headers','POST,Origin,Content-Type,Accept,authorization')
   await next()
 })

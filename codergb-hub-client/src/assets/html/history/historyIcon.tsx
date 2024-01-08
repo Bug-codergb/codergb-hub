@@ -1,4 +1,4 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 const HistoryIcon: FC = () => {
   return (
     <div>

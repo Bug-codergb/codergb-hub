@@ -4,7 +4,8 @@ const {
   createService,
   channelMomentService,
   momentDetailService,
-  getAllMomentService
+  getAllMomentService,
+  deleteMomentService
 }=require("../service/moment.service");
 class MomentController{
   async create(ctx,next){
@@ -63,6 +64,15 @@ class MomentController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
+    }
+  }
+  async deleteMoment(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const result = await deleteMomentService(ctx,id);
+      setResponse(ctx,"success",200,{})
+    }catch (e) {
+      setResponse(ctx,"server error",500,{});
     }
   }
 }

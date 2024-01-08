@@ -118,6 +118,15 @@ class MomentService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async deleteMomentService(ctx,id){
+    try{
+      const sql=`delete from moment where id=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
 }
 
 module.exports = new MomentService();

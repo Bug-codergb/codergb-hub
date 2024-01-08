@@ -1,4 +1,3 @@
-import React from 'react';
 import Home from '../../views/myChannel/childCpn/home';
 import Video from '../../views/myChannel/childCpn/video';
 import Shorts from '../../views/myChannel/childCpn/shorts';

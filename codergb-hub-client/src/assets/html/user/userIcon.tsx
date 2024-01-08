@@ -1,4 +1,4 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { UserIconWrapper } from './style';
 const UserIcon: FC = () => {
   return (

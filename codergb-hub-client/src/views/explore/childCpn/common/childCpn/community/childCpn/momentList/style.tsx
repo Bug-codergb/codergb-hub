@@ -44,7 +44,7 @@ export const MomentListWrapper = styled.div`
           }
         }
 
-        .user-info {
+        .g-user-info {
           display: flex;
           align-items: center;
 

@@ -35,6 +35,7 @@ const Recommend: FC = (): ReactElement => {
   const navigate = useNavigate();
   const vioRef = useRef<HTMLVideoElement>(null);
   const vioListRef = useRef<HTMLUListElement>(null);
+
   useEffect(() => {
     getAllVideo<IResponseType<IPage<IRecommendVideo[]>>>(0, 50, '').then((data) => {
       if (data.status === 200) {

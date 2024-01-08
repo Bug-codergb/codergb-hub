@@ -1,7 +1,6 @@
-import React, { memo, type FC, ReactElement, useEffect, useState, type FormEvent } from 'react';
+import { memo, type FC, ReactElement, useEffect, useState, type FormEvent } from 'react';
 import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import { SearchOutlined } from '@ant-design/icons';
 import { type Map } from 'immutable';
 import { HistoryWrapper, LeftContentWrapper, RightContentWrapper } from './style';

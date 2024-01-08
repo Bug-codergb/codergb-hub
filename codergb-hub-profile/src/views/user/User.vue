@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { reactive, h, ref } from 'vue';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
@@ -36,11 +36,7 @@ const tableData = reactive({
       label: '用户头像',
       'min-width': 90,
       formatter: (row: IUserMsg) => {
-        return h('img', {
-          src: row.avatarUrl,
-          class: 'img-container',
-          style: { width: '60px' }
-        });
+        return <el-avatar shape="square" size={50} fit="contain" src={row.avatarUrl} />;
       }
     },
     {
@@ -48,7 +44,7 @@ const tableData = reactive({
       label: '创建时间',
       'min-width': 160,
       formatter: (row: IVideo) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
@@ -56,7 +52,7 @@ const tableData = reactive({
       label: '更新时间',
       'min-width': 160,
       formatter: (row: IVideo) => {
-        return moment(row.updateTime).format('yyyy-MM-DD HH:mm:ss');
+        return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
     },
     {
@@ -114,7 +110,7 @@ const gbTable = ref<InstanceType<typeof GbHeader>>(null);
 const header = reactive([
   {
     type: 'input',
-    hint: '请输入播放频道名称',
+    hint: '请输入用户名称',
     id: 'name',
     bingParam: '',
     attr: {

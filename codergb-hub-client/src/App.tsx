@@ -1,20 +1,18 @@
-import React, { Suspense } from 'react';
+import { Suspense, type ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import 'antd/dist/antd.css';
 import { HashRouter, useRoutes } from 'react-router-dom';
 import { routes } from './router';
 import store from './store';
 import './store/actionCreators';
-import { Layout } from 'antd';
 import ErrorBoundary from './components/error';
 import { CommonWrapper } from './assets/css/common';
 
-const { Header } = Layout;
-
-function App() {
+function App(): ReactElement {
   function RouteElement() {
     return useRoutes(routes);
   }
+
   return (
     <CommonWrapper>
       <div className="App">

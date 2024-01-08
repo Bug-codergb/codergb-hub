@@ -1,10 +1,10 @@
-import React, { memo, FC, ReactElement, useCallback } from 'react';
+import React, { memo, type FC, type ReactElement, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LoginWrappers } from './style';
 import { useDispatch } from 'react-redux';
 import { loginAction } from './store/actionCreators';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();

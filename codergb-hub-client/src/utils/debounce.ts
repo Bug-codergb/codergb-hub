@@ -1,7 +1,7 @@
 export function debounce(fn: any, time: number, immediate: boolean) {
   let t: any = null;
   const debounced: any = function () {
-    // @ts-ignore
+    // @ts-expect-error
     const self = this;
     const args = arguments;
     if (t) {

@@ -1,21 +1,21 @@
 import React, {
   memo,
-  FC,
+  type FC,
   useEffect,
   useState,
   useImperativeHandle,
   forwardRef,
-  Ref,
+  type Ref,
   Fragment
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MomentListWrapper } from './style';
-import { getChannelMoment } from '../../../../../../../../network/moment';
-import { IMoment } from '../../../../../../../../types/moment';
-import { IResponseType } from '../../../../../../../../types/responseType';
-import { IPage } from '../../../../../../../../types/IPage';
+import { deleteMoment, getChannelMoment } from '../../../../../../../../network/moment';
+import { type IMoment } from '../../../../../../../../types/moment';
+import { type IResponseType } from '../../../../../../../../types/responseType';
+import { type IPage } from '../../../../../../../../types/IPage';
 import timeMoment from 'moment';
-import { Dropdown, Pagination } from 'antd';
+import { Dropdown, Menu, Pagination, message } from 'antd';
 import Operation from './childCpn/operation';
 import {
   DislikeFilled,
@@ -24,6 +24,7 @@ import {
   LikeOutlined,
   MoreOutlined
 } from '@ant-design/icons';
+import MenuItem from 'antd/lib/menu/MenuItem';
 interface IMomentList {
   getChannelMomentReq: (id: string, offset: number, limit: number) => void;
 }
@@ -62,6 +63,18 @@ const MomentList: FC<IProps> = forwardRef((props, propsRef) => {
       }
     });
   };
+  const drodownHandler = (e: any, item: IMoment) => {
+    console.log(e);
+    const { key } = e;
+    if (key === 'del') {
+      deleteMoment(item.id).then((res) => {
+        if (res.status === 200) {
+          message.info('删除成功');
+          getChannelMomentReq(cId, 0, 10).then(() => {});
+        }
+      });
+    }
+  };
   return (
     <MomentListWrapper>
       <ul className="moment-list">
@@ -75,19 +88,43 @@ const MomentList: FC<IProps> = forwardRef((props, propsRef) => {
                 </div>
                 <div className="right-container">
                   <div className="operation">
-                    <Dropdown trigger={['click']} overlay={<Operation />} placement="bottom">
+                    <Dropdown
+                      trigger={['click']}
+                      overlay={
+                        <Menu
+                          onClick={(e) => {
+                            drodownHandler(e, item);
+                          }}
+                        >
+                          <Menu.Item key="del">
+                            <div>删除</div>
+                          </Menu.Item>
+                        </Menu>
+                      }
+                      placement="bottom"
+                    >
                       <MoreOutlined className="more-icon" />
                     </Dropdown>
                   </div>
-                  <div className="user-info">
+                  <div className="g-user-info">
                     <p className="user-name">{item.user.userName}</p>
                     <p className="create-time">{timeMoment(item.createTime).fromNow()}</p>
                   </div>
-                  <p className="title" onClick={() => momentRouter(item)}>
+                  <p
+                    className="title"
+                    onClick={() => {
+                      momentRouter(item);
+                    }}
+                  >
                     {item.title}
                   </p>
                   <p className="content">{item.content}</p>
-                  <div className="video-container" onClick={() => momentRouter(item)}>
+                  <div
+                    className="video-container"
+                    onClick={() => {
+                      momentRouter(item);
+                    }}
+                  >
                     <img src={item.video.picUrl} />
                   </div>
                   <div className="thumb">
@@ -113,7 +150,9 @@ const MomentList: FC<IProps> = forwardRef((props, propsRef) => {
               defaultCurrent={1}
               pageSize={10}
               total={total}
-              onChange={(e) => pageChange(e)}
+              onChange={(e) => {
+                pageChange(e);
+              }}
             />
           </div>
         </Fragment>
