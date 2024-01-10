@@ -7,7 +7,7 @@
     "start:dev": "cross-env CURRENT_ENV=development webpack serve",
     "start:prod": "cross-env CURRENT_ENV=production webpack",
     "prettier": "prettier --write .",
-    "start": "cross-env CURRENT_ENV=development node scripts/start.js webpack serve"
+    "start": "cross-env CURRENT_ENV=development node scripts/start.js"
   },
   "dependencies": {
     "@babel/core": "^7.23.7",
