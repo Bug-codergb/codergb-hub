@@ -154,5 +154,23 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async selectUserSubPlaylist(ctx,playlistId,userId){
+    try{
+      const sql=`select userId playlistId from sub_playlist where userId = ? and playlistId = ?`;
+      const result = await connection.execute(sql,[userId,playlistId]);
+      return result;
+    }catch (e) {
+      setResponse(ctx,'error',500,{})
+    }
+  }
+  async subPlaylistService(ctx,playlistId,userId){
+    try{
+      const sql=`insert into sub_playlist(userId,playlistId) values(?,?)`;
+      const result = await connection.execute(sql,[userId,playlistId]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,'error',500,{})
+    }
+  }
 }
 module.exports = new PlaylistService();

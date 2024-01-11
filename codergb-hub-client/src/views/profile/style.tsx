@@ -4,4 +4,8 @@ export const ProfileWrapper = styled.div`
   .ant-layout-content {
     background-color: white;
   }
+  .g-navigate-content {
+    max-height: 90vh;
+    overflow-y: scroll;
+  }
 `;

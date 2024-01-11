@@ -8,6 +8,27 @@ export const PlaylistWrapper = styled.div`
       width: ${300 / 40}rem;
       height: ${153 / 40}rem;
       margin: 0 0 ${140 / 40}rem 0;
+      position: relative;
+      .sub {
+        display: flex;
+        align-items: center;
+        .label {
+          margin: 0 0 0 5px;
+        }
+      }
+      .container {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        justify-content: space-between;
+        .g-more {
+          margin: ${15 / 40}rem 0 ${5 / 40}rem 0;
+          cursor: pointer;
+          svg {
+            font-size: ${30 / 40}rem;
+          }
+        }
+      }
     }
     .cover {
       width: 100%;
@@ -32,7 +53,7 @@ export const PlaylistWrapper = styled.div`
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
-        width: 100%;
+        width: 88%;
         word-break: break-all;
       }
       .create-time,

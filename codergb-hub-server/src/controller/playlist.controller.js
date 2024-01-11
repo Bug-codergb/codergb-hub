@@ -5,7 +5,9 @@ const {
   getAllPlaylistService,
   getUserPlaylistService,
   playlistDetailService,
-  playlistVideoService
+  playlistVideoService,
+  subPlaylistService,
+  selectUserSubPlaylist
 } = require("../service/playlist.service");
 const {
   createVideoPlaylistService
@@ -89,6 +91,24 @@ class PlaylistController{
     }
     catch (e) {
       setResponse(ctx,e.message,500,{})
+    }
+  }
+  async subPlaylist(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {userId} =ctx.user;
+      const isExists = await selectUserSubPlaylist(ctx,id,userId);
+      if(isExists[0].length===0){
+        const result = await subPlaylistService(ctx,id,userId);
+        if(result){
+          setResponse(ctx,"收藏成功",200,{});
+        }
+      }else{
+        setResponse(ctx,"您已经收藏",200,{});
+      }
+
+    }catch (e) {
+      setResponse(ctx,'error',500,{})
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement, useState } from 'react';
+import { memo, type FC, type ReactElement, useState } from 'react';
 import { Dropdown, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { BlockPageWrapper } from './style';
@@ -24,7 +24,13 @@ const BlockPage: FC = (): ReactElement => {
             overlayClassName={'profile-drop-style'}
             placement={'topLeft'}
             trigger={['click']}
-            overlay={<BlockList addBlock={() => addBlockHandle()} />}
+            overlay={
+              <BlockList
+                addBlock={() => {
+                  addBlockHandle();
+                }}
+              />
+            }
           >
             <div className="add-label">添加板块</div>
           </Dropdown>

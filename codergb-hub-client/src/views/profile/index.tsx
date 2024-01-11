@@ -1,4 +1,4 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 import { ProfileWrapper } from './style';
 import { Layout } from 'antd';
 import HeaderTop from '../../components/header';
@@ -18,7 +18,7 @@ const Profile: FC = () => {
             <Sider>
               <NavList isHome={false} />
             </Sider>
-            <Content>
+            <Content className="g-navigate-content">
               <Outlet />
             </Content>
           </Layout>

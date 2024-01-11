@@ -1,24 +1,38 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import { memo, type FC, type ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tabs, notification } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserDetailWrapper } from './style';
-import { IChannel } from '../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../types/channel/IChannel';
 import { getUserChannel } from '../../../../network/channel';
 import { sub, cancelSub } from '../../../../network/subscriber';
-import { IResponseType } from '../../../../types/responseType';
+import { type IResponseType } from '../../../../types/responseType';
 
 import { tabs } from './config';
 import { getUserBlock } from '../../../../network/block';
-import { IBlock } from '../../../../types/block/IBlock';
-import { CREATED_PLAYLIST, SUB_CHANNEL, UPLOADED_VIDEO } from '../../../../constant/block';
+import { type IBlock } from '../../../../types/block/IBlock';
+import {
+  CREATED_PLAYLIST,
+  HOT_VIDEO,
+  MUL_PLAYLIST,
+  SHORT,
+  SINGLE_PLAYLIST,
+  SUB_CHANNEL,
+  UPLOADED_VIDEO,
+  WONDER_CHANNEL
+} from '../../../../constant/block';
 import UploadedVideo from './childCpn/uploadedVideo';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
 import CreatePlaylist from './childCpn/playlist';
 import Subscriber from './childCpn/subscriber';
 import { useSub } from '../../../../hook/useSub';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../../../../views/login/store/actionCreators';
+import Short from './childCpn/short';
+import MulPlay from './childCpn/mulPlay';
+import SinglePlay from './childCpn/singlePlay';
+import WonderChannel from './childCpn/wonderChannel';
+import HotVideo from './childCpn/hotVideo';
 
 const UserDetail: FC = (): ReactElement => {
   const location = useLocation();
@@ -46,16 +60,24 @@ const UserDetail: FC = (): ReactElement => {
   useEffect(() => {
     if (keyIndex !== 0) {
       getUserBlock<IResponseType<IBlock[]>>(userId).then((data) => {
+        console.log(data);
         if (data.status === 200) {
           setBlock(data.data);
           if (data.data.length !== 0) {
-            let tabList = [...userTabs];
-            for (let item of data.data) {
+            const tabList = [...userTabs];
+            for (const item of data.data) {
               if (item.name === UPLOADED_VIDEO) {
                 tabList.push({
                   key: item.id,
                   label: item.name,
                   children: <UploadedVideo userId={userId} />
+                });
+              }
+              if (item.name === HOT_VIDEO) {
+                tabList.push({
+                  key: item.id,
+                  label: item.name,
+                  children: <HotVideo userId={userId} />
                 });
               }
               if (item.name === CREATED_PLAYLIST) {
@@ -72,6 +94,34 @@ const UserDetail: FC = (): ReactElement => {
                   children: <Subscriber userId={userId} />
                 });
               }
+              if (item.name === WONDER_CHANNEL) {
+                tabList.push({
+                  key: item.id,
+                  label: item.name,
+                  children: <WonderChannel userId={userId} />
+                });
+              }
+              if (item.name === SHORT) {
+                tabList.push({
+                  key: item.id,
+                  label: item.name,
+                  children: <Short userId={userId} />
+                });
+              }
+              if (item.name === MUL_PLAYLIST) {
+                tabList.push({
+                  key: item.id,
+                  label: item.name,
+                  children: <MulPlay userId={userId} />
+                });
+              }
+              if (item.name === SINGLE_PLAYLIST) {
+                tabList.push({
+                  key: item.id,
+                  label: item.name,
+                  children: <SinglePlay userId={userId} />
+                });
+              }
             }
             setUserTabs(tabList);
           }
@@ -80,11 +130,11 @@ const UserDetail: FC = (): ReactElement => {
     }
   }, [keyIndex]);
   const chatRouter = () => {
-    if (userId && userChannel && userChannel.user) {
+    if (userId && userChannel?.user) {
       navigate('/chatDetail', {
         state: {
-          userId: userId,
-          userName: userChannel!.user.userName
+          userId,
+          userName: userChannel.user.userName
         }
       });
     }
@@ -124,12 +174,22 @@ const UserDetail: FC = (): ReactElement => {
         </div>
         <div className="control-btn">
           {loginMsg.userMsg.userId !== userId && (
-            <div className="sub-btn" onClick={() => subHandler()}>
+            <div
+              className="sub-btn"
+              onClick={async () => {
+                await subHandler();
+              }}
+            >
               {isSub ? '已订阅' : '订阅'}
             </div>
           )}
           {loginMsg.userMsg.userId !== userId && (
-            <div className="sub-btn message" onClick={(e) => chatRouter()}>
+            <div
+              className="sub-btn message"
+              onClick={(e) => {
+                chatRouter();
+              }}
+            >
               私信
             </div>
           )}

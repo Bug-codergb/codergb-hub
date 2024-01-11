@@ -68,3 +68,8 @@ export async function getPlaylistVideo<T = IResponseType<any>>(
     }
   });
 }
+export async function subUserPlaylist<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
+    url: '/playlist/sub/' + id
+  });
+}

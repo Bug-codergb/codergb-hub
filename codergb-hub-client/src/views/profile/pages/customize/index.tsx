@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement } from 'react';
+import { memo, type FC, type ReactElement } from 'react';
 import { Tabs } from 'antd';
 import Basic from './childCpn/basic';
 import Brand from './childCpn/brand';

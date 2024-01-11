@@ -145,3 +145,10 @@ button {
 .ant-slider-handle:focus {
   border-color: #ea3323;
 }
+.g-sub-playlist{
+  display: flex;
+  align-items: center;
+  .label{
+    margin: 0 0 0 5px;
+  }
+}

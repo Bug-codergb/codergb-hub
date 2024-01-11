@@ -99,6 +99,24 @@ export async function getUserVideo<T = IResponseType<any>>(
     }
   });
 }
+// 获取用户视频
+export async function getUserHotVideo<T = IResponseType<any>>(
+  id: string,
+  keyword: string,
+  offset: number,
+  limit: number
+) {
+  return await gbRequest.post<T>({
+    url: `/user/video/hot/${id}`,
+    params: {
+      offset,
+      limit
+    },
+    data: {
+      keyword
+    }
+  });
+}
 // 获取订阅用户视频
 export async function getSubUserVideo<T = IResponseType<any>>(
   userId: string,

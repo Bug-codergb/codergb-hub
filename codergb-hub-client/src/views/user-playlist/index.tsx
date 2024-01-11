@@ -1,16 +1,18 @@
 import React, { memo, type FC, useState, useEffect } from 'react';
+import { StarOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { UserPlaylistWrapper, LeftContent, RightContent } from './style';
 import { type IPlaylist } from '../../types/playlist/IPlaylist';
 import { type IVideo } from '../../types/video/IVideo';
-import { getPlaylistDetail, getPlaylistVideo } from '../../network/playlist';
+import { getPlaylistDetail, getPlaylistVideo, subUserPlaylist } from '../../network/playlist';
 import { type IResponseType } from '../../types/responseType';
 import { type IPage } from '../../types/IPage';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { type ILogin } from '../../types/login/ILogin';
+import { notification } from 'antd';
 interface IProps {
   id?: string;
 }
@@ -43,6 +45,18 @@ const UserPlaylist: FC<IProps> = (props) => {
       }
     });
   };
+  const subHandler = () => {
+    console.log(111);
+    subUserPlaylist(id).then((res) => {
+      if (res.status === 200) {
+        notification.info({
+          message: `${res.message}`,
+          description: `个人中心‘收藏的播放列表’中查看`,
+          placement: 'bottomLeft'
+        });
+      }
+    });
+  };
   return (
     <UserPlaylistWrapper>
       {playlist && (
@@ -63,6 +77,18 @@ const UserPlaylist: FC<IProps> = (props) => {
               {moment(playlist.updateTime).format('yyyy-MM-DD HH:MM')}更新
             </div>
           </div>
+
+          {playlist && playlist.user.userId !== login.userMsg.userId && (
+            <div
+              className="sub"
+              onClick={(e) => {
+                subHandler();
+              }}
+            >
+              <StarOutlined />
+              <span className="label">收藏</span>
+            </div>
+          )}
           <div className="mask"></div>
         </LeftContent>
       )}

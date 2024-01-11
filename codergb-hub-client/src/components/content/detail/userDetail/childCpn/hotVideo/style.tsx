@@ -1,2 +1,8 @@
 import styled from 'styled-components';
-export const CommunityWrapper = styled.div``;
+export const HotVideoWrapper = styled.div`
+  .video-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+`;

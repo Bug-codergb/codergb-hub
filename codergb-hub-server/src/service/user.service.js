@@ -108,6 +108,37 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
+  async userHotVideo(ctx,userId,offset,limit,keyword){
+    try{
+      const sql=`
+      select v.id,v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,f.picUrl,
+       (select JSON_OBJECT(
+			  'userId',v.userId,
+				'userName',u.userName,
+				'avatarUrl',u.avatarUrl
+			 ) from user as u WHERE u.userId = v.userId) as user,
+			 (select JSON_OBJECT(
+			  'id',v.cateId,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime
+			 ) from category as c where c.id = v.cateId) as category,
+			 (select JSON_ARRAYAGG(
+			   JSON_OBJECT('id',t.id,'name',t.name,'createTime',t.createTime,'updateTime',t.updateTime)
+			 ) FROM tag as t LEFT JOIN tag_video as tv on tv.tId = t.id where tv.vId = v.id) as tag
+       from video as v
+       LEFT JOIN video_file as vf on vf.videoId = v.id
+       LEFT JOIN file as f on f.id = vf.fileId
+       where vf.mark = "cover" and v.userId=? ${keyword!==""? `and v.name like '%${keyword}%'` : ''}
+       ORDER BY v.playCount desc
+       limit ?,? `;
+      const result = await connection.execute(sql,[userId,offset,limit]);
+      const count = await new UserService().userVideoCountService(ctx,userId,keyword);
+      return {
+        count:count[0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      setResponse(ctx,e.message,500);
+    }
+  }
   async getAllUserCountService(ctx,isExplore){
     try{
       const sql=`select count(u.userId) as count

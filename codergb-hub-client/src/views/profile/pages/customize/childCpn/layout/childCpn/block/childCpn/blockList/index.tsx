@@ -1,13 +1,15 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
+import React, { memo, type FC, type ReactElement, useEffect, useState } from 'react';
 import { BlockListWrapper } from './style';
 import { getAllBlock, userAddBlock } from '../../../../../../../../../../network/block';
-import { IResponseType } from '../../../../../../../../../../types/responseType';
-import { IBlock } from '../../../../../../../../../../types/block/IBlock';
+import { type IResponseType } from '../../../../../../../../../../types/responseType';
+import { type IBlock } from '../../../../../../../../../../types/block/IBlock';
 import UploadVideo from '../../../../../../../../../../components/header/childCpn/uploadVideo';
 import { Modal } from 'antd';
 import {
   CREATED_PLAYLIST,
   HOT_VIDEO,
+  MUL_PLAYLIST,
+  SHORT,
   SINGLE_PLAYLIST,
   SUB_CHANNEL,
   UPLOADED_VIDEO,
@@ -45,7 +47,7 @@ const BlockList: FC<IProps> = (props): ReactElement => {
           addBlock();
         }
       });
-    } else if (item.name === CREATED_PLAYLIST) {
+    } else if (item.name === CREATED_PLAYLIST || item.name === MUL_PLAYLIST) {
       userAddBlock(item.id).then((data) => {
         if (data.status === 200) {
           addBlock();
@@ -63,6 +65,12 @@ const BlockList: FC<IProps> = (props): ReactElement => {
           addBlock();
         }
       });
+    } else if (item.name === SHORT) {
+      userAddBlock(item.id).then((data) => {
+        if (data.status === 200) {
+          addBlock();
+        }
+      });
     }
   };
   return (
@@ -72,7 +80,12 @@ const BlockList: FC<IProps> = (props): ReactElement => {
           block.length !== 0 &&
           block.map((item, index) => {
             return (
-              <li key={item.id} onClick={(e) => addBlockHandle(item)}>
+              <li
+                key={item.id}
+                onClick={(e) => {
+                  addBlockHandle(item);
+                }}
+              >
                 {item.name}
               </li>
             );

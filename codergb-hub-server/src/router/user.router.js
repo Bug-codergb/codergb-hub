@@ -10,7 +10,8 @@ const {
   userMsg,
   userVideo,
   getAllUser,
-  getUSerLib
+  getUSerLib,
+  userHotVideo
 } = require("../controller/user.controller");
 //上传头像
 userRouter.post("/avatar/upload",authVerify,userAvatarUpload,uploadAvatar);
@@ -22,6 +23,8 @@ userRouter.post("/avatar/update/:userId",authVerify,deleteAvatar,userAvatarUploa
 userRouter.post("/msg/:id",authVerify,userMsg);
 //获取用户视频
 userRouter.post("/video/:id",authVerify,userVideo);
+//获取用户热门视频
+userRouter.post("/video/hot/:id",authVerify,userHotVideo);
 //获取所有用户
 userRouter.post("/all",authVerify,getAllUser);
 //获取用户媒体库数据

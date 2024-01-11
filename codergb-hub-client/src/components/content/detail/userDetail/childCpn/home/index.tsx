@@ -32,7 +32,14 @@ const Home: FC<IProps> = (props) => {
     if (channel?.trailer) {
       getVideoURL<IResponseType<{ vioUrl: string }>>(channel.trailer.id).then((res) => {
         if (res.status === 200) {
-          setVioURL(res.data.vioUrl);
+          let url = res.data.vioUrl;
+          if (process.env.NODE_ENV === 'development') {
+            url = url.replace(
+              `${process.env.SERVER_PORT}`,
+              `${process.env.WEBPACK_SERVER_PORT}/gb`
+            );
+          }
+          setVioURL(url);
         }
       });
     }

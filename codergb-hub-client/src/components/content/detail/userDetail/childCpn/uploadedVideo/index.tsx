@@ -1,10 +1,10 @@
-import React, { memo, FC, useState, useEffect } from 'react';
+import React, { memo, type FC, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UploadedVideoWrapper } from './style';
-import { IVideo } from '../../../../../../types/video/IVideo';
+import { type IVideo } from '../../../../../../types/video/IVideo';
 import { getUserVideo } from '../../../../../../network/video';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IPage } from '../../../../../../types/IPage';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IPage } from '../../../../../../types/IPage';
 import VideoItem from '../../../../../videoItem';
 import HolderCpn from '../../../../../holder';
 interface IProps {
@@ -43,7 +43,14 @@ const UploadedVideo: FC<IProps> = (props) => {
             return (
               <li key={item.id}>
                 <VideoItem
-                  img={<img src={item.picUrl} onClick={() => videoRouter(item)} />}
+                  img={
+                    <img
+                      src={item.picUrl}
+                      onClick={() => {
+                        videoRouter(item);
+                      }}
+                    />
+                  }
                   dt={item.dt}
                   isShowUser={false}
                   playCount={item.playCount}

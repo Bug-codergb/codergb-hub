@@ -40,11 +40,13 @@ export const LeftContent: any = styled.div`
     font-weight: bolder;
     margin: ${28 / 40}rem 0 0 0;
     width: ${450 / 40}rem;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 1);
   }
   .user-name {
     font-size: ${18 / 40}rem;
     color: #fff;
     margin: ${20 / 40}rem 0 ${18 / 40}rem 0;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 1);
   }
   .vio-info {
     display: flex;
@@ -59,6 +61,27 @@ export const LeftContent: any = styled.div`
       font-size: ${16 / 40}rem;
       color: #fff;
       text-shadow: 0 0 2px rgba(0, 0, 0, 1);
+    }
+  }
+  .sub {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #fff;
+    color: #fff;
+    width: ${100 / 40}rem;
+    justify-content: center;
+    padding: ${8 / 40}rem 0;
+    margin: ${20 / 40}rem 0 0 0;
+    border-radius: 18px;
+    cursor: pointer;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 1);
+    position: relative;
+    z-index: 999999;
+    .label {
+      margin: 0 0 0 10px;
+      svg {
+        text-shadow: 0 0 2px rgba(0, 0, 0, 1);
+      }
     }
   }
 `;

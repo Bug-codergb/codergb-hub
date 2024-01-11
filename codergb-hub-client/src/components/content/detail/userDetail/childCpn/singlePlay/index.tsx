@@ -1,9 +1,9 @@
-import React, { memo, FC } from 'react';
+import React, { memo, type FC } from 'react';
 interface IProps {
   userId: string;
 }
-const Community: FC<IProps> = (props) => {
+const SinglePlaylist: FC<IProps> = (props) => {
   const { userId } = props;
   return <div>dddd</div>;
 };
-export default memo(Community);
+export default memo(SinglePlaylist);

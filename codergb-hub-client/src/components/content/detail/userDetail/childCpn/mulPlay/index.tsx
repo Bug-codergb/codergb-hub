@@ -2,8 +2,8 @@ import React, { memo, type FC } from 'react';
 interface IProps {
   userId: string;
 }
-const Community: FC<IProps> = (props) => {
+const MulPlay: FC<IProps> = (props) => {
   const { userId } = props;
   return <div>dddd</div>;
 };
-export default memo(Community);
+export default memo(MulPlay);
