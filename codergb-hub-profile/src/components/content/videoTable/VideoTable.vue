@@ -13,6 +13,7 @@
       @selectionChange="selectionChange"
       v-bind="$attrs"
       :data-callback="dataCallback"
+      :is-radio="isRadio"
     >
       <template v-slot:end>
         <slot name="video-end"></slot>
@@ -65,6 +66,10 @@ const props = defineProps({
   },
   dataCallback: {
     type: Function
+  },
+  isRadio: {
+    type: Boolean,
+    default: false
   }
 });
 const emit = defineEmits(['selectionChange', 'create', 'edit']);

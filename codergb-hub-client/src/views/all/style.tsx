@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 import cate from '../../assets/img/cate.png';
 export const AllWrapper = styled.div`
+  .carousel-container {
+    margin: 0 0 ${25 / 40}rem 0;
+    .carousel-item {
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+  }
   .cate-list {
     display: flex;
     align-items: center;

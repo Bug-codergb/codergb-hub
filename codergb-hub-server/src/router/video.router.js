@@ -19,7 +19,10 @@ const {
   updateVideo,
   cateVideo,
   addPlayCount,
-  getVideoChunk
+  getVideoChunk,
+  addCarousel,
+  deleteCarousel,
+  getAllCarousel
 } = require("../controller/video.controller")
 //视频上传文件信息
 videoRouter.post("/upload",authVerify,videoUpload,uploadVideo);
@@ -53,4 +56,9 @@ videoRouter.post("/update",authVerify,updateVideo);
 //获取视频下分类
 videoRouter.post("/cate/:id",authVerify,cateVideo);
 videoRouter.post("/playCount/:id",authVerify,addPlayCount);
+//添加视频轮播图
+videoRouter.post("/carousel",authVerify,addCarousel);
+//删除轮播图
+videoRouter.post("/carousel/:id",authVerify,deleteCarousel);
+videoRouter.get("/carousel/all",authVerify,getAllCarousel);
 module.exports = videoRouter;

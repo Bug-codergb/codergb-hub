@@ -196,3 +196,8 @@ export async function addPlayCount<T = IResponseType<any>>(id: string) {
     url: 'video/playCount/' + id
   });
 }
+export async function getCarousel<T = IResponseType<any>>() {
+  return await gbRequest.get<T>({
+    url: '/video/carousel/all'
+  });
+}

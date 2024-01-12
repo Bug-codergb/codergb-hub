@@ -126,6 +126,7 @@ const confirmHandle = async () => {
     .container {
       flex: 1;
       height: 100%;
+      width: 50%;
       display: flex;
       align-content: center;
       justify-content: center;
@@ -137,6 +138,7 @@ const confirmHandle = async () => {
     .prev {
       flex: 1;
       height: 100%;
+      width: 50%;
       background-color: var(--img-bgc);
       display: flex;
       align-items: center;
@@ -144,7 +146,7 @@ const confirmHandle = async () => {
       .small {
         overflow: hidden;
         img {
-          height: 100%;
+          width: 100% !important;
         }
       }
     }

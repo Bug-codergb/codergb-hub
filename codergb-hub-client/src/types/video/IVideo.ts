@@ -1,6 +1,6 @@
-import { ICate } from '../category/ICate';
-import { ITag } from '../tag/ITag';
-import { IUserMsg } from '../user/IUserMsg';
+import { type ICate } from '../category/ICate';
+import { type ITag } from '../tag/ITag';
+import { type IUserMsg } from '../user/IUserMsg';
 
 interface IVideo {
   isShow: false;
@@ -19,4 +19,13 @@ interface IVideo {
   isShort: number;
   tag: ITag[];
 }
-export type { IVideo };
+
+interface ICarousel {
+  id: string;
+  title: string;
+  description: string;
+  videoId: string;
+  picUrl: string;
+  createTime: string;
+}
+export type { IVideo, ICarousel };

@@ -1,0 +1,57 @@
+<script setup lang="tsx">
+import { reactive, ref } from 'vue';
+import moment from 'moment';
+import GbTable from '@/components/common/gbTable/GbTable.vue';
+import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
+import CreateCarousel from '@/views/videoDict/childCpn/carousel/childCpn/CreateCarousel.vue';
+const createHandle = () => {
+  createCarouselRef.value.showDrawer();
+};
+const tableData = reactive({
+  url: '/video/carousel/all',
+  method: 'get',
+  columns: [
+    {
+      label: '名称',
+      prop: 'title'
+    },
+    {
+      label: '简介',
+      prop: 'description'
+    },
+    {
+      label: '封面',
+      prop: 'picUrl',
+      formatter: (scope: any) => {
+        return <el-image style="width: 200px; height: 70px" src={scope.picUrl} fit="contain" />;
+      }
+    },
+    {
+      label: '创建时间',
+      prop: 'createTime',
+      formatter: (scope: any) => {
+        return moment(scope.createTime).format('yyyy-MM-DD HH:mm');
+      }
+    }
+  ]
+});
+const header = reactive([]);
+const createCarouselRef = ref();
+
+const gbTable = ref();
+const refreshHandler = () => {
+  if (gbTable.value) {
+    gbTable.value.search();
+  }
+};
+</script>
+
+<template>
+  <div class="carousel-container">
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
+    <GbTable :tableData="tableData" ref="gbTable" />
+    <CreateCarousel ref="createCarouselRef" @refresh="refreshHandler" />
+  </div>
+</template>
+
+<style scoped lang="less"></style>

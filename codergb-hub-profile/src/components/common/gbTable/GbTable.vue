@@ -70,6 +70,10 @@ const props = defineProps({
   },
   dataCallback: {
     type: Function
+  },
+  isRadio: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -174,9 +178,20 @@ const btnClick = (it: any, scope: any) => {
   }
 };
 
-const selectionChange = (row: unknown) => {
-  selectMap.value.set(currentPage.value, row);
-  emit('selectionChange', row);
+const selectionChange = (row: any) => {
+  if (!props.isRadio) {
+    selectMap.value.set(currentPage.value, row);
+    emit('selectionChange', row);
+  } else {
+    row = row.length > 0 ? row[row.length - 1] : null;
+    tableRef.value.clearSelection();
+    tableRef.value.toggleRowSelection(row ?? {});
+    if (row) selectMap.value.set(currentPage.value, [row[row.length - 1]]);
+    else {
+      selectMap.value.delete(currentPage.value);
+    }
+    emit('selectionChange', row);
+  }
 };
 defineExpose({
   search,

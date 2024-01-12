@@ -24,7 +24,10 @@ const {
   updateVideoInfoService,
   cateVideoService,
   addPlayCountService,
-  getVideoChunkService
+  getVideoChunkService,
+  addCarouselService,
+  deleteCarouselService,
+  getAllCarouselService
 } = require("../service/video.service")
 const {createUploadPath} = require("../middleware/file.middleware");
 const { getFansService } = require("../service/subscriber.service")
@@ -420,7 +423,39 @@ class VideoController {
         setResponse(ctx, "success", 200, res);
       }
     }catch (e) {
-      setResponse(ctx, e.message, 500, {});
+      setResponse(ctx, 'error', 500, {});
+    }
+  }
+  async addCarousel(ctx,next){
+    try{
+      const { title='',description='',fileId='',videoId='' } = ctx.request.body;
+      if(!isEmpty(ctx,title,"标题不能为空")&& !isEmpty(ctx,description,"简介不能为空")&&
+      !isEmpty(ctx,fileId,"图片不能为空")&&!isEmpty(ctx,videoId,"关联视频不能为空")){
+        const result = await addCarouselService(ctx,title,description,fileId,videoId);
+        if(result){
+          setResponse(ctx, "success", 200, {});
+        }
+      }
+    }catch (e) {
+      setResponse(ctx, 'error', 500, {});
+    }
+  }
+  async deleteCarousel(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await deleteCarouselService(ctx,id);
+      setResponse(ctx, "success", 200, {});
+    }catch (e) {
+      setResponse(ctx, 'error', 500, {});
+    }
+  }
+  async getAllCarousel(ctx,next){
+    try{
+      console.log(1)
+      const result = await getAllCarouselService();
+      setResponse(ctx, "success", 200, result);
+    }catch (e) {
+
     }
   }
 }

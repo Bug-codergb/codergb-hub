@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <el-form :model="newFormData" ref="ruleFormRef" :rules="rules">
+    <el-form :model="newFormData" ref="ruleFormRef" :rules="rules" label-position="top">
       <template v-for="item in tableConstructor" :key="item">
         <el-row>
           <el-col v-for="it in item" :key="it">
@@ -52,6 +52,9 @@
                     <input type="file" @change="(e) => videoChange(e, it.prop)" />
                   </template>
                 </div>
+              </template>
+              <template v-if="it.type.name === 'slot'">
+                <slot :name="it.prop"></slot>
               </template>
             </el-form-item>
           </el-col>

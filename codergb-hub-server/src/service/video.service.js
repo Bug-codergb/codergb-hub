@@ -510,7 +510,42 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
       const result = await connection.execute(sql,[playCount,id]);
       return result[0]
     }catch (e) {
-      setResponse(ctx, e.message, 500, {});
+      setResponse(ctx, 'error', 500, {});
+    }
+  }
+  async addCarouselService(ctx,title,description,fileId,videoId){
+    try{
+      const id = new Date().getTime();
+      const sql= `insert into video_carousel(id,title,description,fileId,videoId) values(?,?,?,?,?)`;
+      const result = await connection.execute(sql,[id,title,description,fileId,videoId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx, 'error', 500, {});
+    }
+  }
+  async deleteCarouselService(ctx,id){
+    try{
+      const sql=`delete from video_carousel where id=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
+  async getAllCarouselService(){
+    try{
+      const sql=`
+      select vc.id,vc.title,vc.description,vc.videoId,f.picUrl,v.name as name
+      from video_carousel as vc
+      left join file f on vc.fileId = f.id
+      left join video v on v.id = vc.videoId`;
+      const result = await connection.execute(sql);
+      console.log(result)
+      return {
+        list:result[0]
+      }
+    }catch (e) {
+      console.log(e)
     }
   }
 }

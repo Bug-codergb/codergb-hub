@@ -221,3 +221,19 @@ export async function getCollectionVideo<T = IResponseType<any>>(
     }
   });
 }
+export function addCarousel<T = IResponseType<any>>(
+  title: string,
+  desc: string,
+  fileId: string,
+  videoId: string
+) {
+  return gbRequest.post<T>({
+    url: '/video/carousel',
+    data: {
+      title,
+      description: desc,
+      fileId,
+      videoId
+    }
+  });
+}

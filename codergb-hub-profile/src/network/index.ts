@@ -3,8 +3,8 @@ import { HOST_NAME } from '@/constant/host';
 import localCache from '../utils/cache';
 
 const gbRequest = new GBRequest({
-  baseURL: HOST_NAME,
-  timeout: 1000000,
+  baseURL: `${HOST_NAME}/gb`,
+  timeout: 10000,
   interceptors: {
     requestInterceptor: (config) => {
       if (localCache.getCache('userMsg') && config.headers) {
