@@ -1,4 +1,5 @@
 import React, { memo, type FC, type ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'antd';
 import { getAllCate } from '../../network/category';
 import { type ICate } from '../../types/category/ICate';
@@ -10,6 +11,7 @@ import { getCarousel } from '../../network/video';
 const AllVideo: FC = (): ReactElement => {
   const [cate, setCate] = useState<ICate[]>([]);
   const [count, setCount] = useState<number>(0);
+  const navigate = useNavigate();
   useEffect(() => {
     getAllCate<IResponseType<IPage<ICate[]>>>(0, 10).then((res) => {
       if (res.status === 200) {
@@ -33,15 +35,29 @@ const AllVideo: FC = (): ReactElement => {
       }
     });
   }, []);
+  const videoRouter = (item: ICarousel) => {
+    navigate('/videoDetail', {
+      replace: true,
+      state: {
+        id: item.videoId
+      }
+    });
+  };
   return (
     <AllWrapper>
       <div className="carousel-container">
         <Carousel autoplay={true}>
           {carousel &&
             carousel.length !== 0 &&
-            carousel.map((item) => {
+            carousel.map((item: ICarousel) => {
               return (
-                <div key={item.id} className="carousel-item">
+                <div
+                  key={item.id}
+                  className="carousel-item"
+                  onClick={() => {
+                    videoRouter(item);
+                  }}
+                >
                   <img src={item.picUrl} />
                 </div>
               );

@@ -10,17 +10,35 @@ interface IProps {
 const props = defineProps<IProps>();
 const url = ref('');
 const videoRef = ref<HTMLVideoElement | null>(null);
+console.log(process.env.VUE_APP_SERVER_PORT);
 getVideoURL(props.id).then((res) => {
   if (res.status === 200) {
     console.log(res.data);
     nextTick(() => {
       if (Hls.isSupported() && videoRef.value) {
+        let url = res.data.vioUrl;
+
+        if (process.env.NODE_ENV === 'development') {
+          url = url.replace(
+            `${process.env.VUE_APP_SERVER_PORT}`,
+            `${process.env.VUE_APP_WEBPACK_SERVER_PORT}/gb`
+          );
+        }
         const hls = new Hls();
-        hls.loadSource(res.data.vioUrl);
+        hls.loadSource(url);
         // hls.loadSource('http://localhost:8888/video/0718294d1c07ee39c7ebb9cb93b0f9580.ts');
         hls.attachMedia(videoRef.value);
       } else if (videoRef.value.canPlayType('application/vnd.apple.mpegurl')) {
-        videoRef.value.src = res.data.vioUrl;
+        let url = res.data.vioUrl;
+
+        if (process.env.NODE_ENV === 'development') {
+          url = url.replace(
+            `${process.env.VUE_APP_SERVER_PORT}`,
+            `${process.env.VUE_APP_WEBPACK_SERVER_PORT}/gb`
+          );
+        }
+        console.log(url);
+        if (videoRef.value) videoRef.value.src = url;
       }
     });
   }

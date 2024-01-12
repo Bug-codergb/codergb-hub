@@ -17,6 +17,7 @@ const useLoginStore = defineStore('login', {
   actions: {
     async loginAction(userName: string, password: string): Promise<boolean> {
       const res = await login<IResponseType<IUserMsg>>(userName, password);
+
       if (res.status === 200) {
         this.userMsg = res.data;
         localCache.setCache('userMsg', res.data);
