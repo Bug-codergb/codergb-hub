@@ -237,3 +237,8 @@ export function addCarousel<T = IResponseType<any>>(
     }
   });
 }
+export function deleteCarousel<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: '/video/carousel/' + id
+  });
+}

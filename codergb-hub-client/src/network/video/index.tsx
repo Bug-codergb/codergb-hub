@@ -201,3 +201,16 @@ export async function getCarousel<T = IResponseType<any>>() {
     url: '/video/carousel/all'
   });
 }
+export async function getCateVideo<T = IResponseType<any>>(
+  id: string,
+  offset: number,
+  limit: number
+) {
+  return await gbRequest.post<T>({
+    url: '/video/cate/' + id,
+    params: {
+      offset,
+      limit
+    }
+  });
+}

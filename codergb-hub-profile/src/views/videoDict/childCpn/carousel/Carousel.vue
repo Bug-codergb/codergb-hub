@@ -4,6 +4,8 @@ import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import CreateCarousel from '@/views/videoDict/childCpn/carousel/childCpn/CreateCarousel.vue';
+import { deleteCarousel } from '@/network/video';
+import { ElMessage } from 'element-plus';
 const createHandle = () => {
   createCarouselRef.value.showDrawer();
 };
@@ -32,6 +34,27 @@ const tableData = reactive({
       formatter: (scope: any) => {
         return moment(scope.createTime).format('yyyy-MM-DD HH:mm');
       }
+    },
+    {
+      label: '操作',
+      prop: '',
+      btns: [
+        {
+          text: '删除',
+          type: 'danger',
+          onClick: async (row: any) => {
+            console.log(row);
+            const res = await deleteCarousel(row.id);
+            if (res.status === 200) {
+              ElMessage({
+                type: 'success',
+                message: '删除成功'
+              });
+              refreshHandler();
+            }
+          }
+        }
+      ]
     }
   ]
 });
