@@ -33,7 +33,26 @@ module.exports = function (webpackEnv) {
     },
     optimization: {
       minimize: isEnvProduction,
-      minimizer: [new TerserPlugin({}), new CssMinimizerPlugin()]
+      minimizer: [
+        new TerserPlugin({
+        terserOptions: {
+          parse: {
+            ecma:8
+          },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+            drop_console: true,
+            drop_debugger:true
+          },
+          output: {
+            ecma: 5,
+            comments:false
+          }
+        }
+      }), new CssMinimizerPlugin()]
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js']
