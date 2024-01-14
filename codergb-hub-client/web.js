@@ -1,11 +1,11 @@
-const webpack = require("webpack")
+const webpack = require('webpack');
 const path = require('path');
-const config = require("./config/index.js");
+const config = require('./config/index.js');
 
 const DotenvWebpack = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -15,8 +15,8 @@ module.exports = {
     assetModuleFilename: 'images/[hash][ext][query]',
     clean: true
   },
-  cache:true,
-  mode:process.env.NODE_ENV==='development'?'development':"production",
+  cache: true,
+  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js']
   },
@@ -28,8 +28,8 @@ module.exports = {
     proxy: {
       '/gb': {
         target: `http://${process.env.HOST}:${process.env.SERVER_PORT}`,
-        pathRewrite: { '^/gb': '' },
-      },
+        pathRewrite: { '^/gb': '' }
+      }
     }
   },
   optimization: {
@@ -39,8 +39,8 @@ module.exports = {
         test: /\.css$/i
       }),
       new TerserPlugin({
-        exclude:/node_modules/,
-        test:/\.tsx?$/i
+        exclude: /node_modules/,
+        test: /\.tsx?$/i
       })
     ],
     splitChunks: {
@@ -51,22 +51,18 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.less$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'less-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.tsx?$/i,
         exclude: /(node_modules|bower_components)/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: 'babel-loader'
           }
         ]
       },
@@ -89,12 +85,12 @@ module.exports = {
       favicon: path.resolve(__dirname, './public/favicon.ico')
     }),
     new DotenvWebpack({
-      path: config.envConfigPath[process.env.CURRENT_ENV], // 根据环境配置文件路径
+      path: config.envConfigPath[process.env.CURRENT_ENV] // 根据环境配置文件路径
     }),
     new webpack.ProgressPlugin(),
     new webpack.ProvidePlugin({
       React: 'react',
-      moment:'moment'
+      moment: 'moment'
     })
   ]
 };

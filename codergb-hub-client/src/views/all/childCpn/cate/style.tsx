@@ -10,6 +10,7 @@ export const CateWrapper = styled.div<IStyle>`
     display: flex;
     width: 100%;
     background-color: #ffffff;
+    max-width: 100% !important;
   }
 
   // Start here
@@ -48,7 +49,7 @@ export const CateWrapper = styled.div<IStyle>`
     }
   }
   .animation-3 {
-    animation: scroller 40s linear infinite;
+    animation: scroller 50s linear infinite;
     display: flex;
   }
 

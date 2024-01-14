@@ -36,7 +36,6 @@ interface IProps {
 }
 const Comment: FC<IProps> = (props): ReactElement => {
   const { user, alias, id } = props;
-
   const [comment, setComment] = useState<IComment[]>([]);
   const [commentCount, setCommentCount] = useState<number>(0);
   const [isShowReply, setIsShowReply] = useState<boolean>(false);

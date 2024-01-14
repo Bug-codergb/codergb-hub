@@ -1,9 +1,9 @@
 const dotenv = require('dotenv');
-const path = require("path");
+const path = require('path');
 const envConfigPath = {
   development: path.resolve(__dirname, '../.env.development'),
-  test: path.resolve(__dirname, '.env.test'), 
-  production: path.resolve(__dirname, '../.env.production'), 
+  test: path.resolve(__dirname, '.env.test'),
+  production: path.resolve(__dirname, '../.env.production')
 };
 const envConfig = dotenv.config({
   path: envConfigPath[process.env.CURRENT_ENV]
@@ -13,4 +13,4 @@ module.exports = {
   dotenv,
   envConfigPath,
   envConfig
-}
+};

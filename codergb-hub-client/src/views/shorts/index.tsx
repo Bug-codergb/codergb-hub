@@ -1,12 +1,20 @@
-import React, { memo, FC, ReactElement, useState, useEffect, useRef, createRef } from 'react';
+import React, {
+  memo,
+  type FC,
+  type ReactElement,
+  useState,
+  useEffect,
+  useRef,
+  createRef
+} from 'react';
 import VideoItem from './childCpn/videoItem';
 import lodash from 'lodash';
 import Hls from 'hls.js';
 import { ShortsWrapper } from './style';
-import { IVideo } from '../../types/video/IVideo';
+import { type IVideo } from '../../types/video/IVideo';
 import { getAllVideo, getVideoURL } from '../../network/video';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import { setTextRange } from 'typescript';
 
 interface ICustomVideo extends IVideo {
@@ -59,7 +67,14 @@ const Shorts: FC = (): ReactElement => {
     if (currentVideo) {
       getVideoURL(currentVideo.id).then((res) => {
         if (res.status === 200) {
-          setURL(res.data.vioUrl);
+          let url = res.data.vioUrl;
+          if (process.env.NODE_ENV === 'development') {
+            url = url.replace(
+              `${process.env.SERVER_PORT}`,
+              `${process.env.WEBPACK_SERVER_PORT}/gb`
+            );
+          }
+          setURL(url);
         }
       });
     }
@@ -90,7 +105,7 @@ const Shorts: FC = (): ReactElement => {
   useEffect(() => {
     if (videoRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(videoRef.current);
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
@@ -101,9 +116,9 @@ const Shorts: FC = (): ReactElement => {
   const scrollRef = useRef<ICustomHtmlElement>(null);
 
   const videoItemRef = useRef<IVideoItem>({ changeShow: () => {} });
-  //向上滑动时
+  // 向上滑动时
   const moveSubScrollTop = () => {
-    let fn = () => {
+    const fn = () => {
       requestAnimationFrame(() => {
         if (listRef.current.scrollTop === 0) {
           const scrollHeight = scrollRef.current!.scrollHeight;
@@ -143,18 +158,18 @@ const Shorts: FC = (): ReactElement => {
     };
     fn();
   };
-  //向下滑动时
+  // 向下滑动时
   const moveAddScrollTop = () => {
-    let fn = () => {
+    const fn = () => {
       requestAnimationFrame(() => {
         if (listRef.current.scrollTop < itemRef.current.offsetHeight * offset.current) {
-          let scrollTop = listRef.current.scrollTop;
+          const scrollTop = listRef.current.scrollTop;
           listRef.current.scrollTop = scrollTop + listRef.current.offsetHeight / 33;
 
           setURL('');
           videoItemRef.current.changeShow();
           if (scrollTop === listRef.current.scrollTop) {
-            //到达最底部
+            // 到达最底部
             listRef.current.scrollTop = itemRef.current.offsetHeight * offset.current;
 
             offset.current = 2;
@@ -205,7 +220,7 @@ const Shorts: FC = (): ReactElement => {
     if (scrollRef.current) {
       scrollRef.current.g_flag = true;
       const handler = (e: any) => {
-        let time = new Date().getTime();
+        const time = new Date().getTime();
 
         if (time - lastScrollTopTime > 40) {
           if (scrollRef.current!.g_flag) {

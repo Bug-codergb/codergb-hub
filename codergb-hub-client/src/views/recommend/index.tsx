@@ -124,7 +124,7 @@ const Recommend: FC = (): ReactElement => {
       setIsTop(isT);
     }
     if (timer) clearTimeout(timer);
-    const timeoutTimer = setTimeout(async () => {
+    const timeoutTimer = setTimeout(async (): void => {
       setCurrentIndex(index);
       const res = await getVideoURL(item.id);
       if (res.status === 200) {

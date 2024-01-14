@@ -3,7 +3,12 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['standard-with-typescript', 'plugin:react/recommended',"plugin:prettier/recommended",'plugin:react/jsx-runtime'],
+  extends: [
+    'standard-with-typescript',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+    'plugin:react/jsx-runtime'
+  ],
   overrides: [
     {
       env: {
@@ -21,9 +26,9 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "react/display-name": "off",
-    "@typescript-eslint/no-floating-promises": "off",
-    "@typescript-eslint/strict-boolean-expressions": "off"
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'react/display-name': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 };

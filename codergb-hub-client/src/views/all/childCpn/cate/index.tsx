@@ -19,7 +19,7 @@ const Cate: FC<IProps> = (props) => {
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
-    getAllCate<IResponseType<IPage<ICate[]>>>(0, 10).then((res) => {
+    getAllCate<IResponseType<IPage<ICate[]>>>(0, 100000).then((res) => {
       if (res.status === 200) {
         const cateList: ICustomCate[] = [];
         for (const item of res.data.list) {
