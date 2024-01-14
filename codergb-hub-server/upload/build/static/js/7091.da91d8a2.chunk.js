@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcodergb_hub_client=self.webpackChunkcodergb_hub_client||[]).push([[7091],{47091:function(e,c,n){n.r(c);var t=n(67294);const u=()=>t.createElement("div",null,"字幕");c.default=(0,t.memo)(u)}}]);
+//# sourceMappingURL=7091.da91d8a2.chunk.js.map

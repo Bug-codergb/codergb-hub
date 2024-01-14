@@ -1,0 +1,29 @@
+"use strict";(self.webpackChunkcodergb_hub_client=self.webpackChunkcodergb_hub_client||[]).push([[4688],{60331:function(e,t,n){n.d(t,{Z:function(){return E}});var a=n(4942),r=n(87462),c=n(29439),o=n(54549),l=n(93967),i=n.n(l),s=n(98423),u=n(67294),m=n(53124),d=n(98787),f=n(21790),p=function(e,t){var n={};for(var a in e)Object.prototype.hasOwnProperty.call(e,a)&&t.indexOf(a)<0&&(n[a]=e[a]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var r=0;for(a=Object.getOwnPropertySymbols(e);r<a.length;r++)t.indexOf(a[r])<0&&Object.prototype.propertyIsEnumerable.call(e,a[r])&&(n[a[r]]=e[a[r]])}return n},y=function(e){var t,n=e.prefixCls,c=e.className,o=e.checked,l=e.onChange,s=e.onClick,d=p(e,["prefixCls","className","checked","onChange","onClick"]),f=(0,u.useContext(m.E_).getPrefixCls)("tag",n),y=i()(f,(t={},(0,a.Z)(t,"".concat(f,"-checkable"),!0),(0,a.Z)(t,"".concat(f,"-checkable-checked"),o),t),c);return u.createElement("span",(0,r.Z)({},d,{className:y,onClick:function(e){null==l||l(!o),null==s||s(e)}}))},v=function(e,t){var n={};for(var a in e)Object.prototype.hasOwnProperty.call(e,a)&&t.indexOf(a)<0&&(n[a]=e[a]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var r=0;for(a=Object.getOwnPropertySymbols(e);r<a.length;r++)t.indexOf(a[r])<0&&Object.prototype.propertyIsEnumerable.call(e,a[r])&&(n[a[r]]=e[a[r]])}return n},g=new RegExp("^(".concat(d.Y.join("|"),")(-inverse)?$")),h=new RegExp("^(".concat(d.E.join("|"),")$")),b=function(e,t){var n,l=e.prefixCls,d=e.className,p=e.style,y=e.children,b=e.icon,w=e.color,E=e.onClose,Z=e.closeIcon,C=e.closable,x=void 0!==C&&C,k=v(e,["prefixCls","className","style","children","icon","color","onClose","closeIcon","closable"]),O=u.useContext(m.E_),N=O.getPrefixCls,j=O.direction,P=u.useState(!0),I=(0,c.Z)(P,2),S=I[0],$=I[1];u.useEffect((function(){"visible"in k&&$(k.visible)}),[k.visible]);var R=function(){return!!w&&(g.test(w)||h.test(w))},_=(0,r.Z)({backgroundColor:w&&!R()?w:void 0},p),M=R(),T=N("tag",l),H=i()(T,(n={},(0,a.Z)(n,"".concat(T,"-").concat(w),M),(0,a.Z)(n,"".concat(T,"-has-color"),w&&!M),(0,a.Z)(n,"".concat(T,"-hidden"),!S),(0,a.Z)(n,"".concat(T,"-rtl"),"rtl"===j),n),d),z=function(e){e.stopPropagation(),null==E||E(e),e.defaultPrevented||"visible"in k||$(!1)},D="onClick"in k||y&&"a"===y.type,F=(0,s.Z)(k,["visible"]),K=b||null,U=K?u.createElement(u.Fragment,null,K,u.createElement("span",null,y)):y,W=u.createElement("span",(0,r.Z)({},F,{ref:t,className:H,style:_}),U,x?Z?u.createElement("span",{className:"".concat(T,"-close-icon"),onClick:z},Z):u.createElement(o.Z,{className:"".concat(T,"-close-icon"),onClick:z}):null);return D?u.createElement(f.Z,null,W):W},w=u.forwardRef(b);w.CheckableTag=y;var E=w},71344:function(e,t,n){n.d(t,{Hi:function(){return l},WF:function(){return c},Z4:function(){return i},dR:function(){return r},uo:function(){return o}});var a=n(74283);async function r(e,t,n,r){return await a.Z.get({url:"/comment/all/"+e,params:{offset:t,limit:n,alias:r}})}async function c(e,t,n){return await a.Z.get({url:"/comment/reply/all/"+e,params:{offset:t,limit:n}})}async function o(e,t,n){return await a.Z.post({url:"/comment",data:{id:e,alias:t,content:n}})}async function l(e,t){return await a.Z.post({url:"/comment/reply/"+e,data:{content:t}})}async function i(e,t,n){return await a.Z.get({url:`/comment/user/${e}`,params:{offset:t,limit:n}})}},44688:function(e,t,n){n.r(t),n.d(t,{default:function(){return y}});var a=n(67294),r=n(94746),c=n(53133);const o=c.ZP.div``,l=c.ZP.div`
+  .comment-container {
+    width: ${10}rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .avatar-container {
+    img {
+      width: ${1.75}rem;
+      height: ${1.75}rem;
+      border-radius: 50%;
+      margin: 0 10px 0 0;
+    }
+    .user-name {
+      font-size: ${.45}rem;
+      color: #616161;
+    }
+  }
+  .comment-from {
+    .content {
+      width: ${10}rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+`;var i=n(95998),s=n(71344),u=n(60331),m=n(30381),d=n.n(m);const f=[{title:"内容",dataIndex:"content",render:(e,t)=>a.createElement(l,null,a.createElement("div",{className:"comment-container",title:e},e))},{title:"创建人",dataIndex:"user.userName",render:(e,t)=>a.createElement(l,null,a.createElement("div",{className:"avatar-container"},a.createElement("img",{src:t.user.avatarUrl}),a.createElement("span",{className:"user-name"},t.user.userName)))},{title:"评论时间",dataIndex:"createTime",render:(e,t)=>a.createElement(l,null,a.createElement("span",null,d()(t.createTime).format("yyyy-MM-DD HH:mm")))},{title:"评论来自",dataIndex:"createTime",width:200,render:(e,t)=>a.createElement(l,null,a.createElement("div",{className:"comment-from"},a.createElement(u.Z,{key:t.id,color:"geekblue"},t.video?"视频":t.moment?"动态":t.reply&&"object"==typeof t.reply?"评论":""),a.createElement("div",{key:t.id,className:"content"},t.video?t.video.name:t.moment?t.moment.title:t.reply&&"object"==typeof t.reply?t.reply.content:"")))}],p=()=>{const[e,t]=(0,a.useState)("checkbox"),[n,c]=(0,a.useState)([]),[l,u]=(0,a.useState)(0),m=(0,i.v9)((e=>e.getIn(["loginReducer","login"])));(0,a.useEffect)((()=>{(0,s.Z4)(m.userMsg.userId,0,4).then((e=>{200===e.status&&(c(e.data.list),u(e.data.count))}))}),[]);const d={onChange:(e,t)=>{console.log("selectedRows: ",t)}};return a.createElement(o,null,n&&0!==n.length&&a.createElement(r.Z,{rowSelection:{type:e,...d},rowKey:"id",columns:f,dataSource:n,pagination:{pageSize:4,total:l,onChange:e=>(e=>{(0,s.Z4)(m.userMsg.userId,4*(e-1),4).then((e=>{200===e.status&&(c(e.data.list),u(e.data.count))}))})(e)}}))};var y=(0,a.memo)(p)}}]);
+//# sourceMappingURL=4688.be3b2753.chunk.js.map
