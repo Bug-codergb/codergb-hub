@@ -16,6 +16,8 @@
 /upload/video/
 /upload/dist
 /upload_temp/
+/upload/build
+/upload/dist
 # misc
 .DS_Store
 .env.local
