@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import Cate from './childCpn/cate/Cate.vue';
-import Tag from './childCpn/tag/Tag';
+import Tag from './childCpn/tag/Tag.vue';
 import Carousel from './childCpn/carousel/Carousel.vue';
 import type { TabsPaneContext } from 'element-plus';
 const activeName = ref('first');
