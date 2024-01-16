@@ -26,11 +26,12 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
-      outDir: 'dits',
+      outDir: 'dist',
       minify: 'esbuild',
       reportCompressedSize: false,
       // 规定触发警告的 chunk 大小
       chunkSizeWarningLimit: 2000,
+      cssCodeSplit: true,
       rollupOptions: {
         output: {
           // Static resource classification and packaging

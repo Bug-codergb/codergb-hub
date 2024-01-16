@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require('webpack');
 const { envConfigPath } = require('./index.js');
 const paths = require('./paths.js');
@@ -14,7 +15,7 @@ module.exports = function (webpackEnv) {
   return {
     target: 'browserslist', //用于构建多种环境
     mode: isEnvProduction ? 'production' : 'development',
-    devtool: isEnvProduction ? 'source-map' : 'cheap-module-source-map',
+    devtool: isEnvProduction ? false : 'cheap-module-source-map',
     entry: paths.appIndexJs,
     output: {
       path: paths.appBuild,
@@ -24,7 +25,8 @@ module.exports = function (webpackEnv) {
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : 'static/js/[name].chunk.js',
       assetModuleFilename: 'static/medis/[name].[hash][ext]',
-      clean: true
+      clean: true,
+      publicPath:process.env.PUBLIC_PATH
     },
     cache: {
       type: 'filesystem',
@@ -105,7 +107,12 @@ module.exports = function (webpackEnv) {
       new webpack.ProvidePlugin({
         React: 'react',
         moment: 'moment'
-      })
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: paths.appStatic, to: `${paths.appBuild}/${process.env.STATIC_PATH}/[name].[contenthash][ext]` },
+        ],
+      }),
     ]
   };
 };
