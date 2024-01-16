@@ -2,6 +2,8 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "fluent-ffmpeg": "^2.1.2",
+    "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^2.0.6",
     "jimp": "^0.16.2",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",

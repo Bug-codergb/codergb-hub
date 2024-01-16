@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const proxy = require("http-proxy-middleware");
 const KoaWebsocket = require('koa-websocket');
 const KoaStatic = require("koa-static");
 const koaBodyparser = require('koa-bodyparser');
@@ -13,6 +14,11 @@ app.use(async(ctx,next)=>{
   ctx.set('Access-Control-Allow-Headers','POST,Origin,Content-Type,Accept,authorization')
   await next()
 })
+const httpProxy = proxy.createProxyMiddleware("/codergb", {
+  target: "http://localhost:8888",// http代理跨域目标接口
+  changeOrigin: true,
+  logLevel: "debug",
+});
 app.use(KoaStatic(path.resolve(__dirname,"../../","./upload/")))
 const useRoutes = require("../router/index");
 useRoutes(app);

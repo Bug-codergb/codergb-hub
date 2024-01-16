@@ -18,6 +18,7 @@
 /upload_temp/
 /upload/build
 /upload/dist
+/upload/codergb/
 # misc
 .DS_Store
 .env.local
