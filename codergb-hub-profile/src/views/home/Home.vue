@@ -10,7 +10,11 @@
         </el-aside>
         <el-container>
           <el-main class="codergb-main">
-            <RouterView />
+            <RouterView v-slot="{ Component, route }">
+              <transition appear name="fade-transform" mode="out-in">
+                <component :is="Component" />
+              </transition>
+            </RouterView>
           </el-main>
         </el-container>
       </el-container>
@@ -41,5 +45,21 @@ loginInit.userMsg = localCache.getCache('userMsg');
   overflow-y: scroll;
   background-color: #fff;
   padding: 15px;
+}
+</style>
+<style lang="less">
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.2s;
+}
+.fade-transform-enter-from {
+  opacity: 0;
+  transition: all 0.2s;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transition: all 0.2s;
+  transform: translateX(30px);
 }
 </style>

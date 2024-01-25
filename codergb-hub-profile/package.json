@@ -17,10 +17,13 @@
     "hls.js": "^1.4.14",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.29",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "spark-md5": "^3.0.2",
     "vite": "^5.0.11",
     "vue": "^3.2.13",
+    "vue-i18n": "^9.9.0",
     "vue-router": "^4.0.3",
     "vue-tsc": "^1.8.27"
   },
