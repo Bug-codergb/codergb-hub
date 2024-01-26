@@ -54,46 +54,73 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: VIDEO_PATH,
         name: 'video',
+        meta: {
+          title: '视频'
+        },
         component: VideoPage
       },
       {
         path: VIDEO_DM,
         name: 'dm',
+        meta: {
+          title: '弹幕'
+        },
         component: Dm
       },
       {
         path: VIDEO_DICT,
         name: 'videoDict',
+        meta: {
+          title: '字典'
+        },
         component: VideoDict
       },
       {
         path: VIDEO_COLLECTION,
         name: 'videoCollection',
+        meta: {
+          title: '源文件'
+        },
         component: VideoCollection
       },
       {
         path: PLAYLIST_PATH,
         name: 'playlist',
+        meta: {
+          title: '播放列表'
+        },
         component: Playlist
       },
       {
         path: USER_PATH,
         name: 'user',
+        meta: {
+          title: '用户'
+        },
         component: UserPage
       },
       {
         path: CHANNEL_PATH,
         name: 'channel',
+        meta: {
+          title: '频道'
+        },
         component: Channel
       },
       {
         path: COMMENT_PATH,
         name: 'comment',
+        meta: {
+          title: '评论'
+        },
         component: Comment
       },
       {
         path: MOMENT_PATH,
         name: 'moment',
+        meta: {
+          title: '动态'
+        },
         component: Moment
       },
       {
@@ -104,16 +131,25 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: SETTING_PATH,
         name: 'setting',
+        meta: {
+          title: '设置'
+        },
         component: () => import('../views/setting/Setting.vue')
       },
       {
         path: OVERVIEW_PATH,
         name: 'overview',
+        meta: {
+          title: '看板'
+        },
         component: () => import('../views/overview/Overview.vue')
       },
       {
         path: MESSAGE_PATH,
         name: 'message',
+        meta: {
+          title: '消息通知'
+        },
         component: () => import('../views/message/Message.vue')
       },
       detailRoutes.collectionRoute,

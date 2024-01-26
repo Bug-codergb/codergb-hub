@@ -40,9 +40,14 @@ const login = async () => {
 <style scoped lang="less">
 .login-outer {
   position: relative;
-  height: 96vh;
+  height: 100%;
+  width: 100%;
+  background-image: url('../../assets/img/bgc.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
   .login {
     position: absolute;
+    background-color: #fff;
     left: 75%;
     top: 50%;
     transform: translate(-50%, -50%);

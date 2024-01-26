@@ -1,6 +1,8 @@
 <template>
   <div class="top-bar">
-    <div class="left-container">codergb-hub</div>
+    <div class="left-container">
+      <div>codergb-hub</div>
+    </div>
     <div class="right-container">
       <el-dropdown @command="handleCommand">
         <el-avatar shape="square" size="large" :src="loginMsg.userMsg.avatarUrl" />
@@ -16,11 +18,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ArrowRight } from '@element-plus/icons-vue';
 import useLoginStore from '@/views/login/store';
+import { menu } from '@/constant/menu';
 import { LOGIN_PATH } from '@/router/constant';
 const loginMsg = useLoginStore();
 const router = useRouter();
+const route = useRoute();
 const handleCommand = (e: string) => {
   switch (e) {
     case 'exit':
@@ -29,6 +35,26 @@ const handleCommand = (e: string) => {
       });
   }
 };
+const breadCrumb = computed(() => {
+  const currentPath = route.path;
+  let obj = {
+    currentRoute: { name: '' },
+    parentRoute: { name: '' }
+  };
+  for (let item of menu) {
+    if (item.children) {
+      for (let it of item.children) {
+        if (it.path === currentPath) {
+          obj.currentRoute = it;
+          obj.parentRoute = item;
+          break;
+        }
+      }
+    }
+  }
+  console.log(obj);
+  return obj;
+});
 </script>
 
 <style scoped lang="less">

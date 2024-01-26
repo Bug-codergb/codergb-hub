@@ -1,5 +1,13 @@
 html {
   font-size: 2.083333333333vw;
+  height: 100%;
+}
+body{
+  height: 100%;
+}
+#app{
+  width: 100%;
+  height: 100%;
 }
 :root {
   --primary-color: #ff0000;

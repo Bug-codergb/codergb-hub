@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <el-container>
+    <el-container class="home-inner">
       <el-header class="codergb-header">
         <TopBar />
       </el-header>
-      <el-container>
+      <el-container class="g-container">
         <el-aside width="200px" class="codergb-aside">
           <NavBar />
         </el-aside>
@@ -33,6 +33,17 @@ loginInit.userMsg = localCache.getCache('userMsg');
 </script>
 
 <style scoped lang="less">
+.home {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+}
+.home-inner {
+  height: 100%;
+}
+.g-container {
+  height: 100%;
+}
 .codergb-header {
   border-bottom: 1px solid var(--line-color);
 }
@@ -41,7 +52,7 @@ loginInit.userMsg = localCache.getCache('userMsg');
   background-color: #0c2135;
 }
 .codergb-main {
-  height: 89vh;
+  height: 100%;
   overflow-y: scroll;
   background-color: #fff;
   padding: 15px;
