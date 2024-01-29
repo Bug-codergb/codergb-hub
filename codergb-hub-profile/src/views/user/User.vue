@@ -8,19 +8,22 @@
 
 <script lang="tsx" setup>
 import { reactive, h, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import moment from 'moment';
 import { IUserMsg } from '@/types/user/IUserMsg';
 import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
+import { USER_DETAIL_PATH } from '@/router/constant';
+const router = useRouter();
 const tableData = reactive({
   url: '/user/all',
   method: 'post',
-  pageSize: 9,
+  pageSize: 8,
   params: {
     offset: 0,
-    limit: 9
+    limit: 8
   },
   data: {
     keyword: ''
@@ -81,8 +84,11 @@ const tableData = reactive({
         {
           text: '查看',
           type: 'primary',
-          onClick: (row: IVideo, index: number) => {
+          onClick: (row: IUserMsg, index: number) => {
             console.log(row);
+            router.push({
+              path: USER_DETAIL_PATH + '/' + row.userId
+            });
           }
         },
         {

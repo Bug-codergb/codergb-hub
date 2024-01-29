@@ -6,7 +6,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import Notify from './childCpn/notify/Notify.vue';
 import useTable from './hook/useTable';

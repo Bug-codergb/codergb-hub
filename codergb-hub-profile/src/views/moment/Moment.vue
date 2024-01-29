@@ -1,5 +1,6 @@
 <template>
   <div class="moment">
+    <GbHeader :header="header" :isShowRefresh="true" />
     <GbTable :table-data="tableData" ref="gbTable" />
   </div>
 </template>
@@ -8,15 +9,18 @@ import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { IMoment } from '@/types/moment';
-
+import { MOMENT_DETAIL_PATH } from '@/router/constant';
+const gbTable = ref();
+const router = useRouter();
 const tableData = reactive({
   url: '/moment/list',
   method: 'post',
-  pageSize: 9,
+  pageSize: 8,
   params: {
     offset: 0,
-    limit: 9,
+    limit: 8,
     keyword: ''
   },
   columns: [
@@ -81,12 +85,32 @@ const tableData = reactive({
         },
         {
           text: '查看',
-          type: 'primary'
+          type: 'primary',
+          onClick: (scope: IMoment) => {
+            router.push({
+              path: MOMENT_DETAIL_PATH + `/${scope.id}`
+            });
+          }
         }
       ]
     }
   ]
 });
+const header = reactive([
+  {
+    type: 'input',
+    hint: '请输入播放列表名称',
+    id: 'name',
+    bingParam: '',
+    attr: {
+      clearable: true
+    },
+    onChange: (e: string) => {
+      tableData.params.keyword = e;
+      gbTable.value.search();
+    }
+  }
+]);
 </script>
 
 <style scoped lang="less"></style>

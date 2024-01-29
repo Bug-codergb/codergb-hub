@@ -79,7 +79,7 @@ class MomentService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getAllMomentService(ctx,offset,limit){
+  async getAllMomentService(ctx,offset,limit,keyword){
     try{
       const sql=`
                   select m.id,m.title,m.content,m.createTime,m.updateTime,m.cId as cId,
@@ -96,7 +96,7 @@ class MomentService{
             left join file as f on f.id = vf.fileId
             left join user on user.userId =m.userId
             left join channel c on m.cId = c.id
-            where vf.mark="cover"
+            where vf.mark="cover" ${keyword.trim().length!==0 ? `and m.title like '%${keyword}%' or m.content like '%${keyword}%'`:''}
             limit ?,?`;
       const count = `
                 select count(distinct (m.id)) as count
@@ -106,7 +106,7 @@ class MomentService{
           left join file as f on f.id = vf.fileId
           left join user on user.userId =m.userId
           left join channel c on m.cId = c.id  
-          where vf.mark="cover"`;
+          where vf.mark="cover" ${keyword.trim().length!==0 ? `and m.title like '%${keyword}%' or m.content like '%${keyword}%'`:''}`;
       const result = await connection.execute(sql,[offset,limit]);
 
       const countRes = await connection.execute(count);

@@ -54,8 +54,9 @@ class MomentController{
   }
   async getAllMoment(ctx,next){
     try{
-      const { offset="0",limit="12" } = ctx.query;
-      const result = await getAllMomentService(ctx,offset,limit);
+      let { offset="0",limit="12",keyword="" } = ctx.query;
+      keyword = keyword.substring(0,40)
+      const result = await getAllMomentService(ctx,offset,limit,keyword);
 
       if(result){
         setResponse(ctx,"success",200,result);

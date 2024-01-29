@@ -21,6 +21,8 @@ const CATE_VIDEO_DETAIL_PATH = HOME_PATH + '/video-cate-detail';
 const PLAYLIST_DETAIL_PATH = HOME_PATH + '/playlist-detail';
 const TAG_DETAIL_PATH = HOME_PATH + '/tag-detail';
 const VIDEO_DETAIL_PATH = HOME_PATH + '/video-detail';
+const MOMENT_DETAIL_PATH = HOME_PATH + '/moment-detail';
+const USER_DETAIL_PATH = HOME_PATH + '/user-detail';
 export {
   HOME_PATH,
   LOGIN_PATH,
@@ -41,5 +43,7 @@ export {
   MESSAGE_PATH,
   PLAYLIST_DETAIL_PATH,
   TAG_DETAIL_PATH,
-  VIDEO_DETAIL_PATH
+  VIDEO_DETAIL_PATH,
+  MOMENT_DETAIL_PATH,
+  USER_DETAIL_PATH
 };
