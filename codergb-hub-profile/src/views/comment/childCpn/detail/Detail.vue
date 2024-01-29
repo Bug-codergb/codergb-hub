@@ -34,7 +34,7 @@
           </span>
         </div>
         <template v-if="comment.video">
-          <div class="img-container">
+          <div class="img-container" @click="handleVideorouter">
             <img :src="comment.video.picUrl" />
           </div>
         </template>
@@ -49,8 +49,10 @@
 </template>
 <script setup lang="ts">
 import { ref, defineExpose, defineProps, withDefaults } from 'vue';
+import { useRouter } from 'vue-router';
 import GbDialog from '@/components/common/gbDialog/GbDialog.vue';
 import { IComment } from '@/types/comment/IComment';
+import { VIDEO_DETAIL_PATH } from '@/router/constant';
 
 interface IProps {
   isShowSource: boolean;
@@ -58,11 +60,20 @@ interface IProps {
 const prop = withDefaults(defineProps<IProps>(), {
   isShowSource: true
 });
+const router = useRouter();
 const isShow = ref(false);
 const comment = ref<IComment | null>();
 const showDialog = (row: IComment) => {
   isShow.value = true;
   comment.value = row;
+};
+const handleVideorouter = () => {
+  console.log(comment.value);
+  comment.value &&
+    comment.value.video &&
+    router.push({
+      path: VIDEO_DETAIL_PATH + '/' + comment.value.video.id
+    });
 };
 defineExpose({
   showDialog

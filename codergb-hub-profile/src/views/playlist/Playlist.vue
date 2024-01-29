@@ -8,6 +8,7 @@
 
 <script lang="tsx" setup>
 import { reactive, ref, nextTick } from 'vue';
+import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
@@ -17,10 +18,12 @@ import { IUserMsg } from '@/types/user/IUserMsg';
 import CreatePlaylist from './childCpn/createPlaylist/CreatePlaylist.vue';
 import { View, Hide } from '@element-plus/icons-vue';
 import { PLAYLIST_DETAIL_PATH } from '@/router/constant';
+import { deletePlaylist } from '@/network/playlist';
 const router = useRouter();
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createPlaylist = ref<InstanceType<typeof CreatePlaylist>>();
 const keyIndex = ref(0);
+
 const tableData = reactive({
   url: '/playlist/all',
   method: 'post',
@@ -108,18 +111,27 @@ const tableData = reactive({
         },
         {
           text: '编辑',
-          type: 'primary'
-          /*onClick: (row: ICate, index: number) => {
-            if (createCateRef.value) {
-              createCateRef.value.showDrawer(row);
+          type: 'primary',
+          onClick: (row: IPlaylist, index: number) => {
+            console.log(createPlaylist.value);
+            if (createPlaylist.value) {
+              createPlaylist.value.showDrawer(row);
             }
-          }*/
+          }
         },
         {
           text: '删除',
           type: 'danger',
-          onClick: (row: IPlaylist, index: number) => {
+          onClick: async (row: IPlaylist, index: number) => {
             console.log(index);
+            const result = await deletePlaylist(row.id);
+            if (result.status === 200) {
+              gbTable.value.search();
+              ElMessage({
+                message: '删除成功',
+                type: 'success'
+              });
+            }
           }
         }
       ]

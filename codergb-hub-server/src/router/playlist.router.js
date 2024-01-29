@@ -8,7 +8,9 @@ const {
   addVideo,
   playlistDetail,
   playlistVideo,
-  subPlaylist
+  subPlaylist,
+  updatePlaylist,
+  deletePlaylist
 } = require("../controller/playlist.controller");
 //创建播放列表
 playlistRouter.post("/",authVerify,create);
@@ -24,4 +26,8 @@ playlistRouter.post("/:id",authVerify,playlistDetail);
 playlistRouter.post("/video/:id",authVerify,playlistVideo);
 //收藏播放列表
 playlistRouter.post("/sub/:id",authVerify,subPlaylist);
+//更新播放列表
+playlistRouter.post("/update/:id",authVerify,updatePlaylist);
+//删除播放列表
+playlistRouter.post("/delete/:id",authVerify,deletePlaylist);
 module.exports = playlistRouter

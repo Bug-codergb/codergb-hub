@@ -68,3 +68,25 @@ export function getPlaylistVideo<T = IResponseType<any>>(
     }
   });
 }
+export function updatePlaylist<T = IResponseType<any>>(
+  id: string,
+  name: string,
+  isPublic: number,
+  description: string,
+  userId: string
+) {
+  return gbRequest.post<T>({
+    url: '/playlist/update/' + id,
+    data: {
+      name,
+      isPublic,
+      description,
+      userId
+    }
+  });
+}
+export function deletePlaylist<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: `/playlist/delete/${id}`
+  });
+}

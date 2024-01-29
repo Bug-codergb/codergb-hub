@@ -10,6 +10,15 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async updatePlaylistService(ctx,id,name,isPublic,description,userId){
+    try{
+      const sql=`update playlist set name = ?,isPublic=?,userId=?,description=? where id = ?`;
+      const result = await connection.execute(sql,[name,isPublic,userId,description,id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,"error",500,{});
+    }
+  }
   async getPlaylistCount(ctx,keyword,isPublic){
     try{
       let pSQL = '',execArr=[];
@@ -167,6 +176,15 @@ class PlaylistService{
     try{
       const sql=`insert into sub_playlist(userId,playlistId) values(?,?)`;
       const result = await connection.execute(sql,[userId,playlistId]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,'error',500,{})
+    }
+  }
+  async deletePlaylistService(ctx,id){
+    try{
+      const sql=`delete from playlist where id = ?`;
+      const result = await connection.execute(sql,[id]);
       return result[0]
     }catch (e) {
       setResponse(ctx,'error',500,{})

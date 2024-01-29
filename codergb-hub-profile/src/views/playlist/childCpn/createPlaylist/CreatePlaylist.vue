@@ -11,15 +11,32 @@ import { ref, defineExpose, defineEmits, reactive } from 'vue';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
 import Create from '@/components/content/create/Create.vue';
 import { ICate } from '@/types/category/ICate';
-import { createPlaylist } from '@/network/playlist';
+import { createPlaylist, updatePlaylist } from '@/network/playlist';
 import { ElMessage } from 'element-plus';
+import { IPlaylist } from '@/types/playlist/IPlaylist';
 
 const emit = defineEmits(['refresh']);
 const drawer = ref(false);
 const title = ref('新增播放列表');
 const create = ref<InstanceType<typeof Create>>();
-const showDrawer = (data: ICate) => {
+
+const isUpdate = ref(false);
+const showDrawer = (data: IPlaylist) => {
   drawer.value = true;
+  isUpdate.value = Boolean(data);
+  if (isUpdate.value) {
+    formData.data.description = data.description;
+    formData.data.name = data.name;
+    formData.data.isPublic = data.isPublic;
+    formData.data.userId = data.user.userId;
+    formData.data.id = data.id;
+  } else {
+    formData.data.userId = '';
+    formData.data.name = '';
+    formData.data.description = '';
+    formData.data.id = '';
+    formData.data.isPublic = 1;
+  }
 };
 defineExpose({
   showDrawer
@@ -28,7 +45,9 @@ const formData = reactive({
   data: {
     name: '',
     description: '',
-    isPublic: 1
+    isPublic: 1,
+    userId: '',
+    id: ''
   }
 });
 const tableConstructor = reactive([
@@ -94,17 +113,25 @@ const confirmHandle = () => {
   if (create.value && create.value.ruleFormRef) {
     create.value.ruleFormRef.validate(async (e: boolean) => {
       if (e) {
-        const result = await createPlaylist(
-          formData.data.name,
-          formData.data.description,
-          formData.data.isPublic
-        );
+        const result = isUpdate.value
+          ? await updatePlaylist(
+              formData.data.id,
+              formData.data.name,
+              formData.data.isPublic,
+              formData.data.description,
+              formData.data.userId
+            )
+          : await createPlaylist(
+              formData.data.name,
+              formData.data.description,
+              formData.data.isPublic
+            );
         if (result.status === 200) {
           drawer.value = false;
           emit('refresh');
           ElMessage({
             type: 'success',
-            message: '播放列表创建成功'
+            message: `播放列表${isUpdate.value ? '更新' : '创建'}成功`
           });
         }
       }

@@ -7,7 +7,9 @@ const {
   playlistDetailService,
   playlistVideoService,
   subPlaylistService,
-  selectUserSubPlaylist
+  selectUserSubPlaylist,
+  updatePlaylistService,
+  deletePlaylistService
 } = require("../service/playlist.service");
 const {
   createVideoPlaylistService
@@ -26,6 +28,25 @@ class PlaylistController{
       }
     }catch (e){
       setResponse(ctx,e.message,500,{})
+    }
+  }
+  //更新播放列表
+  async updatePlaylist(ctx,next){
+    try{
+      const { id } = ctx.params;
+      const {name="",description="",isPublic,userId} = ctx.request.body;
+      if(
+        !isEmpty(ctx,name,"播放列表名称不能为空") &&
+        !isEmpty(ctx,userId,"用户名称不能为空")&&
+        !isEmpty(ctx,isPublic,"播放列表是否为公开不能为空")){
+        const result = await updatePlaylistService(ctx,id,name,isPublic,description,userId);
+        if(result){
+          setResponse(ctx,"播放列表更新成功",200,{});
+        }
+      }
+
+    }catch (e) {
+
     }
   }
   //获取所有播放列表
@@ -107,6 +128,17 @@ class PlaylistController{
         setResponse(ctx,"您已经收藏",200,{});
       }
 
+    }catch (e) {
+      setResponse(ctx,'error',500,{})
+    }
+  }
+  async deletePlaylist(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await deletePlaylistService(ctx,id);
+      if(result){
+        setResponse(ctx,"删除成功",200,{});
+      }
     }catch (e) {
       setResponse(ctx,'error',500,{})
     }
