@@ -1,6 +1,6 @@
-import React, { memo, type FC, type ReactElement } from 'react';
+import React, { memo, type FC, type ReactElement, useRef } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { Outlet, useLocation, useOutlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
 import HeaderTop from '../../components/header';
 import { HomeWrapper } from './style';
@@ -8,7 +8,8 @@ import NavList from '../../components/navList';
 const { Header, Footer, Sider, Content } = Layout;
 const Home: FC = (): ReactElement => {
   const location = useLocation();
-  const currentOutlet = useOutlet();
+
+  const routeElement = useRef<HTMLDivElement>(null);
   return (
     <HomeWrapper>
       <Layout>
@@ -21,18 +22,7 @@ const Home: FC = (): ReactElement => {
               <NavList isHome={true} />
             </Sider>
             <Content>
-              <SwitchTransition>
-                <CSSTransition
-                  key={location.key}
-                  unmountOnExit={true}
-                  classNames={'g-page'}
-                  timeout={200}
-                >
-                  {() => {
-                    return <div className="g-page">{currentOutlet}</div>;
-                  }}
-                </CSSTransition>
-              </SwitchTransition>
+              <Outlet />
             </Content>
           </Layout>
         </Layout>

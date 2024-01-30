@@ -23,13 +23,18 @@
 </template>
 
 <script lang="ts" setup>
+import { nextTick, onMounted } from 'vue';
 import TopBar from '../../components/topBar/TopBar.vue';
 import NavBar from '@/components/navBar/NavBar.vue';
 
 import localCache from '@/utils/cache';
 import useLoginStore from '@/views/login/store';
+import watermark from 'watermark-dom';
 const loginInit = useLoginStore();
 loginInit.userMsg = localCache.getCache('userMsg');
+onMounted(() => {
+  //watermark.load({ watermark_txt: '测试水印' });
+});
 </script>
 
 <style scoped lang="less">
