@@ -1,5 +1,5 @@
-import React, { memo, FC, ReactElement, useState, useRef } from 'react';
-import { Map } from 'immutable';
+import React, { memo, type FC, type ReactElement, useState, useRef } from 'react';
+import { type Map } from 'immutable';
 import { Progress, Modal } from 'antd';
 import { BrandWrapper } from './style';
 import BrandItem from './childCpn/brandItem';
@@ -8,15 +8,15 @@ import {
   updateChannel,
   uploadAvatar as uploadAvatarReq
 } from '../../../../../../network/channel/index';
-import { ILogin } from '../../../../../../types/login/ILogin';
+import { type ILogin } from '../../../../../../types/login/ILogin';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAvatar } from '../../../../../../network/user';
-import { IResponseType } from '../../../../../../types/responseType';
+import { type IResponseType } from '../../../../../../types/responseType';
 import ImgUpload from '../../../../../../components/common/imgUpload';
 import { uploadImage } from '../../../../../../network/image';
-import { IChannel } from '../../../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../../../types/channel/IChannel';
 import { changeChannelAction } from '../../store/actionCreators';
-import { Dispatch } from 'redux';
+import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../../../../../login/store/actionCreators';
 const Brand: FC = (): ReactElement => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
@@ -36,10 +36,10 @@ const Brand: FC = (): ReactElement => {
   const uploadCover = () => {
     setIsShowCover(true);
   };
-  //频道头像
+  // 频道头像
   const handleAvatarOk = async () => {
     const file = await avatarUpload.current.getCropperFile();
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('avatar', file);
     let result: IResponseType<any>;
     if (login.userMsg.avatarUrl) {
@@ -59,9 +59,9 @@ const Brand: FC = (): ReactElement => {
   const handleAvatarCancel = () => {
     setIsAvatarModalOpen(false);
   };
-  //上传横幅
+  // 上传横幅
   const uploadCoverHandle = async (res: any) => {
-    if (res && res.data && res.data.id) {
+    if (res?.data?.id) {
       await updateChannel(channel.id, { banner: `${res.data.id}` });
       if (login && login.userMsg && channel && Object.keys(res.data).length !== 0) {
         dispatch(changeChannelAction(login.userMsg.userId));
@@ -82,7 +82,9 @@ const Brand: FC = (): ReactElement => {
         operator={login.userMsg.avatarUrl ? '更换' : '上传'}
         isAvatar={true}
         img={<img src={login.userMsg.avatarUrl} />}
-        uploadHandle={() => uploadAvatar()}
+        uploadHandle={() => {
+          uploadAvatar();
+        }}
       />
       <BrandItem
         title={'横幅图片'}
@@ -93,7 +95,9 @@ const Brand: FC = (): ReactElement => {
         operator={channel.picUrl ? '更换' : '上传'}
         isAvatar={false}
         img={<img src={channel.picUrl} />}
-        uploadHandle={() => uploadCover()}
+        uploadHandle={() => {
+          uploadCover();
+        }}
       />
       <Modal
         title="自定义图片"
@@ -104,20 +108,24 @@ const Brand: FC = (): ReactElement => {
         onCancel={handleAvatarCancel}
       >
         <AvatarUpload
-          //@ts-ignore
+          // @ts-expect-error
           ref={avatarUpload}
         />
         <Progress percent={parseFloat(progress.toFixed(1))} />
       </Modal>
-      {/*上传横幅*/}
+      {/* 上传横幅 */}
       {isShowCover && (
         <ImgUpload
           isCustom={false}
           aspectRatio={6.2}
           realWidth={1000}
           isShow={isShowCover}
-          handleOk={(res) => uploadCoverHandle(res)}
-          handleCancel={() => setIsShowCover(false)}
+          handleOk={async (res) => {
+            await uploadCoverHandle(res);
+          }}
+          handleCancel={() => {
+            setIsShowCover(false);
+          }}
           network={uploadImage}
           uploadName={'file'}
         />

@@ -29,9 +29,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, defineProps, defineEmits, watch } from 'vue';
+import { ref, computed, defineProps, defineEmits, watch, withDefaults } from 'vue';
 import Cropper from 'cropperjs';
 import { uploadImage } from '@/network/image';
+import { IResponseType } from '@/types/responseType';
 interface IProps {
   modelValue: boolean;
   file: File | null;
@@ -39,8 +40,19 @@ interface IProps {
   realWidth: number;
   itemWidth: number;
   scale: number;
+  addExtra: () => void;
+  uploadReq: <T = IResponseType<any>>(
+    formData: FormData,
+    getProgress: (e: any) => void,
+    userId: string
+  ) => Promise<T>;
+  userId?: string;
+  alias: string;
 }
-const props = defineProps<IProps>();
+const props = withDefaults(defineProps<IProps>(), {
+  uploadReq: uploadImage,
+  alias: 'file'
+});
 
 const emit = defineEmits(['update:modelValue', 'confirm']);
 const imgURL = ref('');
@@ -102,14 +114,25 @@ watch(
   },
   { deep: true }
 );
+const rawUserId = ref('');
+watch(
+  () => props.userId,
+  (newVal: string | undefined) => {
+    rawUserId.value = newVal ?? '';
+  },
+  {
+    immediate: true
+  }
+);
 const confirmHandle = async () => {
   const res: File | null = await getCropperFile();
   if (res) {
     let formData = new FormData();
-    formData.append('file', res);
-    const result = await uploadImage(formData, () => {});
+    formData.append(props.alias, res);
+    const userId = rawUserId.value;
+    const result = await props.uploadReq(formData, () => {}, userId);
     if (result.status === 200) {
-      emit('confirm', { file: res, id: result.data.id });
+      emit('confirm', { file: res, id: result.data.id, res: result.data });
     }
   }
   dialogVisible.value = false;

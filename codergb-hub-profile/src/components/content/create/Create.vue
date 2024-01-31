@@ -186,7 +186,7 @@ const videoChange = (e: Event, prop: string) => {
     });
   }
 };
-const confirmHandle = (e: { file: File; id: string }) => {
+const confirmHandle = (e: { file: File; id: string; res: any }) => {
   isPrev.value = true;
   imgURL.value = URL.createObjectURL(e.file);
   newFormData.value[imgProp.value] = e.id;

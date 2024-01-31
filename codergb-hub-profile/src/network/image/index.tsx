@@ -2,7 +2,8 @@ import gbRequest from '../index';
 import { IResponseType } from '../../types/responseType';
 export function uploadImage<T = IResponseType<any>>(
   formData: FormData,
-  getProgress: (e: any) => void
+  getProgress: (e: any) => void,
+  userId: string
 ) {
   return gbRequest.post<T>({
     url: '/image/upload',

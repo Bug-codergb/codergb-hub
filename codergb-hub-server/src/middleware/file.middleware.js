@@ -40,7 +40,7 @@ function uploadHandle(relativePath,uploadName,method){
   try{
 
     createUploadPath(relativePath);
-
+    console.log(relativePath)
     const methods=['single','array']
     if(!methods.includes(method)){
       return;
@@ -107,7 +107,7 @@ const videoUpload= chunkHandle("./upload_temp/video",'video','single');
 createUploadPath("./upload/video");
 module.exports={
   userAvatarUpload,
-  channelAvatarUpload,  
+  channelAvatarUpload,
   videoUpload,
   imageUpload,
   createUploadPath

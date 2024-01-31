@@ -159,6 +159,7 @@ class UserService{
       const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore
                   from user as u
                   ${isExplore!==-1?`where isExplore = ?`:``}
+                  order by u.createTime desc
                   limit ?,?`;
       let exeArr=[offset,limit];
       if(isExplore!==-1){
@@ -197,6 +198,24 @@ class UserService{
 
     }catch (e) {
       setResponse(ctx,e.message,500);
+    }
+  }
+  async createUserService(ctx,userId,userName,password,history,isExplore,mimetype,destination,filename,originalname, size,avatarUrl){
+    try{
+      const sql=`insert into user(userId,userName,password,history,isExplore,mimetype,dest,filename,originalname, size,avatarUrl) values(?,?,?,?,?,?,?,?,?,?,?)`;
+      const result = await connection.execute(sql,[userId,userName,password,history,isExplore,mimetype,destination,filename,originalname, size,avatarUrl]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,"error",500);
+    }
+  }
+  async getBriefService(ctx,id){
+    try{
+      const sql=`select userId from user where userId=?`;
+      const result = await connection.execute(sql,[id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,"error",500);
     }
   }
 }

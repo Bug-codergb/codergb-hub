@@ -17,6 +17,7 @@ async function authVerify(ctx,next){
       ctx.user = result;
       await next();
     }catch (e) {
+      console.log(e)
       setResponse(ctx,"请登录",401);
     }
   }

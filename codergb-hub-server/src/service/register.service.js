@@ -12,7 +12,7 @@ class RegisterService{
         userId
       };
     }catch (e) {
-      setResponse(ctx,e.message,500)
+      setResponse(ctx,"error",500)
     }
   }
   async addChannelService(ctx,userId,userName){

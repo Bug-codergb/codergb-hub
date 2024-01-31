@@ -1,8 +1,8 @@
 import React, {
   memo,
-  FC,
-  ReactElement,
-  ChangeEvent,
+  type FC,
+  type ReactElement,
+  type ChangeEvent,
   useState,
   useRef,
   forwardRef,
@@ -29,7 +29,7 @@ const AvatarUpload: FC = forwardRef((props, propsRef): ReactElement => {
   };
   useImperativeHandle(propsRef, () => {
     return {
-      getCropperFile: getCropperFile
+      getCropperFile
     };
   });
   return (
@@ -37,7 +37,12 @@ const AvatarUpload: FC = forwardRef((props, propsRef): ReactElement => {
       <div className="upload-outer">
         {!isShowCropper && (
           <div className="input-container">
-            <input type="file" onChange={(e) => fileChange(e)} />
+            <input
+              type="file"
+              onChange={(e) => {
+                fileChange(e);
+              }}
+            />
             <div className="msg-tip">
               <p className="tip">请选择图片</p>
               <PictureOutlined className="img-icon" />
@@ -52,7 +57,7 @@ const AvatarUpload: FC = forwardRef((props, propsRef): ReactElement => {
             aspectRatio={1}
             isCircle={false}
             realWidth={200}
-            //@ts-ignore
+            // @ts-expect-error
             ref={uploadRef}
           />
         )}

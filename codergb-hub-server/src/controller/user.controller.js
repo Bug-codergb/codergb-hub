@@ -10,25 +10,32 @@ const {
   userVideoService,
   getAllUserService,
   getUSerLibService,
-  userHotVideo
+  userHotVideo,
+  createUserService,
+  getBriefService
 } = require("../service/user.service");
+const { addChannelService } = require("../service/register.service.js")
 const {APP_HOST,APP_PORT} = require("../app/config")
+const {isEmpty} = require("../utils/isEmpty");
 class UserController{
   async uploadAvatar(ctx,next){
     try{
       if(ctx.req.file && Object.keys(ctx.req.file)){
-        const {userId}=ctx.user;
+        const {userId}=ctx.params;
         const {mimetype,destination,filename,originalname, size} = ctx.req.file;
         const avatarUrl = `${APP_HOST}:${APP_PORT}/user/avatar/${userId}`;
         const result = await uploadAvatarService(ctx,userId,avatarUrl,mimetype,destination,filename, size,originalname);
         if(result){
-          setResponse(ctx,"用户头像上传成功",200);
+          setResponse(ctx,"用户头像上传成功",200,{
+            mimetype,destination,filename,originalname, size,
+            avatarUrl
+          });
         }
       }else{
         setResponse(ctx,'上传文件不能为空',400);
       }
     }catch (e) {
-      setResponse(ctx,e.message,500)
+      setResponse(ctx,"error",500)
     }
   }
   //获取用户头像(预览)
@@ -145,6 +152,49 @@ class UserController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500)
+    }
+  }
+  async createUser(ctx,next){
+    try{
+
+      const {
+        userId='',
+        userName,
+        password,
+        history,
+        isExplore,
+        mimetype,
+        destination,
+        filename,
+        originalname,
+        size,
+        avatarUrl
+      } = ctx.request.body;
+      if(!isEmpty(ctx,userName,"用户名称不能为空")
+        && !isEmpty(ctx,password,"密码不能为空")
+        && !isEmpty(ctx,isExplore,"是否为探索不能为空")
+        && !isEmpty(ctx,history,"存储历史不能为空")
+        && !isEmpty(ctx,userId,"用户id不能为空")
+      ){
+        if(userId.length<10){
+          setResponse(ctx,"userId不合法",400,{})
+          return 0;
+        }else{
+          const isExists = await getBriefService(ctx,userId);
+          if(isExists.length===0){
+            const res = await createUserService(ctx,userId,userName,password,history,isExplore,mimetype,destination,filename,originalname, size,avatarUrl);
+            if(res){
+              await addChannelService(ctx,userId,userName);
+              setResponse(ctx,"用户添加成功",200,{})
+            }
+          }else{
+            setResponse(ctx,"请勿重复添加用户",400,{})
+          }
+
+        }
+      }
+    }catch (e) {
+
     }
   }
 }

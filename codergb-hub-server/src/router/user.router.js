@@ -11,10 +11,11 @@ const {
   userVideo,
   getAllUser,
   getUSerLib,
-  userHotVideo
+  userHotVideo,
+  createUser
 } = require("../controller/user.controller");
 //上传头像
-userRouter.post("/avatar/upload",authVerify,userAvatarUpload,uploadAvatar);
+userRouter.post("/avatar/upload/:userId",authVerify,userAvatarUpload,uploadAvatar);
 //获取用户头像
 userRouter.get("/avatar/:userId",getUserAvatar);
 //更换用户头像
@@ -29,4 +30,6 @@ userRouter.post("/video/hot/:id",authVerify,userHotVideo);
 userRouter.post("/all",authVerify,getAllUser);
 //获取用户媒体库数据
 userRouter.get("/library/:id",authVerify,getUSerLib);
+//添加用户中心
+userRouter.post("/add",authVerify,createUser);
 module.exports = userRouter;

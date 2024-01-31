@@ -136,7 +136,6 @@ const createHandler = () => {
   }
 };
 const search = () => {
-  debugger;
   if (gbTable.value) gbTable.value.search();
 };
 </script>
