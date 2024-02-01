@@ -7,6 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const DotenvWebpack = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
@@ -74,7 +75,7 @@ module.exports = function (webpackEnv) {
             },
             {
               test: /\.css$/,
-              use: ['style-loader', 'css-loader']
+              use: ['style-loader', MiniCssExtractPlugin.loader,'css-loader']
             },
             {
               test: /\.less$/i,
@@ -113,6 +114,12 @@ module.exports = function (webpackEnv) {
           { from: paths.appStatic, to: `${paths.appBuild}/${process.env.STATIC_PATH}/[name].[contenthash][ext]` },
         ],
       }),
+      new MiniCssExtractPlugin({
+        filename: isEnvProduction ? 'static/css/[name].[contenthash:8].css' : 'static/css/bundle.css',
+        chunkFilename: isEnvProduction
+          ? 'static/css/[name].[contenthash:8].chunk.css'
+          : 'static/css/[name].chunk.css',
+      })
     ]
   };
 };
