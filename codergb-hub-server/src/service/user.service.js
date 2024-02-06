@@ -21,7 +21,7 @@ class UserService{
   async userMsgService(ctx,userId){
     try{
       const sql=`
-      select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,
+      select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,u.history,u.isExplore,
        JSON_ARRAYAGG(JSON_OBJECT(
 			   'userId',sub.upId,
 				 'userName',(select usr.userName from user as usr where usr.userId = sub.upId),

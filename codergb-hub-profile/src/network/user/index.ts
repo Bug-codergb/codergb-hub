@@ -20,3 +20,16 @@ export function createUser<T = IResponseType<any>>(data: any) {
     data: data
   });
 }
+// 获取userMsg
+export async function getUserMsg<T = IResponseType<any>>(userId: string) {
+  return await gbRequest.post<T>({
+    url: `/user/msg/${userId}`
+  });
+}
+
+// 获取用户媒体库
+export async function getUserLibrary<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
+    url: `/user/library/` + id
+  });
+}
