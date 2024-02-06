@@ -41,3 +41,18 @@ export async function deleteMoment<T = IResponseType<any>>(id: string) {
     url: '/moment/delete/' + id
   });
 }
+export async function updateMoment<T = IResponseType<any>>(
+  id: string,
+  title: string,
+  content: string,
+  vid: string
+) {
+  return await gbRequest.post<T>({
+    url: '/moment/update/' + id,
+    data: {
+      title,
+      content,
+      vid
+    }
+  });
+}

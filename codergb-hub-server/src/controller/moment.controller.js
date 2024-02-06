@@ -5,7 +5,8 @@ const {
   channelMomentService,
   momentDetailService,
   getAllMomentService,
-  deleteMomentService
+  deleteMomentService,
+  updateMomentService
 }=require("../service/moment.service");
 class MomentController{
   async create(ctx,next){
@@ -73,6 +74,28 @@ class MomentController{
       const result = await deleteMomentService(ctx,id);
       setResponse(ctx,"success",200,{})
     }catch (e) {
+      setResponse(ctx,"server error",500,{});
+    }
+  }
+  //编辑动态
+  async updateMoment(ctx,next){
+    try{
+      const {id} = ctx.params;
+      console.log(id);
+      const {title="",content="",vid="",cId=""} = ctx.request.body;
+      if(
+        !isEmpty(ctx,id,"动态id不能为空")&&
+        !isEmpty(ctx,title,"标题不能为空") &&
+        !isEmpty(ctx,content,"内容不能为空") &&
+        !isEmpty(ctx,vid,"关联视频不能为空过")
+      ){
+        const result = await updateMomentService(ctx,id,title,content,vid);
+        if(result){
+          setResponse(ctx,"动态更新成功",200);
+        }
+      }
+    }catch (e) {
+      setResponse(ctx,"server error",500,{});
       setResponse(ctx,"server error",500,{});
     }
   }

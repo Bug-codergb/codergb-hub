@@ -1,19 +1,30 @@
 <template>
   <div class="moment">
-    <GbHeader :header="header" :isShowRefresh="true" />
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" />
     <GbTable :table-data="tableData" ref="gbTable" />
+    <CreateMoment ref="createMomentRef" @refresh="search" />
   </div>
 </template>
 <script setup lang="tsx">
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
+import CreateMoment from './childCpn/createMoment/CreateMoment.vue';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IMoment } from '@/types/moment';
 import { MOMENT_DETAIL_PATH } from '@/router/constant';
+import { deleteMoment } from '@/network/moment';
+import { IResponseType } from '@/types/responseType';
 const gbTable = ref();
 const router = useRouter();
+
+const createMomentRef = ref();
+const createHandler = () => {
+  if (createMomentRef.value) {
+    createMomentRef.value.showDrawer();
+  }
+};
 const tableData = reactive({
   url: '/moment/list',
   method: 'post',
@@ -29,7 +40,7 @@ const tableData = reactive({
       prop: 'title',
       'min-width': 120,
       formatter: (scope: IMoment) => {
-        return <div class="text-mul-line">{scope.content}</div>;
+        return <div class="text-mul-line">{scope.title}</div>;
       }
     },
     {
@@ -77,11 +88,22 @@ const tableData = reactive({
       btns: [
         {
           text: '编辑',
-          type: 'primary'
+          type: 'primary',
+          onClick: (scope: IMoment) => {
+            if (createMomentRef.value) {
+              createMomentRef.value.showDrawer(scope);
+            }
+          }
         },
         {
           text: '删除',
-          type: 'danger'
+          type: 'danger',
+          onClick: async (scope: IMoment) => {
+            const res = await deleteMoment<IResponseType<any>>(scope.id);
+            if (res.status === 200) {
+              search();
+            }
+          }
         },
         {
           text: '查看',
@@ -111,6 +133,9 @@ const header = reactive([
     }
   }
 ]);
+const search = () => {
+  if (gbTable.value) gbTable.value.search();
+};
 </script>
 
 <style scoped lang="less"></style>

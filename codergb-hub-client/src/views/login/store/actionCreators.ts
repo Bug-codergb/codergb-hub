@@ -1,28 +1,28 @@
-import { IUserDetail } from '../../../types/user/IUserDetail';
-import { IUserMsg } from '../../../types/user/IUserMsg';
-import { IResponseType } from '../../../types/responseType';
+import { type IUserDetail } from '../../../types/user/IUserDetail';
+import { type IUserMsg } from '../../../types/user/IUserMsg';
+import { type IResponseType } from '../../../types/responseType';
 import { login } from '../../../network/login';
 import localCache from '../../../utils/cache';
-import { NavigateFunction } from 'react-router/dist/lib/hooks';
+import { type NavigateFunction } from 'react-router/dist/lib/hooks';
 import { getUserMsg } from '../../../network/user';
 import { changeChannelAction } from '../../profile/pages/customize/store/actionCreators';
 
 export function changeUserMsg(userMsg: IUserMsg) {
   return {
     type: 'changeUserMsg',
-    userMsg: userMsg
+    userMsg
   };
 }
 export function changeUserDetail(userDetail: IUserDetail) {
   return {
     type: 'changeUserDetail',
-    userDetail: userDetail
+    userDetail
   };
 }
 export function changeLoginType(loginType: number) {
   return {
     type: 'changeLoginType',
-    loginType: loginType
+    loginType
   };
 }
 export function loginAction(userName: string, password: string, navigate: NavigateFunction) {

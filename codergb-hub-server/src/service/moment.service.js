@@ -97,6 +97,7 @@ class MomentService{
             left join user on user.userId =m.userId
             left join channel c on m.cId = c.id
             where vf.mark="cover" ${keyword.trim().length!==0 ? `and m.title like '%${keyword}%' or m.content like '%${keyword}%'`:''}
+            order by m.createTime desc
             limit ?,?`;
       const count = `
                 select count(distinct (m.id)) as count
@@ -125,6 +126,16 @@ class MomentService{
       return result[0];
     }catch (e) {
 
+    }
+  }
+  async updateMomentService(ctx,id,title,content,vid){
+    try{
+      const sql=`
+      update moment set title=?,content=?,vid=? where id=?`;
+      const result = await connection.execute(sql,[title,content,vid,id]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,"server error",500)
     }
   }
 }

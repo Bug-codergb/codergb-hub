@@ -75,7 +75,7 @@ module.exports = function (webpackEnv) {
             },
             {
               test: /\.css$/,
-              use: ['style-loader', MiniCssExtractPlugin.loader,'css-loader']
+              use: ['style-loader','css-loader']
             },
             {
               test: /\.less$/i,
@@ -114,12 +114,12 @@ module.exports = function (webpackEnv) {
           { from: paths.appStatic, to: `${paths.appBuild}/${process.env.STATIC_PATH}/[name].[contenthash][ext]` },
         ],
       }),
-      new MiniCssExtractPlugin({
+      /*new MiniCssExtractPlugin({
         filename: isEnvProduction ? 'static/css/[name].[contenthash:8].css' : 'static/css/bundle.css',
         chunkFilename: isEnvProduction
           ? 'static/css/[name].[contenthash:8].chunk.css'
           : 'static/css/[name].chunk.css',
-      })
+      })*/
     ]
   };
 };

@@ -6,7 +6,8 @@ const {
   channelMoment,
   momentDetail,
   getAllMoment,
-  deleteMoment
+  deleteMoment,
+  updateMoment
 }=require("../controller/moment.controller")
 momentRouter.post("/",authVerify,create);
 //获取频道动态
@@ -17,4 +18,6 @@ momentRouter.post("/list",authVerify,getAllMoment)
 momentRouter.post("/:id",authVerify,momentDetail);
 //删除动态
 momentRouter.post("/delete/:id",authVerify,deleteMoment)
+//新增动态
+momentRouter.post("/update/:id",authVerify,updateMoment);
 module.exports = momentRouter;

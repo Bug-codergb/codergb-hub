@@ -29,9 +29,13 @@ import NavBar from '@/components/navBar/NavBar.vue';
 
 import localCache from '@/utils/cache';
 import useLoginStore from '@/views/login/store';
+import useChannelStore from '@/store/modules/channel';
+
 import watermark from 'watermark-dom';
 const loginInit = useLoginStore();
+const channelInit = useChannelStore();
 loginInit.userMsg = localCache.getCache('userMsg');
+channelInit.channel = localCache.getCache('channel');
 onMounted(() => {
   //watermark.load({ watermark_txt: '测试水印' });
 });
