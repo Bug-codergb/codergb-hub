@@ -1,12 +1,12 @@
 import { getUserChannel } from '../../../../../network/channel';
-import { IChannel } from '../../../../../types/channel/IChannel';
-import { IResponseType } from '../../../../../types/responseType';
+import { type IChannel } from '../../../../../types/channel/IChannel';
+import { type IResponseType } from '../../../../../types/responseType';
 import localCache from '../../../../../utils/cache';
 
 export function changeChannel(channel: IChannel) {
   return {
     type: 'changeChannel',
-    channel: channel
+    channel
   };
 }
 export function changeChannelAction(userId: string) {
