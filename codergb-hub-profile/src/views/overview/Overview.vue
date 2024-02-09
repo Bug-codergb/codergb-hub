@@ -28,11 +28,25 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-row :gutter="24">
+      <el-col :span="12">
+        <el-card>
+          <CateVideo />
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card>
+          <UploadAnalysis />
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue';
 import UserWorks from './childCpn/userWorks/UserWorks.vue';
+import CateVideo from './childCpn/cateVideo/CateVideo.vue';
+import UploadAnalysis from './childCpn/uploadAnalysis/UploadAnalysis.vue';
 import { getDataAnalysis } from '../../network/dashboard/index';
 import { IResponseType } from '@/types/responseType';
 interface IDataAnalysis {
@@ -57,6 +71,7 @@ getDataAnalysis<IResponseType<IDataAnalysis>>().then((res) => {
 
 <style scoped lang="less">
 .overview {
+  height: 100%;
   .el-row {
     margin: 0 0 15px 0;
   }

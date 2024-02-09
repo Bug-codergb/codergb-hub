@@ -10,3 +10,13 @@ export function getUserWorks<T = IResponseType<any>>() {
     url: '/dashboard/user-works'
   });
 }
+export function getCateVideo<T = IResponseType<any>>() {
+  return gbRequest.get<T>({
+    url: '/dashboard/cate-video'
+  });
+}
+export function getUploadAnalysis<T = IResponseType<any>>() {
+  return gbRequest.get<T>({
+    url: '/dashboard/video-analysis'
+  });
+}

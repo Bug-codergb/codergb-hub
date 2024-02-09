@@ -42,7 +42,7 @@ onMounted(async () => {
       endIndex = 8;
     }
     setOption(xAxisData, yAxisData, userPlaylist, startIndex, endIndex);
-  }, 3100);
+  }, 3500);
   window.addEventListener('resize', () => {
     myChart.resize();
   });
@@ -67,7 +67,7 @@ onMounted(async () => {
       legend: {},
       grid: {
         left: '1%',
-        right: 0,
+        right: '2%',
         bottom: 0,
         containLabel: true
       },
@@ -96,6 +96,7 @@ onMounted(async () => {
           type: 'line',
           data: yAxisData.slice(startIndex, endIndex),
           yAxisIndex: 0,
+
           itemStyle: {
             color: '#f2ca6b'
           }
@@ -106,6 +107,7 @@ onMounted(async () => {
           data: userPlaylist.slice(startIndex, endIndex),
           yAxisIndex: 1,
           barWidth: '20%',
+
           itemStyle: {
             color: '#5a6fc0'
           }

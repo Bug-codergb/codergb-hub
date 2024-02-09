@@ -40,5 +40,31 @@ class DashboardService {
 
     }
   }
+  async getCateVideoService(ctx){
+    try{
+      const sql=`
+      select c.id,c.name,count(v.id) as count
+      from category as c
+      left join video v on c.id = v.cateId
+      group by c.id
+      order by count desc`;
+      const result = await connection.execute(sql);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
+  async getVideoAnalysisService(ctx){
+    try{
+      const sql=`
+      select count(v.id) as count,date(v.createTime) as time
+      from video as v
+      group by time;`;
+      const result = await connection.execute(sql);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
 }
 module.exports = new DashboardService()
