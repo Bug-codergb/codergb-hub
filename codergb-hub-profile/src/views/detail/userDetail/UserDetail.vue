@@ -52,8 +52,12 @@
     <el-card>
       <el-tabs>
         <el-tab-pane label="Ta的视频"> <UserVideo :url="`/user/video/${id}`" /> </el-tab-pane>
-        <el-tab-pane label="Ta的播放列表"></el-tab-pane>
-        <el-tab-pane label="Ta的订阅"></el-tab-pane>
+        <el-tab-pane label="Ta的播放列表">
+          <UserPlaylist :user-id="id" />
+        </el-tab-pane>
+        <el-tab-pane label="Ta的订阅">
+          <SubUser :user-id="id" @user-detail="changeUserDetail" />
+        </el-tab-pane>
         <el-tab-pane label="Ta的社区"></el-tab-pane>
         <el-tab-pane label="Ta的收藏"></el-tab-pane>
       </el-tabs>
@@ -61,6 +65,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { USER_DETAIL_PATH } from '@/router/constant';
+
 interface ILibrary {
   subCount: number;
   thumbCount: number;
@@ -68,27 +74,38 @@ interface ILibrary {
 }
 import { ref } from 'vue';
 import moment from 'moment';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { getUserLibrary, getUserMsg } from '@/network/user';
 import { IResponseType } from '@/types/responseType';
 import { IUserDetail } from '@/types/user/IUserDetail';
 import UserVideo from '@/views/detail/userDetail/childCpn/userVideo/UserVideo.vue';
-
+import UserPlaylist from '@/views/detail/userDetail/childCpn/userPlaylist/UserPlaylist.vue';
+import SubUser from '@/views/detail/userDetail/childCpn/subUser/SubUser.vue';
 const route = useRoute();
+const router = useRouter();
 const { id } = route.params;
+const changeUserDetail = (userId: string) => {
+  router.push({
+    path: USER_DETAIL_PATH + '/' + userId
+  });
+  initData(userId);
+};
+initData(id as string);
 
 const userDetail = ref<IUserDetail | null>(null);
-getUserMsg<IResponseType<IUserDetail>>(id as string).then((res) => {
-  if (res.status === 200) {
-    userDetail.value = res.data;
-  }
-});
 const userLibrary = ref<ILibrary>({ subCount: 0, uploadCount: 0, thumbCount: 0 });
-getUserLibrary<IResponseType<ILibrary>>(id as string).then((res) => {
-  if (res.status === 200) {
-    userLibrary.value = res.data;
-  }
-});
+function initData(id: string) {
+  getUserMsg<IResponseType<IUserDetail>>(id).then((res) => {
+    if (res.status === 200) {
+      userDetail.value = res.data;
+    }
+  });
+  getUserLibrary<IResponseType<ILibrary>>(id).then((res) => {
+    if (res.status === 200) {
+      userLibrary.value = res.data;
+    }
+  });
+}
 </script>
 
 <style scoped lang="less">

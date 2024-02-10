@@ -1,8 +1,8 @@
-import React, { memo, FC, useState, useEffect } from 'react';
-import { ISubscriber } from '../../../../../../types/subscriber/ISubscriber';
+import React, { memo, type FC, useState, useEffect } from 'react';
+import { type ISubscriber } from '../../../../../../types/subscriber/ISubscriber';
 import { getUserSub } from '../../../../../../network/subscriber';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IPage } from '../../../../../../types/IPage';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IPage } from '../../../../../../types/IPage';
 import { SubWrapper } from './style';
 import SubBtn from '../../../../../common/subBtn';
 interface IProps {
@@ -13,7 +13,7 @@ const Subscriber: FC<IProps> = (props) => {
   const [sub, setSub] = useState<ISubscriber[]>([]);
   const [total, setTotal] = useState<number>(0);
   const getUserSubReq = (userId: string, offset: number, limit: number) => {
-    getUserSub<IResponseType<IPage<ISubscriber[]>>>(userId, offset, limit).then((data) => {
+    getUserSuub<IResponseType<IPage<ISubscriber[]>>>(userId, offset, limit).then((data) => {
       if (data.status === 200) {
         setSub(data.data.list);
         setTotal(data.data.count);
