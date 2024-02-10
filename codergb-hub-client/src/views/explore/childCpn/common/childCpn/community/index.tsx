@@ -1,9 +1,9 @@
-import React, { memo, FC, useState, useRef } from 'react';
+import React, { memo, type FC, useState, useRef } from 'react';
 import { FormOutlined, PlusOutlined, RadiusBottomrightOutlined } from '@ant-design/icons';
-import { Button, Modal, Form, Input, FormInstance, message, notification } from 'antd';
+import { Button, Modal, Form, Input, type FormInstance, message, notification } from 'antd';
 import { CommunityWrapper } from './style';
 import VideoList from './childCpn/videoList';
-import { IVideo } from '../../../../../../types/video/IVideo';
+import { type IVideo } from '../../../../../../types/video/IVideo';
 import { createMoment } from '../../../../../../network/moment';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 import { login } from '../../../../../../network/login';
@@ -79,7 +79,13 @@ const Community: FC<IProps> = (props) => {
     <CommunityWrapper>
       {(loginMsg.userMsg.userId === props.userId || props.isShowPub) && (
         <div className="publish-btn">
-          <Button type="primary" icon={<FormOutlined />} onClick={(e) => publishClick()}>
+          <Button
+            type="primary"
+            icon={<FormOutlined />}
+            onClick={(e) => {
+              publishClick();
+            }}
+          >
             发表你的看法
           </Button>
         </div>
@@ -127,7 +133,14 @@ const Community: FC<IProps> = (props) => {
                 <img src={videoSource.picUrl} />
               </div>
             )}
-            <Button type="dashed" onClick={() => selectVideo()} block icon={<PlusOutlined />}>
+            <Button
+              type="dashed"
+              onClick={() => {
+                selectVideo();
+              }}
+              block
+              icon={<PlusOutlined />}
+            >
               选择视频
             </Button>
           </Form.Item>
@@ -144,7 +157,7 @@ const Community: FC<IProps> = (props) => {
       >
         <VideoList ref={videoListRef} />
       </Modal>
-      {/*频道动态*/}
+      {/* 频道动态 */}
       {props.cId && <MomentList cId={props.cId} ref={momentRef} />}
     </CommunityWrapper>
   );

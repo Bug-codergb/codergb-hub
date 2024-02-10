@@ -58,7 +58,9 @@
         <el-tab-pane label="Ta的订阅">
           <SubUser :user-id="id" @user-detail="changeUserDetail" />
         </el-tab-pane>
-        <el-tab-pane label="Ta的社区"></el-tab-pane>
+        <el-tab-pane label="Ta的社区">
+          <Community />
+        </el-tab-pane>
         <el-tab-pane label="Ta的收藏"></el-tab-pane>
       </el-tabs>
     </el-card>
@@ -81,6 +83,7 @@ import { IUserDetail } from '@/types/user/IUserDetail';
 import UserVideo from '@/views/detail/userDetail/childCpn/userVideo/UserVideo.vue';
 import UserPlaylist from '@/views/detail/userDetail/childCpn/userPlaylist/UserPlaylist.vue';
 import SubUser from '@/views/detail/userDetail/childCpn/subUser/SubUser.vue';
+import Community from '@/views/detail/userDetail/childCpn/community/Community.vue';
 const route = useRoute();
 const router = useRouter();
 const { id } = route.params;
