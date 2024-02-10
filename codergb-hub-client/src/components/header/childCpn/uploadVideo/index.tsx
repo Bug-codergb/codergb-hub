@@ -1,12 +1,12 @@
 import React, {
   memo,
-  FC,
-  ChangeEvent,
+  type FC,
+  type ChangeEvent,
   useState,
   forwardRef,
   useRef,
   useImperativeHandle,
-  Ref,
+  type Ref,
   useEffect
 } from 'react';
 import { CloudUploadOutlined } from '@ant-design/icons';
@@ -14,7 +14,7 @@ import { Progress, Spin } from 'antd';
 import { UploadVideoWrapper } from './style';
 import { shardUtils } from '../../../../utils/shard';
 import VideoInfo from './childCpn/videoInfo';
-import { IUploadVideo } from '../../../../types/imperative/uploadVideo';
+import { type IUploadVideo } from '../../../../types/imperative/uploadVideo';
 interface IProps {
   keyIndex: number;
   ref: Ref<IUploadVideo>;
@@ -22,7 +22,7 @@ interface IProps {
 const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef) => {
   const { keyIndex } = props;
   const [file, setFile] = useState<File | null>(null);
-  //const [childKeyIndex,setChildKeyIndex] = useState<number>(keyIndex);
+  // const [childKeyIndex,setChildKeyIndex] = useState<number>(keyIndex);
   const [videoURL, setVideoURL] = useState<string>('');
   const [videoName, setVideoName] = useState<string>('');
   const [videoId, setVideoId] = useState<string>('');
@@ -44,14 +44,14 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
     propsRef,
     () => {
       return {
-        videoId: videoId,
+        videoId,
         title: videoInfoRef.current.title,
         desc: videoInfoRef.current.desc,
         playlist: videoInfoRef.current.playlist,
         tag: videoInfoRef.current.tag,
         cate: videoInfoRef.current.cate,
         imgId: videoInfoRef.current.imgId,
-        file: file
+        file
       };
     },
     [videoInfoRef.current, videoId, keyIndex, file]
@@ -92,7 +92,13 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
           <button className="select-btn">选择文件</button>
           <p className="upload-label">请选择您要上传的文件</p>
           <CloudUploadOutlined className="upload-icon" />
-          <input type="file" className="file-inp" onChange={(e) => fileChangeHandle(e)} />
+          <input
+            type="file"
+            className="file-inp"
+            onChange={async (e) => {
+              await fileChangeHandle(e);
+            }}
+          />
         </div>
       )}
       {!isShowUpload && <VideoInfo videoURL={videoURL} videoName={videoName} ref={videoInfoRef} />}

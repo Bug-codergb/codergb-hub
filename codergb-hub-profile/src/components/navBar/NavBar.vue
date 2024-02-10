@@ -6,9 +6,7 @@
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
       :unique-opened="true"
-      @open="handleOpen"
-      default-active="1-1"
-      @close="handleClose"
+      :default-active="currentNav"
     >
       <template v-for="item in menu" :key="item.index">
         <el-sub-menu :index="item.index">
@@ -28,9 +26,23 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { menu } from '@/constant/menu';
 const router = useRouter();
+const route = useRoute();
+const currentPath = ref('1-1');
+const currentNav = computed(() => {
+  for (let item of menu) {
+    for (let sub of item.children) {
+      if (sub.path === route.path) {
+        currentPath.value = sub.index;
+        return sub.index;
+      }
+    }
+  }
+  return currentPath.value;
+});
 const menuClick = (it) => {
   console.log(it);
   router.push(it.path);

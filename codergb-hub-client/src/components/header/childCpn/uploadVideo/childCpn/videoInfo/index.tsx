@@ -118,7 +118,9 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
     } else {
     }
   };
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   // 删除缩略图
   const deleteAbb = async () => {
     const result = await deleteImage(imgID);

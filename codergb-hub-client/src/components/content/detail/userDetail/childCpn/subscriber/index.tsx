@@ -13,7 +13,7 @@ const Subscriber: FC<IProps> = (props) => {
   const [sub, setSub] = useState<ISubscriber[]>([]);
   const [total, setTotal] = useState<number>(0);
   const getUserSubReq = (userId: string, offset: number, limit: number) => {
-    getUserSuub<IResponseType<IPage<ISubscriber[]>>>(userId, offset, limit).then((data) => {
+    getUserSub<IResponseType<IPage<ISubscriber[]>>>(userId, offset, limit).then((data) => {
       if (data.status === 200) {
         setSub(data.data.list);
         setTotal(data.data.count);
