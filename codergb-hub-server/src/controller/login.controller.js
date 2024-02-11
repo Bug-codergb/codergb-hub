@@ -14,7 +14,9 @@ class LoginController{
       userId,
       userName,
       token,
-      avatarUrl: result[0].avatarUrl
+      avatarUrl: result[0].avatarUrl,
+      history:result[0].history,
+      isExplore:result[0].isExplore
     })
   }
 }

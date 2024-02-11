@@ -3,7 +3,7 @@ interface IUserMsg {
   userName: string;
   token: string;
   avatarUrl: string;
-  history?: number;
-  isExplore?: number;
+  history: number;
+  isExplore: number;
 }
 export type { IUserMsg };

@@ -11,7 +11,9 @@ const useLoginStore = defineStore('login', {
         userId: '',
         userName: '',
         avatarUrl: '',
-        token: ''
+        token: '',
+        isExplore: 0,
+        history: 1
       }
     };
   },
