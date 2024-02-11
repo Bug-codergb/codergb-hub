@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import NProgress from '@/config/nprogress';
 import Login from '../views/login/Login.vue';
 import Home from '../views/home/Home.vue';
@@ -165,7 +165,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 });
 router.beforeEach((to, from, next) => {

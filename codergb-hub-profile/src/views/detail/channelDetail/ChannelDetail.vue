@@ -34,6 +34,7 @@
                   @click="$videoRouter(channel.trailer?.id)"
                   >{{ channel.trailer?.name }}</span
                 >
+                <span v-else>--</span>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -44,6 +45,7 @@
                   @click="$videoRouter(channel.featured?.id)"
                   >{{ channel.featured?.name }}</span
                 >
+                <span v-else>--</span>
               </el-form-item>
             </el-col>
           </el-row>

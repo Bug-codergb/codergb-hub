@@ -2,9 +2,13 @@ import { loadEnv, defineConfig } from 'vite';
 import { resolve } from 'path';
 import pluginVue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+
 export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), 'VITE_NODE_ENV');
+
   return {
     root: process.cwd(),
+    base: env.VITE_NODE_ENV === 'production' ? '/codergb' : '/',
     mode: 'development',
     resolve: {
       alias: {
@@ -26,7 +30,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
-      outDir: 'dist',
+      outDir: 'codergb',
       minify: 'esbuild',
       reportCompressedSize: false,
       // 规定触发警告的 chunk 大小

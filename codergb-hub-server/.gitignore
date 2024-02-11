@@ -10,6 +10,8 @@
 
 # production
 /build
+/dist
+/upload/**
 /upload/channel/avatar/
 /upload/image/
 /upload/user/avatar/
