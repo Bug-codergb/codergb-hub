@@ -56,6 +56,14 @@
         </el-col>
       </el-row>
     </el-card>
+    <el-card>
+      <template #header>
+        <div class="card-header">
+          <span>当前用户活跃度</span>
+        </div>
+      </template>
+      <Log v-if="loginMsg && loginMsg.userMsg" :user-id="loginMsg.userMsg.userId" />
+    </el-card>
   </div>
 </template>
 <script setup lang="ts">
@@ -63,6 +71,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import moment from 'moment';
 import useLoginStore from '@/views/login/store';
 import useChannelStore from '@/store/modules/channel';
+import Log from '@/views/setting/childCpn/log/Log.vue';
 const loginMsg = useLoginStore();
 const channel = useChannelStore();
 
@@ -81,9 +90,19 @@ const logOff = () => {
     .catch(() => {});
 };
 </script>
+<style lang="less">
+.setting {
+  .el-card {
+    margin: 0 0 15px 0;
+  }
+}
+</style>
 <style scoped lang="less">
 .setting {
   font-size: (24/40rem);
+  .el-card {
+    margin: 0 0 15px 0;
+  }
   .card-header {
     display: flex;
     justify-content: space-between;

@@ -18,3 +18,8 @@ export function register<T = IResponseType<any>>(username: string, password: str
     }
   });
 }
+export function getLoginLog<T = IResponseType<any>>(userId: string) {
+  return gbRequest.get<T>({
+    url: `/login/log/${userId}`
+  });
+}
