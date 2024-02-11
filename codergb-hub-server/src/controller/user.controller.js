@@ -12,7 +12,8 @@ const {
   getUSerLibService,
   userHotVideo,
   createUserService,
-  getBriefService
+  getBriefService,
+  updateUserService
 } = require("../service/user.service");
 const { addChannelService } = require("../service/register.service.js")
 const {APP_HOST,APP_PORT} = require("../app/config")
@@ -191,6 +192,50 @@ class UserController{
             setResponse(ctx,"请勿重复添加用户",400,{})
           }
 
+        }
+      }
+    }catch (e) {
+
+    }
+  }
+  async updateUser(ctx,next){
+    try{
+      const {
+        userId,
+        userName,
+        password,
+        history,
+        isExplore,
+        mimetype,
+        destination,
+        filename,
+        originalname,
+        size,
+        avatarUrl
+      } = ctx.request.body;
+      if(!isEmpty(ctx,userName,"用户名称不能为空")
+        && !isEmpty(ctx,password,"密码不能为空")
+        && !isEmpty(ctx,isExplore,"是否为探索不能为空")
+        && !isEmpty(ctx,history,"存储历史不能为空")
+        && !isEmpty(ctx,userId,"用户id不能为空")
+        && !isEmpty(ctx,avatarUrl,"用户头像不能为空")
+      ){
+        const result = await updateUserService(
+          ctx,
+          userId,
+          userName,
+          password,
+          history,
+          isExplore,
+          mimetype,
+          destination,
+          filename,
+          originalname,
+          size,
+          avatarUrl
+        );
+        if(result){
+          setResponse(ctx,"success",200,{});
         }
       }
     }catch (e) {

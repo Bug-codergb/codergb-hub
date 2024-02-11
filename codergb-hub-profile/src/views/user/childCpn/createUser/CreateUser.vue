@@ -1,7 +1,7 @@
 <template>
   <GbDrawer v-model="drawer" :title="title" @confirm="confirmHandle">
     <el-form :model="formData.data" label-position="top" :rules="rules" ref="create">
-      <el-form-item>
+      <el-form-item v-if="!isUpdate">
         <el-alert title="新建用户会同步创建频道" type="success" />
       </el-form-item>
       <el-form-item label="用户名" prop="userName">
@@ -68,11 +68,9 @@
 <script setup lang="ts">
 import { ref, defineExpose, defineEmits, reactive, nextTick } from 'vue';
 import { getUuid } from '../../../../utils/index';
-import { createUser, userUploadAvatar } from '@/network/user';
+import { createUser, updateUser, userUploadAvatar } from '@/network/user';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
-
 import { ElMessage } from 'element-plus';
-import { register } from '@/network/login';
 
 import GbUpload from '@/components/common/gbUpload/GbUpload.vue';
 const emit = defineEmits(['refresh']);
@@ -129,8 +127,9 @@ const isUpdate = ref(false);
 const showDrawer = (data: any) => {
   drawer.value = true;
   isUpdate.value = Boolean(data);
-
+  //  如果是新增
   if (!isUpdate.value) {
+    title.value = '新增用户';
     formData.data.userId = getUuid();
     formData.data.userName = '';
     formData.data.password = '';
@@ -142,6 +141,23 @@ const showDrawer = (data: any) => {
     isPrev.value = false;
     imgURL.value = '';
   } else {
+    title.value = '更新用户';
+    formData.data.userId = data.userId;
+    formData.data.userName = data.userName;
+    formData.data.password = '123';
+    formData.data.history = data.history;
+    formData.data.isExplore = data.isExplore;
+    formData.data.avatar = data.avatarUrl;
+    isShowUpload.value = false;
+    isPrev.value = true;
+    imgURL.value = data.avatarUrl;
+
+    formData.data.fileInfo.avatarUrl = data.avatarUrl;
+    formData.data.fileInfo.destination = data.dest;
+    formData.data.fileInfo.filename = data.filename;
+    formData.data.fileInfo.size = data.size;
+    formData.data.fileInfo.originalname = data.originalname;
+    formData.data.fileInfo.mimetype = data.mimetype;
   }
 };
 defineExpose({
@@ -164,13 +180,14 @@ const confirmHandle = () => {
           history: formData.data.history,
           ...formData.data.fileInfo
         };
-        const result = await createUser(params);
+
+        const result = isUpdate.value ? await updateUser(params) : await createUser(params);
         if (result.status === 200) {
           drawer.value = false;
           emit('refresh');
           ElMessage({
             type: 'success',
-            message: '用户添加成功'
+            message: `用户${isUpdate.value ? '更新' : '添加'}成功`
           });
         }
       }

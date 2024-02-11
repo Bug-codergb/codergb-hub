@@ -22,7 +22,12 @@ class LoginController{
       token,
       avatarUrl: result[0].avatarUrl,
       history:result[0].history,
-      isExplore:result[0].isExplore
+      isExplore:result[0].isExplore,
+      originalname:result[0].originalname,
+      mimetype:result[0].mimetype,
+      dest:result[0].dest,
+      filename:result[0].filename,
+      size:result[0].size,
     })
   }
   async loginLog(ctx,next){
@@ -35,6 +40,26 @@ class LoginController{
         }
       }
       setResponse(ctx,"success",200,result);
+    }catch (e) {
+
+    }
+  }
+  async loginMsg(ctx,next){
+    try{
+      const {userId} = ctx.params;
+      const result = await getUserMsgService(ctx, userId);
+      setResponse(ctx, "success", 200, {
+        userId:result[0].userId,
+        userName:result[0].userName,
+        avatarUrl: result[0].avatarUrl,
+        history:result[0].history,
+        isExplore:result[0].isExplore,
+        originalname:result[0].originalname,
+        mimetype:result[0].mimetype,
+        dest:result[0].dest,
+        filename:result[0].filename,
+        size:result[0].size,
+      })
     }catch (e) {
 
     }

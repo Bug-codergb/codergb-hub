@@ -7,7 +7,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { reactive, h, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
@@ -39,7 +39,15 @@ const tableData = reactive({
       label: '用户头像',
       'min-width': 90,
       formatter: (row: IUserMsg) => {
-        return <el-avatar shape="square" size={50} fit="contain" src={row.avatarUrl} />;
+        return (
+          <el-avatar
+            key={row.avatarUrl}
+            shape="square"
+            size={50}
+            fit="contain"
+            src={`${row.avatarUrl}?t=${Math.random()}`}
+          />
+        );
       }
     },
     {
@@ -85,7 +93,6 @@ const tableData = reactive({
           text: '查看',
           type: 'primary',
           onClick: (row: IUserMsg, index: number) => {
-            console.log(row);
             router.push({
               path: USER_DETAIL_PATH + '/' + row.userId
             });
@@ -93,12 +100,12 @@ const tableData = reactive({
         },
         {
           text: '编辑',
-          type: 'primary'
-          /*onClick: (row: ICate, index: number) => {
-            if (createCateRef.value) {
-              createCateRef.value.showDrawer(row);
+          type: 'primary',
+          onClick: (row: IUserMsg, index: number) => {
+            if (createUserRef.value) {
+              createUserRef.value.showDrawer(row);
             }
-          }*/
+          }
         },
         {
           text: '删除',

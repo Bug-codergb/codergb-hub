@@ -38,7 +38,7 @@
     <div class="page" v-if="total > tableData.pageSize">
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total,prev, pager, next"
         :total="total"
         :page-size="tableData.pageSize"
         @current-change="currentChange"

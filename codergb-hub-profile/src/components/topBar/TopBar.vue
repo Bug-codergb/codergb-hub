@@ -5,7 +5,11 @@
     </div>
     <div class="right-container">
       <el-dropdown @command="handleCommand">
-        <el-avatar shape="square" size="large" :src="loginMsg.userMsg.avatarUrl" />
+        <el-avatar
+          shape="square"
+          size="large"
+          :src="`${loginMsg.userMsg.avatarUrl}?t=${Math.random()}`"
+        />
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item command="profile">个人中心</el-dropdown-item>
@@ -23,7 +27,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { ArrowRight } from '@element-plus/icons-vue';
 import useLoginStore from '@/views/login/store';
 import { menu } from '@/constant/menu';
-import { LOGIN_PATH } from '@/router/constant';
+import { LOGIN_PATH, USER_DETAIL_PATH } from '@/router/constant';
 const loginMsg = useLoginStore();
 const router = useRouter();
 const route = useRoute();
@@ -32,6 +36,11 @@ const handleCommand = (e: string) => {
     case 'exit':
       router.push({
         path: LOGIN_PATH
+      });
+      break;
+    case 'profile':
+      router.push({
+        path: `${USER_DETAIL_PATH}/${loginMsg.userMsg.userId}`
       });
   }
 };

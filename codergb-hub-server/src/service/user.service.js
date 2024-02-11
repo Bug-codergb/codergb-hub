@@ -156,7 +156,8 @@ class UserService{
   }
   async getAllUserService(ctx,offset,limit,isExplore){
     try{
-      const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore
+      const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore,
+                  u.originalname,u.mimetype,u.dest,u.filename,u.size
                   from user as u
                   ${isExplore!==-1?`where isExplore = ?`:``}
                   order by u.createTime desc
@@ -217,6 +218,43 @@ class UserService{
     }catch (e) {
       setResponse(ctx,"error",500);
     }
+  }
+  async updateUserService(ctx,
+                          userId,
+                          userName,
+                          password,
+                          history,
+                          isExplore,
+                          mimetype,
+                          destination,
+                          filename,
+                          originalname,
+                          size,
+                          avatarUrl){
+    const sql=`update user set userName=?,password=?,
+                          history=?,
+                          isExplore=?,
+                          mimetype=?,
+                          dest=?,
+                          filename=?,
+                          originalname=?,
+                          size=?,
+                          avatarUrl=?
+                          where userId = ?`;
+    const result = await connection.execute(sql,[
+      userName,
+      password,
+      history,
+      isExplore,
+      mimetype,
+      destination,
+      filename,
+      originalname,
+      size,
+      avatarUrl,
+      userId
+    ])
+    return result[0]
   }
 }
 module.exports=new UserService();

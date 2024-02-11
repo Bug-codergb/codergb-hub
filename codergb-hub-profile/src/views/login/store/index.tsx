@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { login } from '@/network/login';
+import { getLoginMsg, login } from '@/network/login';
 import { IResponseType } from '@/types/responseType';
 import { IUserMsg } from '@/types/user/IUserMsg';
 import localCache from '../../../utils/cache';
@@ -28,6 +28,21 @@ const useLoginStore = defineStore('login', {
         return true;
       } else {
         return false;
+      }
+    },
+    async changeMsgAction(userId: string) {
+      const res = await getLoginMsg<IResponseType<IUserMsg>>(userId);
+      if (res.status === 200) {
+        const token: string = this.userMsg.token;
+        this.userMsg = {
+          ...res.data,
+          token: this.userMsg.token
+        };
+        console.log(this.userMsg.token);
+        localCache.setCache('userMsg', {
+          ...res.data,
+          token
+        });
       }
     }
   }

@@ -6,14 +6,14 @@
           <span>用户信息</span>
           <div>
             <el-button class="button" type="danger" text @click="logOff">注销账号</el-button>
-            <el-button class="button" type="primary" text>编辑</el-button>
+            <el-button class="button" type="primary" text @click="editUserHandler">编辑</el-button>
           </div>
         </div>
       </template>
       <el-row>
         <el-col :span="4">
           <div class="img-container">
-            <el-avatar :src="loginMsg.userMsg.avatarUrl" :size="100" />
+            <el-avatar :src="`${loginMsg.userMsg.avatarUrl}?t=${Math.random()}`" :size="100" />
           </div>
         </el-col>
         <el-col :span="20">
@@ -64,6 +64,7 @@
       </template>
       <Log v-if="loginMsg && loginMsg.userMsg" :user-id="loginMsg.userMsg.userId" />
     </el-card>
+    <CreateUser ref="createUserRef" @refresh="refreshHandler" />
   </div>
 </template>
 <script setup lang="ts">
@@ -72,6 +73,8 @@ import moment from 'moment';
 import useLoginStore from '@/views/login/store';
 import useChannelStore from '@/store/modules/channel';
 import Log from '@/views/setting/childCpn/log/Log.vue';
+import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
+import { ref } from 'vue';
 const loginMsg = useLoginStore();
 const channel = useChannelStore();
 
@@ -88,6 +91,15 @@ const logOff = () => {
       });
     })
     .catch(() => {});
+};
+const createUserRef = ref<InstanceType<typeof CreateUser>>(null);
+const editUserHandler = async () => {
+  if (createUserRef.value) {
+    createUserRef.value.showDrawer(loginMsg.userMsg);
+  }
+};
+const refreshHandler = async () => {
+  await loginMsg.changeMsgAction(loginMsg.userMsg.userId);
 };
 </script>
 <style lang="less">

@@ -20,6 +20,12 @@ export function createUser<T = IResponseType<any>>(data: any) {
     data: data
   });
 }
+export function updateUser<T = IResponseType<any>>(data: any) {
+  return gbRequest.post<T>({
+    url: `/user/update`,
+    data: data
+  });
+}
 // 获取userMsg
 export async function getUserMsg<T = IResponseType<any>>(userId: string) {
   return await gbRequest.post<T>({
