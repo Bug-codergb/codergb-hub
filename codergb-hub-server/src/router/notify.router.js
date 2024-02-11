@@ -5,8 +5,11 @@ const {
 } = require("../middleware/login.middleware");
 const {
   create,
-  allNotify
+  allNotify,
+  getAllNotify
 } = require("../controller/notify.controller");
 notifyRouter.post("/",authVerify,create);
+//获取所有用户通知
 notifyRouter.get("/all/:id",authVerify,allNotify)
+notifyRouter.post("/all",authVerify,getAllNotify);
 module.exports = notifyRouter;

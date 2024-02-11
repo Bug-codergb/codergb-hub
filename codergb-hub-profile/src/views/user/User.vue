@@ -1,9 +1,11 @@
 <template>
-  <div class="user-list">
-    <GbHeader :header="header" @create="createHandler" />
-    <CreateUser ref="createUserRef" @refresh="search" />
-    <GbTable :tableData="tableData" ref="gbTable" />
-  </div>
+  <el-card>
+    <div class="user-list">
+      <GbHeader :header="header" @create="createHandler" />
+      <CreateUser ref="createUserRef" @refresh="search" />
+      <GbTable :tableData="tableData" ref="gbTable" />
+    </div>
+  </el-card>
 </template>
 
 <script lang="tsx" setup>

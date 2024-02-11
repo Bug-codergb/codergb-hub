@@ -2,7 +2,8 @@ const { setResponse } = require("../utils/setResponse");
 const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
-  allNotifyService
+  allNotifyService,
+  getAllNotifyService
 } = require("../service/notify.service");
 class NotifyController{
   async create(ctx,next){
@@ -32,6 +33,15 @@ class NotifyController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
+    }
+  }
+  async getAllNotify(ctx,next){
+    try{
+      const { offset='0',limit='30'} = ctx.query;
+      const result = await getAllNotifyService(ctx,offset,limit);
+      setResponse(ctx,"success",200,result)
+    }catch (e){
+
     }
   }
 }

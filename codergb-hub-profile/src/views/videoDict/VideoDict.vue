@@ -1,13 +1,15 @@
 <template>
-  <div class="video-dict">
-    <el-tabs v-model="activeName" class="demo-tabs">
-      <el-tab-pane label="视频分类" name="first"> <Cate /> </el-tab-pane>
-      <el-tab-pane label="视频标签" name="second"><Tag /></el-tab-pane>
-      <el-tab-pane label="首页轮播图" name="third">
-        <Carousel />
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+  <el-card>
+    <div class="video-dict">
+      <el-tabs v-model="activeName" class="demo-tabs">
+        <el-tab-pane label="视频分类" name="first"> <Cate /> </el-tab-pane>
+        <el-tab-pane label="视频标签" name="second"><Tag /></el-tab-pane>
+        <el-tab-pane label="首页轮播图" name="third">
+          <Carousel />
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+  </el-card>
 </template>
 
 <script lang="ts" setup>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <el-card>
     <GbDrawer v-model="drawer" :title="title" @confirm="confirmHandle" @cancel="cancelHandle">
       <Create
         ref="createRef"
@@ -13,7 +13,7 @@
       />
     </GbDrawer>
     <VideoTable url="/video/all" @create="createHandle" ref="videoTableRef" @edit="editHandle" />
-  </div>
+  </el-card>
 </template>
 
 <script lang="ts" setup>

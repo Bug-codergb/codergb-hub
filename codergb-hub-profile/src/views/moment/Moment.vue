@@ -1,11 +1,15 @@
 <template>
-  <div class="moment">
-    <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" />
-    <GbTable :table-data="tableData" ref="gbTable" />
-    <CreateMoment ref="createMomentRef" @refresh="search" />
-  </div>
+  <el-card>
+    <div class="moment">
+      <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" />
+      <GbTable :table-data="tableData" ref="gbTable" />
+      <CreateMoment ref="createMomentRef" @refresh="search" />
+    </div>
+  </el-card>
 </template>
 <script setup lang="tsx">
+import { getCurrentInstance } from 'vue';
+import { User } from '@element-plus/icons-vue';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
@@ -16,6 +20,7 @@ import { IMoment } from '@/types/moment';
 import { MOMENT_DETAIL_PATH } from '@/router/constant';
 import { deleteMoment } from '@/network/moment';
 import { IResponseType } from '@/types/responseType';
+
 const gbTable = ref();
 const router = useRouter();
 
@@ -25,6 +30,8 @@ const createHandler = () => {
     createMomentRef.value.showDrawer();
   }
 };
+
+const instance = getCurrentInstance();
 const tableData = reactive({
   url: '/moment/list',
   method: 'post',
@@ -56,28 +63,45 @@ const tableData = reactive({
       prop: 'video',
       'min-width': 100,
       formatter: (scope: IMoment) => {
-        return <span class="text-mul-line">{scope.video.name}</span>;
+        return (
+          <span
+            class="text-mul-line associate-video"
+            onClick={() => instance?.proxy?.$videoRouter(scope.video.id)}
+          >
+            {scope.video.name}
+          </span>
+        );
       }
     },
     {
       label: '创建人',
       prop: 'user',
       formatter: (scope: IMoment) => {
-        return <span>{scope.user.userName}</span>;
+        return (
+          <div
+            class="base-user-info-icon"
+            onClick={() => instance?.proxy?.$userRouter(scope.user.userId)}
+          >
+            <el-icon>
+              <User />
+            </el-icon>
+            <span>{scope.user.userName}</span>
+          </div>
+        );
       }
     },
     {
       label: '频道',
       prop: 'channel',
-      formatter: (scope) => {
-        return <span>{scope.channel.name}</span>;
+      formatter: (scope: IMoment) => {
+        return <span>{scope.channel?.name}</span>;
       }
     },
     {
       label: '创建时间',
       prop: 'createTime',
       width: 180,
-      formatter: (scope) => {
+      formatter: (scope: IMoment) => {
         return <span>{moment(scope.createTime).format('yyyy-MM-DD HH:mm')}</span>;
       }
     },
@@ -138,4 +162,11 @@ const search = () => {
 };
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less">
+.moment {
+  .associate-video {
+    cursor: pointer;
+    color: #47b1ff;
+  }
+}
+</style>

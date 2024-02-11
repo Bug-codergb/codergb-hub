@@ -1,8 +1,10 @@
 <template>
-  <div class="channel-container">
-    <GbHeader :header="header" :is-show-create="false" />
-    <GbTable :table-data="tableData" ref="gbTable" />
-  </div>
+  <el-card>
+    <div class="channel-container">
+      <GbHeader :header="header" :is-show-create="false" />
+      <GbTable :table-data="tableData" ref="gbTable" />
+    </div>
+  </el-card>
 </template>
 <script setup lang="tsx">
 import GbTable from '@/components/common/gbTable/GbTable.vue';

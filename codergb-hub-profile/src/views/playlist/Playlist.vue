@@ -1,9 +1,11 @@
 <template>
-  <div class="playlist">
-    <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" />
-    <GbTable :tableData="tableData" ref="gbTable" />
-    <CreatePlaylist ref="createPlaylist" @refresh="refresh" :key="keyIndex" />
-  </div>
+  <el-card>
+    <div class="playlist">
+      <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" />
+      <GbTable :tableData="tableData" ref="gbTable" />
+      <CreatePlaylist ref="createPlaylist" @refresh="refresh" :key="keyIndex" />
+    </div>
+  </el-card>
 </template>
 
 <script lang="tsx" setup>

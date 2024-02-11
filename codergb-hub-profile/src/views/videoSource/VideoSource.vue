@@ -1,14 +1,16 @@
 <template>
-  <div class="video-source">
-    <GbHeader :header="header" :isShowRefresh="true">
-      <template #btnContent>
-        <el-button type="default">批量删除</el-button>
-      </template>
-    </GbHeader>
-    <GbTable :table-data="tableData" ref="gbTableRef" />
-    <AssociateVideo ref="associateVideo" />
-    <Chunk ref="chunkRef" />
-  </div>
+  <el-card>
+    <div class="video-source">
+      <GbHeader :header="header" :isShowRefresh="true">
+        <template #btnContent>
+          <el-button type="default">批量删除</el-button>
+        </template>
+      </GbHeader>
+      <GbTable :table-data="tableData" ref="gbTableRef" />
+      <AssociateVideo ref="associateVideo" />
+      <Chunk ref="chunkRef" />
+    </div>
+  </el-card>
 </template>
 <script setup lang="tsx">
 import GbTable from '@/components/common/gbTable/GbTable.vue';

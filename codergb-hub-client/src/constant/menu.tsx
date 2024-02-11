@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ReactElement } from 'react';
 import HomeIcon from '../assets/html/home/homeIcon';
 import HomeShadowIcon from '../assets/html/home/homeShadowIcon';
 import ExploreIcon from '../assets/html/explore/exploreIcon';
@@ -12,7 +12,6 @@ import LibraryIcon from '../assets/html/library/libraryIcon';
 import LibraryShadowIcon from '../assets/html/library/libraryShadowIcon';
 import HistoryIcon from '../assets/html/history/historyIcon';
 import HistoryShadowIcon from '../assets/html/history/historyShadowIcon';
-import { ReactElement } from 'react';
 import LaterIcon from '../assets/html/later/laterIcon';
 import LaterShadowIcon from '../assets/html/later/laterShadowIcon';
 import ThumbIcon from '../assets/html/thumb/thumbIcon';

@@ -1,8 +1,10 @@
 <template>
-  <div class="dm">
-    <GbHeader :header="header" />
-    <GbTable :table-data="tableData" ref="gbTable" />
-  </div>
+  <el-card>
+    <div class="dm">
+      <GbHeader :header="header" />
+      <GbTable :table-data="tableData" ref="gbTable" />
+    </div>
+  </el-card>
 </template>
 
 <script lang="tsx" setup>

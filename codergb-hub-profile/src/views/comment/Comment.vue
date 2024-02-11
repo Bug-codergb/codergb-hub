@@ -1,9 +1,11 @@
 <template>
-  <div class="comment">
-    <GbTable :table-data="tableData" ref="gbTable" />
-    <Notify ref="notifyRef" />
-    <Detail ref="detailRef" />
-  </div>
+  <el-card>
+    <div class="comment">
+      <GbTable :table-data="tableData" ref="gbTable" />
+      <Notify ref="notifyRef" />
+      <Detail ref="detailRef" />
+    </div>
+  </el-card>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue';

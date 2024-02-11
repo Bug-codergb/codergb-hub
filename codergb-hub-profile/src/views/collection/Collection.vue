@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <el-card>
     <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCol ref="createColRef" @refresh="refresh" />
     <AddVideo ref="addVideo" @refresh="refreshHandler" />
-  </div>
+  </el-card>
 </template>
 
 <script lang="tsx" setup>

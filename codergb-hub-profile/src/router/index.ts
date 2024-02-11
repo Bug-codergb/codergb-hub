@@ -5,15 +5,15 @@ import Home from '../views/home/Home.vue';
 
 import VideoPage from '../views/video/VideoPage.vue';
 import UserPage from '../views/user/User.vue';
-import Playlist from '@/views/playlist/Playlist.vue';
-const Comment = import('../views/comment/Comment.vue');
-const Moment = import('../views/moment/Moment.vue');
-import Dm from '../views/dm/Dm.vue';
-import VideoDict from '../views/videoDict/VideoDict.vue';
-import VideoCollection from '../views/collection/Collection.vue';
-const VideoSource = import('../views/videoSource/VideoSource.vue');
+const Playlist = () => import('@/views/playlist/Playlist.vue');
+const Comment = () => import('../views/comment/Comment.vue');
+const Moment = () => import('../views/moment/Moment.vue');
+const Dm = () => import('../views/dm/Dm.vue');
+const VideoDict = () => import('../views/videoDict/VideoDict.vue');
+const VideoCollection = () => import('../views/collection/Collection.vue');
+const VideoSource = () => import('../views/videoSource/VideoSource.vue');
 
-const Channel = import('../views/channel/Channel.vue');
+const Channel = () => import('../views/channel/Channel.vue');
 import {
   HOME_PATH,
   LOGIN_PATH,
@@ -79,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
         path: VIDEO_COLLECTION,
         name: 'videoCollection',
         meta: {
-          title: '源文件'
+          title: '集合'
         },
         component: VideoCollection
       },
