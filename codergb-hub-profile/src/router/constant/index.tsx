@@ -23,6 +23,7 @@ const TAG_DETAIL_PATH = HOME_PATH + '/tag-detail';
 const VIDEO_DETAIL_PATH = HOME_PATH + '/video-detail';
 const MOMENT_DETAIL_PATH = HOME_PATH + '/moment-detail';
 const USER_DETAIL_PATH = HOME_PATH + '/user-detail';
+const CHANNEL_DETAIL_PATH = HOME_PATH + '/channel-detail';
 export {
   HOME_PATH,
   LOGIN_PATH,
@@ -45,5 +46,6 @@ export {
   TAG_DETAIL_PATH,
   VIDEO_DETAIL_PATH,
   MOMENT_DETAIL_PATH,
-  USER_DETAIL_PATH
+  USER_DETAIL_PATH,
+  CHANNEL_DETAIL_PATH
 };

@@ -8,7 +8,8 @@ import {
   TAG_DETAIL_PATH,
   VIDEO_DETAIL_PATH,
   MOMENT_DETAIL_PATH,
-  USER_DETAIL_PATH
+  USER_DETAIL_PATH,
+  CHANNEL_DETAIL_PATH
 } from '@/router/constant';
 import CollectionDetail from '@/views/detail/collectionDetail/CollectionDetail.vue';
 import CateVideoDetail from '@/views/detail/cateVideoDetail/CateVideoDetail.vue';
@@ -41,6 +42,10 @@ const userRoute: RouteRecordRaw = {
   path: USER_DETAIL_PATH + '/:id',
   component: () => import('@/views/detail/userDetail/UserDetail.vue')
 };
+const channelRoute: RouteRecordRaw = {
+  path: CHANNEL_DETAIL_PATH + '/:id',
+  component: () => import('@/views/detail/channelDetail/ChannelDetail.vue')
+};
 export {
   collectionRoute,
   momentRoute,
@@ -48,5 +53,6 @@ export {
   playlistRoute,
   tagRoute,
   videoRoute,
-  userRoute
+  userRoute,
+  channelRoute
 };

@@ -49,3 +49,12 @@ p {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.base-user-info-icon{
+  display: flex;
+  align-items: center;
+}
+.base-user-info-icon span {
+  margin: 0 0 0 5px;
+  color: #409eff;
+  cursor: pointer;
+}

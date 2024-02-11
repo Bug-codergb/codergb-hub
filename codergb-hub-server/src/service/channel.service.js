@@ -101,7 +101,7 @@ class ChannelService{
         from channel as c
         left join user u on c.userId = u.userId
         left join file as f on f.id=banner
-        where f.picUrl is not null
+        where f.vioUrl is null
         limit ?,?`;
 
       const res = await connection.execute(sql,[offset,limit]);
@@ -110,7 +110,8 @@ class ChannelService{
           from channel as c
           left join user u on c.userId = u.userId
           left join file as f on f.id=banner
-          where f.picUrl is not null`;
+        where f.vioUrl is null
+          `;
       const count = await connection.execute(countSQL);
       return {
         list:res[0],

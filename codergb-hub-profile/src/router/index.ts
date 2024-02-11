@@ -158,7 +158,8 @@ const routes: Array<RouteRecordRaw> = [
       detailRoutes.tagRoute,
       detailRoutes.videoRoute,
       detailRoutes.momentRoute,
-      detailRoutes.userRoute
+      detailRoutes.userRoute,
+      detailRoutes.channelRoute
     ]
   }
 ];
