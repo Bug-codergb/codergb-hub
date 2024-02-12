@@ -7,7 +7,7 @@ import Moment from '../../views/myChannel/childCpn/moment';
 import Channel from '../../views/myChannel/childCpn/channel';
 import Desc from '../../views/myChannel/childCpn/desc';
 
-const tabs = (userId: string) => {
+const tabs = (userId: string, channelId: string) => {
   return [
     {
       label: '首页',
@@ -20,27 +20,28 @@ const tabs = (userId: string) => {
       children: <Video userId={userId} />
     },
     {
-      label: 'SHORTS',
+      label: '短视频',
       key: '1003',
       children: <Shorts userId={userId} />
     },
-    {
-      label: '直播',
-      key: '1004',
-      children: <Live userId={userId} />
-    },
+
     {
       label: '播放列表',
       key: '1005',
       children: <Playlist userId={userId} />
     },
     {
-      label: '社区',
-      key: '1006',
-      children: <Moment userId={userId} />
+      label: '收藏的播放列表',
+      key: '1004',
+      children: <Live userId={userId} />
     },
     {
-      label: '频道',
+      label: '社区',
+      key: '1006',
+      children: <Moment userId={userId} channelId={channelId} />
+    },
+    {
+      label: '订阅的频道',
       key: '1007',
       children: <Channel userId={userId} />
     },

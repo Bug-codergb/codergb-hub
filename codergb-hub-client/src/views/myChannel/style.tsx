@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 export const MyChannelWrapper = styled.div`
+  width: 100%;
+  height: 86vh;
+  overflow-y: scroll;
+  background-color: #ffffff;
   .banner {
     width: 100%;
     height: ${260 / 40}rem;

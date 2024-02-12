@@ -7,7 +7,6 @@ interface IProps {
 }
 const Community: FC<IProps> = (props) => {
   const { userId, channel } = props;
-  console.log(channel);
   return (
     <div>{channel && <CommunityPro userId={userId} cId={channel.id} isShowPub={false} />}</div>
   );

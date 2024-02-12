@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 export const HomeWrapper = styled.div`
+  .title {
+    font-size: ${20 / 40}rem;
+    font-weight: bolder;
+    margin: 0 0 ${12 / 40}rem 0;
+  }
   .trailer {
     display: flex;
     align-items: flex-start;
     border-bottom: 1px solid #e5e5e5;
     padding: 0 0 ${20 / 40}rem 0;
+    margin: 0 0 ${15 / 40}rem 0;
     .left-container {
       width: ${380 / 40}rem;
       img {

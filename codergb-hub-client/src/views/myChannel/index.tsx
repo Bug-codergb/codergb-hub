@@ -1,14 +1,14 @@
-import React, { memo, FC } from 'react';
-import { Map } from 'immutable';
+import React, { memo, type FC } from 'react';
+import { type Map } from 'immutable';
 import { useLocation } from 'react-router-dom';
 import { MyChannelWrapper } from './style';
 import { useSelector } from 'react-redux';
-import { IChannel } from '../../types/channel/IChannel';
-import { ILogin } from '../../types/login/ILogin';
+import { type IChannel } from '../../types/channel/IChannel';
+import { type ILogin } from '../../types/login/ILogin';
 import TabContent from './childCpn/TabContent';
 const MyChannel: FC = () => {
   const location = useLocation();
-  const { id } = location.state; //userId
+  const { id } = location.state; // userId
   const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
     return state.getIn(['channelReducer', 'channel']) as IChannel;
   });
@@ -28,7 +28,7 @@ const MyChannel: FC = () => {
           <div className="user-name">{login.userMsg.userName}</div>
         </div>
       </div>
-      <TabContent userId={id} />
+      <TabContent userId={id} channelId={channel.id} />
     </MyChannelWrapper>
   );
 };

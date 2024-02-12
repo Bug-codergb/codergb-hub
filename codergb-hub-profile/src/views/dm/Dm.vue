@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <div class="dm">
-      <GbHeader :header="header" />
+      <GbHeader :header="header" :is-show-create="false" />
       <GbTable :table-data="tableData" ref="gbTable" />
     </div>
   </el-card>

@@ -1,9 +1,9 @@
-import React, { memo, FC, ReactElement, useState, useEffect, useRef } from 'react';
+import React, { memo, type FC, ReactElement, useState, useEffect, useRef } from 'react';
 import { VideoWrapper } from './style';
-import { IVideo } from '../../../../types/video/IVideo';
+import { type IVideo } from '../../../../types/video/IVideo';
 import { getUserVideo, getVideoURL } from '../../../../network/video';
-import { IResponseType } from '../../../../types/responseType';
-import { IPage } from '../../../../types/IPage';
+import { type IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
 import VideoItem from '../../../../components/videoItem';
 import { useNavigate } from 'react-router-dom';
 import Hls from 'hls.js';
@@ -30,7 +30,7 @@ const Video: FC<IProps> = (props) => {
   useEffect(() => {
     if (vioRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(videoURL);
         hls.attachMedia(vioRef.current);
       } else if (vioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
@@ -65,43 +65,31 @@ const Video: FC<IProps> = (props) => {
             return (
               <li
                 key={item.id}
-                onClick={(e) => videoRouterHandle(item)}
+                onClick={(e) => {
+                  videoRouterHandle(item);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <VideoItem
-                  img={
-                    <img
-                      src={item.picUrl}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
-                      onMouseEnter={(e) => mouseImgHandle(item, index)}
-                    />
-                  }
-                  video={
-                    <video
-                      src={videoURL}
-                      ref={vioRef}
-                      autoPlay={true}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
-                      muted={true}
-                    />
-                  }
+                  img={<img src={item.picUrl} />}
                   dtPos={{ left: 98, top: 54 }}
                   isShowMore={false}
-                  isShowVideo={currentIndex === index}
+                  isShowUser={false}
+                  isShowVideo={false}
                   state={item.name}
                   id={item.id}
-                  vioHeight={200}
+                  vioHeight={140}
                   user={item.user}
                   createTime={item.createTime}
                   dt={item.dt}
                   playCount={item.playCount}
-                  itemWidth={380}
+                  itemWidth={300}
                   scale={0.92}
                 />
               </li>
             );
           })}
-        {HolderCpn(video.length, 4, 380)}
+        {HolderCpn(video.length, 5, 300)}
       </ul>
     </VideoWrapper>
   );
