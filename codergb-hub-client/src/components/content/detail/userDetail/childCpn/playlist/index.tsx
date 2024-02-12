@@ -1,4 +1,4 @@
-import React, { memo, type FC, useState, useEffect } from 'react';
+import { memo, type FC, useState, useEffect } from 'react';
 import { MoreOutlined, StarOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { type IPage } from '../../../../../../types/IPage';
 import HolderCpn from '../../../../../holder';
 import moment from 'moment';
 import { PlaylistWrapper } from './style';
+import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 interface IProps {
   userId: string;
 }
@@ -16,6 +17,7 @@ const CreatePlaylist: FC<IProps> = (props) => {
   const { userId } = props;
   const [playlist, setPlaylist] = useState<IPlaylist[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const login = useLoginMsg();
   const getUserPlaylistReq = (userId: string, offset: number, limit: number) => {
     getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(userId, offset, limit).then((data) => {
       if (data.status === 200) {
@@ -67,25 +69,28 @@ const CreatePlaylist: FC<IProps> = (props) => {
                 <div className="state">
                   <div className="container">
                     <p className="name">{item.name}</p>
-                    <Dropdown
-                      overlay={
-                        <Menu
-                          onClick={(e) => {
-                            openChangeHandle(e, item);
-                          }}
-                        >
-                          <Menu.Item key="sub">
-                            <div className="g-sub-playlist">
-                              <StarOutlined />
-                              <span className="label">收藏</span>
-                            </div>
-                          </Menu.Item>
-                        </Menu>
-                      }
-                      trigger={['click']}
-                    >
-                      <MoreOutlined className="g-more" />
-                    </Dropdown>
+
+                    {login.userMsg.userId !== item.user.userId && (
+                      <Dropdown
+                        overlay={
+                          <Menu
+                            onClick={(e) => {
+                              openChangeHandle(e, item);
+                            }}
+                          >
+                            <Menu.Item key="sub">
+                              <div className="g-sub-playlist">
+                                <StarOutlined />
+                                <span className="label">收藏</span>
+                              </div>
+                            </Menu.Item>
+                          </Menu>
+                        }
+                        trigger={['click']}
+                      >
+                        <MoreOutlined className="g-more" />
+                      </Dropdown>
+                    )}
                   </div>
                   <p className="create-time">
                     {moment(item.createTime).format('yyyy-MM-DD HH:mm')}

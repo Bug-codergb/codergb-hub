@@ -190,5 +190,39 @@ class PlaylistService{
       setResponse(ctx,'error',500,{})
     }
   }
+  async getUserSubService(ctx,id,offset,limit){
+    try{
+      const sql=`
+      select p.id,p.name,p.description,
+       JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user,
+       p.createTime,p.updateTime,p.isPublic,
+       if(f.picUrl is null,u.avatarUrl,f.picUrl) as picUrl
+        from sub_playlist as sp
+        left join playlist p on p.id = sp.playlistId
+        LEFT JOIN user as u on u.userId = p.userId
+        LEFT JOIN playlist_video as pv on pv.pId = p.id
+        LEFT JOIN video as v on v.id = pv.vId
+        LEFT JOIN video_file as vf on vf.videoId =v.id
+        LEFT JOIN file as f on f.id = vf.fileId
+        where sp.userId = ? and (vf.mark="cover" or vf.mark is null)
+        GROUP BY p.id
+        ORDER BY p.updateTime desc
+      limit ?,?`;
+      const result = await connection.execute(sql,[id,offset,limit]);
+
+      const countSQL=`
+      select count(p.id) as count
+      from sub_playlist as sp
+      left join playlist p on p.id = sp.playlistId
+      where sp.userId = ?`;
+      const count = await connection.execute(countSQL,[id]);
+      return {
+        count:count[0][0].count,
+        list:result[0]
+      }
+    }catch (e) {
+      console.log(e);
+    }
+  }
 }
 module.exports = new PlaylistService();

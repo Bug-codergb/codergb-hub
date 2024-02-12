@@ -37,7 +37,7 @@ import HotVideo from './childCpn/hotVideo';
 const UserDetail: FC = (): ReactElement => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { userId } = location.state;
+  const { userId } = location.state as { userId: string };
   const dispatch = useDispatch<Dispatch<any>>();
 
   const isSub = useSub(userId);
@@ -60,7 +60,6 @@ const UserDetail: FC = (): ReactElement => {
   useEffect(() => {
     if (keyIndex !== 0) {
       getUserBlock<IResponseType<IBlock[]>>(userId).then((data) => {
-        console.log(data);
         if (data.status === 200) {
           setBlock(data.data);
           if (data.data.length !== 0) {

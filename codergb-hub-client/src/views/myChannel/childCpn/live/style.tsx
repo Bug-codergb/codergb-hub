@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-export const MulPlayWrapper = styled.div`
+export const LiveWrapper = styled.div`
   .play-list {
     display: flex;
     justify-content: space-between;

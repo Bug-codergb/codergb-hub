@@ -9,7 +9,8 @@ const {
   subPlaylistService,
   selectUserSubPlaylist,
   updatePlaylistService,
-  deletePlaylistService
+  deletePlaylistService,
+  getUserSubService
 } = require("../service/playlist.service");
 const {
   createVideoPlaylistService
@@ -141,6 +142,19 @@ class PlaylistController{
       }
     }catch (e) {
       setResponse(ctx,'error',500,{})
+    }
+  }
+  async getUserSub(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {offset='0',limit="30"} = ctx.query;
+      const result = await getUserSubService(ctx,id,offset,limit);
+      console.log(result);
+      if(result){
+        setResponse(ctx,"success",200,result);
+      }
+    }catch (e) {
+
     }
   }
 }
