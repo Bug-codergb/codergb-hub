@@ -1,4 +1,11 @@
-import React, { memo, type FC, type ReactElement, useCallback } from 'react';
+import React, {
+  memo,
+  type FC,
+  type ReactElement,
+  useCallback,
+  useState,
+  type ChangeEvent
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LoginWrappers } from './style';
@@ -8,13 +15,19 @@ import { type Dispatch } from 'redux';
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
-  const onFinish = useCallback((values: any) => {
-    const { username, password } = values;
+
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const onFinish = () => {
     dispatch(loginAction(username, password, navigate));
-  }, []);
-  const onFinishFailed = useCallback((errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  }, []);
+  };
+
+  const usernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.currentTarget.value);
+  };
+  const passwordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
+  };
   return (
     <LoginWrappers>
       <div className="login-bgc">
@@ -28,37 +41,39 @@ const Login: FC = (): ReactElement => {
         </div>
       </div>
       <div className="login-inner">
-        <Form
-          name="basic"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 16 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="用户名"
-            name="username"
-            rules={[{ required: true, message: '请输入您的用户名' }]}
+        <h2 className="title">codergb-hub</h2>
+        <div className="form-item">
+          <div className="label">用户名</div>
+          <input
+            className="inp"
+            value={username}
+            onChange={(e) => {
+              usernameChange(e);
+            }}
+          />
+        </div>
+        <div className="form-item">
+          <div className="label">密&nbsp;&nbsp;码</div>
+          <input
+            className="inp"
+            value={password}
+            onChange={(e) => {
+              passwordChange(e);
+            }}
+          />
+        </div>
+        <div className="form-item">
+          <button className="btn">注册</button>
+          <div className="block"></div>
+          <button
+            className="btn login"
+            onClick={() => {
+              onFinish();
+            }}
           >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="密码"
-            name="password"
-            rules={[{ required: true, message: '请输入您的密码' }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 7, span: 16 }}>
-            <Button>注册</Button>
-            <Button type="primary" htmlType="submit">
-              登录
-            </Button>
-          </Form.Item>
-        </Form>
+            登录
+          </button>
+        </div>
       </div>
     </LoginWrappers>
   );
