@@ -26,6 +26,10 @@ import { type IUploadVideo } from '../../types/imperative/uploadVideo';
 import { debounce } from '../../utils/debounce';
 import { getVideoDuration } from '../../utils/video';
 import { HOME_RECOMMEND } from '../../constant/routes';
+import { getAllNotify } from '../../network/notify';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
+import { type INotify } from '../../types/message';
 const Header: FC = (): ReactElement => {
   const [isModalOpen, setIsModelOpen] = useState<boolean>(false);
   const [searchContent, setSearchContent] = useState<string>('');
@@ -56,6 +60,7 @@ const Header: FC = (): ReactElement => {
       }
     }
   }, [keyIndex]);
+
   const handleOk = async (): void => {
     setKeyIndex(keyIndex + 1);
   };
@@ -99,6 +104,17 @@ const Header: FC = (): ReactElement => {
       searchRouter();
     }
   };
+
+  const [unReadCount, setUnReadCount] = useState<number>(0);
+  useEffect(() => {
+    getAllNotify<IResponseType<IPage<INotify[]>>>(loginState.userMsg.userId, 0, 1, 0).then(
+      (res) => {
+        if (res.status === 200) {
+          setUnReadCount(res.data.count);
+        }
+      }
+    );
+  }, []);
   return (
     <HeaderWrapper>
       <LeftContent>
@@ -141,9 +157,11 @@ const Header: FC = (): ReactElement => {
           <VideoCameraOutlined />
         </div>
         <div className="tip">
-          <Badge count={100} size="default" offset={[4, -1]}>
-            <MailOutlined />
-          </Badge>
+          {unReadCount !== 0 && (
+            <Badge count={unReadCount} size="default" offset={[4, -1]}>
+              <MailOutlined />
+            </Badge>
+          )}
         </div>
         <Modal
           title="视频上传"

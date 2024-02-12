@@ -57,6 +57,8 @@ const Login: FC = (): ReactElement => {
           <input
             className="inp"
             value={password}
+            type="password"
+            autoComplete="new-password"
             onChange={(e) => {
               passwordChange(e);
             }}

@@ -1,4 +1,5 @@
-import React, { memo, type FC, useEffect, useState } from 'react';
+import type React from 'react';
+import { memo, type FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { Divider, Radio, Table } from 'antd';
@@ -18,14 +19,16 @@ const Message: FC = () => {
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
-
+  const pageSize = 7;
   useEffect(() => {
-    getAllNotify<IResponseType<IPage<INotify[]>>>(login.userMsg.userId, 0, 6).then((data) => {
-      if (data.status === 200) {
-        setNotify(data.data.list);
-        setCount(data.data.count);
+    getAllNotify<IResponseType<IPage<INotify[]>>>(login.userMsg.userId, 0, pageSize).then(
+      (data) => {
+        if (data.status === 200) {
+          setNotify(data.data.list);
+          setCount(data.data.count);
+        }
       }
-    });
+    );
   }, []);
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: INotify[]) => {
@@ -36,8 +39,8 @@ const Message: FC = () => {
     getAllNotify<IResponseType<IPage<INotify[]>>>(
       login.userMsg.userId,
 
-      (e - 1) * 6,
-      6
+      (e - 1) * pageSize,
+      pageSize
     ).then((data) => {
       if (data.status === 200) {
         setNotify(data.data.list);
@@ -57,7 +60,7 @@ const Message: FC = () => {
           columns={columns(navigate)}
           dataSource={nofity}
           pagination={{
-            pageSize: 6,
+            pageSize,
             total: count,
             onChange: (e) => {
               pageChangeHandle(e);

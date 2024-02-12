@@ -3,7 +3,8 @@ const { isEmpty } = require("../utils/isEmpty");
 const {
   createService,
   allNotifyService,
-  getAllNotifyService
+  getAllNotifyService,
+  updateNotifyStatusService
 } = require("../service/notify.service");
 class NotifyController{
   async create(ctx,next){
@@ -24,9 +25,9 @@ class NotifyController{
   }
   async allNotify(ctx,next){
     try{
-      const { offset='0',limit='30'} = ctx.query;
+      const { offset='0',limit='30',isRead} = ctx.query;
       const {id} = ctx.params;
-      const result = await allNotifyService(ctx,id,offset,limit);
+      const result = await allNotifyService(ctx,id,offset,limit,isRead);
 
       if(result){
         setResponse(ctx,"success",200,result);
@@ -41,6 +42,15 @@ class NotifyController{
       const result = await getAllNotifyService(ctx,offset,limit);
       setResponse(ctx,"success",200,result)
     }catch (e){
+
+    }
+  }
+  async updateNotifyStatus(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await updateNotifyStatusService(ctx,id);
+      setResponse(ctx,"success",200,{})
+    }catch (e) {
 
     }
   }

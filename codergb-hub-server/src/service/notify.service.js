@@ -21,7 +21,8 @@ class NotifyService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async allNotifyService(ctx,id,offset,limit){
+  async allNotifyService(ctx,id,offset,limit,isRead){
+    console.log(isRead,"-----------------")
     try{
       const sql=`
       select n.id,n.content,if(n.userId,n.userId,if(v.userId,v.userId,c.userId)) as userId,
@@ -35,19 +36,29 @@ class NotifyService{
       from notify as n
       left join video as v on v.id = n.aliaId
       left join comment as c on c.id = n.aliaId
-      where if( n.type!='upload',v.userId = ? or c.userId=? or n.userId=?,
-                n.userId = ?)
+      where if( n.type!='upload',(v.userId = ? or c.userId=? or n.userId=?) ${isRead!==undefined?` and isRead = ?`:''},
+                n.userId = ?${isRead!==undefined?` and isRead = ?` : ''})
       limit ?,?`;
-      const result = await connection.execute(sql,[id,id,id,id,offset,limit]);
+      let execArr=[id,id,id,id,offset,limit];
+      if(isRead!==undefined){
+        execArr=[id,id,id,isRead,id,isRead,offset,limit]
+      }
+
+      const result = await connection.execute(sql,execArr);
 
       const countSQL=`
       select count(n.id) as count
       from notify as n
       left join video as v on v.id = n.aliaId
       left join comment as c on c.id = n.aliaId
-      where if( n.type!='upload',v.userId = ? or c.userId=? or n.userId=?,
-                n.userId = ?)`;
-      const count = await connection.execute(countSQL,[id,id,id,id]);
+      where if( n.type!='upload',(v.userId = ? or c.userId=? or n.userId=?)${isRead!==undefined?` and isRead = ?`:''} ,
+                n.userId = ? ${isRead!==undefined?` and isRead = ?` : ''})`;
+
+      let countExecArr=[id,id,id,id];
+      if(isRead!==undefined){
+        countExecArr=[id,id,id,isRead,id,isRead]
+      }
+      const count = await connection.execute(countSQL,countExecArr);
       return {
         list:result[0],
         count:count[0][0].count
@@ -90,6 +101,16 @@ class NotifyService{
         list:result[0],
         count:count[0][0].count
       }
+    }catch (e) {
+
+    }
+  }
+  async updateNotifyStatusService(ctx,id){
+    try{
+      console.log(id)
+      const sql=`update notify set isRead = 1 where id in (?)`;
+      const result = await connection.execute(sql,[id]);
+      return result;
     }catch (e) {
 
     }

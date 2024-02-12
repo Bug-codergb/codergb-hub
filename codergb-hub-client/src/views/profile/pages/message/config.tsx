@@ -6,7 +6,18 @@ import moment from 'moment';
 import { type NavigateFunction } from 'react-router-dom';
 import { type INotify } from '../../../../types/message';
 import { NotifyWrapper } from './style';
-const videoRouter = (item: INotify, navigate: NavigateFunction) => {};
+import { updateNotify } from '../../../../network/notify';
+const videoRouter = (item: INotify, navigate: NavigateFunction) => {
+  console.log(item);
+  if (item.video) {
+    updateNotify(item.id).then(() => {});
+    navigate('/videoDetail', {
+      state: {
+        id: item.video.id
+      }
+    });
+  }
+};
 const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
   return [
     {
@@ -24,13 +35,28 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
                 您关注的
                 <span className="user-name">{item.operation.userName}</span>
                 发布了视频
-                <span className="info">{item.video?.name}</span>
+                <span
+                  className="info text-nowrap-mul-line"
+                  onClick={() => {
+                    videoRouter(item, navigate);
+                  }}
+                >
+                  {item.video?.name}
+                </span>
               </span>
             )}
             {item.type === 'thumb-vId' && (
               <span>
                 <span className="user-name">{item.operation.userName}</span>
-                点赞了您的视频<span className="info">{item.video?.name}</span>
+                点赞了您的视频
+                <span
+                  className="info text-nowrap-mul-line"
+                  onClick={() => {
+                    videoRouter(item, navigate);
+                  }}
+                >
+                  {item.video?.name}
+                </span>
               </span>
             )}
             {item.type === 'thumb-commentId' && (
@@ -47,8 +73,12 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
     {
       title: '是否已读',
       dataIndex: 'isRead',
-      render: (item: INotify) => {
-        return <Tag color={'green'}>{item.isRead === 0 ? '已读' : '未读'}</Tag>;
+      render: (text: string, item: INotify) => {
+        return (
+          <Tag color={`${item.isRead}` === '0' ? 'blue' : 'green'}>
+            {`${item.isRead}` === '0' ? '未读' : '已读'}
+          </Tag>
+        );
       }
     },
     {
