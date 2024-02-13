@@ -1,5 +1,5 @@
-import { memo, type FC, ReactElement, useEffect, useState, type FormEvent } from 'react';
-import { Button, Modal } from 'antd';
+import { memo, type FC, ReactElement, useEffect, useState, type FormEvent, Fragment } from 'react';
+import { Pagination, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import { type Map } from 'immutable';
@@ -62,6 +62,11 @@ const History: FC = () => {
       }
     });
   };
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageChange = async (e: number) => {
+    setCurrentPage(e);
+    await getAllUserHistory(login.userMsg.userId, (e - 1) * 10, 10, keyword);
+  };
   return (
     <HistoryWrapper>
       <LeftContentWrapper>
@@ -103,6 +108,19 @@ const History: FC = () => {
               );
             })}
         </ul>
+        {count > 9 && (
+          <Fragment>
+            <div className="page">
+              <Pagination
+                defaultCurrent={1}
+                current={currentPage}
+                pageSize={10}
+                total={count}
+                onChange={pageChange}
+              />
+            </div>
+          </Fragment>
+        )}
       </LeftContentWrapper>
       <RightContentWrapper isBolderBorder={isBolderBorder}>
         <div className="search-outer">
@@ -142,6 +160,8 @@ const History: FC = () => {
         open={isShowDelHisModal}
         onOk={handleDelHistOk}
         onCancel={handleDelHisCancel}
+        okText={'确定'}
+        cancelText={'取消'}
       >
         <p style={{ fontWeight: 'bolder' }}>{login.userMsg.userName}</p>
         <p>你的codergb-hub观看记录将从所有设备上的所有codergb-hub应用中清除</p>

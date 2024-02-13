@@ -6,7 +6,7 @@ export const HistoryWrapper = styled.div`
 `;
 export const LeftContentWrapper = styled.div`
   width: 65%;
-  height: 86vh;
+  height: 87vh;
   overflow-y: scroll;
   .label-title {
     font-size: ${24 / 40}rem;
@@ -21,6 +21,12 @@ export const LeftContentWrapper = styled.div`
         margin: 0 0 ${16 / 40}rem 0;
       }
     }
+  }
+  .page {
+    padding-bottom: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: flex-end;
   }
 `;
 export const RightContentWrapper: any = styled.div`
