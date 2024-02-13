@@ -1,4 +1,4 @@
-import React, {
+import {
   memo,
   type FC,
   type ReactElement,
@@ -7,8 +7,7 @@ import React, {
   useRef,
   type MutableRefObject,
   type SyntheticEvent,
-  createRef,
-  useCallback
+  createRef
 } from 'react';
 import {
   PauseCircleOutlined,

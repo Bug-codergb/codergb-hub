@@ -1,13 +1,13 @@
-import React, { memo, FC, ReactElement, useEffect, useState, useRef } from 'react';
+import React, { memo, type FC, type ReactElement, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map } from 'immutable';
+import { type Map } from 'immutable';
 import { SubscriptionsWrapper } from './style';
 import { getSubUserVideo, getVideoURL } from '../../network/video';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
-import { IVideo } from '../../types/video/IVideo';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type ILogin } from '../../types/login/ILogin';
+import { type IVideo } from '../../types/video/IVideo';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import VideoItem from '../../components/videoItem';
 import HolderCpn from '../../components/holder';
 import Hls from 'hls.js';
@@ -32,7 +32,7 @@ const Subscriptions: FC = (): ReactElement => {
   useEffect(() => {
     if (vioRef.current) {
       if (Hls.isSupported()) {
-        let hls = new Hls();
+        const hls = new Hls();
         hls.loadSource(videoURL);
         hls.attachMedia(vioRef.current);
       } else if (vioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
@@ -58,7 +58,11 @@ const Subscriptions: FC = (): ReactElement => {
     setCurrentIndex(index);
     const res = await getVideoURL(item.id);
     if (res.status === 200) {
-      setVideoURL(res.data.vioUrl);
+      let url: string = res.data.vioUrl;
+      if (process.env.NODE_ENV === 'development') {
+        url = url.replace(`${process.env.SERVER_PORT}`, `${process.env.WEBPACK_SERVER_PORT}/gb`);
+      }
+      setVideoURL(url);
     }
   };
   const mouseLeaveHandle = () => {
@@ -68,7 +72,12 @@ const Subscriptions: FC = (): ReactElement => {
     <SubscriptionsWrapper>
       <div className="header-title">
         <div className="current-time">本月</div>
-        <div className="manage" onClick={(e) => manageRouteHandle()}>
+        <div
+          className="manage"
+          onClick={(e) => {
+            manageRouteHandle();
+          }}
+        >
           管理
         </div>
       </div>
@@ -79,15 +88,21 @@ const Subscriptions: FC = (): ReactElement => {
             return (
               <li
                 key={item.id}
-                onClick={(e) => videoRouterHandle(item)}
+                onClick={(e) => {
+                  videoRouterHandle(item);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <VideoItem
                   img={
                     <img
                       src={item.picUrl}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
-                      onMouseEnter={(e) => mouseImgHandle(item, index)}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
+                      onMouseEnter={async (e) => {
+                        await mouseImgHandle(item, index);
+                      }}
                     />
                   }
                   video={
@@ -95,7 +110,9 @@ const Subscriptions: FC = (): ReactElement => {
                       src={videoURL}
                       ref={vioRef}
                       autoPlay={true}
-                      onMouseLeave={(e) => mouseLeaveHandle()}
+                      onMouseLeave={(e) => {
+                        mouseLeaveHandle();
+                      }}
                       muted={true}
                     />
                   }

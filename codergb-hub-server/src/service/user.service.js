@@ -266,5 +266,31 @@ class UserService{
     ])
     return result[0]
   }
+  async getUserFansService(ctx,id,offset,limit){
+    try{
+      const sql=`
+      select sub.userId,u.userName,u.avatarUrl
+      from subscriber as sub
+      left join user as u on u.userId = sub.userId
+      where upId = ?
+      limit ?,?`;
+
+      const result = await connection.execute(sql,[id,offset,limit])
+
+      const countSQL=`
+      select count(sub.userId) as count
+      from subscriber as sub
+      left join user as u on u.userId = sub.userId
+      where upId = ?`;
+
+      const count = await connection.execute(countSQL,[id]);
+      return {
+        list:result[0],
+        count:count[0][0].count
+      }
+    }catch (e) {
+
+    }
+  }
 }
 module.exports=new UserService();

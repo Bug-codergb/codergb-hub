@@ -33,6 +33,9 @@ import MulPlay from './childCpn/mulPlay';
 import SinglePlay from './childCpn/singlePlay';
 import WonderChannel from './childCpn/wonderChannel';
 import HotVideo from './childCpn/hotVideo';
+import { getUserFans } from '../../../../network/user';
+import { type IPage } from '../../../../types/IPage';
+import { type IUserMsg } from '../../../../types/user/IUserMsg';
 
 const UserDetail: FC = (): ReactElement => {
   const location = useLocation();
@@ -54,6 +57,15 @@ const UserDetail: FC = (): ReactElement => {
         setUserChannel(data.data);
         setUserTabs(tabs(userId, data.data));
         setKeyIndex(1);
+      }
+    });
+  }, [userId]);
+
+  const [fans, setFans] = useState<number>(0);
+  useEffect(() => {
+    getUserFans<IResponseType<IPage<IUserMsg[]>>>(userId, 0, 1).then((res) => {
+      if (res.status === 200) {
+        setFans(res.data.count);
       }
     });
   }, [userId]);
@@ -169,6 +181,7 @@ const UserDetail: FC = (): ReactElement => {
           </div>
           <div className="right-info">
             <div className="user-name">{userChannel?.user?.userName}</div>
+            <div className="sub-count"> {fans}位订阅者</div>
           </div>
         </div>
         <div className="control-btn">

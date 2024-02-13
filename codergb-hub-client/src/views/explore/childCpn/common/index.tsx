@@ -16,6 +16,10 @@ import { cancelSub, sub } from '../../../../network/subscriber';
 import { type Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { changeUserDetailAction } from '../../../login/store/actionCreators';
+import { getUserFans } from '../../../../network/user';
+import { IPlaylist } from '../../../../types/playlist/IPlaylist';
+import { type IPage } from '../../../../types/IPage';
+import { type IUserMsg } from '../../../../types/user/IUserMsg';
 interface IProps {
   userId: string;
 }
@@ -34,6 +38,15 @@ const Common: FC<IProps> = (props) => {
       }
     });
   }, []);
+
+  const [fans, setFans] = useState<number>(0);
+  useEffect(() => {
+    getUserFans<IResponseType<IPage<IUserMsg[]>>>(userId, 0, 1).then((res) => {
+      if (res.status === 200) {
+        setFans(res.data.count);
+      }
+    });
+  }, [userId]);
   const items = [
     { label: '首页', key: 'item-1', children: <Home userId={userId} /> },
     {
@@ -83,7 +96,7 @@ const Common: FC<IProps> = (props) => {
           </div>
           <div className="right">
             <div className={'name'}>{channel?.name}</div>
-            <div className={'sub'}>1.8亿位订阅</div>
+            <div className={'sub'}>{fans}位订阅</div>
           </div>
         </div>
         {loginState.userMsg.userId !== userId && (

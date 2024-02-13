@@ -40,3 +40,16 @@ export async function getUserLibrary<T = IResponseType<any>>(id: string) {
     url: `/user/library/` + id
   });
 }
+export async function getUserFans<T = IResponseType<any>>(
+  id: string,
+  offset: number,
+  limit: number
+) {
+  return await gbRequest.post<T>({
+    url: `/user/fans/${id}`,
+    params: {
+      offset,
+      limit
+    }
+  });
+}

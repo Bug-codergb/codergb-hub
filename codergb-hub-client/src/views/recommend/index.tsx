@@ -128,7 +128,11 @@ const Recommend: FC = (): ReactElement => {
       setCurrentIndex(index);
       const res = await getVideoURL(item.id);
       if (res.status === 200) {
-        setVideoURL(res.data.vioUrl);
+        let url: string = res.data.vioUrl;
+        if (process.env.NODE_ENV === 'development') {
+          url = url.replace(`${process.env.SERVER_PORT}`, `${process.env.WEBPACK_SERVER_PORT}/gb`);
+        }
+        setVideoURL(url);
       }
     }, 2500);
     setTimer(timeoutTimer);

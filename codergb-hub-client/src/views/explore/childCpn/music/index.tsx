@@ -13,6 +13,9 @@ import { useSub } from '../../../../hook/useSub';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
 import { cancelSub, sub } from '../../../../network/subscriber';
 import { changeUserDetailAction } from '../../../login/store/actionCreators';
+import { getUserFans } from '../../../../network/user';
+import { type IPage } from '../../../../types/IPage';
+import { type IUserMsg } from '../../../../types/user/IUserMsg';
 interface IProps {
   userId: string;
 }
@@ -27,6 +30,15 @@ const Music: FC<IProps> = (props) => {
     getUserChannel<IResponseType<IChannel>>(userId).then((data) => {
       if (data.status === 200) {
         setChannel(data.data);
+      }
+    });
+  }, [userId]);
+
+  const [fans, setFans] = useState<number>(0);
+  useEffect(() => {
+    getUserFans<IResponseType<IPage<IUserMsg[]>>>(userId, 0, 1).then((res) => {
+      if (res.status === 200) {
+        setFans(res.data.count);
       }
     });
   }, [userId]);
@@ -66,7 +78,7 @@ const Music: FC<IProps> = (props) => {
           </div>
           <div className="right">
             <div className={'name'}>{channel?.name}</div>
-            <div className={'sub'}>1.8亿位订阅</div>
+            <div className={'sub'}>{fans}位订阅</div>
           </div>
         </div>
         {loginMsg.userMsg.userId !== userId && (

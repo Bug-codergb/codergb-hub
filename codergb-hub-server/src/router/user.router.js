@@ -13,7 +13,8 @@ const {
   getUSerLib,
   userHotVideo,
   createUser,
-  updateUser
+  updateUser,
+  getUserFans
 } = require("../controller/user.controller");
 //上传头像
 userRouter.post("/avatar/upload/:userId",authVerify,userAvatarUpload,uploadAvatar);
@@ -35,4 +36,6 @@ userRouter.get("/library/:id",authVerify,getUSerLib);
 userRouter.post("/add",authVerify,createUser);
 //编辑用户
 userRouter.post("/update",authVerify,updateUser);
+//获取用户粉丝
+userRouter.post("/fans/:id",authVerify,getUserFans);
 module.exports = userRouter;

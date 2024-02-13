@@ -13,7 +13,8 @@ const {
   userHotVideo,
   createUserService,
   getBriefService,
-  updateUserService
+  updateUserService,
+  getUserFansService
 } = require("../service/user.service");
 const { addChannelService } = require("../service/register.service.js")
 const {APP_HOST,APP_PORT} = require("../app/config")
@@ -238,6 +239,16 @@ class UserController{
           setResponse(ctx,"success",200,{});
         }
       }
+    }catch (e) {
+
+    }
+  }
+  async getUserFans(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {offset="0",limit="30"} = ctx.query;
+      const result = await getUserFansService(ctx,id,offset,limit);
+      setResponse(ctx,"success",200,result);
     }catch (e) {
 
     }

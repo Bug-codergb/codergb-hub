@@ -1,15 +1,15 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
-import { Map } from 'immutable';
+import React, { memo, type FC, ReactElement, useEffect, useState } from 'react';
+import { type Map } from 'immutable';
 import { LibraryWrapper } from './style';
 import { useSelector } from 'react-redux';
-import { ILogin } from '../../types/login/ILogin';
-import { IVideo } from '../../types/video/IVideo';
+import { type ILogin } from '../../types/login/ILogin';
+import { type IVideo } from '../../types/video/IVideo';
 import { getUserHistory } from '../../network/history';
-import { IResponseType } from '../../types/responseType';
-import { IPage } from '../../types/IPage';
+import { type IResponseType } from '../../types/responseType';
+import { type IPage } from '../../types/IPage';
 import VideoList from './childCpn/videoList';
 import { getUserLater } from '../../network/later';
-import { ILater } from '../../types/later/ILater';
+import { type ILater } from '../../types/later/ILater';
 import { getUserBlock } from '../../network/block';
 import { getUserLibrary } from '../../network/user';
 interface IUserLib {
@@ -61,14 +61,18 @@ const Library: FC = () => {
           video={history}
           more={'查看更多'}
           title={'历史记录'}
-          moreClickHandle={() => moreHandle()}
+          moreClickHandle={() => {
+            moreHandle();
+          }}
         />
         <div className="line"> </div>
         <VideoList
           video={later}
           more={'查看更多'}
           title={'稍后观看'}
-          moreClickHandle={() => moreHandle()}
+          moreClickHandle={() => {
+            moreHandle();
+          }}
         />
       </div>
       <div className="right-content">
