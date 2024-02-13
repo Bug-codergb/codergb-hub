@@ -74,10 +74,10 @@ const Brand: FC = (): ReactElement => {
       <BrandItem
         title={'照片'}
         label={
-          '您的个人资料照片会随您的频道一起出现在 YouTube 上的一些地方，例如您的视频和评论旁边'
+          '您的个人资料照片会随您的频道一起出现在 codergb-hub 上的一些地方，例如您的视频和评论旁边'
         }
         desc={
-          '建议使用一张不低于 98 x 98 像素而且大小不超过 4MB 的照片。文件格式为 PNG 或 GIF（不带动画）。请确保您的照片符合《YouTube 社区准则》'
+          '建议使用一张不低于 98 x 98 像素而且大小不超过 4MB 的照片。文件格式为 PNG 或 GIF（不带动画）。'
         }
         operator={login.userMsg.avatarUrl ? '更换' : '上传'}
         isAvatar={true}
@@ -90,7 +90,7 @@ const Brand: FC = (): ReactElement => {
         title={'横幅图片'}
         label={'此图片将会显示在您频道的顶部'}
         desc={
-          '建议使用一张不低于 98 x 98 像素而且大小不超过 4MB 的照片。文件格式为 PNG 或 GIF（不带动画）。请确保您的照片符合《YouTube 社区准则》'
+          '建议使用一张不低于 98 x 98 像素而且大小不超过 4MB 的照片。文件格式为 PNG 或 GIF（不带动画）。'
         }
         operator={channel.picUrl ? '更换' : '上传'}
         isAvatar={false}
