@@ -1,10 +1,10 @@
-import React, { memo, FC, ReactElement, useState, useEffect } from 'react';
+import { memo, type FC, type ReactElement, useState, useEffect } from 'react';
 import { Tabs } from 'antd';
 import { ExploreWrapper } from './style';
-import { IResponseType } from '../../types/responseType';
+import { type IResponseType } from '../../types/responseType';
 import { getExplore } from '../../network/explore';
-import { IUserMsg } from '../../types/user/IUserMsg';
-import { IPage } from '../../types/IPage';
+import { type IUserMsg } from '../../types/user/IUserMsg';
+import { type IPage } from '../../types/IPage';
 import {
   EXPLORE_GAME,
   EXPLORE_MOVIE,
@@ -20,6 +20,7 @@ import Game from './childCpn/game';
 import News from './childCpn/news';
 import Sport from './childCpn/sport';
 import Study from './childCpn/study';
+import Ordinary from './childCpn/ordinary';
 interface ITab {
   label: string;
   key: string;
@@ -43,14 +44,14 @@ const Explore: FC = (): ReactElement => {
       case EXPLORE_STUDY:
         return <Study userId={userId} />;
       default:
-        return <Music userId={userId} />;
+        return <Ordinary userId={userId} />;
     }
   };
   useEffect(() => {
     getExplore<IResponseType<IPage<IUserMsg[]>>>().then((data) => {
       setExplore(data.data.list);
-      let list = [];
-      for (let item of data.data.list) {
+      const list = [];
+      for (const item of data.data.list) {
         list.push({
           label: item.userName,
           key: item.userId,

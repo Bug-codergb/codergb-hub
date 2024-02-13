@@ -138,7 +138,7 @@ const MomentItem: FC<IProps> = (props): ReactElement => {
           >
             {!isThumb && <LikeOutlined className={`thumb-icon`} />}
             {isThumb && <LikeFilled className={`thumb-icon`} />}
-            <span className="label">14万</span>
+            <span className="label">{moment.thumb}</span>
           </div>
           <div
             className="tread"

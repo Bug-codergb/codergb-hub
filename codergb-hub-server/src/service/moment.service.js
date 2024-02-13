@@ -37,7 +37,8 @@ class MomentService{
 				v.description,'createTime',v.createTime,'updateTime',v.updateTime,'picUrl',f.picUrl,'user',
        (select JSON_object('userId',v.userId,'userName',u.userName,'avatarUrl',u.avatarUrl)
 			 from user as u where u.userId = v.userId)
-			 ) as video
+			 ) as video,
+			  (select count(t.userId) from thumb as t where t.mId = m.id and t.tread=0) as thumb
        from moment as m
        LEFT JOIN video as v on v.id = m.vid
        LEFT JOIN category as c on c.id = v.cateId

@@ -1,5 +1,5 @@
-import { IUserMsg } from '../user/IUserMsg';
-import { IVideo } from '../video/IVideo';
+import { type IUserMsg } from '../user/IUserMsg';
+import { type IVideo } from '../video/IVideo';
 
 interface IMoment {
   id: string;
@@ -10,5 +10,6 @@ interface IMoment {
   updateTime: string;
   user: IUserMsg;
   video: IVideo;
+  thumb?: number;
 }
 export type { IMoment };

@@ -1,22 +1,32 @@
-import React, { memo, FC, useState, useEffect } from 'react';
-import { Avatar, Empty } from 'antd';
+import React, { memo, type FC, useState, useEffect } from 'react';
+import { Avatar, Empty, Tabs, notification } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import errorImg from '../../../../assets/img/1677308494819.png';
 import { CommonWrapper } from './style';
-import { IChannel } from '../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../types/channel/IChannel';
 import { getUserChannel } from '../../../../network/channel';
-import { IResponseType } from '../../../../types/responseType';
-import { Tabs } from 'antd';
+import { type IResponseType } from '../../../../types/responseType';
 import Home from './childCpn/home/index';
 import Community from './childCpn/community';
 import Desc from './childCpn/desc';
+import { useSub } from '../../../../hook/useSub';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
+import { cancelSub, sub } from '../../../../network/subscriber';
+import { type Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
+import { changeUserDetailAction } from '../../../login/store/actionCreators';
 interface IProps {
   userId: string;
 }
 const Common: FC<IProps> = (props) => {
   const { userId } = props;
+
+  const isSub = useSub(userId);
+  const loginState = useLoginMsg();
   const [channel, setChannel] = useState<IChannel>();
+
+  const dispatch = useDispatch<Dispatch<any>>();
   useEffect(() => {
     getUserChannel<IResponseType<IChannel>>(userId).then((data) => {
       if (data.status === 200) {
@@ -33,17 +43,37 @@ const Common: FC<IProps> = (props) => {
     },
     { label: '简介', key: 'item-3', children: <Desc /> }
   ];
+
+  const subHandler = async () => {
+    if (!isSub) {
+      const result = await sub(userId);
+      if (result.status === 200) {
+        notification.info({
+          message: `订阅成功`,
+          description: `在“订阅内容中”查看您添加的视频`,
+          placement: 'bottomLeft'
+        });
+      }
+    } else {
+      const result = await cancelSub(userId);
+      if (result.status === 200) {
+      }
+    }
+    if (loginState && loginState.userMsg) {
+      dispatch(changeUserDetailAction(loginState.userMsg.userId));
+    }
+  };
   return (
     <CommonWrapper>
       <div className="common-header">
         {channel?.picUrl && <img src={channel?.picUrl} alt={channel?.name} />}
-        {(!channel || !channel.picUrl) && <img src={errorImg} alt={channel?.name} />}
+        {!channel?.picUrl && <img src={errorImg} alt={channel?.name} />}
       </div>
       <div className="channel-msg">
         <div className="left-container">
           <div className="left">
-            {/* <img src={}/>*/}
-            {channel && channel.user && (
+            {/* <img src={}/> */}
+            {channel?.user && (
               <Avatar
                 src={channel?.user.avatarUrl}
                 size={70}
@@ -56,7 +86,16 @@ const Common: FC<IProps> = (props) => {
             <div className={'sub'}>1.8亿位订阅</div>
           </div>
         </div>
-        <div className="right-container">订阅</div>
+        {loginState.userMsg.userId !== userId && (
+          <div
+            className="right-container"
+            onClick={async () => {
+              await subHandler();
+            }}
+          >
+            {isSub ? '已订阅' : '订阅'}
+          </div>
+        )}
       </div>
       <Tabs items={items} />
     </CommonWrapper>

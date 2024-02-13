@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 export const SubManageWrapper = styled.div`
+  max-height: 87vh;
+  overflow-y: scroll;
   .sub-list {
     & > li {
       display: flex;

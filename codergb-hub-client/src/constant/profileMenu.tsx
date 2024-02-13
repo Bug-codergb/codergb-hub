@@ -11,15 +11,15 @@ const profileMenu = [
     path: '/home/myChannel'
   },
   {
-    name: 'YouTuBe工作室',
+    name: 'codergb-hub工作室',
     icon: <Studio />,
     path: '/studio'
   },
-  {
-    name: '切换账号',
-    icon: <Change />,
-    path: '/studio'
-  },
+  // {
+  //   name: '切换账号',
+  //   icon: <Change />,
+  //   path: '/studio'
+  // },
   {
     name: '退出账号',
     icon: <Exit />,
