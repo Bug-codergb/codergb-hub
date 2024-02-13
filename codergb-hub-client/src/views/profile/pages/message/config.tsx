@@ -66,6 +66,13 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
                 <span className="info text-nowrap-mul-line">{item.comment?.content}</span>
               </span>
             )}
+            {item.type === 'thumb-mId' && (
+              <span>
+                <span className="user-name">{item.operation.userName}</span>
+                点赞了您的动态
+                <span className="info text-nowrap-mul-line">{item.moment?.title}</span>
+              </span>
+            )}
           </NotifyWrapper>
         );
       }
