@@ -52,6 +52,8 @@ const tableData = reactive({
               <el-tag type="success">评论</el-tag>
             ) : scope.type === 'thumb-vId' ? (
               <el-tag type="warning">视频</el-tag>
+            ) : scope.type === 'thumb-mId' ? (
+              <el-tag type="info">动态</el-tag>
             ) : (
               <el-tag type="danger">用户</el-tag>
             )}
@@ -81,8 +83,10 @@ const tableData = reactive({
               >
                 {scope.video.name}
               </span>
+            ) : scope.type === 'thumb-mId' ? (
+              <span class="text-mul-line">{scope.moment.title}</span>
             ) : (
-              <span class="text-mul-line">{scope.user.userName}</span>
+              <span class="text-mul-line">{scope.user?.userName}</span>
             )}
           </span>
         );
@@ -98,7 +102,7 @@ const tableData = reactive({
             <el-icon>
               <User />
             </el-icon>
-            <span>{scope.user.userName}</span>
+            <span>{scope.user?.userName}</span>
           </div>
         );
       }

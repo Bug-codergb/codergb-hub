@@ -75,7 +75,10 @@ class NotifyService{
        (select JSON_OBJECT('userId',n.userId,'userName',u1.userName,'avatarUrl',u1.avatarUrl) from user as u1 where u1.userId = n.userId),
       if(v.userId,
           (select JSON_OBJECT('userId',v.userId,'userName',u2.userName,'avatarUrl',u2.avatarUrl) FROM user as u2 where u2.userId = v.userId),
-          (select JSON_OBJECT('userId',c.userId,'userName',u3.userName,'avatarUrl',u3.avatarUrl) from user as u3 where u3.userId = c.userId )
+          if(c.userId,
+              (select JSON_OBJECT('userId',c.userId,'userName',u3.userName,'avatarUrl',u3.avatarUrl) from user as u3 where u3.userId = c.userId ),
+              (select JSON_OBJECT('userId',c.userId,'userName',u4.userName,'avatarUrl',u4.avatarUrl) FROM user as u4 where u4.userId = m.userId)
+            )
           )) as user,
        (select JSON_OBJECT(
         'userId',n.operation,'userName',u.userName,'avatarUrl',u.avatarUrl
@@ -83,10 +86,12 @@ class NotifyService{
        n.isRead,n.createTime,
        n.updateTime,n.type,n.aliaId,
        if(v.id,JSON_OBJECT('id',v.id,'name',v.name,'dt',v.dt,'playCount',v.playCount),null) as video,
-       if(c.id,JSON_OBJECT('id',c.id,'content',c.content),null ) as comment
+       if(c.id,JSON_OBJECT('id',c.id,'content',c.content),null ) as comment,
+       if(m.id,JSON_OBJECT('id',m.id,'title',m.title),null) as moment
       from notify as n
       left join video as v on v.id = n.aliaId
       left join comment as c on c.id = n.aliaId
+      left join moment as m on m.id = n.aliaId
       limit ?,?`;
       const result = await connection.execute(sql,[offset,limit]);
 
