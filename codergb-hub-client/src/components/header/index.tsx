@@ -115,6 +115,11 @@ const Header: FC = (): ReactElement => {
       }
     );
   }, []);
+  const messageRouter = () => {
+    navigate('/studio/message', {
+      replace: false
+    });
+  };
   return (
     <HeaderWrapper>
       <LeftContent>
@@ -158,7 +163,14 @@ const Header: FC = (): ReactElement => {
         </div>
         <div className="tip">
           {unReadCount !== 0 && (
-            <Badge count={unReadCount} size="default" offset={[4, -1]}>
+            <Badge
+              onClick={() => {
+                messageRouter();
+              }}
+              count={unReadCount}
+              size="default"
+              offset={[4, -1]}
+            >
               <MailOutlined />
             </Badge>
           )}

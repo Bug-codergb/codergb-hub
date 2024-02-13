@@ -1,4 +1,4 @@
-import React, {
+import {
   memo,
   type FC,
   useEffect,
@@ -8,23 +8,14 @@ import React, {
   type Ref,
   Fragment
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { MomentListWrapper } from './style';
 import { deleteMoment, getChannelMoment } from '../../../../../../../../network/moment';
 import { type IMoment } from '../../../../../../../../types/moment';
 import { type IResponseType } from '../../../../../../../../types/responseType';
 import { type IPage } from '../../../../../../../../types/IPage';
-import timeMoment from 'moment';
-import { Dropdown, Menu, Pagination, message } from 'antd';
-import Operation from './childCpn/operation';
-import {
-  DislikeFilled,
-  DislikeOutlined,
-  LikeFilled,
-  LikeOutlined,
-  MoreOutlined
-} from '@ant-design/icons';
-import MenuItem from 'antd/lib/menu/MenuItem';
+
+import { Pagination, message } from 'antd';
+import MomentItem from './childCpn/momentItem';
 interface IMomentList {
   getChannelMomentReq: (id: string, offset: number, limit: number) => void;
 }
@@ -54,26 +45,17 @@ const MomentList: FC<IProps> = forwardRef((props, propsRef) => {
   const pageChange = (e: number) => {
     getChannelMomentReq(cId, (e - 1) * 10, 10).then(() => {});
   };
-  const navigate = useNavigate();
-  const momentRouter = (item: IMoment) => {
-    navigate('/home/moment', {
-      replace: false,
-      state: {
-        id: item.id
+
+  const deleteHandler = (item: IMoment) => {
+    deleteMoment(item.id).then((res) => {
+      if (res.status === 200) {
+        message.info('删除成功');
+        getChannelMomentReq(cId, 0, 10).then(() => {});
       }
     });
   };
-  const drodownHandler = (e: any, item: IMoment) => {
-    console.log(e);
-    const { key } = e;
-    if (key === 'del') {
-      deleteMoment(item.id).then((res) => {
-        if (res.status === 200) {
-          message.info('删除成功');
-          getChannelMomentReq(cId, 0, 10).then(() => {});
-        }
-      });
-    }
+  const thumbHandler = () => {
+    getChannelMomentReq(cId, 0, 10).then(() => {});
   };
   return (
     <MomentListWrapper>
@@ -83,62 +65,13 @@ const MomentList: FC<IProps> = forwardRef((props, propsRef) => {
           moment.map((item, index) => {
             return (
               <li key={item.id}>
-                <div className="avatar-container">
-                  <img src={item.user.avatarUrl} />
-                </div>
-                <div className="right-container">
-                  <div className="operation">
-                    <Dropdown
-                      trigger={['click']}
-                      overlay={
-                        <Menu
-                          onClick={(e) => {
-                            drodownHandler(e, item);
-                          }}
-                        >
-                          <Menu.Item key="del">
-                            <div>删除</div>
-                          </Menu.Item>
-                        </Menu>
-                      }
-                      placement="bottom"
-                    >
-                      <MoreOutlined className="more-icon" />
-                    </Dropdown>
-                  </div>
-                  <div className="g-user-info">
-                    <p className="user-name">{item.user.userName}</p>
-                    <p className="create-time">{timeMoment(item.createTime).fromNow()}</p>
-                  </div>
-                  <p
-                    className="title"
-                    onClick={() => {
-                      momentRouter(item);
-                    }}
-                  >
-                    {item.title}
-                  </p>
-                  <p className="content">{item.content}</p>
-                  <div
-                    className="video-container"
-                    onClick={() => {
-                      momentRouter(item);
-                    }}
-                  >
-                    <img src={item.video.picUrl} />
-                  </div>
-                  <div className="thumb">
-                    <div className="thumb-inner">
-                      <LikeOutlined className={`thumb-icon`} />
-                      <LikeFilled className={`thumb-icon`} />
-                      <span className="label">14万</span>
-                    </div>
-                    <div className="tread">
-                      <DislikeOutlined className="tread-icon" />
-                      <DislikeFilled className="tread-icon" />
-                    </div>
-                  </div>
-                </div>
+                <MomentItem
+                  moment={item}
+                  thumbHandler={thumbHandler}
+                  deleteHandler={() => {
+                    deleteHandler(item);
+                  }}
+                />
               </li>
             );
           })}

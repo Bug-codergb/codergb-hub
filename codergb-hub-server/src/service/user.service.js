@@ -37,7 +37,12 @@ class UserService{
 				select JSON_ARRAYAGG(
 					  JSON_OBJECT('id',t.commentId)
 					) FROM thumb as t where t.userId = u.userId and t.commentId is not null and tread=0
-				)
+				),
+				 'moment',(
+\t\t\t        select JSON_ARRAYAGG(
+\t\t\t            json_object('id',t.mId)
+                    ) from thumb as t where t.userId = u.userId and t.mId is not null and tread = 0
+                  )
 			 ) AS thumb,
 			 JSON_OBJECT(
 			 'video',(
@@ -49,7 +54,12 @@ class UserService{
 				select JSON_ARRAYAGG(
 					  JSON_OBJECT('id',t.commentId)
 					) FROM thumb as t where t.userId = u.userId and t.commentId is not null and tread=1
-				)
+				),
+				'moment',(
+\t\t\t        select JSON_ARRAYAGG(
+\t\t\t          json_object("id",t.mId)
+                    ) from thumb as t where t.userId = u.userId and t.mId is not null and tread = 1
+                 )
 			 ) AS tread
        from user as u
        LEFT JOIN subscriber as sub on u.userId = sub.userId

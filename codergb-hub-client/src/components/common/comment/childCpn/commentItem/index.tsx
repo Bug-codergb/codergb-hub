@@ -1,4 +1,4 @@
-import React, { memo, type FC, useState } from 'react';
+import { memo, type FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   CaretDownOutlined,
