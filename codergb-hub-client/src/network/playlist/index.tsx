@@ -14,13 +14,15 @@ export async function getAllPlaylist<T = IResponseType<any>>(offset: number, lim
 export async function getUserPlaylist<T = IResponseType<any>>(
   userId: string,
   offset: number,
-  limit: number
+  limit: number,
+  isPublic?: number
 ): Promise<T> {
   return await gbRequest.get<T>({
     url: '/playlist/user/' + userId,
     params: {
       offset,
-      limit
+      limit,
+      isPublic
     }
   });
 }

@@ -68,17 +68,24 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getUserPlaylistCountService(ctx,userId,keyword){
+  async getUserPlaylistCountService(ctx,userId,keyword,isPublic){
     try{
-      const sql=`select count(*) as count from playlist where userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''}`;
-      const result = await connection.execute(sql,[userId]);
+      const sql=`select count(*) as count 
+                        from playlist 
+                        where userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''} ${isPublic!==undefined? `and isPublic=?`:''}`;
+      let execArr=[userId];
+      if(isPublic!==undefined){
+        execArr = [userId,isPublic]
+      }
+      const result = await connection.execute(sql,execArr);
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }
   }
-  async getUserPlaylistService(ctx,userId,keyword,offset,limit){
+  async getUserPlaylistService(ctx,userId,keyword,offset,limit,loginUserId,isPublic){
     try{
+      const self = `${userId}` === `${loginUserId}`;
       const sql=`select p.id,p.name,p.isPublic,p.description,JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) AS user,
                  p.createTime,p.updateTime,count(p.id) as video,
                  if(f.picUrl is null,u.avatarUrl,f.picUrl) as picUrl
@@ -88,12 +95,18 @@ class PlaylistService{
                  LEFT JOIN video as v on v.id = pv.vId
                  LEFT JOIN video_file as vf on vf.videoId =v.id
                  LEFT JOIN file as f on f.id = vf.fileId
-                 where p.userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''} and (vf.mark="cover" or vf.mark is null)
+                 where p.userId=? ${keyword!==''? `and playlist.name like '%${keyword}%'` :''}
+                       and (vf.mark="cover" or vf.mark is null) ${isPublic!==undefined? `and isPublic=?`:''}
                  GROUP BY p.id
                  ORDER BY p.updateTime desc
                  limit ?,?`;
-      const result = await connection.execute(sql,[userId,offset,limit]);
-      const count = await new PlaylistService().getUserPlaylistCountService(ctx,userId,keyword);
+      let execArr=[userId,offset,limit];
+      if(isPublic!==undefined && (`${isPublic}`==='0'||`${isPublic}`==='1')){
+        execArr = [userId,isPublic,offset,limit];
+      }
+
+      const result = await connection.execute(sql,execArr);
+      const count = await new PlaylistService().getUserPlaylistCountService(ctx,userId,keyword,isPublic);
       return {
         count:count[0].count,
         list:result[0],

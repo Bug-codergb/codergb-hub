@@ -66,9 +66,13 @@ class PlaylistController{
   //获取用户播放列表
   async getUserPlaylist(ctx,next){
     try{
-      const {id} = ctx.params;
-      const { offset="0",limit="30",keyword="" } = ctx.query;
-      const result = await getUserPlaylistService(ctx,id,keyword,offset,limit);
+      const { id } = ctx.params;//当前想要获取播放列表的用户
+      const { userId } = ctx.user;//当前用户
+      let { offset="0", limit="30", keyword="",isPublic } = ctx.query;
+      if(isPublic!==undefined && (`${isPublic}`!=='0'&& `${isPublic}`!=='1')){
+        isPublic = undefined;
+      }
+      const result = await getUserPlaylistService(ctx,id,keyword,offset,limit,userId,isPublic);
       if(result){
         setResponse(ctx,"success",200,result);
       }

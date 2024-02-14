@@ -19,12 +19,20 @@ const CreatePlaylist: FC<IProps> = (props) => {
   const [total, setTotal] = useState<number>(0);
   const login = useLoginMsg();
   const getUserPlaylistReq = (userId: string, offset: number, limit: number) => {
-    getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(userId, offset, limit).then((data) => {
-      if (data.status === 200) {
-        setPlaylist(data.data.list);
-        setTotal(data.data.count);
+    let isPublic;
+    console.log(userId);
+    console.log(login.userMsg.userId);
+    if (userId !== login.userMsg.userId) {
+      isPublic = 1;
+    }
+    getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(userId, offset, limit, isPublic).then(
+      (data) => {
+        if (data.status === 200) {
+          setPlaylist(data.data.list);
+          setTotal(data.data.count);
+        }
       }
-    });
+    );
   };
   const navigate = useNavigate();
   useEffect(() => {
