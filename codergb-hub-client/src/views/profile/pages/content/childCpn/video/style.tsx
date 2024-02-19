@@ -3,9 +3,10 @@ export const VideoPageWrapper = styled.div``;
 export const VideoListItemWrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  width: ${600 / 40}rem;
   .left-container {
     .img-container {
-      width: ${180 / 40}rem;
+      width: ${160 / 40}rem;
       img {
         width: 100%;
         border-radius: 4px;

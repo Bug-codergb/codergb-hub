@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactElement } from 'react';
+import React, { memo, type FC, ReactElement } from 'react';
 import { ContentWrapper } from './style';
 import { Tabs } from 'antd';
 import VideoPage from './childCpn/video';
@@ -16,11 +16,6 @@ const Content: FC = () => {
             label: `视频`,
             key: '1',
             children: <VideoPage />
-          },
-          {
-            label: `直播`,
-            key: '2',
-            children: <LiveStream />
           }
         ]}
       />

@@ -61,5 +61,18 @@ class RecordService{
 
     }
   }
+  async getUserSubService(ctx,id){
+    try{
+      const sql=`
+      select count(s.id) as count,DATE(s.createTime) AS time
+      from subscriber as s
+      where s.upId=? and DATE_SUB(CURDATE(),INTERVAL 30 DAY)<=DATE(s.createTime)
+      group by time`;
+      const result = await connection.execute(sql,[id]);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
 }
 module.exports=new RecordService();

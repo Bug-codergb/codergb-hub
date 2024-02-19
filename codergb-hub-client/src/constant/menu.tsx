@@ -38,12 +38,12 @@ const mainMenu: MainMenuType[] = [
     icon: <ExploreIcon />,
     shadowIcon: <ExploreShadowIcon />
   },
-  {
-    name: 'shorts',
-    path: '/home/shorts',
-    icon: <ShortsIcon />,
-    shadowIcon: <ShortsShadowIcon />
-  },
+  // {
+  //   name: 'shorts',
+  //   path: '/home/shorts',
+  //   icon: <ShortsIcon />,
+  //   shadowIcon: <ShortsShadowIcon />
+  // },
   {
     name: '分类',
     path: '/home/cate',

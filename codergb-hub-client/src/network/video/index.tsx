@@ -191,6 +191,13 @@ export async function getUserRecordThumb<T = IResponseType<any>>(id: string) {
     url: '/record/thumb/' + id
   });
 }
+
+export async function getUserSub<T = IResponseType<any>>(id: string) {
+  return await gbRequest.get<T>({
+    url: '/record/sub/' + id
+  });
+}
+
 export async function addPlayCount<T = IResponseType<any>>(id: string) {
   return await gbRequest.post<T>({
     url: 'video/playCount/' + id
@@ -212,5 +219,10 @@ export async function getCateVideo<T = IResponseType<any>>(
       offset,
       limit
     }
+  });
+}
+export async function deleteVideo<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
+    url: '/video/delete/' + id
   });
 }

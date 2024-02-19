@@ -5,6 +5,7 @@ const {
   getVideoService,
   updateCountService,
   getUserVideoRecordService,
+  getUserSubService,
   getUserVideoThumbService
 }=require("../service/record.service");
 const moment = require("moment");
@@ -95,9 +96,42 @@ class RecordController{
         }
         result.sort((a,b)=>new Date(a.createTime).getTime()-new Date(b.createTime).getTime());
         setResponse(ctx,"success",200,result);
+      }else{
+        setResponse(ctx,'error',500,{})
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
+    }
+  }
+  async getUserSub(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await getUserSubService(ctx,id);
+      if(result){
+        const oneMonth = [];
+        for(let i=0;i<=30;i++){
+          oneMonth.push(moment(new Date()).subtract(i,"days").format("yyyy-MM-DD"))
+        }
+        let map = new Map();
+        for(let item of result){
+          item.time = moment(item.time).format("yyyy-MM-DD");
+          map.set(item.time,true)
+        }
+        for(let item of oneMonth){
+          if(!map.get(item)){
+            result.push({
+              time:item,
+              count:0
+            })
+          }
+        }
+        result.sort((a,b)=>new Date(a.time).getTime() - new Date(b.time).getTime());
+        setResponse(ctx,"success",200,result);
+      }else{
+        setResponse(ctx,'error',500,{})
+      }
+    }catch (e) {
+
     }
   }
 }

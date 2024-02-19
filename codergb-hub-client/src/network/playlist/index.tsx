@@ -80,3 +80,9 @@ export async function getSubPlaylist<T = IResponseType<any>>(id: string) {
     url: `/playlist/user/sub/${id}`
   });
 }
+
+export async function deletePlaylist<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
+    url: `/playlist/delete/${id}`
+  });
+}

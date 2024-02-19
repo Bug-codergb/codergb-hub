@@ -15,7 +15,6 @@ import { type IVideo } from '../../types/video/IVideo';
 import { getAllVideo, getVideoURL } from '../../network/video';
 import { type IResponseType } from '../../types/responseType';
 import { type IPage } from '../../types/IPage';
-import { setTextRange } from 'typescript';
 
 interface ICustomVideo extends IVideo {
   ref: any;
@@ -84,12 +83,10 @@ const Shorts: FC = (): ReactElement => {
   const itemRef = useRef<any>(null);
 
   const refreshUp = async () => {
-    console.log('up');
     dataOffset.current += 1;
     await getShortVideoReq(dataOffset.current, 3);
   };
   const refreshDown = async () => {
-    console.log('down');
     dataOffset.current -= 1;
     if (dataOffset.current <= 0) {
       dataOffset.current = 0;
@@ -160,15 +157,18 @@ const Shorts: FC = (): ReactElement => {
   };
   // 向下滑动时
   const moveAddScrollTop = () => {
+    let t: number | null = null;
     const fn = () => {
-      requestAnimationFrame(() => {
+      t = requestAnimationFrame(() => {
         if (listRef.current.scrollTop < itemRef.current.offsetHeight * offset.current) {
           const scrollTop = listRef.current.scrollTop;
           listRef.current.scrollTop = scrollTop + listRef.current.offsetHeight / 33;
 
           setURL('');
           videoItemRef.current.changeShow();
+          console.log(scrollTop, listRef.current.scrollTop, listRef.current.offsetHeight);
           if (scrollTop === listRef.current.scrollTop) {
+            debugger;
             // 到达最底部
             listRef.current.scrollTop = itemRef.current.offsetHeight * offset.current;
 
@@ -185,6 +185,10 @@ const Shorts: FC = (): ReactElement => {
             fn();
           }
         } else {
+          if (t) {
+            cancelAnimationFrame(t);
+          }
+          console.log('zheli');
           listRef.current.scrollTop = itemRef.current.offsetHeight * offset.current;
           if (offset.current < dataLimit.current) {
             offset.current += 1;
@@ -218,11 +222,14 @@ const Shorts: FC = (): ReactElement => {
   let lastScrollTopTime = 0;
   useEffect(() => {
     if (scrollRef.current) {
+      console.log('effect执行·------------------');
       scrollRef.current.g_flag = true;
       const handler = (e: any) => {
         const time = new Date().getTime();
 
+        console.log(time - lastScrollTopTime);
         if (time - lastScrollTopTime > 40) {
+          console.log('这里·', scrollRef.current?.g_flag);
           if (scrollRef.current!.g_flag) {
             scrollRef.current!.g_flag = false;
 

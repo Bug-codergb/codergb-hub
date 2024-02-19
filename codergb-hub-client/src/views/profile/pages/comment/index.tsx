@@ -1,13 +1,15 @@
-import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
-import { Map } from 'immutable';
+import { type FC, type ReactElement } from 'react';
+import type React from 'react';
+import { memo, useEffect, useState } from 'react';
+import { type Map } from 'immutable';
 import { Divider, Radio, Table } from 'antd';
 import { CommentWrapper } from './style';
 import { useSelector } from 'react-redux';
-import { IComment } from '../../../../types/comment/IComment';
-import { ILogin } from '../../../../types/login/ILogin';
+import { type IComment } from '../../../../types/comment/IComment';
+import { type ILogin } from '../../../../types/login/ILogin';
 import { getUserComment } from '../../../../network/comment';
-import { IPage } from '../../../../types/IPage';
-import { IResponseType } from '../../../../types/responseType';
+import { type IPage } from '../../../../types/IPage';
+import { type IResponseType } from '../../../../types/responseType';
 import { columns } from './config';
 
 const Comment: FC = (): ReactElement => {
@@ -18,7 +20,7 @@ const Comment: FC = (): ReactElement => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
   useEffect(() => {
-    getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, 0, 4).then((data) => {
+    getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, 0, 6).then((data) => {
       if (data.status === 200) {
         setComment(data.data.list);
         setCount(data.data.count);
@@ -31,7 +33,7 @@ const Comment: FC = (): ReactElement => {
     }
   };
   const pageChangeHandle = (e: number) => {
-    getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, (e - 1) * 4, 4).then(
+    getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, (e - 1) * 6, 6).then(
       (data) => {
         if (data.status === 200) {
           setComment(data.data.list);
@@ -52,9 +54,11 @@ const Comment: FC = (): ReactElement => {
           columns={columns}
           dataSource={comment}
           pagination={{
-            pageSize: 4,
+            pageSize: 6,
             total: count,
-            onChange: (e) => pageChangeHandle(e)
+            onChange: (e) => {
+              pageChangeHandle(e);
+            }
           }}
         />
       )}
