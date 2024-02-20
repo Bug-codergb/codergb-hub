@@ -9,15 +9,26 @@ import React, {
   type Ref,
   type MouseEvent
 } from 'react';
-import { Modal, Input, Select, notification, Menu } from 'antd';
+import { Modal, Input, Select, notification, Menu, message } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import type { NotificationPlacement } from 'antd/es/notification';
 import { AddWrapper } from './style';
-import { ADD_PLAYLIST, ADD_WATCH_LATER, addList, type IAddType } from '../../../constant/addList';
+import {
+  ADD_PLAYLIST,
+  ADD_QUEUE,
+  ADD_WATCH_LATER,
+  addList,
+  type IAddType
+} from '../../../constant/addList';
 import Playlist from '../playlist';
 import { addVideoPlaylist, createPlaylist } from '../../../network/playlist';
 import { type IPlaylist } from '../../../types/playlist/IPlaylist';
 import { addLater } from '../../../network/later';
+import { useDispatch } from 'react-redux';
+import { changeQueue } from './store/actionCreators';
+import { getVideoDetail } from '../../../network/video';
+import { type IResponseType } from '../../../types/responseType';
+import { type IVideo } from '../../../types/video/IVideo';
 
 const { Option } = Select;
 interface IAdd {
@@ -36,6 +47,7 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
   const [name, setName] = useState<string>('');
   const [isPublic, setIsPublic] = useState<number>(0);
 
+  const dispatch = useDispatch();
   const openNotification = (placement: NotificationPlacement) => {
     notification.info({
       message: `已成功添加至稍后观看`,
@@ -45,8 +57,10 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
   };
 
   const liClick = (item: IAddType) => {
+    console.log(item);
     if (item.name === ADD_PLAYLIST) {
       setIsShowPlay(true);
+      return;
     }
     if (item.name === ADD_WATCH_LATER) {
       addLater(id)
@@ -57,6 +71,19 @@ const Add: FC<IProps> = forwardRef((props, propsRef): ReactElement => {
           }
         })
         .catch((err) => {});
+      return;
+    }
+    if (item.name === ADD_QUEUE) {
+      console.log(item.id);
+      if (item.id) {
+        getVideoDetail<IResponseType<IVideo>>(item.id).then((res) => {
+          if (res.status === 200) {
+            dispatch(changeQueue(res.data));
+            message.success('成功添加到播放队列');
+          }
+        });
+      }
+      //
     }
   };
 

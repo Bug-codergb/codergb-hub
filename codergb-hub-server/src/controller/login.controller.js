@@ -4,7 +4,8 @@ const { PRIVATE_KEY }=require("../app/config");
 const {
   getUserMsgService ,
   insertLoginLog,
-  loginLogService
+  loginLogService,
+  editUserService
 }=require("../service/login.service")
 const {setResponse} = require("../utils/setResponse")
 class LoginController{
@@ -60,6 +61,18 @@ class LoginController{
         filename:result[0].filename,
         size:result[0].size,
       })
+    }catch (e) {
+
+    }
+  }
+  async editUser(ctx,next){
+    try{
+      const {userId} = ctx.user;
+      const {userName,password} = ctx.request.body;
+      const result = await editUserService(ctx,userId,userName,password);
+      if(result){
+        setResponse(ctx,"success",200,{})
+      }
     }catch (e) {
 
     }

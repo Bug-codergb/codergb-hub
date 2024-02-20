@@ -1,6 +1,7 @@
 interface IAddType {
   icon: string;
   name: string;
+  id: string;
 }
 const ADD_QUEUE = '添加到队列';
 const ADD_WATCH_LATER = `保存到"稍后观看`;

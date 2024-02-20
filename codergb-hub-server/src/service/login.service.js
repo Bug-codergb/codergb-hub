@@ -44,5 +44,14 @@ class LoginService{
 
     }
   }
+  async editUserService(ctx,userId,userName,password){
+    try{
+      const sql=`update user set userName = ? ,password=? where userId=?`;
+      const result = await connection.execute(sql,[userName,password,userId]);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
 }
 module.exports = new LoginService();

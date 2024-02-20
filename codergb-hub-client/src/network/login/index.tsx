@@ -12,3 +12,17 @@ export async function login<T = IResponseType<any>>(
     }
   });
 }
+export async function getLoginLog<T = IResponseType<any>>(userId: string) {
+  return await gbRequest.get<T>({
+    url: `/login/log/${userId}`
+  });
+}
+export async function editUserPass<T = IResponseType<any>>(userName: string, password: string) {
+  return await gbRequest.post<T>({
+    url: `/login/edit`,
+    data: {
+      userName,
+      password
+    }
+  });
+}

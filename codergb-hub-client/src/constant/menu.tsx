@@ -146,12 +146,12 @@ const studioMenu = [
     shadowIcon: '',
     icon: ''
   },
-  {
-    name: '音频库',
-    path: '/studio/audioLib',
-    shadowIcon: '',
-    icon: ''
-  },
+  // {
+  //   name: '音频库',
+  //   path: '/studio/audioLib',
+  //   shadowIcon: '',
+  //   icon: ''
+  // },
   {
     name: '设置',
     path: '/studio/setting',

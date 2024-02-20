@@ -174,3 +174,11 @@ button {
   transform: scale(0.95);
   transition: opacity 300ms, transform 200ms;
 }
+.edit-user-info .g-info-item{
+  display: block;
+  width: 100%;
+  margin: 0 0 10px 0;
+  padding: 8px 10px;
+  border: 1px solid #cccccc;
+  border-radius:4px ;
+}

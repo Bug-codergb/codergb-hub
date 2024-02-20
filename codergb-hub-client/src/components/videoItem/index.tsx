@@ -63,7 +63,8 @@ const VideoItem: FC<IProps> = (props): ReactElement => {
     if (addRef && addRef.current) {
       addRef.current.liClick({
         icon: '',
-        name: a.key
+        name: a.key,
+        id
       });
     }
   };

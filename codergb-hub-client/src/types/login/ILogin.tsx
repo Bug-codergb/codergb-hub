@@ -1,5 +1,5 @@
-import { IUserMsg } from '../user/IUserMsg';
-import { IUserDetail } from '../user/IUserDetail';
+import { type IUserMsg } from '../user/IUserMsg';
+import { type IUserDetail } from '../user/IUserDetail';
 
 interface ILogin {
   userMsg: IUserMsg;

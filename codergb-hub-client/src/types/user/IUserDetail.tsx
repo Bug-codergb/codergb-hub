@@ -1,4 +1,4 @@
-import { IUserMsg } from './IUserMsg';
+import { type IUserMsg } from './IUserMsg';
 interface idString {
   id: string;
 }
@@ -10,5 +10,6 @@ interface IUserDetail extends IUserMsg {
   subscriber: IUserMsg[];
   thumb: IUserOperator;
   tread: IUserOperator;
+  createTime: string;
 }
 export type { IUserDetail };

@@ -29,6 +29,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/display-name': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/strict-boolean-expressions': 'off'
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    "no-case-declarations":"off"
   }
 };
