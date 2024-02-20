@@ -68,3 +68,8 @@ export async function getUserComment<T = IResponseType<any>>(
     }
   });
 }
+export async function deleteComment<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
+    url: '/comment/delete/' + id
+  });
+}

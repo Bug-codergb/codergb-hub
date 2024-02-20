@@ -1,4 +1,5 @@
 import React, { memo, type FC, type ReactElement } from 'react';
+import { Col, Row } from 'antd';
 import PlayData from './childCpn/playData/index';
 import ThumbData from './childCpn/thumbData';
 import SubData from './childCpn/subData';
@@ -6,22 +7,25 @@ import { DataAnalyzeWrapper } from './style';
 const DataAnalyze: FC = (): ReactElement => {
   return (
     <DataAnalyzeWrapper>
-      <ul className="chart-list">
-        <li className="item">
+      <Row gutter={16} className="gutter-row">
+        <Col span={12}>
           <div className="card">
             <PlayData />
           </div>
-
+        </Col>
+        <Col span={12}>
           <div className="card">
             <ThumbData />
           </div>
-        </li>
-        <li className="item">
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
           <div className="card">
             <SubData />
           </div>
-        </li>
-      </ul>
+        </Col>
+      </Row>
     </DataAnalyzeWrapper>
   );
 };

@@ -1,6 +1,7 @@
 import { type FC, type ReactElement } from 'react';
 import type React from 'react';
 import { memo, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { Divider, Radio, Table } from 'antd';
 import { CommentWrapper } from './style';
@@ -19,6 +20,8 @@ const Comment: FC = (): ReactElement => {
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
+
+  const navigate = useNavigate();
   useEffect(() => {
     getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, 0, 6).then((data) => {
       if (data.status === 200) {
@@ -33,6 +36,7 @@ const Comment: FC = (): ReactElement => {
     }
   };
   const pageChangeHandle = (e: number) => {
+    setPageIndex(e);
     getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, (e - 1) * 6, 6).then(
       (data) => {
         if (data.status === 200) {
@@ -42,20 +46,27 @@ const Comment: FC = (): ReactElement => {
       }
     );
   };
+  const [pageIndex, setPageIndex] = useState<number>(1);
+  const getAllUserComment = () => {
+    getUserComment<IResponseType<IPage<IComment[]>>>(login.userMsg.userId, 0, 6).then((data) => {
+      if (data.status === 200) {
+        setPageIndex(1);
+        setComment(data.data.list);
+        setCount(data.data.count);
+      }
+    });
+  };
   return (
     <CommentWrapper>
       {comment && comment.length !== 0 && (
         <Table
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection
-          }}
           rowKey={'id'}
-          columns={columns}
+          columns={columns(navigate, getAllUserComment)}
           dataSource={comment}
           pagination={{
             pageSize: 6,
             total: count,
+            current: pageIndex,
             onChange: (e) => {
               pageChangeHandle(e);
             }

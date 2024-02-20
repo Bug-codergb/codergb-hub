@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 export const ThumbDataWrapper = styled.div`
   .charts-container {
-    width: ${730 / 40}rem;
+    width: 100%;
     height: ${300 / 40}rem;
     background-color: #fff;
   }
