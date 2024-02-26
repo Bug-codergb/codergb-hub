@@ -12,6 +12,7 @@ const reducer = (state = defaultState, action: any) => {
       localCache.setCache('queue', q);
       return state.setIn(['queue'], q);
     case 'changeQueueList':
+      localCache.setCache('queue', action.queue);
       return state.setIn(['queue'], action.queue);
     default:
       return state;

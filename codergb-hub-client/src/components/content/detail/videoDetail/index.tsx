@@ -17,7 +17,7 @@ import {
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import { Layout, Slider } from 'antd';
+import { Layout, Slider, Progress } from 'antd';
 import {
   VideoDetailWrapper,
   CenterContent,
@@ -37,7 +37,7 @@ import Hls from 'hls.js';
 import { type IVideo } from '../../../../types/video/IVideo';
 import VideoInfo from './childCpn/videoInfo';
 import Comment from '../../../common/comment';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { type Map } from 'immutable';
 import { type ILogin } from '../../../../types/login/ILogin';
 import { addHistory } from '../../../../network/history';
@@ -50,11 +50,13 @@ import Similar from './childCpn/similar';
 import HeaderTop from '../../../header';
 import CollectionVideo from './childCpn/collectionVideo';
 import { generateAnimation } from '../../../../utils/dom';
+import lodash from 'lodash';
+import { changeQueueAction } from '../../add/store/actionCreators';
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
   const { id, type = 'source', cId } = location.state;
-  console.log(id);
+
   const [videoSourceType, setVideoSourceType] = useState<string>(type);
   const [currentTime, setCurrentTime] = useState('');
   const [vioURL, setVioURL] = useState<string>('');
@@ -67,6 +69,12 @@ const VideoDetail: FC = (): ReactElement => {
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
+
+  const queue = useSelector<Map<string, IVideo[]>, IVideo[]>((state) => {
+    return state.getIn(['queueReducer', 'queue']) as IVideo[];
+  });
+  const dispatch = useDispatch();
+
   const contentRef = useRef<HTMLUListElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
 
@@ -219,6 +227,8 @@ const VideoDetail: FC = (): ReactElement => {
 
   const [playCount, setPlayCount] = useState<number | string>(0);
   const canPlayHandler = () => {
+    setPercent(100);
+    setIsPlay(true);
     if (videoRef.current) {
       videoRef.current.volume = 0.6;
       addPlayCount<IResponseType<{ playCount: number }>>(vioId).then((res) => {
@@ -265,6 +275,7 @@ const VideoDetail: FC = (): ReactElement => {
   const [isPlay, setIsPlay] = useState<boolean>(true);
   const playHandler = () => {
     setIsPlay(!isPlay);
+    setIsShowQueue(false);
     if (videoRef.current) {
       if (isPlay) {
         videoRef.current.pause();
@@ -288,6 +299,10 @@ const VideoDetail: FC = (): ReactElement => {
   };
   const endHandler = () => {
     setIsPlay(false);
+    if (queue.length !== 0) {
+      setIsShowQueue(true);
+      changePercent();
+    }
   };
 
   useEffect(() => {
@@ -321,6 +336,52 @@ const VideoDetail: FC = (): ReactElement => {
     if (videoRef.current) {
       videoRef.current.volume = e / 100;
     }
+  };
+
+  const [percent, setPercent] = useState<number>(100);
+  const [isShowQueue, setIsShowQueue] = useState<boolean>(false);
+  const changePercent = () => {
+    if (percent <= 10) {
+      setPercent(10);
+      if (queue.length !== 0) {
+        setVioId(queue[0].id);
+        const q = lodash.cloneDeep(queue);
+        const value: IVideo = q.shift();
+        q.push(value);
+        dispatch(changeQueueAction(q));
+        setIsShowQueue(false);
+        setIsPlay(true);
+      }
+    } else {
+      const value = percent - 0.3;
+      setPercent(value);
+    }
+  };
+  let t: null | number = null;
+  useEffect(() => {
+    if (percent !== 100 && percent !== 10) {
+      t = requestAnimationFrame(() => {
+        changePercent();
+      });
+    }
+  }, [percent]);
+  const queueVideoHandler = (item: IVideo) => {
+    setVioId(item.id);
+
+    if (t) {
+      cancelAnimationFrame(t);
+    }
+    setPercent(100);
+    const q = lodash.cloneDeep(queue);
+    for (let i = 0; i < q.length; i++) {
+      if (q[i].id === item.id) {
+        q.splice(i, 1);
+      }
+    }
+    q.push(item);
+    dispatch(changeQueueAction(q));
+    setIsShowQueue(false);
+    setIsPlay(true);
   };
   return (
     <VideoDetailWrapper>
@@ -417,6 +478,58 @@ const VideoDetail: FC = (): ReactElement => {
                               {isFull && <CompressOutlined />}
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    )}
+                    {queue.length !== 0 && isShowQueue && (
+                      <div
+                        className="mask"
+                        style={{ justifyContent: queue.length === 1 ? 'center' : 'space-between' }}
+                      >
+                        <div className="mask-left">
+                          <p className="be-going">即将播放</p>
+                          <div className="current-video">
+                            <img src={queue[0].picUrl} />
+                            <div className="mask"></div>
+                            <div className="per">
+                              <Progress
+                                strokeWidth={10}
+                                type="circle"
+                                width={80}
+                                strokeColor={{
+                                  '0%': '#d765d7',
+                                  '100%': '#ea3323'
+                                }}
+                                percent={percent}
+                                showInfo={false}
+                              />
+                            </div>
+                          </div>
+                          <div className="info text-nowrap-mul-line">{queue[0].name}</div>
+                        </div>
+                        <div className="mask-right">
+                          <ul className="vio-list">
+                            {queue &&
+                              queue.length !== 0 &&
+                              queue.slice(1).map((item, index) => {
+                                return (
+                                  <li
+                                    key={item.id}
+                                    className={`item ${index === 0 ? 'active' : ''}`}
+                                    onClick={() => {
+                                      queueVideoHandler(item);
+                                    }}
+                                  >
+                                    <div className="left">
+                                      <img src={item.picUrl} />
+                                    </div>
+                                    <div className="right">
+                                      <div className="name text-nowrap-mul-line">{item.name}</div>
+                                    </div>
+                                  </li>
+                                );
+                              })}
+                          </ul>
                         </div>
                       </div>
                     )}

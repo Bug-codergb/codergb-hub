@@ -8,6 +8,10 @@ export const CenterContent = styled.div`
   display: flex;
   align-items: flex-start;
 `;
+
+interface IProps {
+  isSingle: boolean;
+}
 export const LeftContentWrapper: any = styled.div`
   width: 67%;
   padding: ${20 / 40}rem 0;
@@ -65,6 +69,79 @@ export const LeftContentWrapper: any = styled.div`
     background-color: black;
     border-radius: 3px;
     position: relative;
+    .mask {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 15px 20px 0;
+      .mask-left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+
+        width: 40%;
+        .be-going {
+          text-align: left;
+          width: 100%;
+          color: #fff;
+          font-size: ${24 / 40};
+          font-weight: bold;
+          width: ${400 / 40}rem;
+          margin: 0 0 10px 0;
+        }
+        .current-video {
+          position: relative;
+          width: ${400 / 40}rem;
+          .per {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+        .info {
+          color: #fff;
+          margin: 10px 0 0 0;
+          width: ${400 / 40}rem;
+        }
+      }
+      .mask-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .vio-list {
+        overflow-y: auto;
+        padding: 10px 0;
+        .item {
+          display: flex;
+          align-items: flex-start;
+          padding: 10px 0;
+          &.active {
+          }
+          .left {
+            width: ${280 / 40}rem;
+            img {
+              width: 100%;
+              border-radius: 4px;
+            }
+          }
+          .right {
+            margin: 0 0 0 10px;
+            width: 180px;
+          }
+          .name {
+            color: #fff;
+          }
+        }
+      }
+    }
     video {
       width: 100%;
       height: 100%;
