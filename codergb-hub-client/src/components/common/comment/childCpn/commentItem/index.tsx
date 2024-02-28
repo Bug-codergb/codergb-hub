@@ -1,4 +1,5 @@
 import { memo, type FC, useState } from 'react';
+import { Popconfirm } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
   CaretDownOutlined,
@@ -33,6 +34,7 @@ interface IProps {
   propsShowReply: (index: number) => void;
 
   thumbHandler: () => void;
+  delComment: (index: number) => void;
 }
 const CommentItem: FC<IProps> = (props) => {
   const {
@@ -44,7 +46,8 @@ const CommentItem: FC<IProps> = (props) => {
     propsShowReplyHandle,
     propsPublishReplyHandle,
     propsShowReply,
-    thumbHandler: propThumber
+    thumbHandler: propThumber,
+    delComment
   } = props;
   const [tempReplyCount, setReplyCount] = useState<number>(0);
 
@@ -114,6 +117,10 @@ const CommentItem: FC<IProps> = (props) => {
       });
     }
   };
+
+  const delCommentHandler = (index: number) => {
+    delComment && delComment(index);
+  };
   return (
     <CommentItemWrapper>
       <div className="comment-content">
@@ -168,13 +175,24 @@ const CommentItem: FC<IProps> = (props) => {
               )}
             </div>
             <div
-              className="reply-label"
+              className="reply-label g-reply-label"
               onClick={(e) => {
                 showReplyHandle(index);
               }}
             >
               回复
             </div>
+            <Popconfirm
+              title="删除评论将删除该评论下的所有恢复"
+              onConfirm={() => {
+                delCommentHandler(index);
+              }}
+              onCancel={() => {}}
+              okText="确认"
+              cancelText="取消"
+            >
+              <div className="reply-label g-reply-label del-btn">删除</div>
+            </Popconfirm>
           </div>
           {/* 发表回复 */}
           {index === replyIndex && (

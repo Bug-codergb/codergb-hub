@@ -1,6 +1,7 @@
-import React, { memo, type FC, ReactElement, useEffect, useState } from 'react';
+import React, { memo, type FC, type ReactElement, useEffect, useState } from 'react';
+import { Pagination, message } from 'antd';
 import { ReplyWrapper } from './style';
-import { getAllReply, replyComment } from '../../../../../network/comment';
+import { deleteComment, getAllReply, replyComment } from '../../../../../network/comment';
 import { type IResponseType } from '../../../../../types/responseType';
 import { type IPage } from '../../../../../types/IPage';
 import { type IComment } from '../../../../../types/comment/IComment';
@@ -14,7 +15,7 @@ interface IProps {
   user: IUserMsg;
   replyHandle: (count: number) => void; // 用于更改评论数
 }
-const Reply: FC<IProps> = (props) => {
+const Reply: FC<IProps> = (props): ReactElement => {
   const { id, user, replyHandle } = props;
   const [reply, setReply] = useState<IComment[]>([]);
   const [count, setCount] = useState<number>(0);
@@ -47,6 +48,21 @@ const Reply: FC<IProps> = (props) => {
   const thubmHandler = async () => {
     await getAllReplyHandle(id, 0, 10);
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageChange = async (e: number) => {
+    setCurrentPage(e);
+    await getAllReplyHandle(id, (e - 1) * 10, 10);
+  };
+
+  const deleteCommentHandler = (item: IComment) => {
+    deleteComment(item.id).then((res) => {
+      if (res.status === 200) {
+        message.success('删除成功');
+        pageChange(1);
+        replyHandle(count - 2);
+      }
+    });
+  };
   return (
     <ReplyWrapper>
       <ul className="reply-list">
@@ -56,6 +72,9 @@ const Reply: FC<IProps> = (props) => {
             return (
               <li key={item.id}>
                 <ReplyItem
+                  delComment={() => {
+                    deleteCommentHandler(item);
+                  }}
                   replyIndex={replyIndex}
                   index={index}
                   reply={item}
@@ -74,6 +93,20 @@ const Reply: FC<IProps> = (props) => {
               </li>
             );
           })}
+
+        {count > 10 && (
+          <div className="page-container">
+            <Pagination
+              defaultCurrent={1}
+              current={currentPage}
+              pageSize={10}
+              total={count}
+              onChange={(e) => {
+                pageChange(e);
+              }}
+            />
+          </div>
+        )}
       </ul>
     </ReplyWrapper>
   );

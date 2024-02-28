@@ -7,6 +7,7 @@ import React, {
   type FormEvent,
   useRef
 } from 'react';
+import { Pagination, message } from 'antd';
 import moment from 'moment';
 import {
   LikeOutlined,
@@ -19,7 +20,12 @@ import {
 import { Map } from 'immutable';
 import { CommentWrapper } from './style';
 import { type IUserMsg } from '../../../types/user/IUserMsg';
-import { getAllComment, publishComment, replyComment } from '../../../network/comment';
+import {
+  deleteComment,
+  getAllComment,
+  publishComment,
+  replyComment
+} from '../../../network/comment';
 import { type IResponseType } from '../../../types/responseType';
 import { type IPage } from '../../../types/IPage';
 import { type IComment } from '../../../types/comment/IComment';
@@ -108,6 +114,21 @@ const Comment: FC<IProps> = (props): ReactElement => {
     getAllCommentHandle(id, 0, 10, alias);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageChange = (e: number) => {
+    setCurrentPage(e);
+    getAllCommentHandle(id, (e - 1) * 10, 10, alias);
+  };
+
+  const deleteCommentHandler = (item: IComment) => {
+    console.log(item);
+    deleteComment(item.id).then((res) => {
+      if (res.status === 200) {
+        message.success('删除成功');
+        pageChange(1);
+      }
+    });
+  };
   return (
     <CommentWrapper>
       <div className={`publish-outer ${isFocus ? 'publish-outer-start' : ''}`}>
@@ -178,6 +199,9 @@ const Comment: FC<IProps> = (props): ReactElement => {
                   propsShowReplyHandle={(index) => {
                     showReplyHandle(index);
                   }}
+                  delComment={() => {
+                    deleteCommentHandler(item);
+                  }}
                 />
               </li>
             );
@@ -186,6 +210,19 @@ const Comment: FC<IProps> = (props): ReactElement => {
           <EmptyHolder padding={200} msg={'暂无评论，快来发布您的第一条评论'} />
         )}
       </ul>
+      {commentCount > 10 && (
+        <div className="page-container">
+          <Pagination
+            defaultCurrent={1}
+            current={currentPage}
+            pageSize={10}
+            total={commentCount}
+            onChange={(e) => {
+              pageChange(e);
+            }}
+          />
+        </div>
+      )}
     </CommentWrapper>
   );
 };

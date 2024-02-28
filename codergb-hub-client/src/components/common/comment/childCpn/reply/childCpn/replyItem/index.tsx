@@ -1,5 +1,6 @@
 import React, { memo, type FC } from 'react';
 import { ReplyItemWrapper } from './style';
+import { Popconfirm } from 'antd';
 import moment from 'moment';
 import { DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined } from '@ant-design/icons';
 import Publish from '../../../../../publish';
@@ -21,6 +22,7 @@ interface IProps {
   propsShowReplyHandle: (index: number) => void;
   propsReplyReplyHandle: (content: string, item: IComment) => void;
   thubmHandler: () => void;
+  delComment: (index: number) => void;
 }
 const ReplyItem: FC<IProps> = (props) => {
   const {
@@ -31,7 +33,8 @@ const ReplyItem: FC<IProps> = (props) => {
     index,
     propsShowReplyHandle,
     propsReplyReplyHandle,
-    thubmHandler: propThumbHandler
+    thubmHandler: propThumbHandler,
+    delComment
   } = props;
   const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
@@ -81,6 +84,9 @@ const ReplyItem: FC<IProps> = (props) => {
         dispatch(changeUserDetailAction(loginState.userMsg.userId));
       }
     }
+  };
+  const delCommentHandler = (index: number) => {
+    delComment && delComment(index);
   };
   return (
     <ReplyItemWrapper>
@@ -141,13 +147,24 @@ const ReplyItem: FC<IProps> = (props) => {
             )}
           </div>
           <div
-            className="reply-label"
+            className="reply-label g-reply-label"
             onClick={(e) => {
               showReplyHandle(index);
             }}
           >
             回复
           </div>
+          <Popconfirm
+            title="删除评论将删除该评论下的所有恢复"
+            onConfirm={() => {
+              delCommentHandler(index);
+            }}
+            onCancel={() => {}}
+            okText="确认"
+            cancelText="取消"
+          >
+            <div className="reply-label g-reply-label del-btn">删除</div>
+          </Popconfirm>
         </div>
         {/* 回复评论的回复 */}
         {index === replyIndex && (

@@ -6,4 +6,7 @@ export const ReplyItemWrapper = styled.div`
   .right-msg {
     flex: 1;
   }
+  .g-reply-label {
+    margin: 0 ${5 / 40}rem 0 0 !important;
+  }
 `;

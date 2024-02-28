@@ -148,4 +148,9 @@ export const CommentWrapper = styled.div`
       }
     }
   }
+  .page-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+  }
 `;
