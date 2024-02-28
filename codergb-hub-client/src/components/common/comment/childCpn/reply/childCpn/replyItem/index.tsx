@@ -154,17 +154,19 @@ const ReplyItem: FC<IProps> = (props) => {
           >
             回复
           </div>
-          <Popconfirm
-            title="删除评论将删除该评论下的所有恢复"
-            onConfirm={() => {
-              delCommentHandler(index);
-            }}
-            onCancel={() => {}}
-            okText="确认"
-            cancelText="取消"
-          >
-            <div className="reply-label g-reply-label del-btn">删除</div>
-          </Popconfirm>
+          {loginState.userMsg && loginState.userMsg.userId === reply.user.userId && (
+            <Popconfirm
+              title="删除评论将删除该评论下的所有恢复"
+              onConfirm={() => {
+                delCommentHandler(index);
+              }}
+              onCancel={() => {}}
+              okText="确认"
+              cancelText="取消"
+            >
+              <div className="reply-label g-reply-label del-btn">删除</div>
+            </Popconfirm>
+          )}
         </div>
         {/* 回复评论的回复 */}
         {index === replyIndex && (
