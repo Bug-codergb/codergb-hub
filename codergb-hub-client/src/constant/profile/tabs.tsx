@@ -19,11 +19,11 @@ const tabs = (userId: string, channelId: string) => {
       key: '1002',
       children: <Video userId={userId} />
     },
-    {
+    /* {
       label: '短视频',
       key: '1003',
       children: <Shorts userId={userId} />
-    },
+    }, */
 
     {
       label: '播放列表',

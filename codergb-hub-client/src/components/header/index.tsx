@@ -162,18 +162,16 @@ const Header: FC = (): ReactElement => {
           <VideoCameraOutlined />
         </div>
         <div className="tip">
-          {unReadCount !== 0 && (
-            <Badge
-              onClick={() => {
-                messageRouter();
-              }}
-              count={unReadCount}
-              size="default"
-              offset={[4, -1]}
-            >
-              <MailOutlined />
-            </Badge>
-          )}
+          <Badge
+            onClick={() => {
+              messageRouter();
+            }}
+            count={unReadCount}
+            size="default"
+            offset={[4, -1]}
+          >
+            <MailOutlined />
+          </Badge>
         </div>
         <Modal
           title="视频上传"

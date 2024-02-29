@@ -13,7 +13,8 @@ const {
   getUserSubService
 } = require("../service/playlist.service");
 const {
-  createVideoPlaylistService
+  createVideoPlaylistService,
+  getPlaylistVideoDetail
 } =require("../service/video.service");
 class PlaylistController{
   async create(ctx,next){
@@ -85,10 +86,17 @@ class PlaylistController{
     try{
       const {vId,pId} = ctx.request.body;
       if(!isEmpty(ctx,vId,"视频ID不能为空")&&!isEmpty(ctx,pId,"播放列表ID不能为空")){
-        const result = await createVideoPlaylistService(ctx,vId,pId);
-        if(result){
-          setResponse(ctx,"success",200,{})
+        const isExists = await getPlaylistVideoDetail(ctx,vId,pId);
+        if(isExists.length===0){
+          const result = await createVideoPlaylistService(ctx,vId,pId);
+          if(result){
+            setResponse(ctx,"success",200,{})
+          }
+        }else{
+          setResponse(ctx,"视频已加入当前播放列表",200,{})
         }
+
+
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})

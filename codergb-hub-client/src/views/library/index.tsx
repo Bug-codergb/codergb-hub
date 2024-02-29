@@ -1,4 +1,5 @@
 import React, { memo, type FC, ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { LibraryWrapper } from './style';
 import { useSelector } from 'react-redux';
@@ -23,6 +24,8 @@ const Library: FC = () => {
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
+
+  const navigate = useNavigate();
   useEffect(() => {
     getUserHistory<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId, 0, 4, '').then((data) => {
       if (data.status === 200) {
@@ -53,7 +56,17 @@ const Library: FC = () => {
       }
     });
   }, []);
-  const moreHandle = () => {};
+  const moreHandle = (alias: string) => {
+    if (alias === '稍后观看') {
+      navigate('/home/playlist', {
+        replace: false
+      });
+    } else if (alias === '历史记录') {
+      navigate('/home/history', {
+        replace: false
+      });
+    }
+  };
   return (
     <LibraryWrapper>
       <div className="left-content">
@@ -62,7 +75,7 @@ const Library: FC = () => {
           more={'查看更多'}
           title={'历史记录'}
           moreClickHandle={() => {
-            moreHandle();
+            moreHandle('历史记录');
           }}
         />
         <div className="line"> </div>
@@ -71,7 +84,7 @@ const Library: FC = () => {
           more={'查看更多'}
           title={'稍后观看'}
           moreClickHandle={() => {
-            moreHandle();
+            moreHandle('稍后观看');
           }}
         />
       </div>

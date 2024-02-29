@@ -37,6 +37,16 @@ class VideoService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getPlaylistVideoDetail(ctx,vid,pid){
+    try{
+      const sql=`
+      select pId from playlist_video where vId=? and pId=?`;
+      const result = await connection.execute(sql,[vid,pid]);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
   //视频播放列表
   async createVideoPlaylistService(ctx,vId,pId){
     try{

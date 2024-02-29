@@ -1,5 +1,5 @@
 import React, { memo, type FC, useState, useEffect } from 'react';
-import { StarOutlined } from '@ant-design/icons';
+import { StarOutlined, MoreOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { UserPlaylistWrapper, LeftContent, RightContent } from './style';
@@ -12,7 +12,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { type ILogin } from '../../types/login/ILogin';
-import { notification } from 'antd';
+import { notification, Dropdown, Menu } from 'antd';
 interface IProps {
   id?: string;
 }
@@ -57,6 +57,11 @@ const UserPlaylist: FC<IProps> = (props) => {
       }
     });
   };
+  const openChangeHandle = (e: any, item: IVideo) => {
+    if (e.key === 'delete') {
+      console.log(item);
+    }
+  };
   return (
     <UserPlaylistWrapper>
       {playlist && (
@@ -99,28 +104,46 @@ const UserPlaylist: FC<IProps> = (props) => {
             video.map((item) => {
               return (
                 <li key={item.id}>
-                  <div
-                    className="cover-container"
-                    onClick={(e) => {
-                      videoRouterHandle(item);
-                    }}
-                  >
-                    <img src={item.picUrl} />
-                  </div>
-                  <div className="later-right-info">
-                    <p
-                      className="vio-name text-nowrap-mul-line"
+                  <div className="info-container">
+                    <div
+                      className="cover-container"
                       onClick={(e) => {
                         videoRouterHandle(item);
                       }}
                     >
-                      {item.name}
-                    </p>
-                    <div className="desc">
-                      <div className="user-name">{item.user.userName}.</div>
-                      <div className="play-count">{item.playCount}次观看.</div>
-                      <div className="create-time">{moment(item.createTime).fromNow()}加入</div>
+                      <img src={item.picUrl} />
                     </div>
+                    <div className="later-right-info">
+                      <p
+                        className="vio-name text-nowrap-mul-line"
+                        onClick={(e) => {
+                          videoRouterHandle(item);
+                        }}
+                      >
+                        {item.name}
+                      </p>
+                      <div className="desc">
+                        <div className="user-name">{item.user.userName}.</div>
+                        <div className="play-count">{item.playCount}次观看.</div>
+                        <div className="create-time">{moment(item.createTime).fromNow()}加入</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="operator">
+                    <Dropdown
+                      trigger={['click']}
+                      overlay={
+                        <Menu
+                          onClick={(e) => {
+                            openChangeHandle(e, item);
+                          }}
+                        >
+                          <Menu.Item key={'delete'}>删除</Menu.Item>
+                        </Menu>
+                      }
+                    >
+                      <MoreOutlined className="more-icon" />
+                    </Dropdown>
                   </div>
                 </li>
               );

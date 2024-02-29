@@ -7,6 +7,7 @@ import { type NavigateFunction } from 'react-router-dom';
 import { type INotify } from '../../../../types/message';
 import { NotifyWrapper } from './style';
 import { updateNotify } from '../../../../network/notify';
+import { type IUserMsg } from '../../../../types/user/IUserMsg';
 const videoRouter = (item: INotify, navigate: NavigateFunction) => {
   console.log(item);
   if (item.video) {
@@ -18,6 +19,15 @@ const videoRouter = (item: INotify, navigate: NavigateFunction) => {
     });
   }
 };
+const userSub = (id: string, user: IUserMsg, navigate: NavigateFunction) => {
+  updateNotify(id).then(() => {});
+  navigate('/home/userDetail', {
+    state: {
+      userId: user.userId
+    },
+    replace: false
+  });
+};
 const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
   return [
     {
@@ -28,12 +38,26 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
         return (
           <NotifyWrapper>
             {item.type === 'sub' && (
-              <span className="user-name">{item.operation.userName}关注了你</span>
+              <span
+                className="user-name"
+                onClick={() => {
+                  userSub(item.id, item.operation, navigate);
+                }}
+              >
+                {item.operation.userName}关注了你
+              </span>
             )}
             {item.type === 'upload' && (
               <span>
                 您关注的
-                <span className="user-name">{item.operation.userName}</span>
+                <span
+                  className="user-name"
+                  onClick={() => {
+                    userSub(item.id, item.operation, navigate);
+                  }}
+                >
+                  {item.operation.userName}
+                </span>
                 发布了视频
                 <span
                   className="info text-nowrap-mul-line"
@@ -47,7 +71,14 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
             )}
             {item.type === 'thumb-vId' && (
               <span>
-                <span className="user-name">{item.operation.userName}</span>
+                <span
+                  className="user-name"
+                  onClick={() => {
+                    userSub(item.id, item.operation, navigate);
+                  }}
+                >
+                  {item.operation.userName}
+                </span>
                 点赞了您的视频
                 <span
                   className="info text-nowrap-mul-line"
@@ -61,7 +92,14 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
             )}
             {item.type === 'thumb-commentId' && (
               <span>
-                <span className="user-name">{item.operation.userName}</span>
+                <span
+                  className="user-name"
+                  onClick={() => {
+                    userSub(item.id, item.operation, navigate);
+                  }}
+                >
+                  {item.operation.userName}
+                </span>
                 点赞了您的评论
                 <span className="info text-nowrap-mul-line">{item.comment?.content}</span>
               </span>

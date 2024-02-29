@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 export const SubscriptionsWrapper = styled.div`
+  height: 87vh;
+  overflow-y: auto;
   .header-title {
     display: flex;
     justify-content: space-between;
