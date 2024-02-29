@@ -28,6 +28,15 @@ const userSub = (id: string, user: IUserMsg, navigate: NavigateFunction) => {
     replace: false
   });
 };
+const userMomment = (item: INotify, navigate: NavigateFunction) => {
+  updateNotify(item.id).then(() => {});
+  item.moment &&
+    navigate('/home/moment', {
+      state: {
+        id: item.moment.id
+      }
+    });
+};
 const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
   return [
     {
@@ -106,9 +115,23 @@ const columns = (navigate: NavigateFunction): ColumnsType<INotify> => {
             )}
             {item.type === 'thumb-mId' && (
               <span>
-                <span className="user-name">{item.operation.userName}</span>
+                <span
+                  className="user-name"
+                  onClick={() => {
+                    userSub(item.id, item.operation, navigate);
+                  }}
+                >
+                  {item.operation.userName}
+                </span>
                 点赞了您的动态
-                <span className="info text-nowrap-mul-line">{item.moment?.title}</span>
+                <span
+                  className="info text-nowrap-mul-line"
+                  onClick={() => {
+                    userMomment(item, navigate);
+                  }}
+                >
+                  {item.moment?.title}
+                </span>
               </span>
             )}
           </NotifyWrapper>
