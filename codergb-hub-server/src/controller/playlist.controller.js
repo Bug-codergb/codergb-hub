@@ -10,7 +10,8 @@ const {
   selectUserSubPlaylist,
   updatePlaylistService,
   deletePlaylistService,
-  getUserSubService
+  getUserSubService,
+  deleteVideoPlaylistService
 } = require("../service/playlist.service");
 const {
   createVideoPlaylistService,
@@ -165,6 +166,19 @@ class PlaylistController{
       if(result){
         setResponse(ctx,"success",200,result);
       }
+    }catch (e) {
+
+    }
+  }
+  async deleteVideoPlaylist(ctx,next){
+    try{
+      console.log(1)
+      const {pid,vid} = ctx.request.body;
+      if(!isEmpty(ctx,pid,"播放列表id不能为空") && !isEmpty(ctx,vid,"视频id不能为空")){
+        const result = await deleteVideoPlaylistService(ctx,pid,vid);
+        setResponse(ctx,"success",200,{});
+      }
+
     }catch (e) {
 
     }

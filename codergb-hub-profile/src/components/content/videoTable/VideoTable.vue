@@ -302,9 +302,13 @@ const createHandle = () => {
 nextTick(() => {
   console.log(gbTable.value.selectMap);
 });
+const search = () => {
+  gbTable.value?.search();
+};
 defineExpose({
   tableData,
-  gbTable
+  gbTable,
+  search
 });
 </script>
 

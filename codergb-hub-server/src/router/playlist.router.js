@@ -11,7 +11,8 @@ const {
   subPlaylist,
   updatePlaylist,
   deletePlaylist,
-  getUserSub
+  getUserSub,
+  deleteVideoPlaylist
 } = require("../controller/playlist.controller");
 //创建播放列表
 playlistRouter.post("/",authVerify,create);
@@ -33,4 +34,7 @@ playlistRouter.post("/update/:id",authVerify,updatePlaylist);
 playlistRouter.post("/delete/:id",authVerify,deletePlaylist);
 //获取用户收藏的播放列表
 playlistRouter.post("/user/sub/:id",authVerify,getUserSub);
+
+//删除播放列表中的视频
+playlistRouter.post("/del/video",authVerify,deleteVideoPlaylist);
 module.exports = playlistRouter

@@ -2,6 +2,7 @@ import React, { memo, type FC, useState, type FormEvent } from 'react';
 import { DmWrapper } from './style';
 import { pubDm } from '../../../../../../network/dm';
 import moment from 'moment';
+import { message } from 'antd';
 interface IProps {
   id: string;
   time: string;
@@ -14,12 +15,17 @@ const Dm: FC<IProps> = (props) => {
     setContent(e.currentTarget.value);
   };
   const pubHandle = () => {
-    pubDm(id, content, time).then((data) => {
-      if (data.status === 200) {
-        setContent('');
-        pub();
-      }
-    });
+    if (content && content.trim().length !== 0) {
+      pubDm(id, content, time).then((data) => {
+        if (data.status === 200) {
+          setContent('');
+          pub();
+        }
+      });
+    } else {
+      message.destroy();
+      message.warning('弹幕内容不能为空');
+    }
   };
   return (
     <DmWrapper>

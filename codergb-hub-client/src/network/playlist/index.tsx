@@ -86,3 +86,12 @@ export async function deletePlaylist<T = IResponseType<any>>(id: string) {
     url: `/playlist/delete/${id}`
   });
 }
+export async function deletePlaylistVideo<T = IResponseType<any>>(vid: string, pid: string) {
+  return await gbRequest.post<T>({
+    url: '/playlist/del/video',
+    data: {
+      vid,
+      pid
+    }
+  });
+}

@@ -237,5 +237,16 @@ class PlaylistService{
       console.log(e);
     }
   }
+  async deleteVideoPlaylistService(ctx,pid,vid){
+    try{
+      const sql=`
+      delete from playlist_video as pv
+      where pv.pId =? and pv.vId=?`;
+      const result = await connection.execute(sql,[pid,vid]);
+      return result[0]
+    }catch (e) {
+
+    }
+  }
 }
 module.exports = new PlaylistService();

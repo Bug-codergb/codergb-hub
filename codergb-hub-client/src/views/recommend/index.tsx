@@ -10,6 +10,8 @@ import React, {
   useMemo
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 import { RecommendWrapper } from './style';
 import { type IVideo } from '../../types/video/IVideo';
 import { getAllVideo, getVideoURL } from '../../network/video';
@@ -21,12 +23,15 @@ import Hls from 'hls.js';
 interface IRecommendVideo extends IVideo {
   vioRef: RefObject<HTMLLIElement>;
 }
+const antIcon = <LoadingOutlined style={{ fontSize: 44 }} spin />;
 const Recommend: FC = (): ReactElement => {
   const [count, setCount] = useState<number>(0);
   const [video, setVideo] = useState<IRecommendVideo[]>([]);
   const [videoURL, setVideoURL] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [isRight, setIsRight] = useState<boolean>(false);
   const [isLeft, setIsLeft] = useState<boolean>(false);
@@ -45,6 +50,7 @@ const Recommend: FC = (): ReactElement => {
           }
           setVideo(data.data.list);
           setCount(data.data.count);
+          setLoading(false);
         }
       }
     });
@@ -143,60 +149,62 @@ const Recommend: FC = (): ReactElement => {
   };
   return (
     <RecommendWrapper isLeftBoundray={isLeft} isRightBoundray={isRight} isTopBoundray={isTop}>
-      <ul className="video-list" ref={vioListRef}>
-        {video &&
-          video.length !== 0 &&
-          video.map((item, index) => {
-            return (
-              <li
-                key={item.id}
-                onClick={(e) => {
-                  videoRouterHandle(item);
-                }}
-                className={currentIndex === index ? 'active' : ''}
-                ref={item.vioRef}
-              >
-                <VideoItem
-                  img={
-                    <img
-                      src={item.picUrl}
-                      onMouseLeave={(e) => {
-                        mouseLeaveHandle();
-                      }}
-                      onMouseEnter={async (e) => {
-                        await mouseImgHandle(item, index);
-                      }}
-                    />
-                  }
-                  video={
-                    <video
-                      src={videoURL}
-                      ref={vioRef}
-                      autoPlay={true}
-                      onMouseLeave={(e) => {
-                        mouseLeaveHandle();
-                      }}
-                      muted={true}
-                    />
-                  }
-                  dtPos={{ left: 98, top: 54 }}
-                  isShowVideo={currentIndex === index}
-                  state={item.name}
-                  vioHeight={200}
-                  id={item.id}
-                  user={item.user}
-                  createTime={item.createTime}
-                  dt={item.dt}
-                  playCount={item.playCount}
-                  itemWidth={380}
-                  isShowMore={true}
-                  scale={0.92}
-                />
-              </li>
-            );
-          })}
-        {HolderCpn(video.length, 4, 380)}
-      </ul>
+      <Spin spinning={loading} size="large">
+        <ul className="video-list" ref={vioListRef}>
+          {video &&
+            video.length !== 0 &&
+            video.map((item, index) => {
+              return (
+                <li
+                  key={item.id}
+                  onClick={(e) => {
+                    videoRouterHandle(item);
+                  }}
+                  className={currentIndex === index ? 'active' : ''}
+                  ref={item.vioRef}
+                >
+                  <VideoItem
+                    img={
+                      <img
+                        src={item.picUrl}
+                        onMouseLeave={(e) => {
+                          mouseLeaveHandle();
+                        }}
+                        onMouseEnter={async (e) => {
+                          await mouseImgHandle(item, index);
+                        }}
+                      />
+                    }
+                    video={
+                      <video
+                        src={videoURL}
+                        ref={vioRef}
+                        autoPlay={true}
+                        onMouseLeave={(e) => {
+                          mouseLeaveHandle();
+                        }}
+                        muted={true}
+                      />
+                    }
+                    dtPos={{ left: 98, top: 54 }}
+                    isShowVideo={currentIndex === index}
+                    state={item.name}
+                    vioHeight={200}
+                    id={item.id}
+                    user={item.user}
+                    createTime={item.createTime}
+                    dt={item.dt}
+                    playCount={item.playCount}
+                    itemWidth={380}
+                    isShowMore={true}
+                    scale={0.92}
+                  />
+                </li>
+              );
+            })}
+          {HolderCpn(video.length, 4, 380)}
+        </ul>
+      </Spin>
     </RecommendWrapper>
   );
 };

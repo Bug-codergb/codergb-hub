@@ -42,6 +42,7 @@
             <VideoTable
               :key="keyIndex"
               :url="url"
+              ref="videoTableRef"
               :isOperate="false"
               :is-show-create="false"
               :height="tableHeight"
@@ -70,11 +71,12 @@
 import { ref } from 'vue';
 import moment from 'moment';
 import { useRoute } from 'vue-router';
-import { getPlaylistDetail } from '@/network/playlist';
+import { deletePlaylistVideo, getPlaylistDetail } from '@/network/playlist';
 import { IPlaylist } from '@/types/playlist/IPlaylist';
 import { IResponseType } from '@/types/responseType';
 import VideoTable from '@/components/content/videoTable/VideoTable.vue';
 import { IVideo } from '@/types/video/IVideo';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 const activeName = 'first';
 const keyIndex = ref(0);
@@ -97,13 +99,36 @@ const playlist = ref<IPlaylist>({
     token: ''
   }
 });
-getPlaylistDetail<IResponseType<IPlaylist>>(id).then((res) => {
-  if (res.status === 200) {
-    console.log(res.data);
-    playlist.value = res.data;
-  }
-});
-const delHandle = (item: IVideo) => {};
+const getPlaylistDetailHandler = (id: string) => {
+  getPlaylistDetail<IResponseType<IPlaylist>>(id).then((res) => {
+    if (res.status === 200) {
+      playlist.value = res.data;
+    }
+  });
+};
+getPlaylistDetailHandler(id as string);
+
+const videoTableRef = ref();
+const delHandle = (item: IVideo) => {
+  console.log(item);
+  ElMessageBox.confirm('确定要删除该视频从当前列表么?', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      deletePlaylistVideo(item.id, id as string).then((res) => {
+        if (res.status === 200) {
+          videoTableRef.value && videoTableRef.value.search();
+          ElMessage({
+            type: 'success',
+            message: '删除成功'
+          });
+        }
+      });
+    })
+    .catch(() => {});
+};
 </script>
 
 <style scoped lang="less">

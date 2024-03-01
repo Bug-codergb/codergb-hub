@@ -2,6 +2,7 @@ import styled from 'styled-components';
 export const UserPlaylistWrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  width: 100%;
 `;
 export const LeftContent: any = styled.div`
   display: flex;

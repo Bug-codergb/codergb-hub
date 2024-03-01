@@ -7,6 +7,7 @@ import React, {
   type MouseEvent
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import * as echarts from 'echarts';
 import { Card, Row, Col, Button, Modal, Form, Input, message } from 'antd';
 import { SettingWrapper } from './style';
@@ -15,6 +16,7 @@ import moment from 'moment';
 import { editUserPass, getLoginLog } from '../../../../network/login';
 import { type IResponseType } from '../../../../types/responseType';
 
+const { confirm } = Modal;
 interface ILoinLog {
   count: number;
   date: string;
@@ -117,6 +119,23 @@ const Setting: FC = (): ReactElement => {
     setPassword(e.currentTarget.value);
   };
 
+  const logoff = () => {
+    console.log(12);
+    confirm({
+      title: '确定要注销当前账号么?',
+      icon: <ExclamationCircleOutlined />,
+      content: '注销账号则删除用户以及频道中的所有数据',
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      }
+    });
+  };
   return (
     <SettingWrapper>
       <Card
@@ -133,7 +152,13 @@ const Setting: FC = (): ReactElement => {
             >
               修改
             </Button>
-            <Button type="link" danger>
+            <Button
+              type="link"
+              danger
+              onClick={() => {
+                logoff();
+              }}
+            >
               注销账号
             </Button>
           </>
