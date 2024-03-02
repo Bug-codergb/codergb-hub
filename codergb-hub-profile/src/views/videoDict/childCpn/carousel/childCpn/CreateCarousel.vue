@@ -25,6 +25,7 @@ const showDrawer = (data: any) => {
   formData.data.videoId = '';
   formData.data.fileId = '';
   formData.data.description = '';
+  formData.data.title = '';
   video.value = null;
 };
 const create = ref();

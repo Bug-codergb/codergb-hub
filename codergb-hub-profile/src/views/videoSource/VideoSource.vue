@@ -1,10 +1,8 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="video-source">
-      <GbHeader :header="header" :isShowRefresh="true">
-        <template #btnContent>
-          <el-button type="default">批量删除</el-button>
-        </template>
+      <GbHeader :header="header" :isShowRefresh="true" :is-show-create="false">
+        <template #btnContent> </template>
       </GbHeader>
       <GbTable :table-data="tableData" ref="gbTableRef" />
       <AssociateVideo ref="associateVideo" />

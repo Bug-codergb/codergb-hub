@@ -45,11 +45,11 @@ const useTable = (id: string, gbTable: any) => {
         minWidth: 200,
         fixed: 'right',
         btns: [
-          {
+          /*{
             text: '编辑',
             type: 'primary',
             onClick: () => {}
-          },
+          },*/
           {
             text: '删除',
             type: 'danger',

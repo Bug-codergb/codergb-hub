@@ -70,6 +70,14 @@ class DmService{
       setResponse(ctx,e.message,500,{});
     }
   }
+  async updateDmService(ctx,id,content){
+    try{
+      const sql=`update dm set text=? where id=?`;
+      const result = await connection.execute(sql,[content,id]);
+    }catch (e) {
+      setResponse(ctx,"error",500,{});
+    }
+  }
 }
 
 module.exports = new DmService();

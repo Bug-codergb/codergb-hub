@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="video-dict">
       <el-tabs v-model="activeName" class="demo-tabs">
         <el-tab-pane label="视频分类" name="first"> <Cate /> </el-tab-pane>

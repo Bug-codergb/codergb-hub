@@ -31,6 +31,7 @@ const useFormData = () => {
     formData.value.dt = 0;
     formData.value.cate = '';
     formData.value.imgId = '';
+    formData.value.imgURL = '';
   };
   return {
     formData,

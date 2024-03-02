@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="playlist">
       <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" />
       <GbTable :tableData="tableData" ref="gbTable" />
@@ -18,8 +18,8 @@ import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import { IPlaylist } from '../../types/playlist';
 import { IUserMsg } from '@/types/user/IUserMsg';
 import CreatePlaylist from './childCpn/createPlaylist/CreatePlaylist.vue';
-import { View, Hide } from '@element-plus/icons-vue';
-import { PLAYLIST_DETAIL_PATH } from '@/router/constant';
+import { View, Hide, User } from '@element-plus/icons-vue';
+import { PLAYLIST_DETAIL_PATH, USER_DETAIL_PATH } from '@/router/constant';
 import { deletePlaylist } from '@/network/playlist';
 const router = useRouter();
 const gbTable = ref<InstanceType<typeof GbHeader>>();
@@ -76,7 +76,14 @@ const tableData = reactive({
       'min-width': 120,
       formatter: (row: IPlaylist) => {
         const { user } = row;
-        return user.userName;
+        return (
+          <div class="base-user-info-icon" onClick={() => userRouter(user)}>
+            <el-icon>
+              <User />
+            </el-icon>
+            <span>{user.userName}</span>
+          </div>
+        );
       }
     },
     {
@@ -188,6 +195,11 @@ const newPlaylist = () => {
   if (createPlaylist.value) {
     createPlaylist.value.showDrawer();
   }
+};
+const userRouter = (user: IUserMsg) => {
+  router.push({
+    path: `${USER_DETAIL_PATH}/${user.userId}`
+  });
 };
 const refresh = () => {
   gbTable.value.search();

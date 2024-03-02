@@ -30,7 +30,9 @@
       <el-row>
         <el-col :span="24">
           <span class="key">创建人：</span>
-          <span class="value person">{{ playlist.user.userName }}</span>
+          <span class="value person" @click="userRouter(playlist.user)">{{
+            playlist.user.userName
+          }}</span>
         </el-col>
       </el-row>
     </el-card>
@@ -70,18 +72,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import moment from 'moment';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { deletePlaylistVideo, getPlaylistDetail } from '@/network/playlist';
 import { IPlaylist } from '@/types/playlist/IPlaylist';
 import { IResponseType } from '@/types/responseType';
 import VideoTable from '@/components/content/videoTable/VideoTable.vue';
 import { IVideo } from '@/types/video/IVideo';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { IUserMsg } from '@/types/user/IUserMsg';
+import { USER_DETAIL_PATH } from '@/router/constant';
 
 const activeName = 'first';
 const keyIndex = ref(0);
 const tableHeight = ref(window.innerHeight - 400);
 const route = useRoute();
+const router = useRouter();
 const { id } = route.params;
 const url = ref(`/playlist/video/${id}`);
 const playlist = ref<IPlaylist>({
@@ -128,6 +133,11 @@ const delHandle = (item: IVideo) => {
       });
     })
     .catch(() => {});
+};
+const userRouter = (user: IUserMsg) => {
+  router.push({
+    path: `${USER_DETAIL_PATH}/${user.userId}`
+  });
 };
 </script>
 

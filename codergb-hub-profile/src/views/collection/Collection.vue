@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCol ref="createColRef" @refresh="refresh" />
@@ -9,16 +9,19 @@
 
 <script lang="tsx" setup>
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import CreateCol from './childCpn/CreateCol.vue';
 import AddVideo from './childCpn/AddVideo.vue';
 import { ICollection } from '@/types/collection/ICollection';
-import { useRouter } from 'vue-router';
-import { COLLECTION_DETAIL_PATH } from '@/router/constant';
+
+import { COLLECTION_DETAIL_PATH, USER_DETAIL_PATH } from '@/router/constant';
 import { deleteCol } from '@/network/collection';
 import { ElMessage } from 'element-plus';
+import { User } from '@element-plus/icons-vue';
+import { IUserMsg } from '@/types/user/IUserMsg';
 
 const gbTable = ref<InstanceType<typeof GbHeader>>();
 const createColRef = ref<InstanceType<typeof CreateCol>>();
@@ -57,7 +60,14 @@ const tableData = reactive({
       'min-width': 140,
       formatter: (row: ICollection) => {
         const { user } = row;
-        return user.userName;
+        return (
+          <div class="base-user-info-icon" onClick={() => userRouter(user)}>
+            <el-icon>
+              <User />
+            </el-icon>
+            <span>{user.userName}</span>
+          </div>
+        );
       }
     },
     {
@@ -146,6 +156,11 @@ const createHandle = () => {
 };
 const refresh = () => {
   gbTable.value?.search();
+};
+const userRouter = (user: IUserMsg) => {
+  router.push({
+    path: `${USER_DETAIL_PATH}/${user.userId}`
+  });
 };
 </script>
 

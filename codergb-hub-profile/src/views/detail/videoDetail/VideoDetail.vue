@@ -19,7 +19,9 @@
             </el-col>
             <el-col :span="12">
               <span class="label">创建人:</span>
-              <span>{{ videoDetail.user?.userName }}</span>
+              <span class="cate" @click="userRouter(videoDetail.user)">{{
+                videoDetail.user?.userName
+              }}</span>
             </el-col>
           </el-row>
 
@@ -72,11 +74,13 @@ import Comment from './childCpn/comment/Comment.vue';
 import Dm from './childCpn/dm/Dm.vue';
 import Thumb from './childCpn/thumb/Thumb.vue';
 import Source from './childCpn/source/Source.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import moment from 'moment';
 import { getVideoDetail } from '@/network/video/index';
 import { IVideo } from '@/types/video/IVideo';
 import { IResponseType } from '@/types/responseType';
+import { IUserMsg } from '@/types/user/IUserMsg';
+import { USER_DETAIL_PATH } from '@/router/constant';
 
 const route = useRoute();
 const videoDetail = ref<IVideo | null>(null);
@@ -88,6 +92,13 @@ getVideoDetail<IResponseType<IVideo>>(id).then((res) => {
     console.log(videoDetail.value.picUrl);
   }
 });
+const router = useRouter();
+const userRouter = (user?: IUserMsg) => {
+  user &&
+    router.push({
+      path: USER_DETAIL_PATH + '/' + user.userId
+    });
+};
 </script>
 
 <style scoped lang="less">

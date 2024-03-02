@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 import useTable from './hook/useTable';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 interface IProps {
   id: string;
 }
 const props = defineProps<IProps>();
-const { tableData } = useTable(props.id);
+const gbTable = ref();
+const { tableData } = useTable(props.id, gbTable);
 </script>
 
 <template>
   <div class="dm-container">
-    <GbTable :table-data="tableData" />
+    <GbTable :table-data="tableData" ref="gbTable" />
   </div>
 </template>
 

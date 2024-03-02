@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <GbDrawer v-model="drawer" :title="title" @confirm="confirmHandle" @cancel="cancelHandle">
       <Create
         ref="createRef"
@@ -32,10 +32,14 @@ import { ElMessage } from 'element-plus';
 
 const title = ref('新增视频');
 const drawer = ref(false);
+
+const { formData, resetFormData } = useFormData();
 const createHandle = () => {
   drawer.value = true;
   isUpdate.value = false;
   vid.value = '';
+
+  resetFormData();
 };
 
 const vid = ref('');
@@ -54,7 +58,7 @@ const editHandle = (row: IVideo) => {
   formData.value.videoId = row.videoSourceId ?? '';
   vid.value = row.id;
 };
-const { formData, resetFormData } = useFormData();
+
 const tableConstructor = ref();
 onMounted(async () => {
   const user = useLoginStore();

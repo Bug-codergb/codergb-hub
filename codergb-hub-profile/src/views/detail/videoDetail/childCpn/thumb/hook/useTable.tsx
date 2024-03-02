@@ -1,8 +1,11 @@
 import { reactive } from 'vue';
 import { ITableData } from '@/types/tableData/tableData';
 import moment from 'moment';
+import { useRouter } from 'vue-router';
 import { IUserMsg } from '@/types/user/IUserMsg';
+import { USER_DETAIL_PATH } from '@/router/constant';
 const useTable = (id: string, gbTable: any) => {
+  const router = useRouter();
   const tableData = reactive<ITableData<IUserMsg & { createTime: string }>>({
     url: '/thumb/user/' + id,
     params: {
@@ -29,7 +32,11 @@ const useTable = (id: string, gbTable: any) => {
           {
             text: '详情',
             type: 'primary',
-            onClick: () => {}
+            onClick: (user: IUserMsg) => {
+              router.push({
+                path: USER_DETAIL_PATH + '/' + user.userId
+              });
+            }
           }
         ]
       },

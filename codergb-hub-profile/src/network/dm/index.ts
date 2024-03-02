@@ -5,3 +5,11 @@ export function deleteDm<T = IResponseType<any>>(id: string) {
     url: '/dm/delete/' + id
   });
 }
+export function updateDm<T = IResponseType<any>>(id: string, content: string) {
+  return gbRequest.post<T>({
+    url: '/dm/update/' + id,
+    data: {
+      content
+    }
+  });
+}

@@ -39,7 +39,13 @@ import { getAllTag } from '@/network/tag';
 import { getRandColor } from '@/constant/color';
 import { deleteVideo } from '@/network/video';
 import { ElMessage } from 'element-plus';
-import { VIDEO_DETAIL_PATH } from '@/router/constant';
+import { User } from '@element-plus/icons-vue';
+import {
+  CATE_VIDEO_DETAIL_PATH,
+  TAG_DETAIL_PATH,
+  USER_DETAIL_PATH,
+  VIDEO_DETAIL_PATH
+} from '@/router/constant';
 const router = useRouter();
 const props = defineProps({
   isOperate: {
@@ -116,7 +122,14 @@ const tableData = reactive({
       label: '创建者',
       'min-width': 90,
       formatter: (row: IVideo) => {
-        return row.user.userName;
+        return (
+          <div class="base-user-info-icon" onClick={() => userRouter(row)}>
+            <el-icon>
+              <User />
+            </el-icon>
+            <span>{row.user.userName}</span>
+          </div>
+        );
       }
     },
     {
@@ -129,7 +142,13 @@ const tableData = reactive({
           tag &&
           tag.map((item: ITag) => {
             return (
-              <el-tag class="video-tag" type="success" color={getRandColor()} effect="light">
+              <el-tag
+                class="video-tag"
+                type="success"
+                color={getRandColor()}
+                effect="light"
+                onClick={() => tagRouter(item)}
+              >
                 {item.name}
               </el-tag>
             );
@@ -143,7 +162,11 @@ const tableData = reactive({
       'min-width': 120,
       formatter: (row: IVideo) => {
         const { category } = row;
-        return category.name;
+        return (
+          <span class="cate-name" onClick={() => cateRouter(category)}>
+            {category.name}
+          </span>
+        );
       }
     },
     {
@@ -260,7 +283,25 @@ if (props.excludeHeader.length !== 0) {
     }
   }
 }
-
+const tagRouter = (item: ITag) => {
+  router.push({
+    path: `${TAG_DETAIL_PATH}/${item.id}`
+  });
+};
+const cateRouter = (item: ICate) => {
+  router.push({
+    path: CATE_VIDEO_DETAIL_PATH + '/' + item.id,
+    query: {
+      name: item.name
+    }
+  });
+};
+const userRouter = (item: IVideo) => {
+  item.user &&
+    router.push({
+      path: USER_DETAIL_PATH + '/' + item.user.userId
+    });
+};
 const getAllCateReq = async () => {
   const result = await getAllCate<IResponseType<IPage<ICate[]>>>(0, 15000, '');
   if (result.status === 200) {
@@ -321,4 +362,14 @@ defineExpose({
   }
 }
 </style>
-<style scoped lang="less"></style>
+<style lang="less">
+.el-tag {
+  cursor: pointer;
+}
+</style>
+<style lang="less" scope>
+.cate-name {
+  cursor: pointer;
+  color: #5a9cf8;
+}
+</style>

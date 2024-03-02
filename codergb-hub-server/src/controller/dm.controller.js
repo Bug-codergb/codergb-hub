@@ -5,7 +5,8 @@ const {
   createService,
   videoDmService,
   allDmService,
-  deleteDmService
+  deleteDmService,
+  updateDmService
 } = require("../service/dm.service");
 class DmController{
   async create(ctx,next){
@@ -54,6 +55,16 @@ class DmController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
+    }
+  }
+  async updateDm(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const {content} = ctx.request.body;
+      const result = await updateDmService(ctx,id,content);
+      setResponse(ctx,"success",200,{})
+    }catch (e) {
+
     }
   }
 }

@@ -145,8 +145,11 @@ watch(
   { deep: true }
 );
 onMounted(() => {
-  isPrev.value = true;
-  imgURL.value = newFormData.value['imgURL'];
+  isPrev.value = false;
+  imgURL.value = newFormData.value['imgURL'] ?? '';
+  if (imgURL.value) {
+    isPrev.value = true;
+  }
 });
 let ruleObj = {};
 for (let item of props.tableConstructor) {
@@ -226,12 +229,14 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
+
     .upload-icon {
       font-size: (50/40rem);
       color: var(--primary-color);
     }
     img {
       height: 100%;
+      width: 100%;
       object-fit: contain;
     }
     video {

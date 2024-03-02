@@ -30,6 +30,8 @@ const showDrawer = (data: ICollection | null) => {
     formData.data.name = '';
     formData.data.cover = '';
     formData.data.desc = '';
+    formData.data.imgURL = '';
+    title.value = '新增集合';
   } else {
     formData.data.name = data.name;
     formData.data.desc = data.description;
@@ -37,6 +39,7 @@ const showDrawer = (data: ICollection | null) => {
     formData.data.imgURL = data.picUrl;
     formData.data.cover = data.imgId ?? '';
     formData.data.id = data.id;
+    title.value = '编辑集合';
   }
   console.log(data);
 };

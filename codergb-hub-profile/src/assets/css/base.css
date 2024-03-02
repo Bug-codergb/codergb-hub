@@ -58,3 +58,6 @@ p {
   color: #409eff;
   cursor: pointer;
 }
+.g-inner-card {
+  height: 100%;
+}

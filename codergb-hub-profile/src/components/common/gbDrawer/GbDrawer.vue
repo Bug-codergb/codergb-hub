@@ -8,6 +8,7 @@
     :append-to-body="true"
     @opened="openDrawer"
     :size="width"
+    :close-on-click-modal="false"
   >
     <template #header="{ close }">
       <div class="gb-drawer-header">
