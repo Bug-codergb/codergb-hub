@@ -5,13 +5,13 @@ import { User } from '@element-plus/icons-vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import moment from 'moment';
 import { reactive } from 'vue';
-const useTable = (id: string, notifyRef: any, gbTable: any, detailRef: any) => {
+const useTable = (id: string, alias: string, notifyRef: any, gbTable: any, detailRef: any) => {
   const tableData = reactive<ITableData<IComment>>({
     url: '/comment/all/' + id,
     params: {
       offset: 0,
       limit: 10,
-      alias: 'vId'
+      alias: alias
     },
     method: 'get',
 

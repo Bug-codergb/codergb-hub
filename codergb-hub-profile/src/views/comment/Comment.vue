@@ -1,6 +1,7 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="comment">
+      <GbHeader :header="header" :is-show-create="false" :is-show-refresh="false" />
       <GbTable :table-data="tableData" ref="gbTable" />
       <Notify ref="notifyRef" />
       <Detail ref="detailRef" />
@@ -13,10 +14,26 @@ import GbTable from '@/components/common/gbTable/GbTable.vue';
 import Notify from './childCpn/notify/Notify.vue';
 import useTable from './hook/useTable';
 import Detail from './childCpn/detail/Detail.vue';
+import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 const gbTable = ref();
 const notifyRef = ref();
 const detailRef = ref();
 const { tableData } = useTable(notifyRef, gbTable, detailRef);
+const header = reactive([
+  {
+    type: 'input',
+    hint: '请输入集合名称',
+    id: '23',
+    bingParam: '',
+    attr: {
+      clearable: true
+    },
+    onChange: (e: string) => {
+      tableData.params.keyword = e;
+      gbTable.value.search();
+    }
+  }
+]);
 </script>
 <style lang="less">
 .comment-from {

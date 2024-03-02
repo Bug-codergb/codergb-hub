@@ -7,12 +7,13 @@ import Detail from '@/views/comment/childCpn/detail/Detail.vue';
 
 interface IProps {
   id: string;
+  alias: string;
 }
 const props = defineProps<IProps>();
 const gbTable = ref();
 const notifyRef = ref();
 const detailRef = ref();
-const { tableData } = useTale(props.id, notifyRef, gbTable, detailRef);
+const { tableData } = useTale(props.id, props.alias, notifyRef, gbTable, detailRef);
 </script>
 
 <template>

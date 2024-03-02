@@ -111,6 +111,15 @@ const tableData = reactive({
       width: 170,
       btns: [
         {
+          text: '查看',
+          type: 'primary',
+          onClick: (scope: IMoment) => {
+            router.push({
+              path: MOMENT_DETAIL_PATH + `/${scope.id}`
+            });
+          }
+        },
+        {
           text: '编辑',
           type: 'primary',
           onClick: (scope: IMoment) => {
@@ -127,15 +136,6 @@ const tableData = reactive({
             if (res.status === 200) {
               search();
             }
-          }
-        },
-        {
-          text: '查看',
-          type: 'primary',
-          onClick: (scope: IMoment) => {
-            router.push({
-              path: MOMENT_DETAIL_PATH + `/${scope.id}`
-            });
           }
         }
       ]

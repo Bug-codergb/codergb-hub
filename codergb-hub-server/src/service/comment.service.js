@@ -97,7 +97,7 @@ class CommentService{
       setResponse(ctx,e.message,500,{});
     }
   }
-  async sysCommentCountService(ctx){
+  async sysCommentCountService(ctx,keyword){
     try{
       const sql=`
       select count(distinct(c.id)) as count
@@ -105,14 +105,15 @@ class CommentService{
       LEFT JOIN user as u on u.userId = c.userId
       LEFT JOIN video as v on v.id = c.vId
       LEFT JOIN moment as m on m.id = c.mId
-      LEFT JOIN comment as rep on rep.replyId = c.id`;
+      LEFT JOIN comment as rep on rep.replyId = c.id
+      ${keyword.trim().length!==0 ? `where c.content like '%${keyword}%'` : ''}`;
       const result = await connection.execute(sql)
       return result[0];
     }catch (e) {
       setResponse(ctx,e.message,500,{});
     }
   }
-  async sysCommentService(ctx,offset,limit){
+  async sysCommentService(ctx,keyword,offset,limit){
     try{
       const sql=`
       select distinct(c.id),c.content,c.createTime,c.updateTime,
@@ -133,9 +134,11 @@ class CommentService{
       LEFT JOIN video as v on v.id = c.vId
       LEFT JOIN moment as m on m.id = c.mId
       LEFT JOIN comment as rep on rep.replyId = c.id
+      ${keyword.trim().length!==0 ? `where c.content like '%${keyword}%'` : ''}
+      order by c.createTime desc
       limit ?,?`;
       const result =await connection.execute(sql,[offset,limit]);
-      const count = await new CommentService().sysCommentCountService(ctx);
+      const count = await new CommentService().sysCommentCountService(ctx,keyword);
       return{
         count:count[0].count,
         list:result[0]

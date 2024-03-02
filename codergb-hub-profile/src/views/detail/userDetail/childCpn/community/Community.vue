@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import { IMoment } from '@/types/moment';
-import { VIDEO_DETAIL_PATH } from '@/router/constant';
+import { MOMENT_DETAIL_PATH, VIDEO_DETAIL_PATH } from '@/router/constant';
 
 const router = useRouter();
 const tableData = reactive({
@@ -59,7 +59,9 @@ const tableData = reactive({
         {
           text: '查看',
           type: 'primary',
-          onClick: (row: IMoment) => {}
+          onClick: (row: IMoment) => {
+            momentRouter(row);
+          }
         }
       ]
     }
@@ -69,6 +71,11 @@ const videoRouter = (item: IMoment) => {
   console.log(item);
   router.push({
     path: `${VIDEO_DETAIL_PATH}/${item.video.id}`
+  });
+};
+const momentRouter = (item: IMoment) => {
+  router.push({
+    path: `${MOMENT_DETAIL_PATH}/${item.id}`
   });
 };
 </script>

@@ -53,7 +53,7 @@
     <el-card>
       <el-tabs v-if="videoDetail">
         <el-tab-pane label="评论">
-          <Comment :id="videoDetail.id" />
+          <Comment :id="videoDetail.id" alias="vId" />
         </el-tab-pane>
         <el-tab-pane label="弹幕">
           <Dm :id="videoDetail.id" />

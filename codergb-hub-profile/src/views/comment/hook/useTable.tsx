@@ -5,12 +5,35 @@ import { User } from '@element-plus/icons-vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import moment from 'moment';
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { IUserMsg } from '@/types/user/IUserMsg';
+import { MOMENT_DETAIL_PATH, USER_DETAIL_PATH, VIDEO_DETAIL_PATH } from '@/router/constant';
 const useTable = (notifyRef: any, gbTable: any, detailRef: any) => {
+  const router = useRouter();
+
+  const userRouter = (user: IUserMsg) => {
+    router.push({
+      path: `${USER_DETAIL_PATH}/${user.userId}`
+    });
+  };
+  const commentRouter = (comment: IComment) => {
+    console.log(comment);
+    if (comment.video) {
+      router.push({
+        path: `${VIDEO_DETAIL_PATH}/${comment.video.id}`
+      });
+    } else if (comment.moment) {
+      router.push({
+        path: `${MOMENT_DETAIL_PATH}/${comment.moment.id}`
+      });
+    }
+  };
   const tableData = reactive<ITableData<IComment>>({
     url: '/comment/all',
     params: {
       offset: 0,
-      limit: 10
+      limit: 10,
+      keyword: ''
     },
     method: 'post',
     pageSize: 10,
@@ -29,7 +52,7 @@ const useTable = (notifyRef: any, gbTable: any, detailRef: any) => {
         minWidth: 80,
         formatter: (row: IComment) => {
           return (
-            <div class="comment-creator">
+            <div class="comment-creator" onClick={() => userRouter(row.user)}>
               <el-icon>
                 <User />
               </el-icon>
@@ -51,7 +74,7 @@ const useTable = (notifyRef: any, gbTable: any, detailRef: any) => {
         minWidth: 140,
         formatter: (row: IComment) => {
           return (
-            <div class="comment-from">
+            <div class="comment-from" onClick={() => commentRouter(row)}>
               <el-tag
                 type={row.video != null ? 'success' : row.moment != null ? 'warning' : 'danger'}
               >
@@ -84,35 +107,15 @@ const useTable = (notifyRef: any, gbTable: any, detailRef: any) => {
           {
             text: '删除',
             type: 'danger',
-            onClick: (row) => {
-              ElMessageBox.confirm('要通知用户吗?', '提示', {
-                type: 'warning',
-                confirmButtonText: '通知',
-                cancelButtonText: '取消'
-              })
-                .then(() => {
-                  if (notifyRef.value)
-                    notifyRef.value.showDialog(row, async () => {
-                      const result = await deletComment(row.id);
-                      if (result.status === 200) {
-                        if (gbTable.value) gbTable.value.search();
-                        ElMessage({
-                          type: 'success',
-                          message: '删除成功'
-                        });
-                      }
-                    });
-                })
-                .catch(async () => {
-                  const result = await deletComment(row.id);
-                  if (result.status === 200) {
-                    if (gbTable.value) gbTable.value.search();
-                    ElMessage({
-                      type: 'success',
-                      message: '删除成功'
-                    });
-                  }
+            onClick: async (row) => {
+              const result = await deletComment(row.id);
+              if (result.status === 200) {
+                if (gbTable.value) gbTable.value.search();
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功'
                 });
+              }
             }
           }
         ]

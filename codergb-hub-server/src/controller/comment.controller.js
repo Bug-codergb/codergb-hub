@@ -68,8 +68,8 @@ class CommentController{
   }
   async sysComment(ctx,next){
     try{
-      const { offset="0",limit="30" } = ctx.query;
-      const result = await sysCommentService(ctx,offset,limit);
+      const { offset="0",limit="30",keyword="" } = ctx.query;
+      const result = await sysCommentService(ctx,keyword,offset,limit);
       if(result){
         setResponse(ctx,'success',200,result)
       }
