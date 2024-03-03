@@ -306,8 +306,7 @@ const VideoDetail: FC = (): ReactElement => {
   };
 
   useEffect(() => {
-    document.onkeydown = (e) => {
-      console.log(e);
+    /* document.onkeydown = (e) => {
       if (
         e.code !== undefined &&
         (e.code.toLocaleLowerCase() === 'space' ||
@@ -328,7 +327,7 @@ const VideoDetail: FC = (): ReactElement => {
         document.exitFullscreen();
         setIsFull(false);
       }
-    };
+    }; */
   }, [videoRef.current, isPlay]);
 
   const volumeChangeHandler = (e: number) => {
