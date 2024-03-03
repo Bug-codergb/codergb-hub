@@ -116,7 +116,7 @@ const NavList: FC<IProps> = (props): ReactElement => {
             title={login.userMsg && !login.userMsg.avatarUrl ? '上传头像' : ''}
           >
             {login.userMsg && login.userMsg.avatarUrl && (
-              <img src={login.userMsg.avatarUrl} alt={'avatar'} />
+              <img src={`${login.userMsg.avatarUrl}?code=${new Date().getTime()}`} alt={'avatar'} />
             )}
             {login.userMsg && !login.userMsg.avatarUrl && <UserIcon />}
             {login.userMsg && !login.userMsg.avatarUrl && (

@@ -10,7 +10,7 @@ import React, {
   useEffect
 } from 'react';
 import { CloudUploadOutlined } from '@ant-design/icons';
-import { Progress, Spin } from 'antd';
+import { Progress, Spin, message } from 'antd';
 import { UploadVideoWrapper } from './style';
 import { shardUtils } from '../../../../utils/shard';
 import VideoInfo from './childCpn/videoInfo';
@@ -59,6 +59,10 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
   const fileChangeHandle = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files && e.currentTarget.files.length !== 0) {
       const file = e.currentTarget.files[0];
+      if (!file.type.includes('video')) {
+        message.warning('请上传视频文件');
+        return;
+      }
       setVideoURL(URL.createObjectURL(file));
       setVideoName(file.name);
 

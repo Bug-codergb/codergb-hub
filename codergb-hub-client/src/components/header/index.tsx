@@ -206,7 +206,10 @@ const Header: FC = (): ReactElement => {
             >
               <div className="login-status">
                 {loginState && loginState.userMsg && loginState.userMsg.avatarUrl && (
-                  <img src={loginState.userMsg.avatarUrl} alt="avatar" />
+                  <img
+                    src={`${loginState.userMsg.avatarUrl}?code=${new Date().getTime()}`}
+                    alt="avatar"
+                  />
                 )}
                 {loginState && loginState.userMsg && !loginState.userMsg.avatarUrl && (
                   <div className="no-avatar-container">

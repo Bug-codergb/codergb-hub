@@ -94,6 +94,7 @@ import type { FormInstance, FormRules } from 'element-plus';
 import GbUpload from '@/components/common/gbUpload/GbUpload.vue';
 import GbVideo from '@/components/common/gbVideo/GbVideo.vue';
 import { getVideoDuration } from '@/utils/video';
+import { ElMessage } from 'element-plus';
 const props = defineProps({
   aspectRatio: {
     type: Number,
@@ -170,10 +171,19 @@ for (let item of props.tableConstructor) {
 }
 const rules = reactive<FormRules>(ruleObj);
 const fileChange = (e: Event, prop: string) => {
-  imgProp.value = prop;
   const tar = e.target as HTMLInputElement;
   if (tar.files && tar.files[0]) {
+    const _file = tar.files[0];
+    if (!_file.type.includes('image')) {
+      ElMessage.closeAll();
+      ElMessage({
+        type: 'warning',
+        message: '请选择图片文件'
+      });
+      return;
+    }
     isShowUpload.value = true;
+    imgProp.value = prop;
     nextTick(() => {
       file.value = tar.files![0];
     });
@@ -188,6 +198,14 @@ const videoChange = (e: Event, prop: string) => {
   videoProp.value = prop;
   const tar = e.target as HTMLInputElement;
   if (tar.files && tar.files[0]) {
+    if (!tar.files[0].type.includes('video')) {
+      ElMessage.closeAll();
+      ElMessage({
+        type: 'warning',
+        message: '请选择视频文件'
+      });
+      return;
+    }
     isShowVideoUpload.value = true;
     nextTick(() => {
       videoFile.value = tar.files![0];

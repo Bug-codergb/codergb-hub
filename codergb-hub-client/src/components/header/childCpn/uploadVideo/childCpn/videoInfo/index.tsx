@@ -14,7 +14,7 @@ import React, {
   MutableRefObject
 } from 'react';
 import { CloudUploadOutlined, RocketOutlined } from '@ant-design/icons';
-import { Input, Select, Modal } from 'antd';
+import { Input, Select, Modal, message } from 'antd';
 import { VideoInfoWrapper, LeftContent, RightContent } from './style';
 
 import CustomizeUpload from '../../../../../customizeUpload';
@@ -101,6 +101,11 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
   }, []);
   const abbreviationHandle = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
+      const file = e.currentTarget.files[0];
+      if (!file.type.includes('image')) {
+        message.warning('请选择图片文件');
+        return;
+      }
       setFile(e.currentTarget.files[0]);
       setIsModalOpen(true);
     }

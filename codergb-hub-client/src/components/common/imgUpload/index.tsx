@@ -8,7 +8,7 @@ import React, {
   useRef
 } from 'react';
 import { ImgUploadWrapper } from './style';
-import { Modal, Progress } from 'antd';
+import { Modal, Progress, message } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import CustomizeUpload from '../../customizeUpload';
 import { type IResponseType } from '../../../types/responseType';
@@ -46,6 +46,11 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
   const uploadRef = useRef<any>();
   const fileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files && e.currentTarget.files.length !== 0) {
+      const file = e.currentTarget.files[0];
+      if (!file.type.includes('image')) {
+        message.warning('请选择图片');
+        return;
+      }
       setFile(e.currentTarget.files[0]);
       setIsShowCropper(true);
     }
@@ -78,6 +83,8 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
       onOk={handleAvatarOk}
       width={'65%'}
       onCancel={handleAvatarCancel}
+      okText={'确定'}
+      cancelText={'取消'}
     >
       {isShow && (
         <ImgUploadWrapper>

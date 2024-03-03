@@ -12,6 +12,7 @@ import { PictureOutlined } from '@ant-design/icons';
 import { AvatarUploadWrapper } from './style';
 
 import CustomizeUpload from '../../../../../../../../components/customizeUpload';
+import { message } from 'antd';
 const AvatarUpload: FC = forwardRef((props, propsRef): ReactElement => {
   const [file, setFile] = useState<File | null>(null);
   const [isShowCropper, setIsShowCropper] = useState<boolean>(false);
@@ -20,6 +21,11 @@ const AvatarUpload: FC = forwardRef((props, propsRef): ReactElement => {
   const fileChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.files);
     if (e.currentTarget.files) {
+      const file = e.currentTarget.files[0];
+      if (!file.type.includes('image')) {
+        message.warning('请选择图片文件');
+        return;
+      }
       setFile(e.currentTarget.files[0]);
       setIsShowCropper(true);
     }

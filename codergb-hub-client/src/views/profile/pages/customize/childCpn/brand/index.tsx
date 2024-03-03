@@ -81,7 +81,7 @@ const Brand: FC = (): ReactElement => {
         }
         operator={login.userMsg.avatarUrl ? '更换' : '上传'}
         isAvatar={true}
-        img={<img src={login.userMsg.avatarUrl} />}
+        img={<img src={`${login.userMsg.avatarUrl}?code=${new Date().getTime()}`} />}
         uploadHandle={() => {
           uploadAvatar();
         }}
@@ -106,6 +106,8 @@ const Brand: FC = (): ReactElement => {
         onOk={handleAvatarOk}
         width={'65%'}
         onCancel={handleAvatarCancel}
+        okText={'确定'}
+        cancelText={'取消'}
       >
         <AvatarUpload
           // @ts-expect-error
