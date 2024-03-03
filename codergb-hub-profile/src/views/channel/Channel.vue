@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="channel-container">
       <GbHeader :header="header" :is-show-create="false" />
       <GbTable :table-data="tableData" ref="gbTable" />

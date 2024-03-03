@@ -162,7 +162,7 @@ class PlaylistController{
       const {id} = ctx.params;
       const {offset='0',limit="30"} = ctx.query;
       const result = await getUserSubService(ctx,id,offset,limit);
-      console.log(result);
+
       if(result){
         setResponse(ctx,"success",200,result);
       }

@@ -72,7 +72,7 @@ class ChannelService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async getAllChannelService(ctx,offset,limit){
+  async getAllChannelService(ctx,offset,limit,keyword){
     try{
       const sql=`
               SELECT c.id,c.name,c.alias,c.description,JSON_OBJECT(
@@ -101,7 +101,7 @@ class ChannelService{
         from channel as c
         left join user u on c.userId = u.userId
         left join file as f on f.id=banner
-        where f.vioUrl is null
+        where f.vioUrl is null ${keyword.trim().length!==0 ? `and c.name like '%${keyword}%'`:''}
         limit ?,?`;
 
       const res = await connection.execute(sql,[offset,limit]);
@@ -110,7 +110,7 @@ class ChannelService{
           from channel as c
           left join user u on c.userId = u.userId
           left join file as f on f.id=banner
-        where f.vioUrl is null
+        where f.vioUrl is null ${keyword.trim().length!==0 ? `and c.name like '%${keyword}%'`:''}
           `;
       const count = await connection.execute(countSQL);
       return {

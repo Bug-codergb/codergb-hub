@@ -149,11 +149,12 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
-  async getAllUserCountService(ctx,isExplore){
+  async getAllUserCountService(ctx,isExplore,keyword){
     try{
       const sql=`select count(u.userId) as count
                  from user as u
-                 ${isExplore!==-1?`where isExplore = ?`:``}`;
+                 ${isExplore!==-1 ? `where isExplore = ? ${keyword.trim().length!==0? ` and u.userName like '%${keyword}%'`:''}`:`${keyword.trim().length!==0?` where u.userName like '%${keyword}%'`:''}`}
+                  `;
       let exeArr=[];
       if(isExplore!==-1){
         exeArr=[isExplore];
@@ -164,12 +165,12 @@ class UserService{
       setResponse(ctx,e.message,500);
     }
   }
-  async getAllUserService(ctx,offset,limit,isExplore){
+  async getAllUserService(ctx,offset,limit,isExplore,keyword){
     try{
       const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore,
                   u.originalname,u.mimetype,u.dest,u.filename,u.size
                   from user as u
-                  ${isExplore!==-1?`where isExplore = ?`:``}
+                  ${isExplore!==-1 ? `where isExplore = ? ${keyword.trim().length!==0? ` and u.userName like '%${keyword}%'`:''}`:`${keyword.trim().length!==0?` where u.userName like '%${keyword}%'`:''}`}
                   order by u.createTime desc
                   limit ?,?`;
       let exeArr=[offset,limit];
@@ -177,7 +178,7 @@ class UserService{
         exeArr=[isExplore,offset,limit];
       }
       const result = await connection.execute(sql,exeArr);
-      const count = await new UserService().getAllUserCountService(ctx,isExplore);
+      const count = await new UserService().getAllUserCountService(ctx,isExplore,keyword);
       return {
         count:count[0].count,
         list:result[0]

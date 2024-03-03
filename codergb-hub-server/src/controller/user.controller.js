@@ -137,7 +137,8 @@ class UserController{
   async getAllUser(ctx,next){
     try{
       const { offset="0" ,limit="30",isExplore = -1 } = ctx.request.query;
-      const result = await getAllUserService(ctx,offset,limit,isExplore);
+      const {keyword=""} = ctx.request.body;
+      const result = await getAllUserService(ctx,offset,limit,isExplore,keyword);
       if(result){
         setResponse(ctx,"success",200,result)
       }

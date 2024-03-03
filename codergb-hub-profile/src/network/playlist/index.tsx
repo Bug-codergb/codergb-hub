@@ -99,3 +99,8 @@ export async function deletePlaylistVideo<T = IResponseType<any>>(vid: string, p
     }
   });
 }
+export async function getSubPlaylist<T = IResponseType<any>>(id: string) {
+  return await gbRequest.post<T>({
+    url: `/playlist/user/sub/${id}`
+  });
+}

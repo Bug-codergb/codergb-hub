@@ -208,7 +208,7 @@ class PlaylistService{
       const sql=`
       select p.id,p.name,p.description,
        JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user,
-       p.createTime,p.updateTime,p.isPublic,
+       p.createTime,p.updateTime,p.isPublic, count(p.id) as video,
        if(f.picUrl is null,u.avatarUrl,f.picUrl) as picUrl
         from sub_playlist as sp
         left join playlist p on p.id = sp.playlistId

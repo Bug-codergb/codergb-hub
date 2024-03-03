@@ -61,7 +61,9 @@
         <el-tab-pane label="Ta的社区">
           <Community />
         </el-tab-pane>
-        <el-tab-pane label="Ta的收藏"></el-tab-pane>
+        <el-tab-pane label="Ta的收藏">
+          <SubPlaylist :user-id="id" />
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -84,6 +86,7 @@ import UserVideo from '@/views/detail/userDetail/childCpn/userVideo/UserVideo.vu
 import UserPlaylist from '@/views/detail/userDetail/childCpn/userPlaylist/UserPlaylist.vue';
 import SubUser from '@/views/detail/userDetail/childCpn/subUser/SubUser.vue';
 import Community from '@/views/detail/userDetail/childCpn/community/Community.vue';
+import SubPlaylist from '@/views/detail/userDetail/childCpn/subPlaylist/SubPlaylist.vue';
 const route = useRoute();
 const router = useRouter();
 const { id } = route.params;

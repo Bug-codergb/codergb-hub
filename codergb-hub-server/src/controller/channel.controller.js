@@ -79,8 +79,9 @@ class ChannelController{
   }
   async getAllChannel(ctx,next){
     try{
-      const { offset="0",limit="30" } = ctx.query;
-      const result = await getAllChannelService(ctx,offset,limit);
+      let { offset="0",limit="30",keyword="" } = ctx.query;
+      (!keyword) && (keyword="")
+      const result = await getAllChannelService(ctx,offset,limit,keyword);
       if(result){
         setResponse(ctx,"success",200,result);
       }

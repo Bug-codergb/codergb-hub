@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="user-list">
       <GbHeader :header="header" @create="createHandler" />
       <CreateUser ref="createUserRef" @refresh="search" />
