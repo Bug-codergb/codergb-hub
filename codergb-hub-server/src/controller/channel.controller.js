@@ -9,7 +9,8 @@ const {
   getChannelMsgService,
   uploadAvatarService,
   userChannelService,
-  getAllChannelService
+  getAllChannelService,
+  updateChannelService
 } = require("../service/channel.service");
 class ChannelController{
   async createChannel(ctx,next){
@@ -87,6 +88,28 @@ class ChannelController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
+    }
+  }
+  async updateChannel(ctx,next){
+    try{
+      const {id} = ctx.params;
+      let { name,alias,description,official,trailer,featured,banner } = ctx.request.body;
+      if(
+        !isEmpty(ctx,name,"频道名称不能为空") &&
+        !isEmpty(ctx,alias,"频道别名不能为空") &&
+        !isEmpty(ctx,description,"频道简介不能为空") &&
+        !isEmpty(ctx,official,"频道类型不能为空")
+      ){
+        (!trailer) && (trailer = null);
+        (!featured) && (featured=null);
+        (!banner) && (banner=null)
+        const result = await updateChannelService(ctx,id,name,alias,description,official,trailer,featured,banner);
+        if(result){
+          setResponse(ctx,"success",200,{})
+        }
+      }
+    }catch (e) {
+
     }
   }
 }

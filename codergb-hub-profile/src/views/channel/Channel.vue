@@ -4,11 +4,13 @@
       <GbHeader :header="header" :is-show-create="false" />
       <GbTable :table-data="tableData" ref="gbTable" />
     </div>
+    <EditChannel ref="editChannelRef" @refresh="refreshHandler" />
   </el-card>
 </template>
 <script setup lang="tsx">
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
+import EditChannel from '@/views/channel/childCpn/editChannel/EditChannel.vue';
 import { reactive, ref, getCurrentInstance } from 'vue';
 import { IChannel } from '@/types/channel/IChannel';
 import moment from 'moment';
@@ -18,6 +20,7 @@ import { CHANNEL_DETAIL_PATH } from '@/router/constant';
 
 const instance = getCurrentInstance();
 
+const editChannelRef = ref();
 const tableData = reactive({
   url: '/channel/all',
   method: 'get',
@@ -129,7 +132,9 @@ const tableData = reactive({
         {
           text: '编辑',
           type: 'primary',
-          onClick: () => {}
+          onClick: (row: IChannel) => {
+            editChannelRef.value.showDrawer(row);
+          }
         }
       ]
     }
@@ -151,6 +156,9 @@ const header = reactive([
     }
   }
 ]);
+const refreshHandler = () => {
+  if (gbTable.value) gbTable.value.search();
+};
 </script>
 <style lang="less">
 .g-trailer,

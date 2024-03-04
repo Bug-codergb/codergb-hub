@@ -4,7 +4,7 @@ import { type IResponseType } from '../../../types/responseType';
 import { login } from '../../../network/login';
 import localCache from '../../../utils/cache';
 import { type NavigateFunction } from 'react-router/dist/lib/hooks';
-import { getUserMsg } from '../../../network/user';
+import { getLoginMsg, getUserMsg } from '../../../network/user';
 import { changeChannelAction } from '../../profile/pages/customize/store/actionCreators';
 
 export function changeUserMsg(userMsg: IUserMsg) {
@@ -48,7 +48,8 @@ export function loginAction(userName: string, password: string, navigate: Naviga
 }
 
 export function changeUserDetailAction(userId: string) {
-  return async (dispatch: any) => {
+  return async (dispatch: any, s: any) => {
+    console.log(s);
     try {
       const data = await getUserMsg<IResponseType<IUserDetail>>(userId);
       if (data.status === 200) {
@@ -56,6 +57,12 @@ export function changeUserDetailAction(userId: string) {
         localCache.deleteCache('userDetail');
         localCache.setCache('userDetail', data.data);
         await dispatch(changeChannelAction(userId));
+      }
+
+      const userMsg = await getLoginMsg<IResponseType<IUserMsg>>(userId);
+      if (userMsg.status === 200) {
+        console.log(userMsg.data);
+        localCache.setCache('userMsg', userMsg.data);
       }
     } catch (e) {
       console.log(e);

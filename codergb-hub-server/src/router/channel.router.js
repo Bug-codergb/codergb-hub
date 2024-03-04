@@ -9,7 +9,8 @@ const {
   updateAvatar,
   deleteAvatar,
   userChannel,
-  getAllChannel
+  getAllChannel,
+  updateChannel
 } = require("../controller/channel.controller")
 channelRouter.post("/:id",authVerify,createChannel);
 //上传频道头像(作废)
@@ -18,4 +19,6 @@ channelRouter.post("/avatar/upload",authVerify,channelAvatarUpload,uploadAvatar)
 channelRouter.get("/user/:id",authVerify,userChannel);
 //获取所有频道
 channelRouter.get("/all",authVerify,getAllChannel);
+//更新频道
+channelRouter.post("/update/:id",authVerify,updateChannel);
 module.exports = channelRouter

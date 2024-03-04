@@ -12,6 +12,7 @@ import { Modal, Progress, message } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import CustomizeUpload from '../../customizeUpload';
 import { type IResponseType } from '../../../types/responseType';
+import { useLoginMsg } from '../../../hook/useLoginMsg';
 interface IProps {
   realWidth: number;
   isShow: boolean;
@@ -35,6 +36,7 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
     aspectRatio,
     handleCancel
   } = props;
+  const loginState = useLoginMsg();
   const [progress, setProgress] = useState<number>(0);
   const [isShowCropper, setIsShowCropper] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
@@ -60,9 +62,13 @@ const ImgUpload: FC<IProps> = (props): ReactElement => {
     if (uploadRef.current) {
       const f = await uploadRef.current.getCropperFile();
       formData.append(uploadName, f);
-      const res = await network(formData, (e) => {
-        setProgress((e.loaded / e.total) * 100);
-      });
+      const res = await network(
+        formData,
+        (e) => {
+          setProgress((e.loaded / e.total) * 100);
+        },
+        loginState.userMsg.userId
+      );
       if (res.status === 200) {
         handleOk(res);
       }

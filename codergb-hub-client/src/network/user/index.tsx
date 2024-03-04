@@ -2,10 +2,11 @@ import gbRequest from '../index';
 import { type IResponseType } from '../../types/responseType';
 export async function userUploadAvatar<T = IResponseType<any>>(
   formData: FormData,
-  getProgress: (e: any) => void
+  getProgress: (e: any) => void,
+  userId: string
 ): Promise<T> {
   return await gbRequest.post<T>({
-    url: '/user/avatar/upload',
+    url: `/user/avatar/upload/${userId}`,
     data: formData,
     headers: {
       'Content-type': 'multipart/form-data'
@@ -51,5 +52,10 @@ export async function getUserFans<T = IResponseType<any>>(
       offset,
       limit
     }
+  });
+}
+export async function getLoginMsg<T = IResponseType<any>>(userId: string): Promise<T> {
+  return await gbRequest.get<T>({
+    url: `/login/user-msg/${userId}`
   });
 }

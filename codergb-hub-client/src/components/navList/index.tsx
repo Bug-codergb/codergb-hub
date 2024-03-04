@@ -18,7 +18,7 @@ import {
   studioMenu,
   USER_PLAYLIST
 } from '../../constant/menu';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { type ILogin } from '../../types/login/ILogin';
 import UserIcon from '../../assets/html/user/userIcon';
 
@@ -32,6 +32,10 @@ import PlaylistIcon from '../../assets/html/playlist/playlistIcon';
 import PlaylistShadowIcon from '../../assets/html/playlist/playlistShadowIcon';
 import { routes } from '../../router';
 import UserPlaylist from '../../views/user-playlist';
+import { message } from 'antd';
+import { type Dispatch } from 'redux';
+import { changeUserDetailAction } from '../../views/login/store/actionCreators';
+
 interface IProps {
   isHome: boolean;
 }
@@ -42,6 +46,7 @@ const NavList: FC<IProps> = (props): ReactElement => {
   const [homeMain, setHomeMain] = useState<MainMenuType[]>(profileMenu);
   // const [progress,setProgress]=useState<number>(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch<Dispatch<any>>();
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
@@ -97,12 +102,18 @@ const NavList: FC<IProps> = (props): ReactElement => {
   const fileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files && e.currentTarget.files.length !== 0) {
       const file = e.currentTarget.files[0];
+      if (!file.type.includes('image')) {
+        message.destroy();
+        message.warning('请选择图片文件');
+        return;
+      }
       setFile(file);
       setIsAvatarModalOpen(true);
     }
   };
   const handleAvatarOk = (f?: File) => {
     setIsAvatarModalOpen(false);
+    login.userMsg && dispatch(changeUserDetailAction(login.userMsg.userId));
   };
   const handleAvatarCancel = () => {};
   return (

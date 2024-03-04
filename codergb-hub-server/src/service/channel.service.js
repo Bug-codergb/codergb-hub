@@ -75,7 +75,7 @@ class ChannelService{
   async getAllChannelService(ctx,offset,limit,keyword){
     try{
       const sql=`
-              SELECT c.id,c.name,c.alias,c.description,JSON_OBJECT(
+              SELECT c.id,c.name,c.alias,c.description,c.banner,JSON_OBJECT(
               'userId',c.userId,'userName',u.userName,'avatarUrl',u.avatarUrl
             ) as user,official,c.createTime,c.updateTime,f.picUrl,
             (
@@ -102,6 +102,7 @@ class ChannelService{
         left join user u on c.userId = u.userId
         left join file as f on f.id=banner
         where f.vioUrl is null ${keyword.trim().length!==0 ? `and c.name like '%${keyword}%'`:''}
+        order by c.createTime desc
         limit ?,?`;
 
       const res = await connection.execute(sql,[offset,limit]);
@@ -119,6 +120,21 @@ class ChannelService{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{})
+    }
+  }
+  async updateChannelService(ctx,id,name,alias,description,official,trailer,featured,banner){
+    try{
+      const sql=`
+      update channel set name = ?,alias=?,description=?,official=?,trailer=?,featured=?,banner=?
+      where id=?`;
+      const result = await connection.execute(sql,[name,alias,description,official,trailer,featured,banner,id]);
+      return result[0];
+    }catch (e) {
+      if(e.message.includes("Duplicate") && e.message.includes("channel.name")){
+        setResponse(ctx,'频道名称已经存在',400,{})
+        return;
+      }
+      setResponse(ctx,'error',500,{})
     }
   }
 }
