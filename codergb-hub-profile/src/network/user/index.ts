@@ -39,3 +39,9 @@ export async function getUserLibrary<T = IResponseType<any>>(id: string) {
     url: `/user/library/` + id
   });
 }
+//删除用户
+export async function deleteUser<T = IResponseType<any>>(userId: string) {
+  return await gbRequest.post<T>({
+    url: `/user/delete/${userId}`
+  });
+}

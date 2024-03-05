@@ -10,12 +10,14 @@
 
 <script lang="tsx" setup>
 import { reactive, ref } from 'vue';
+import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { IVideo } from '@/types/video/IVideo';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import moment from 'moment';
 import { IUserMsg } from '@/types/user/IUserMsg';
+import { deleteUser } from '@/network/user/index';
 import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
 import { USER_DETAIL_PATH } from '@/router/constant';
 const router = useRouter();
@@ -112,8 +114,15 @@ const tableData = reactive({
         {
           text: '删除',
           type: 'danger',
-          onClick: (row: IVideo, index: number) => {
-            console.log(index);
+          onClick: async (row: IUserMsg, index: number) => {
+            const result = await deleteUser(row.userId);
+            if (result.status === 200) {
+              ElMessage({
+                type: 'success',
+                message: '删除成功'
+              });
+              search();
+            }
           }
         }
       ]

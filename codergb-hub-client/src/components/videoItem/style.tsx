@@ -47,6 +47,7 @@ export const VideoItemWrapper: any = styled.div`
     margin: ${(props) => ((props as any).isFlex ? 0 : `${20 / 40}rem`)} 0 0 0;
     padding: 0 ${15 / 40}rem;
     width: 100%;
+    flex: 1;
     .left-container {
       width: ${50 / 40}rem;
       height: ${50 / 40}rem;

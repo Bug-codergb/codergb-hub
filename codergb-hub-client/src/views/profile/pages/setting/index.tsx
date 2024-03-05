@@ -15,6 +15,7 @@ import { useLoginMsg } from '../../../../hook/useLoginMsg';
 import moment from 'moment';
 import { editUserPass, getLoginLog } from '../../../../network/login';
 import { type IResponseType } from '../../../../types/responseType';
+import { deleteUser } from '../../../../network/user';
 
 const { confirm } = Modal;
 interface ILoinLog {
@@ -129,7 +130,14 @@ const Setting: FC = (): ReactElement => {
       okType: 'danger',
       cancelText: '取消',
       onOk() {
-        console.log('OK');
+        deleteUser(loginState.userMsg.userId).then((res) => {
+          if (res.status === 200) {
+            message.success('注销成功');
+            navigate('/login', {
+              replace: false
+            });
+          }
+        });
       },
       onCancel() {
         console.log('Cancel');

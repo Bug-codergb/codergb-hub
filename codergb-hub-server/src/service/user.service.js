@@ -293,5 +293,14 @@ class UserService{
 
     }
   }
+  async deleteUserService(ctx,userId){
+    try{
+      const sql=`delete from user where userId=?`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0];
+    }catch (e) {
+      setResponse(ctx,"error",500,{})
+    }
+  }
 }
 module.exports=new UserService();

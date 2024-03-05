@@ -59,3 +59,16 @@ export async function getLoginMsg<T = IResponseType<any>>(userId: string): Promi
     url: `/login/user-msg/${userId}`
   });
 }
+export async function updateUserHistory<T = IResponseType<any>>(userId: string, history: number) {
+  return await gbRequest.post<T>({
+    url: `/history/update/${userId}`,
+    data: {
+      history
+    }
+  });
+}
+export async function deleteUser<T = IResponseType<any>>(userId: string) {
+  return await gbRequest.post<T>({
+    url: `/user/delete/${userId}`
+  });
+}

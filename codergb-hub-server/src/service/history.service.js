@@ -8,7 +8,7 @@ class HistoryService{
       const result = await connection.execute(sql,[id,videoId,userId,0]);
       return result[0];
     }catch (e) {
-      setResponse(ctx,e.message,500,{});
+      setResponse(ctx,'error',200,{});
     }
   }
   async judgeUserHistoryService(ctx,userId,vId){
@@ -84,7 +84,16 @@ class HistoryService{
       const result = await connection.execute(sql,[userId]);
       return result[0];
     }catch (e) {
-      setResponse(ctx,e.message,500,{});
+      setResponse(ctx,"error",500,{});
+    }
+  }
+  async updateUserHistoryService(ctx,id,history){
+    try{
+      const sql=`update user set history=? where userId=?`;
+      const result = await connection.execute(sql,[history,id]);
+      return result[0]
+    }catch (e) {
+      setResponse(ctx,"error",500,{});
     }
   }
 }

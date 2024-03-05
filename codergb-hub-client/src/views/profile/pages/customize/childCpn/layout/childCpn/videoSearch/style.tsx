@@ -8,13 +8,19 @@ export const VideoSearchWrapper = styled.div`
       flex: 1;
     }
   }
+  .g-page {
+    padding: 15px 0 0 0;
+    display: flex;
+    justify-content: flex-end;
+  }
   .video-list {
-    height: ${400 / 40}rem;
+    height: ${440 / 40}rem;
     padding: ${24 / 40}rem 0;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
+    margin: 0 0 15px 0;
     & > li {
       padding: ${18 / 40}rem;
       border: 1px solid #e5e5e5;

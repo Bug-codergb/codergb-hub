@@ -1,14 +1,14 @@
-import React, { memo, FC, ReactElement, useState } from 'react';
-import { Map } from 'immutable';
+import React, { memo, type FC, type ReactElement, useState } from 'react';
+import { type Map } from 'immutable';
 import { AudioOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
+import { Input, Pagination } from 'antd';
 import { VideoSearchWrapper } from './style';
-import { IVideo } from '../../../../../../../../types/video/IVideo';
-import { getUserVideo } from '../../../../../../../../network/video';
+import { type IVideo } from '../../../../../../../../types/video/IVideo';
+import { getAllVideo, getUserVideo } from '../../../../../../../../network/video';
 import { useDispatch, useSelector } from 'react-redux';
-import { ILogin } from '../../../../../../../../types/login/ILogin';
-import { IResponseType } from '../../../../../../../../types/responseType';
-import { IPage } from '../../../../../../../../types/IPage';
+import { type ILogin } from '../../../../../../../../types/login/ILogin';
+import { type IResponseType } from '../../../../../../../../types/responseType';
+import { type IPage } from '../../../../../../../../types/IPage';
 import HolderCpn from '../../../../../../../../components/holder';
 import { updateChannel } from '../../../../../../../../network/channel';
 import { IChannel } from '../../../../../../../../types/channel/IChannel';
@@ -27,6 +27,8 @@ const VideoSearch: FC<IProps> = (props): ReactElement => {
   const [userVideo, setUserVideo] = useState<IVideo[]>([]);
   const [userVideoCount, setUserVideoCount] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
@@ -42,14 +44,24 @@ const VideoSearch: FC<IProps> = (props): ReactElement => {
       setUserVideoCount(result.data.count);
     }
   };
+
+  const getAllVideoHandler = async (keyword: string, offset: number, limit: number) => {
+    const result = await getAllVideo<IResponseType<IPage<IVideo[]>>>(offset, limit, keyword);
+    if (result.status === 200) {
+      setUserVideo(result.data.list);
+      setUserVideoCount(result.data.count);
+    }
+  };
   const onSearchUserSelf = async (value: string) => {
     setUserInp(value);
     await getUserVideoHandle(value, 0, 10);
   };
-  const onSearchOther = () => {};
+  const onSearchOther = (value: string) => {
+    getAllVideoHandler(value, 0, 10);
+  };
   const changeVideo = async (item: IVideo, index: number) => {
     setCurrentIndex(index);
-    let obj = {
+    const obj = {
       [isTrailer ? 'trailer' : 'featured']: item.id
     };
     updateVideo(obj);
@@ -58,11 +70,21 @@ const VideoSearch: FC<IProps> = (props): ReactElement => {
     <VideoSearchWrapper>
       <div className="search-container">
         <div className="user-self">
-          <Search placeholder="搜索您的视频" onSearch={(value, event) => onSearchUserSelf(value)} />
+          <Search
+            placeholder="搜索您的视频"
+            onSearch={async (value, event) => {
+              await onSearchUserSelf(value);
+            }}
+          />
         </div>
         {!isTrailer && (
           <div className="video-lib">
-            <Search placeholder="搜索整站的视频" onSearch={(e) => onSearchOther()} />
+            <Search
+              placeholder="搜索整站的视频"
+              onSearch={(value, event) => {
+                onSearchOther(value);
+              }}
+            />
           </div>
         )}
       </div>
@@ -73,7 +95,9 @@ const VideoSearch: FC<IProps> = (props): ReactElement => {
             return (
               <li
                 key={item.id}
-                onClick={(e) => changeVideo(item, index)}
+                onClick={async (e) => {
+                  await changeVideo(item, index);
+                }}
                 className={currentIndex === index ? 'active' : ''}
               >
                 <div className="video-cover">
@@ -85,6 +109,11 @@ const VideoSearch: FC<IProps> = (props): ReactElement => {
           })}
         {HolderCpn(userVideo.length, 5, 220)}
       </ul>
+      {userVideoCount > 10 && (
+        <div className="g-page">
+          <Pagination defaultCurrent={1} total={userVideoCount} current={currentPage} />
+        </div>
+      )}
     </VideoSearchWrapper>
   );
 };

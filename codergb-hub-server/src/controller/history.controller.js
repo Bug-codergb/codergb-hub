@@ -5,13 +5,25 @@ const {
   judgeUserHistoryService,
   updateHistoryService,
   userHistoryService,
-  deleteAllService
+  deleteAllService,
+  updateUserHistoryService
+
 } = require("../service/history.service");
+const { getUserMsgService } = require("../service/login.service")
 class HistoryController{
   async createHistory(ctx,next){
     try{
       const { id } = ctx.params;
       const {userId} = ctx.user;
+      const userInfo = await getUserMsgService(ctx,userId);
+
+      if(userInfo && userInfo[0]){
+        const {history} = userInfo[0];
+        if(history ===0){
+          setResponse(ctx,"已暂停观看记录",200,{});
+          return;
+        }
+      }
       const isExists = await judgeUserHistoryService(ctx,userId,id);
       if(isExists && isExists.length===0){
         const result = await createHistoryService(ctx,id,userId);
@@ -25,7 +37,7 @@ class HistoryController{
         setResponse(ctx,"success",200,{});
       }
     }catch (e) {
-      setResponse(ctx,e.message,500,{});
+      setResponse(ctx,'error',500,{});
     }
   }
   async userHistory(ctx,next){
@@ -48,6 +60,20 @@ class HistoryController{
       }
     }catch (e) {
       setResponse(ctx,e.message,500,{});
+    }
+  }
+  async updateHistory(ctx,next){
+    try{
+      const {history} = ctx.request.body;
+      if(history!==0 && history!==1){
+        setResponse(ctx,"参数错误",200,{})
+      }else{
+        const {id} = ctx.params;
+        const result = await updateUserHistoryService(ctx,id,history);
+        setResponse(ctx,"success",200,{})
+      }
+    }catch (e) {
+
     }
   }
 }

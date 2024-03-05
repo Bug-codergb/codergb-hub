@@ -14,8 +14,12 @@ export const LeftContentWrapper = styled.div`
   }
   .vio-list {
     & > li {
-      width: ${850 / 40}rem;
+      width: 100%;
       margin: 0 0 ${50 / 40}rem 0;
+      padding: 0 ${20 / 40}rem 0 0;
+      .history-img {
+        width: ${400 / 40}rem;
+      }
       .time {
         font-size: ${20 / 40}rem;
         margin: 0 0 ${16 / 40}rem 0;

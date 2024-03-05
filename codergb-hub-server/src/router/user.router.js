@@ -14,7 +14,8 @@ const {
   userHotVideo,
   createUser,
   updateUser,
-  getUserFans
+  getUserFans,
+  deleteUser
 } = require("../controller/user.controller");
 //上传头像
 userRouter.post("/avatar/upload/:userId",authVerify,userAvatarUpload,uploadAvatar);
@@ -38,4 +39,6 @@ userRouter.post("/add",authVerify,createUser);
 userRouter.post("/update",authVerify,updateUser);
 //获取用户粉丝
 userRouter.post("/fans/:id",authVerify,getUserFans);
+//删除用户
+userRouter.post("/delete/:id",authVerify,deleteUser);
 module.exports = userRouter;

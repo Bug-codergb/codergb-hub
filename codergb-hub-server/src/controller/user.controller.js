@@ -14,7 +14,8 @@ const {
   createUserService,
   getBriefService,
   updateUserService,
-  getUserFansService
+  getUserFansService,
+  deleteUserService
 } = require("../service/user.service");
 const { addChannelService } = require("../service/register.service.js")
 const {APP_HOST,APP_PORT} = require("../app/config")
@@ -131,7 +132,7 @@ class UserController{
         setResponse(ctx,"success",200,result)
       }
     }catch (e) {
-
+      setResponse(ctx,"error",500,{})
     }
   }
   async getAllUser(ctx,next){
@@ -197,7 +198,7 @@ class UserController{
         }
       }
     }catch (e) {
-
+      setResponse(ctx,"error",500,{})
     }
   }
   async updateUser(ctx,next){
@@ -241,7 +242,7 @@ class UserController{
         }
       }
     }catch (e) {
-
+      setResponse(ctx,"error",500,{})
     }
   }
   async getUserFans(ctx,next){
@@ -251,7 +252,18 @@ class UserController{
       const result = await getUserFansService(ctx,id,offset,limit);
       setResponse(ctx,"success",200,result);
     }catch (e) {
-
+      setResponse(ctx,"error",500,{})
+    }
+  }
+  async deleteUser(ctx,next){
+    try{
+      const {id} = ctx.params;
+      const result = await deleteUserService(ctx,id);
+      if(result){
+        setResponse(ctx,"success",200,{})
+      }
+    }catch (e) {
+      setResponse(ctx,"error",500,{})
     }
   }
 }

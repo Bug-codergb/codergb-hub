@@ -81,7 +81,13 @@ const Brand: FC = (): ReactElement => {
         }
         operator={login.userMsg.avatarUrl ? '更换' : '上传'}
         isAvatar={true}
-        img={<img src={`${login.userMsg.avatarUrl}?code=${new Date().getTime()}`} />}
+        img={
+          login.userMsg.avatarUrl ? (
+            <img src={`${login.userMsg.avatarUrl}?code=${new Date().getTime()}`} />
+          ) : (
+            ''
+          )
+        }
         uploadHandle={() => {
           uploadAvatar();
         }}

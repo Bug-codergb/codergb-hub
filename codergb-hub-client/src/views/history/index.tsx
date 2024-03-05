@@ -1,17 +1,29 @@
-import { memo, type FC, ReactElement, useEffect, useState, type FormEvent, Fragment } from 'react';
+import {
+  memo,
+  type FC,
+  type ReactElement,
+  useEffect,
+  useState,
+  type FormEvent,
+  Fragment
+} from 'react';
 import { Pagination, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import { type Map } from 'immutable';
 import { HistoryWrapper, LeftContentWrapper, RightContentWrapper } from './style';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { type ILogin } from '../../types/login/ILogin';
 import { deleteAllHistory, getUserHistory } from '../../network/history';
 import { type IResponseType } from '../../types/responseType';
 import { type IPage } from '../../types/IPage';
 import { type IVideo } from '../../types/video/IVideo';
 import VideoItem from '../../components/videoItem';
-const History: FC = () => {
+import { updateUserHistory } from '../../network/user';
+import { type Dispatch } from 'redux';
+import { changeUserDetailAction } from '../login/store/actionCreators';
+
+const History: FC = (): ReactElement => {
   const [video, setVideo] = useState<IVideo[]>([]);
   const [count, setCount] = useState<number>(0);
   const [isShowDelHisModal, setIsShowDelHisModal] = useState<boolean>(false);
@@ -21,6 +33,7 @@ const History: FC = () => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch<Dispatch<any>>();
   useEffect(() => {
     getAllUserHistory(login.userMsg.userId, 0, 10, '');
   }, [login.userMsg.userId]);
@@ -67,6 +80,20 @@ const History: FC = () => {
     setCurrentPage(e);
     await getAllUserHistory(login.userMsg.userId, (e - 1) * 10, 10, keyword);
   };
+
+  const pauseHistory = () => {
+    console.log(2);
+    const userDetail = login.userDetail;
+    if (userDetail) {
+      const { history } = userDetail;
+      const arg = history === 1 ? 0 : 1;
+      updateUserHistory(userDetail.userId, arg).then((res) => {
+        if (res.status === 200) {
+          dispatch(changeUserDetailAction(login.userMsg.userId, true));
+        }
+      });
+    }
+  };
   return (
     <HistoryWrapper>
       <LeftContentWrapper>
@@ -88,7 +115,7 @@ const History: FC = () => {
                       : moment().format('yyyy-MM-DD')}
                   </p>
                   <VideoItem
-                    img={<img src={item.picUrl} />}
+                    img={<img className="history-img" src={item.picUrl} />}
                     isShowVideo={false}
                     state={item.name}
                     id={item.id}
@@ -151,8 +178,13 @@ const History: FC = () => {
           >
             清除所有历史记录
           </li>
-          <li>暂停观看记录</li>
-          <li>管理所有历史记录</li>
+          <li
+            onClick={() => {
+              pauseHistory();
+            }}
+          >
+            {login.userMsg.history === 1 ? '暂停观看记录' : '恢复观看记录'}
+          </li>
         </ul>
       </RightContentWrapper>
       <Modal

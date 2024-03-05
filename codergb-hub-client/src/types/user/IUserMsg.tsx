@@ -3,5 +3,6 @@ interface IUserMsg {
   userName: string;
   token: string;
   avatarUrl: string;
+  history: number;
 }
 export type { IUserMsg };
