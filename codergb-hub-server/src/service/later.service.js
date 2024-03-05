@@ -69,6 +69,7 @@ class LaterService{
        LEFT JOIN video_file as vf on vf.videoId = v.id
        LEFT JOIN file as f on f.id = vf.fileId
        where l.userId=? and vf.mark="cover"
+       order by l.createTime desc
        limit ?,?;`;
       const result = await connection.execute(sql,[userId,offset,limit]);
       const count = await new LaterService().userLaterCountService(ctx,userId);

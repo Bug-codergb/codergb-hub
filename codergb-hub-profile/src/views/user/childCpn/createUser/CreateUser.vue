@@ -116,6 +116,14 @@ const deleteCover = () => {
 const fileChange = (e: Event, prop: string) => {
   const tar = e.target as HTMLInputElement;
   if (tar.files && tar.files[0]) {
+    if (!tar.files[0].type.includes('image')) {
+      ElMessage.closeAll();
+      ElMessage({
+        message: '请选择图片文件',
+        type: 'warning'
+      });
+      return;
+    }
     isShowUpload.value = true;
     nextTick(() => {
       file.value = tar.files![0];

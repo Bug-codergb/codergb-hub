@@ -1,4 +1,5 @@
 import React, { memo, type FC, type ReactElement, useState, useEffect } from 'react';
+import { Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
 import moment from 'moment';
@@ -35,6 +36,11 @@ const Playlist: FC = (): ReactElement => {
         id: item.id
       }
     });
+  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageChange = (e: number) => {
+    setCurrentPage(e);
+    getUserLaterReq(login.userMsg.userId, (e - 1) * 10, 10);
   };
   return (
     <PlaylistWrapper>
@@ -86,6 +92,19 @@ const Playlist: FC = (): ReactElement => {
               );
             })}
         </ul>
+        {count > 10 && (
+          <div className="page">
+            <Pagination
+              defaultCurrent={1}
+              total={count}
+              pageSize={10}
+              current={currentPage}
+              onChange={(e) => {
+                pageChange(e);
+              }}
+            />
+          </div>
+        )}
       </RightContainer>
     </PlaylistWrapper>
   );
