@@ -84,7 +84,7 @@ const VideoInfo: FC<IProps> = (props) => {
       }
     }
     if (videoInfo?.user && loginState && loginState.userMsg) {
-      dispatch(changeUserDetailAction(loginState.userMsg.userId));
+      dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
     }
     if (videoInfo) {
       getUserSubCount<IResponseType<number>>(videoInfo.user.userId).then((res) => {
@@ -109,7 +109,7 @@ const VideoInfo: FC<IProps> = (props) => {
         }
       }
       if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
       if (videoInfo) {
         getVideoThumbReq(videoInfo);
@@ -130,7 +130,7 @@ const VideoInfo: FC<IProps> = (props) => {
         }
       }
       if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
       if (videoInfo) {
         getVideoThumbReq(videoInfo);

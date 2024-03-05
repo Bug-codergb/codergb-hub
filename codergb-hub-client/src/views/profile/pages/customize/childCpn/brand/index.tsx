@@ -52,7 +52,7 @@ const Brand: FC = (): ReactElement => {
       });
     }
     if (result.status === 200) {
-      dispatch(changeUserDetailAction(login.userMsg.userId));
+      dispatch(changeUserDetailAction(login.userMsg.userId, true));
       setIsAvatarModalOpen(false);
     }
   };

@@ -63,7 +63,7 @@ const ReplyItem: FC<IProps> = (props) => {
         }
       }
       if (reply && reply.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
     }
   };
@@ -81,7 +81,7 @@ const ReplyItem: FC<IProps> = (props) => {
         }
       }
       if (reply && reply.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
     }
   };

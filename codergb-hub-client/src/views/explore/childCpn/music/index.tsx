@@ -63,7 +63,7 @@ const Music: FC<IProps> = (props) => {
       }
     }
     if (loginMsg && loginMsg.userMsg) {
-      dispatch(changeUserDetailAction(loginMsg.userMsg.userId));
+      dispatch(changeUserDetailAction(loginMsg.userMsg.userId, false));
     }
   };
   return (

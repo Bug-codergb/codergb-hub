@@ -13,6 +13,7 @@ import { USER_PLAYLIST } from '../constant/menu';
 import UserPlaylist from '../views/user-playlist';
 
 const LoginRoute = lazy(async () => await import('../views/login/index'));
+const RegisterRoute = lazy(async () => await import('../views/register/index'));
 const HomeRoute = lazy(async () => await import('../views/home/index'));
 const Cate = lazy(async () => await import('../views/all/index'));
 // home页主要内容
@@ -43,6 +44,14 @@ const routes: RouteObject[] = [
     element: (
       <Suspense>
         <LoginRoute />
+      </Suspense>
+    )
+  },
+  {
+    path: 'register',
+    element: (
+      <Suspense>
+        <RegisterRoute />
       </Suspense>
     )
   },

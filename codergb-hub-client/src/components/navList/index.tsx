@@ -113,7 +113,7 @@ const NavList: FC<IProps> = (props): ReactElement => {
   };
   const handleAvatarOk = (f?: File) => {
     setIsAvatarModalOpen(false);
-    login.userMsg && dispatch(changeUserDetailAction(login.userMsg.userId));
+    login.userMsg && dispatch(changeUserDetailAction(login.userMsg.userId, true));
   };
   const handleAvatarCancel = () => {};
   return (

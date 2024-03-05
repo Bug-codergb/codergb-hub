@@ -31,7 +31,7 @@ const SubBtn: FC<IProps> = (props): ReactElement => {
       }
     }
     if (loginMsg && loginMsg.userMsg) {
-      dispatch(changeUserDetailAction(loginMsg.userMsg.userId));
+      dispatch(changeUserDetailAction(loginMsg.userMsg.userId, false));
     }
   };
   return (

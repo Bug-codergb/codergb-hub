@@ -1,32 +1,33 @@
-import React, {
-  memo,
-  type FC,
-  type ReactElement,
-  useCallback,
-  useState,
-  type ChangeEvent
-} from 'react';
+import React, { memo, type FC, type ReactElement, useState, type ChangeEvent } from 'react';
+import { message } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { RightOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
-import { LoginWrappers } from './style';
+import { RegisterWrapper } from './style';
 import { useDispatch } from 'react-redux';
-import { loginAction } from './store/actionCreators';
 import { type Dispatch } from 'redux';
-const Login: FC = (): ReactElement => {
+import { registerReq } from '../../network/login';
+
+const Register: FC = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const onFinish = () => {
-    dispatch(loginAction(username, password, navigate));
+    if (!username || !password) {
+      message.destroy();
+      message.warning('用户名或者密码不能为空');
+      return;
+    }
+    registerReq(username, password).then((res) => {
+      if (res.status === 200) {
+        message.success('账号注册成功');
+        navigate('/login');
+      }
+    });
   };
   const register = () => {
-    console.log(1);
-    navigate('/register', {
-      replace: false
-    });
+    navigate('/login');
   };
   const usernameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.currentTarget.value);
@@ -35,7 +36,7 @@ const Login: FC = (): ReactElement => {
     setPassword(e.currentTarget.value);
   };
   return (
-    <LoginWrappers>
+    <RegisterWrapper>
       <div className="login-bgc">
         <div className="signup-space">
           <div className="signup-stars"></div>
@@ -47,7 +48,8 @@ const Login: FC = (): ReactElement => {
         </div>
       </div>
       <div className="login-inner">
-        <h2 className="title">codergb-hub账号登录</h2>
+        <h2 className="title">codergb-hub</h2>
+        <h3 className="tip">添加一个codergb-hub账号</h3>
         <div className="form-item">
           <div className="label">用户名</div>
           <input
@@ -77,8 +79,8 @@ const Login: FC = (): ReactElement => {
               register();
             }}
           >
-            <span className="register-label">去注册</span>
-            <RightOutlined />
+            <LeftOutlined />
+            <span className="login-label">登录</span>
           </button>
           <div className="block"></div>
           <button
@@ -87,11 +89,11 @@ const Login: FC = (): ReactElement => {
               onFinish();
             }}
           >
-            登录
+            注册
           </button>
         </div>
       </div>
-    </LoginWrappers>
+    </RegisterWrapper>
   );
 };
-export default memo(Login);
+export default memo(Register);

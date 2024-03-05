@@ -86,7 +86,7 @@ const CommentItem: FC<IProps> = (props) => {
         }
       }
       if (comment && comment.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
     }
   };
@@ -104,7 +104,7 @@ const CommentItem: FC<IProps> = (props) => {
         }
       }
       if (comment && comment.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
     }
   };

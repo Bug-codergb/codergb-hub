@@ -73,7 +73,7 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
         }
       }
       if (loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
     }
   };
@@ -91,7 +91,7 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
         }
       }
       if (loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId));
+        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
       }
     }
   };

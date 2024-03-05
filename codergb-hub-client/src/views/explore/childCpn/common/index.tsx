@@ -73,7 +73,7 @@ const Common: FC<IProps> = (props) => {
       }
     }
     if (loginState && loginState.userMsg) {
-      dispatch(changeUserDetailAction(loginState.userMsg.userId));
+      dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
     }
   };
   return (

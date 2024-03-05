@@ -6,6 +6,7 @@ import localCache from '../../../utils/cache';
 import { type NavigateFunction } from 'react-router/dist/lib/hooks';
 import { getLoginMsg, getUserMsg } from '../../../network/user';
 import { changeChannelAction } from '../../profile/pages/customize/store/actionCreators';
+import { type ILogin } from '../../../types/login/ILogin';
 
 export function changeUserMsg(userMsg: IUserMsg) {
   return {
@@ -33,7 +34,7 @@ export function loginAction(userName: string, password: string, navigate: Naviga
         localCache.setCache('userMsg', data.data);
         localCache.setCache('loginType', 1);
         await dispatch(changeUserMsg(data.data));
-        await dispatch(changeUserDetailAction(data.data.userId));
+        await dispatch(changeUserDetailAction(data.data.userId, false));
         await dispatch(changeLoginType(1));
         await dispatch(changeChannelAction(data.data.userId));
 
@@ -47,9 +48,9 @@ export function loginAction(userName: string, password: string, navigate: Naviga
   };
 }
 
-export function changeUserDetailAction(userId: string) {
-  return async (dispatch: any, s: any) => {
-    console.log(s);
+export function changeUserDetailAction(userId: string, setMsg: boolean = false) {
+  return async (dispatch: any, state: any) => {
+    const loginState = state().getIn(['loginReducer', 'login']) as ILogin;
     try {
       const data = await getUserMsg<IResponseType<IUserDetail>>(userId);
       if (data.status === 200) {
@@ -59,10 +60,14 @@ export function changeUserDetailAction(userId: string) {
         await dispatch(changeChannelAction(userId));
       }
 
-      const userMsg = await getLoginMsg<IResponseType<IUserMsg>>(userId);
-      if (userMsg.status === 200) {
-        console.log(userMsg.data);
-        localCache.setCache('userMsg', userMsg.data);
+      if (setMsg) {
+        const userMsg = await getLoginMsg<IResponseType<IUserMsg>>(userId);
+        if (userMsg.status === 200) {
+          const msg = userMsg.data;
+          msg.token = loginState.userMsg.token ?? '';
+          localCache.setCache('userMsg', msg);
+          dispatch(changeUserMsg(msg));
+        }
       }
     } catch (e) {
       console.log(e);

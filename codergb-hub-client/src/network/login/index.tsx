@@ -12,6 +12,15 @@ export async function login<T = IResponseType<any>>(
     }
   });
 }
+export async function registerReq<T = IResponseType<any>>(userName: string, password: string) {
+  return await gbRequest.post<T>({
+    url: '/register',
+    data: {
+      userName,
+      password
+    }
+  });
+}
 export async function getLoginLog<T = IResponseType<any>>(userId: string) {
   return await gbRequest.get<T>({
     url: `/login/log/${userId}`

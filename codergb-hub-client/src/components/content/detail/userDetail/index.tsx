@@ -166,7 +166,7 @@ const UserDetail: FC = (): ReactElement => {
       }
     }
     if (loginMsg && loginMsg.userMsg) {
-      dispatch(changeUserDetailAction(loginMsg.userMsg.userId));
+      dispatch(changeUserDetailAction(loginMsg.userMsg.userId, false));
     }
   };
   return (

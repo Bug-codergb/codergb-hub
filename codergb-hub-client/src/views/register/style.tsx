@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import bgc from '../../assets/img/login.svg';
-export const LoginWrappers = styled.div`
+export const RegisterWrapper = styled.div`
   background-color: #060d20;
   position: relative;
   height: 100%;
@@ -100,17 +100,21 @@ export const LoginWrappers = styled.div`
     top: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    width: 500px;
+    width: 400px;
     background-color: #0e162b;
     border: 1px solid #132f6d;
-    .register-label {
-      margin: 0 10px 0 0;
+    .login-label {
+      margin: 0 0 0 10px;
+    }
+    .tip {
+      color: #7f8aa4;
+      text-align: center;
+      margin: 0 0 15px 0;
     }
     .title {
       font-size: 38px;
       color: #7c8aa6;
       font-weight: 800;
-      white-space: nowrap;
     }
     .form-item {
       display: flex;
