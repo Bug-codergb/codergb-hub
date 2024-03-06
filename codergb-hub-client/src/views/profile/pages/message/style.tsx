@@ -1,5 +1,12 @@
 import styled from 'styled-components';
-export const MessageWrapper = styled.div``;
+export const MessageWrapper = styled.div`
+  .empty-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 200px 0;
+  }
+`;
 export const NotifyWrapper = styled.div`
   width: ${440 / 40}rem;
   .user-name {

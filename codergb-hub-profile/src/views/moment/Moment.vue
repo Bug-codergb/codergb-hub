@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="g-inner-card">
     <div class="moment">
       <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" />
       <GbTable :table-data="tableData" ref="gbTable" />

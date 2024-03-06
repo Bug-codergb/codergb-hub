@@ -2,7 +2,7 @@ import { type FC, type ReactElement } from 'react';
 import type React from 'react';
 import { memo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table } from 'antd';
+import { Table, Empty } from 'antd';
 import { PlaylistWrapper } from './style';
 import { type IPlaylist } from '../../../../types/playlist/IPlaylist';
 import { getUserPlaylist } from '../../../../network/playlist';
@@ -56,6 +56,11 @@ const Playlist: FC = (): ReactElement => {
             }
           }}
         />
+      )}
+      {(!playlist || playlist.length === 0) && (
+        <div className="empty-container">
+          <Empty description="您还没有创建播放列表" />
+        </div>
       )}
     </PlaylistWrapper>
   );

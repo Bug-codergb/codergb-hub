@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-export const VideoPageWrapper = styled.div``;
+export const VideoPageWrapper = styled.div`
+  .empty-container {
+    margin: 150px 0;
+  }
+`;
 export const VideoListItemWrapper = styled.div`
   display: flex;
   align-items: flex-start;

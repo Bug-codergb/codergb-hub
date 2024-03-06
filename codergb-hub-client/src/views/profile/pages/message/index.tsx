@@ -2,7 +2,7 @@ import type React from 'react';
 import { memo, type FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
-import { Divider, Radio, Table } from 'antd';
+import { Divider, Radio, Table, Empty } from 'antd';
 import { MessageWrapper } from './style';
 import { type INotify } from '../../../../types/message';
 import { type ILogin } from '../../../../types/login/ILogin';
@@ -67,6 +67,11 @@ const Message: FC = () => {
             }
           }}
         />
+      )}
+      {(!nofity || nofity.length === 0) && (
+        <div className="empty-container">
+          <Empty description="暂无消息" />
+        </div>
       )}
     </MessageWrapper>
   );

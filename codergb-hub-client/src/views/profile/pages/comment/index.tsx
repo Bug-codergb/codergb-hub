@@ -3,7 +3,7 @@ import type React from 'react';
 import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
-import { Divider, Radio, Table } from 'antd';
+import { Divider, Empty, Radio, Table } from 'antd';
 import { CommentWrapper } from './style';
 import { useSelector } from 'react-redux';
 import { type IComment } from '../../../../types/comment/IComment';
@@ -72,6 +72,11 @@ const Comment: FC = (): ReactElement => {
             }
           }}
         />
+      )}
+      {(!comment || comment.length === 0) && (
+        <div className="empty-container">
+          <Empty description="您还没有发布评论" />
+        </div>
       )}
     </CommentWrapper>
   );

@@ -5,6 +5,9 @@ export const PlaylistWrapper = styled.div`
     font-weight: bolder;
     margin: 0 0 ${16 / 40}rem 0;
   }
+  .empty-container {
+    margin: 150px 0;
+  }
 `;
 export const PlaylistItemWrapper = styled.div`
   display: flex;

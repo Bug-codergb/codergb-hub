@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-export const CommentWrapper = styled.div``;
+export const CommentWrapper = styled.div`
+  .empty-container {
+    margin: 200px 0;
+  }
+`;
 export const CommentItemWrapper = styled.div`
   .comment-container {
     width: ${400 / 40}rem;

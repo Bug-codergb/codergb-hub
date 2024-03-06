@@ -3,7 +3,7 @@ import type React from 'react';
 import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
-import { Divider, Radio, Table } from 'antd';
+import { Divider, Radio, Table, Empty } from 'antd';
 import { VideoPageWrapper } from './style';
 import { getUserVideo } from '../../../../../../network/video';
 import { type IResponseType } from '../../../../../../types/responseType';
@@ -70,6 +70,11 @@ const VideoPage: FC = (): ReactElement => {
             }
           }}
         />
+      )}
+      {(!video || video.length === 0) && (
+        <div className="empty-container">
+          <Empty description="您还没有上传作品" />
+        </div>
       )}
     </VideoPageWrapper>
   );
