@@ -10,7 +10,14 @@ export const LeftContent = styled.div`
   .logo-outer {
     padding: 0 0 0 ${20 / 40}rem;
     img {
-      width: ${120 / 40}rem;
+      width: ${60 / 40}rem;
+      cursor: pointer;
+    }
+    .label {
+      font-size: ${28 / 40}rem;
+      font-weight: bolder;
+      margin: 0 0 0 5px;
+      cursor: pointer;
     }
   }
 `;

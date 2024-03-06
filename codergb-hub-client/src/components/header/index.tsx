@@ -14,7 +14,7 @@ import { type Map } from 'immutable';
 import { Dropdown, Modal, Badge } from 'antd';
 import { SearchOutlined, VideoCameraOutlined, MailOutlined } from '@ant-design/icons';
 import { HeaderWrapper, LeftContent, RightContent, CenterContent } from './style';
-import logo from '../../assets/img/logo.png';
+import logo from '../../assets/img/new-logo.png';
 import UploadVideo from './childCpn/uploadVideo';
 import Fold from '../../assets/html/fold';
 import UserIcon from '../../assets/html/user/userIcon';
