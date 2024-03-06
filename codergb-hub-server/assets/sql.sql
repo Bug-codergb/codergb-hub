@@ -14,3 +14,4 @@ END WHILE;
 RETURN sTemp;
 END;
 
+set global log_bin_trust_function_creators=TRUE
