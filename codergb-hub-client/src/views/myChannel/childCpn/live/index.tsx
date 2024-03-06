@@ -1,12 +1,18 @@
+/*
+  收藏的播放列表
+*/
 import React, { memo, type FC, ReactElement, useEffect, useState } from 'react';
 import { MoreOutlined, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { Dropdown, Menu, notification } from 'antd';
+import { Dropdown, Menu, message, notification } from 'antd';
 import { LiveWrapper } from './style';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
-import { getSubPlaylist, subUserPlaylist } from '../../../../network/playlist';
+import { cancelSubPlaylist, getSubPlaylist, subUserPlaylist } from '../../../../network/playlist';
 import moment from 'moment';
 import HolderCpn from '../../../../components/holder';
+import { IPlaylist } from '../../../../types/playlist/IPlaylist';
+import { IResponseType } from '../../../../types/responseType';
+import { IPage } from '../../../../types/IPage';
 interface IProps {
   userId: string;
 }
@@ -33,15 +39,17 @@ const Live: FC<IProps> = (props) => {
   const openChangeHandle = (e: any, item: IPlaylist) => {
     if (e.key === 'sub') {
       console.log(item);
-      subUserPlaylist(item.id).then((res) => {
-        if (res.status === 200) {
-          notification.info({
-            message: `${res.message}`,
-            description: `个人中心‘收藏的播放列表’中查看`,
-            placement: 'bottomLeft'
+      cancelSubPlaylist(userId,item.id).then((res)=>{
+        if(res.status === 200){
+          message.success("取消收藏成功");
+          getSubPlaylist<IResponseType<IPage<IPlaylist[]>>>(userId).then((res) => {
+            if (res.status === 200) {
+              setPlaylist(res.data.list);
+              setTotal(res.data.count);
+            }
           });
         }
-      });
+      })
     }
   };
   return (
@@ -63,8 +71,6 @@ const Live: FC<IProps> = (props) => {
                 <div className="state">
                   <div className="container">
                     <p className="name">{item.name}</p>
-
-                    {login.userMsg.userId !== item.user.userId && (
                       <Dropdown
                         overlay={
                           <Menu
@@ -75,7 +81,7 @@ const Live: FC<IProps> = (props) => {
                             <Menu.Item key="sub">
                               <div className="g-sub-playlist">
                                 <StarOutlined />
-                                <span className="label">收藏</span>
+                                <span className="label">取消收藏</span>
                               </div>
                             </Menu.Item>
                           </Menu>
@@ -84,7 +90,7 @@ const Live: FC<IProps> = (props) => {
                       >
                         <MoreOutlined className="g-more" />
                       </Dropdown>
-                    )}
+                    
                   </div>
                   <p className="create-time">
                     {moment(item.createTime).format('yyyy-MM-DD HH:mm')}

@@ -11,7 +11,8 @@ const {
   updatePlaylistService,
   deletePlaylistService,
   getUserSubService,
-  deleteVideoPlaylistService
+  deleteVideoPlaylistService,
+  cancelSubPlaylistService
 } = require("../service/playlist.service");
 const {
   createVideoPlaylistService,
@@ -181,6 +182,23 @@ class PlaylistController{
 
     }catch (e) {
 
+    }
+  }
+  //删除用户播放列表
+  async cancelSubPlaylist(ctx,next){
+    try{
+      const { userId,pId } = ctx.request.body;
+      console.log(userId,pId);
+      if(!isEmpty(ctx,userId,"用户ID不能为空")&& (!isEmpty(ctx,pId,"播放列表ID不能为空"))){
+        const result = await cancelSubPlaylistService(ctx,userId,pId);
+        if(result){
+          setResponse(ctx,"success",200,{})
+        }
+      }
+      
+    }catch(e){
+      console.log(e)
+      setResponse(ctx,"error",500,{})
     }
   }
 }

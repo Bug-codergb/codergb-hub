@@ -234,7 +234,7 @@ class PlaylistService{
         list:result[0]
       }
     }catch (e) {
-      console.log(e);
+      setResponse(ctx,"error",500,{})  
     }
   }
   async deleteVideoPlaylistService(ctx,pid,vid){
@@ -245,7 +245,16 @@ class PlaylistService{
       const result = await connection.execute(sql,[pid,vid]);
       return result[0]
     }catch (e) {
-
+      setResponse(ctx,"error",500,{})  
+    }
+  }
+  async cancelSubPlaylistService(ctx,userId,pId){
+    try{
+      const sql=`delete from sub_playlist where userId = ? and playlistId = ?`;
+      const result = await connection.execute(sql,[userId,pId]);
+      return result[0];
+    }catch(e){
+      setResponse(ctx,"error",500,{})  
     }
   }
 }
