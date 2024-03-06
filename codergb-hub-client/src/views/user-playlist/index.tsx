@@ -1,5 +1,5 @@
 import React, { memo, type FC, useState, useEffect } from 'react';
-import { Spin, notification, Dropdown, Menu, message } from 'antd';
+import { Spin, notification, Dropdown, Menu, message ,Pagination} from 'antd';
 import { StarOutlined, MoreOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { type Map } from 'immutable';
@@ -41,7 +41,7 @@ const UserPlaylist: FC<IProps> = (props) => {
   useEffect(() => {
     setLoading(true);
 
-    getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, 0, 30).then((data) => {
+    getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, 0, 10).then((data) => {
       if (data.status === 200) {
         setVideo(data.data.list);
         setCount(data.data.count);
@@ -73,7 +73,7 @@ const UserPlaylist: FC<IProps> = (props) => {
       console.log(item);
       deletePlaylistVideo(item.id, id).then((res) => {
         if (res.status === 200) {
-          getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, 0, 30).then((data) => {
+          getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, 0, 10).then((data) => {
             setVideo(data.data.list);
             setCount(data.data.count);
             message.success('删除成功');
@@ -81,6 +81,17 @@ const UserPlaylist: FC<IProps> = (props) => {
         }
       });
     }
+  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageChange = (e: number) => {
+    setCurrentPage(e);
+    getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, (e-1)*10, 10).then((data) => {
+      if (data.status === 200) {
+        setVideo(data.data.list);
+        setCount(data.data.count);
+        setLoading(false);
+      }
+    });
   };
   return (
     <Spin size="large" spinning={loading}>
@@ -172,6 +183,19 @@ const UserPlaylist: FC<IProps> = (props) => {
                 );
               })}
           </ul>
+          {count > 10 && (
+          <div className="page">
+            <Pagination
+              defaultCurrent={1}
+              total={count}
+              pageSize={10}
+              current={currentPage}
+              onChange={(e) => {
+                pageChange(e);
+              }}
+            />
+          </div>
+        )}
         </RightContent>
       </UserPlaylistWrapper>
     </Spin>

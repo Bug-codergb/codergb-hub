@@ -1,11 +1,11 @@
 import { memo, type FC, type ReactElement, useEffect, useState } from 'react';
 import { MoreOutlined, StarOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { Dropdown, Menu, notification } from 'antd';
+import { Dropdown, Menu, message, notification } from 'antd';
 import { type IResponseType } from '../../../../../../types/responseType';
 import { type IPage } from '../../../../../../types/IPage';
 import { type IPlaylist } from '../../../../../../types/playlist/IPlaylist';
-import { getSubPlaylist, subUserPlaylist } from '../../../../../../network/playlist';
+import { cancelSubPlaylist, getSubPlaylist, subUserPlaylist } from '../../../../../../network/playlist';
 import { MulPlayWrapper } from './style';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 import HolderCpn from '../../../../../holder';
@@ -35,8 +35,9 @@ const MulPlay: FC<IProps> = (props): ReactElement => {
     });
   };
   const openChangeHandle = (e: any, item: IPlaylist) => {
+    
     if (e.key === 'sub') {
-      console.log(item);
+      
       subUserPlaylist(item.id).then((res) => {
         if (res.status === 200) {
           notification.info({
@@ -46,6 +47,18 @@ const MulPlay: FC<IProps> = (props): ReactElement => {
           });
         }
       });
+    }else if(e.key === "cancel-sub"){
+      cancelSubPlaylist(userId,item.id).then((res)=>{
+        if(res.status === 200){
+          message.success("取消收藏成功");
+          getSubPlaylist<IResponseType<IPage<IPlaylist[]>>>(userId).then((res) => {
+            if (res.status === 200) {
+              setPlaylist(res.data.list);
+              setTotal(res.data.count);
+            }
+          });
+        }
+      })
     }
   };
   return (
@@ -76,12 +89,22 @@ const MulPlay: FC<IProps> = (props): ReactElement => {
                               openChangeHandle(e, item);
                             }}
                           >
-                            <Menu.Item key="sub">
+                            {
+                              userId!==login.userMsg.userId&&<Menu.Item key="sub">
                               <div className="g-sub-playlist">
                                 <StarOutlined />
                                 <span className="label">收藏</span>
                               </div>
                             </Menu.Item>
+                            }
+                             {
+                              userId===login.userMsg.userId&&<Menu.Item key="cancel-sub">
+                              <div className="g-sub-playlist">
+                                <StarOutlined />
+                                <span className="label">取消收藏</span>
+                              </div>
+                            </Menu.Item>
+                            }
                           </Menu>
                         }
                         trigger={['click']}

@@ -38,7 +38,7 @@ const Live: FC<IProps> = (props) => {
   };
   const openChangeHandle = (e: any, item: IPlaylist) => {
     if (e.key === 'sub') {
-      console.log(item);
+      
       cancelSubPlaylist(userId,item.id).then((res)=>{
         if(res.status === 200){
           message.success("取消收藏成功");

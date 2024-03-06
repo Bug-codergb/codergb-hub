@@ -144,4 +144,9 @@ export const RightContent = styled.div`
       }
     }
   }
+  .page {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+  }
 `;
