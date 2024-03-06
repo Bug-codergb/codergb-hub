@@ -54,9 +54,8 @@ class BlockController{
   }
   async userDelBlock(ctx,next){
     try{
-      const {userId} = ctx.user;
-      const {blockId} = ctx.request.body;
-      if(!isEmpty(ctx,blockId,"板块ID不能为空")){
+      const {blockId,userId} = ctx.request.body;
+      if(!isEmpty(ctx,blockId,"板块ID不能为空") && !isEmpty(ctx,userId,"用户ID不能为空")){
         const result = await userDelBlockService(ctx,userId,blockId);
         if(result){
           setResponse(ctx,"success",200,{})

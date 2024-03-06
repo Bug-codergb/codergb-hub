@@ -18,3 +18,13 @@ export async function getUserBlock<T = IResponseType<any>>(userId: string) {
     url: `/block/user/${userId}`
   });
 }
+//删除用户板块
+export function deleteUserBlock<T=IResponseType<any>>(userId:string,blockId:string){
+  return gbRequest.post<T>({
+    url:`/block/user/delete`,
+    data:{
+      userId,
+      blockId
+    }
+  })
+}

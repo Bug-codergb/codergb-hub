@@ -26,8 +26,17 @@ const BlockList: FC<IProps> = (props): ReactElement => {
   const [isShowPlay, setIsShowPlay] = useState<boolean>(false);
   useEffect(() => {
     getAllBlock<IResponseType<IBlock[]>>().then((data) => {
-      if (data.status === 200) {
-        setBlock(data.data);
+      if (data.status === 200 && data.data.length!==0) {
+        console.log(data.data);
+        let temp = [];
+        for(let item of data.data){
+          if(item.name!=='短视频'){
+            temp.push(item);
+          }  
+        }
+        setBlock(temp);
+      }else{
+        setBlock([])
       }
     });
   }, []);

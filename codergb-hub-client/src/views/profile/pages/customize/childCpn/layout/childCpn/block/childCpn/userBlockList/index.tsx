@@ -1,9 +1,10 @@
 import React, { memo, type FC, type ReactElement, useState, useEffect } from 'react';
+import { Popconfirm ,Button, message } from "antd"
 import { type Map } from 'immutable';
 import { MoreOutlined } from '@ant-design/icons';
 import { UserBlockListWrapper } from './style';
 import { type IBlock } from '../../../../../../../../../../types/block/IBlock';
-import { getUserBlock } from '../../../../../../../../../../network/block';
+import { deleteUserBlock, getUserBlock } from '../../../../../../../../../../network/block';
 import { type IResponseType } from '../../../../../../../../../../types/responseType';
 import { useSelector } from 'react-redux';
 import { type ILogin } from '../../../../../../../../../../types/login/ILogin';
@@ -22,6 +23,21 @@ const UserBlockList: FC = (): ReactElement => {
       });
     }
   }, [login]);
+
+  const confirmHandler=(item:IBlock)=>{
+    deleteUserBlock(login.userMsg.userId,item.id).then((res)=>{
+      if(res.status === 200){
+        message.destroy();
+        message.success("移除成功");
+        getUserBlock<IResponseType<IBlock[]>>(login.userMsg.userId).then((data) => {
+          if (data.status === 200) {
+            setBlock(data.data);
+          }
+        });
+      }  
+    })
+  }
+
   return (
     <UserBlockListWrapper>
       <ul className="user-block-list">
@@ -38,7 +54,18 @@ const UserBlockList: FC = (): ReactElement => {
                   </div>
                 </div>
                 <div className="right-container">
-                  <MoreOutlined />
+                <Popconfirm
+    title="确定移除当前板块吗?"
+    onConfirm={()=>confirmHandler(item)}
+    onCancel={()=>{}}
+    okText="确定"
+    cancelText="取消"
+  >
+    <Button type="link" danger>
+      移除
+    </Button>
+  </Popconfirm>
+                
                 </div>
               </li>
             );
