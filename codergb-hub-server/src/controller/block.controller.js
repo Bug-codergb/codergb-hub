@@ -5,7 +5,8 @@ const {
   allBlockService,
   userAddBlockService,
   userDelBlockService,
-  getUserBlockService
+  getUserBlockService,
+  getUserBlockDetail
 }= require("../service/block.service");
 class BlockController{
   async create(ctx,next){
@@ -34,6 +35,13 @@ class BlockController{
     try{
       const {userId} = ctx.user;
       const {blockId} = ctx.request.body;
+
+      const isExists = await getUserBlockDetail(ctx,userId,blockId);
+      if(isExists && isExists.length!==0){
+        setResponse(ctx,"已添加当前板块",200,{})
+        return;
+      }
+      
       if(!isEmpty(ctx,blockId,"板块ID不能为空")){
         const result = await userAddBlockService(ctx,userId,blockId);
         if(result){

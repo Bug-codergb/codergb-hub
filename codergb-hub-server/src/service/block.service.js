@@ -51,6 +51,15 @@ class BlockService{
       setResponse(ctx,e.message,500,{})
     }
   }
+  async getUserBlockDetail(ctx,userId,blockId){
+    try{
+      const sql=`select userId blockId from user_block where userId=? and blockId = ?`;  
+      const result = await connection.execute(sql,[userId,blockId]);
+      return result[0];
+    }catch(e){
+      setResponse(ctx,"error",500,{})
+    }
+  }
 }
 
 module.exports = new BlockService();
