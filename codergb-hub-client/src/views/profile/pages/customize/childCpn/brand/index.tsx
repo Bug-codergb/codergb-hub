@@ -10,7 +10,7 @@ import {
 } from '../../../../../../network/channel/index';
 import { type ILogin } from '../../../../../../types/login/ILogin';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateAvatar } from '../../../../../../network/user';
+import { updateAvatar, userUploadAvatar } from '../../../../../../network/user';
 import { type IResponseType } from '../../../../../../types/responseType';
 import ImgUpload from '../../../../../../components/common/imgUpload';
 import { uploadImage } from '../../../../../../network/image';
@@ -47,9 +47,13 @@ const Brand: FC = (): ReactElement => {
         setProgress((progress.loaded / progress.total) * 100);
       });
     } else {
-      result = await uploadAvatarReq(formData, (progress: any) => {
-        setProgress((progress.loaded / progress.total) * 100);
-      });
+      result = await userUploadAvatar(
+        formData,
+        (progress: any) => {
+          setProgress((progress.loaded / progress.total) * 100);
+        },
+        login.userMsg.userId
+      );
     }
     if (result.status === 200) {
       dispatch(changeUserDetailAction(login.userMsg.userId, true));
