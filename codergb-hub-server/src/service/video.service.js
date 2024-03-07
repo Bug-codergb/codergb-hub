@@ -154,7 +154,7 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
 			 from user as u where u.userId = v.userId) as user,
 			 JSON_OBJECT('id',v.cateId,'name',c.name,'createTime',c.createTime,'updateTime',c.updateTime) AS category,
 			 JSON_ARRAYagg(JSON_OBJECT('id',tv.tId,'name',tag.name,'createTime',tag.createTime,'updateTime',tag.updateTime)) as tag
-      from video as v
+      from video as v  
       LEFT JOIN category as c on c.id = v.cateId
       LEFT JOIN tag_video as tv on tv.vId = v.id
       LEFT JOIN tag on tag.id = tv.tId
