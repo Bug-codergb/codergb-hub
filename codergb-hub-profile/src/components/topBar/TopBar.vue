@@ -8,7 +8,7 @@
         <el-avatar
           shape="square"
           size="large"
-          :src="`${loginMsg.userMsg.avatarUrl}?t=${Math.random()}`"
+          :src="`${loginMsg.userMsg.avatarUrl}?code=${new Date().getTime()}`"
         />
         <template #dropdown>
           <el-dropdown-menu>
@@ -16,7 +16,7 @@
             <el-dropdown-item command="exit">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown>
+      </el-dropdown> 
     </div>
   </div>
 </template>

@@ -69,26 +69,35 @@
 </template>
 <script setup lang="ts">
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useRouter } from "vue-router";
 import moment from 'moment';
 import useLoginStore from '@/views/login/store';
 import useChannelStore from '@/store/modules/channel';
 import Log from '@/views/setting/childCpn/log/Log.vue';
 import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
 import { ref } from 'vue';
+import { deleteUser } from '@/network/user';
 const loginMsg = useLoginStore();
 const channel = useChannelStore();
 
+const router = useRouter();
 const logOff = () => {
   ElMessageBox.confirm('确定要注销此账号么?', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
   })
-    .then(() => {
-      ElMessage({
-        type: 'success',
-        message: 'Delete completed'
-      });
+    .then(async () => {
+      const result = await deleteUser(loginMsg.userMsg.userId);
+      if(result.status === 200){
+        ElMessage({
+          type:"success",
+          message:"成功注销账号"
+        })
+        router.push({
+          path:"/login"
+        })
+      }  
     })
     .catch(() => {});
 };
