@@ -541,17 +541,20 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
 
     }
   }
-  async getAllCarouselService(){
+  async getAllCarouselService(ctx,offset,limit){
     try{
       const sql=`
       select vc.id,vc.title,vc.description,vc.videoId,f.picUrl,v.name as name
       from video_carousel as vc
       left join file f on vc.fileId = f.id
-      left join video v on v.id = vc.videoId`;
-      const result = await connection.execute(sql);
-      console.log(result)
+      left join video v on v.id = vc.videoId
+      limit ?,?`;
+      const result = await connection.execute(sql,[offset,limit]);
+      const countSQL= `select count(vc.id) as count from video_carousel as vc`;
+      const count = await connection.execute(countSQL);
       return {
-        list:result[0]
+        list:result[0],
+        count:count[0][0].count
       }
     }catch (e) {
       console.log(e)

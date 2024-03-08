@@ -451,8 +451,8 @@ class VideoController {
   }
   async getAllCarousel(ctx,next){
     try{
-      console.log(1)
-      const result = await getAllCarouselService();
+      const { offset="0",limit="30" } = ctx.query;
+      const result = await getAllCarouselService(ctx,offset,limit);
       setResponse(ctx, "success", 200, result);
     }catch (e) {
 

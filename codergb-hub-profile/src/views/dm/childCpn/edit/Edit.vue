@@ -20,7 +20,7 @@ const showDialog = (data: any) => {
 };
 const formRef = ref();
 const cancelHandler = () => {
-  isShow.value = true;
+  isShow.value = false;
 };
 const confirmHandler = () => {
   formRef.value &&
