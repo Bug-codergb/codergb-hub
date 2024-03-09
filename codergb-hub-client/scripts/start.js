@@ -24,6 +24,9 @@ const devServer = new WebpackDevServer(
   {
     port: 3000,
     open: true,
+    client: {
+      overlay:false
+    },
     static: {
       directory:  paths.appStatic,
       publicPath:"/"

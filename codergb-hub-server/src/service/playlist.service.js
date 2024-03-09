@@ -7,7 +7,11 @@ class PlaylistService{
       const result =await connection.execute(sql,[id,name,description,userId,isPublic]);
       return result[0];
     }catch (e) {
-      setResponse(ctx,e.message,500,{});
+      console.log(e.message);
+      if(e.message.includes("playlist.name") && e.message.includes("Duplicate")){
+        setResponse(ctx,"播放列表名称已经存在",400,{});
+      }
+
     }
   }
   async updatePlaylistService(ctx,id,name,isPublic,description,userId){
@@ -234,7 +238,7 @@ class PlaylistService{
         list:result[0]
       }
     }catch (e) {
-      setResponse(ctx,"error",500,{})  
+      setResponse(ctx,"error",500,{})
     }
   }
   async deleteVideoPlaylistService(ctx,pid,vid){
@@ -245,7 +249,7 @@ class PlaylistService{
       const result = await connection.execute(sql,[pid,vid]);
       return result[0]
     }catch (e) {
-      setResponse(ctx,"error",500,{})  
+      setResponse(ctx,"error",500,{})
     }
   }
   async cancelSubPlaylistService(ctx,userId,pId){
@@ -254,7 +258,7 @@ class PlaylistService{
       const result = await connection.execute(sql,[userId,pId]);
       return result[0];
     }catch(e){
-      setResponse(ctx,"error",500,{})  
+      setResponse(ctx,"error",500,{})
     }
   }
 }
