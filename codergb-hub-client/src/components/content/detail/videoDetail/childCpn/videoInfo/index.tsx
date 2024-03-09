@@ -29,6 +29,7 @@ import { useThumb, useTread } from '../../../../../../hook/useThumb';
 import { type IUserMsg } from '../../../../../../types/user/IUserMsg';
 import { type IResponseType } from '../../../../../../types/responseType';
 import { type IAddType, ADD_PLAYLIST } from '../../../../../../constant/addList';
+import videoDetail from '../..';
 interface IAdd {
   liClick: (item: IAddType) => void;
 }
@@ -56,7 +57,7 @@ const VideoInfo: FC<IProps> = (props) => {
         }
       });
     }
-  }, [videoId]);
+  }, [videoInfo?.user.userId]);
 
   const [videoThumb, setVideoThumb] = useState<number>(0);
   const getVideoThumbReq = (videoInfo: IVideo) => {
