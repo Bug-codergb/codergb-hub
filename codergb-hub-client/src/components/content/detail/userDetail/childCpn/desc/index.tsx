@@ -20,7 +20,7 @@ const Desc: FC<IProps> = (props) => {
   }, [userId]);
   return (
     <DescWrapper>
-      {channel && <div className="desc">{channel.description}</div>}
+      {channel && channel.description && <div className="desc">{channel.description}</div>}
       <div className="create-time">
         于{moment(channel?.createTime).format('yyyy-MM-DD HH:mm')}加入codergb-hub
       </div>

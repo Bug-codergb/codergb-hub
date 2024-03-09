@@ -20,8 +20,6 @@ class MomentController{
         const result = await createService(ctx,title,content,vid,userId,cId);
         if(result){
           setResponse(ctx,"动态创建成功",200,{});
-        }else{
-          setResponse(ctx,e.message,500,{});
         }
       }
     }catch (e) {

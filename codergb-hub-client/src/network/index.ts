@@ -4,6 +4,7 @@ import localCache from '../utils/cache';
 import { notification } from 'antd';
 import type { NotificationPlacement } from 'antd/es/notification';
 const openNotification = (placement: NotificationPlacement, message: string) => {
+  notification.destroy();
   notification.warning({
     message: `提示`,
     description: message,

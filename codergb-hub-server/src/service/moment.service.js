@@ -8,7 +8,11 @@ class MomentService{
       const result = await connection.execute(sql,[id,title,content,vid,userId,cId]);
       return result[0];
     }catch (e) {
-      setResponse(ctx,e.message,500,{});
+      if(e.message.includes("Duplicate") && e.message.includes("moment.title")){
+        setResponse(ctx,"频道标题重复",400,{});
+      }else{
+        setResponse(ctx,e.message,500,{});
+      }
     }
   }
   async channelMomentCountService(ctx,id){

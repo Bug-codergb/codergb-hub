@@ -1,7 +1,7 @@
 import GBRequest from './request/index';
 import { HOST_NAME } from '@/constant/host';
 import localCache from '../utils/cache';
-console.log(import.meta.env.VITE_NODE_ENV);
+import { ElMessage } from 'element-plus';
 const gbRequest = new GBRequest({
   baseURL: import.meta.env.VITE_NODE_ENV === 'development' ? `${HOST_NAME}/gb` : HOST_NAME,
   timeout: 10000,
@@ -20,6 +20,11 @@ const gbRequest = new GBRequest({
       return res;
     },
     responseInterceptorCatch: (err) => {
+      ElMessage.closeAll();
+      ElMessage({
+        type: 'warning',
+        message: err.response.data.message
+      });
       return err;
     }
   }
