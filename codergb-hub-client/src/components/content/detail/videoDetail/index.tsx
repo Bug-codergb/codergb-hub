@@ -539,6 +539,7 @@ const VideoDetail: FC = (): ReactElement => {
               <Dm
                 id={vioId}
                 time={currentTime}
+                dmLength={videoDm ? videoDm.length : 0}
                 pub={() => {
                   pubSuccess();
                 }}

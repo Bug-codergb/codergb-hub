@@ -42,7 +42,7 @@ const Recommend: FC = (): ReactElement => {
   const vioListRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    getAllVideo<IResponseType<IPage<IRecommendVideo[]>>>(0, 50, '').then((data) => {
+    getAllVideo<IResponseType<IPage<IRecommendVideo[]>>>(0, 44, '').then((data) => {
       if (data.status === 200) {
         if (data.data.list && data.data.list.length !== 0) {
           for (const item of data.data.list) {

@@ -7,9 +7,10 @@ interface IProps {
   id: string;
   time: string;
   pub: () => void;
+  dmLength: count;
 }
 const Dm: FC<IProps> = (props) => {
-  const { id, time, pub } = props;
+  const { id, time, pub, dmLength } = props;
   const [content, setContent] = useState<string>('');
   const dmInp = (e: FormEvent<HTMLInputElement>) => {
     setContent(e.currentTarget.value);
@@ -29,7 +30,7 @@ const Dm: FC<IProps> = (props) => {
   };
   return (
     <DmWrapper>
-      <span>已装填2条弹幕</span>
+      <span>已装填{dmLength}条弹幕</span>
       <div className="dm-outer">
         <input
           type={'text'}

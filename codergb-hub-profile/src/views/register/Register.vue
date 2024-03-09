@@ -16,11 +16,11 @@
         />
       </div>
       <div class="control-btn">
-        <div class="register-btn" @click="registerHandler">
-          <span> 去注册 </span>
-          <el-icon><ArrowRight /></el-icon>
+        <div class="register-btn" @click="loginHandler">
+          <el-icon><ArrowLeft /></el-icon>
+          <span> 返回登录 </span>
         </div>
-        <div class="login-btn" @click="login">登录</div>
+        <div class="login-btn" @click="register">注册</div>
       </div>
     </div>
   </div>
@@ -28,28 +28,29 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import useLoginStore from './store';
+import { register as registerReq } from '@/network/login';
+import { ArrowLeft } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { HOME_PATH } from '@/router/constant';
-import { ArrowRight } from '@element-plus/icons-vue';
-import { ElMessage } from 'element-plus';
-const loginMsg = useLoginStore();
 const router = useRouter();
 const account = reactive({
   userName: '',
   password: ''
 });
-const registerHandler = () => {
-  router.push({
-    path: '/register'
-  });
-};
-const login = async () => {
+const register = async () => {
   if (account.userName.trim().length !== 0 && account.password.trim().length !== 0) {
-    const res = await loginMsg.loginAction(account.userName, account.password);
-    if (res) {
-      await router.push(HOME_PATH);
-    }
+    registerReq(account.userName, account.password).then((res) => {
+      if (res.status === 200) {
+        router.push({
+          path: '/login'
+        });
+        ElMessage({
+          message: '注册成功',
+          type: 'success'
+        });
+      }
+    });
   } else {
     ElMessage.closeAll();
     ElMessage({
@@ -57,6 +58,11 @@ const login = async () => {
       type: 'warning'
     });
   }
+};
+const loginHandler = () => {
+  router.push({
+    path: '/login'
+  });
 };
 </script>
 
@@ -140,12 +146,12 @@ const login = async () => {
         white-space: nowrap;
         display: flex;
         align-items: center;
+        .el-icon {
+          margin: 0 10px 0 0;
+        }
         &:hover {
           color: var(--primary-color);
           border-color: var(--primary-color);
-        }
-        span {
-          margin: 0 10px 0 0;
         }
       }
       .login-btn {

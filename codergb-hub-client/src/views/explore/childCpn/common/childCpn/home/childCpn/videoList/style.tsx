@@ -42,7 +42,7 @@ export const VideoListWrapper = styled.div`
       .video-name {
         font-size: ${20 / 40}rem;
         padding: 10px 8px 0 8px;
-        display: inline-block;
+
         word-break: break-all;
       }
       .user-name {

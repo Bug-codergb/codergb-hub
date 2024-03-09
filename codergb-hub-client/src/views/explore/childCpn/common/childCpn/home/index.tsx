@@ -1,8 +1,8 @@
-import React, { memo, FC, useEffect, useState } from 'react';
+import React, { memo, type FC, useEffect, useState } from 'react';
 import { getUserPlaylist } from '../../../../../../network/playlist';
-import { IResponseType } from '../../../../../../types/responseType';
-import { IPage } from '../../../../../../types/IPage';
-import { IPlaylist } from '../../../../../../types/playlist/IPlaylist';
+import { type IResponseType } from '../../../../../../types/responseType';
+import { type IPage } from '../../../../../../types/IPage';
+import { type IPlaylist } from '../../../../../../types/playlist/IPlaylist';
 import VideoList from './childCpn/videoList/index';
 import { HomeWrapper } from './style';
 

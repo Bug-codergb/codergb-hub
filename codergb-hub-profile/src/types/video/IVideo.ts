@@ -17,7 +17,7 @@ interface IVideo {
   history?: string;
   category: ICate;
   tag: ITag[];
-  playlist?: IPlaylist;
+  playlist?: IPlaylist[];
   imgId?: string;
   videoSourceId?: string;
 }

@@ -35,14 +35,14 @@
       </el-form-item>
       <el-form-item label="头像" prop="avatar">
         <div class="img-container">
-          <template v-if="isPrev">
+          <template v-if="isPrev && imgURL">
             <img :src="imgURL" />
           </template>
-          <template v-if="!isPrev">
+          <template v-if="!isPrev || !imgURL">
             <el-icon class="upload-icon"><Picture class="upload-icon" /></el-icon>
             <input type="file" @change="(e) => fileChange(e, 'PROP')" />
           </template>
-          <template v-if="isPrev">
+          <template v-if="isPrev && imgURL">
             <div class="mask" @click="deleteCover">
               <el-icon><Delete /></el-icon>
             </div>
@@ -135,6 +135,7 @@ const isUpdate = ref(false);
 const showDrawer = (data: any) => {
   drawer.value = true;
   isUpdate.value = Boolean(data);
+  console.log(isUpdate.value);
   //  如果是新增
   if (!isUpdate.value) {
     title.value = '新增用户';

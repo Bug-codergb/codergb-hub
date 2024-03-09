@@ -1,15 +1,15 @@
-import React, { memo, FC, useEffect, useState, useRef, Fragment } from 'react';
+import React, { memo, type FC, useEffect, useState, useRef, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Carousel, Empty } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { VideoListWrapper } from './style';
 import { getPlaylistVideo } from '../../../../../../../../network/playlist';
-import { IResponseType } from '../../../../../../../../types/responseType';
-import { IPage } from '../../../../../../../../types/IPage';
-import { IVideo } from '../../../../../../../../types/video/IVideo';
+import { type IResponseType } from '../../../../../../../../types/responseType';
+import { type IPage } from '../../../../../../../../types/IPage';
+import { type IVideo } from '../../../../../../../../types/video/IVideo';
 import HolderCpn from '../../../../../../../../components/holder';
-import { CarouselRef } from 'antd/lib/carousel';
+import { type CarouselRef } from 'antd/lib/carousel';
 
 interface IProps {
   id: string;
@@ -57,7 +57,12 @@ const VideoList: FC<IProps> = (props) => {
                 videoList.slice(item * 5, item * 5 + 5).map((item) => {
                   return (
                     <li key={item.id}>
-                      <div className="img-container" onClick={(e) => videoRouter(item)}>
+                      <div
+                        className="img-container"
+                        onClick={(e) => {
+                          videoRouter(item);
+                        }}
+                      >
                         <img src={item.picUrl} />
                       </div>
                       <div className="video-name text-nowrap-mul-line">{item.name}</div>
@@ -69,11 +74,21 @@ const VideoList: FC<IProps> = (props) => {
               {videoList && videoList.length !== 0 && HolderCpn(videoList.length, 5, 300)}
               {videoList && videoList.length > 5 && (
                 <Fragment>
-                  <div className={'prev'} onClick={(e) => prevHandle()}>
+                  <div
+                    className={'prev'}
+                    onClick={(e) => {
+                      prevHandle();
+                    }}
+                  >
                     {' '}
                     <LeftOutlined />
                   </div>
-                  <div className={'next'} onClick={(e) => nextHandle()}>
+                  <div
+                    className={'next'}
+                    onClick={(e) => {
+                      nextHandle();
+                    }}
+                  >
                     <RightOutlined />{' '}
                   </div>
                 </Fragment>
