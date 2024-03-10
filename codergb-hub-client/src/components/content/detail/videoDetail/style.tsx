@@ -38,10 +38,12 @@ export const LeftContentWrapper: any = styled.div`
         justify-content: flex-end;
         position: relative;
         z-index: 99;
+
         & > ul {
           display: flex;
           flex-direction: column-reverse;
           align-items: flex-end;
+          margin: 0 20px 0 0;
           & > li {
             text-align: end;
             list-style: none;
