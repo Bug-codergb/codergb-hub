@@ -95,13 +95,13 @@ export async function deletePlaylistVideo<T = IResponseType<any>>(vid: string, p
     }
   });
 }
-//取消收藏播放列表
-export function cancelSubPlaylist<T = IResponseType<any>>(userId:string,pId:string){
-  return gbRequest.post<T>({
-    url:`/playlist/cancel/sub`,
-    data:{
+// 取消收藏播放列表
+export async function cancelSubPlaylist<T = IResponseType<any>>(userId: string, pId: string) {
+  return await gbRequest.post<T>({
+    url: `/playlist/cancel/sub`,
+    data: {
       userId,
-      pId  
+      pId
     }
-  })
+  });
 }

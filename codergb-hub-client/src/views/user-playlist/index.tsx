@@ -1,12 +1,13 @@
 import React, { memo, type FC, useState, useEffect } from 'react';
-import { Spin, notification, Dropdown, Menu, message ,Pagination} from 'antd';
-import { StarOutlined, MoreOutlined } from '@ant-design/icons';
+import { Spin, notification, Dropdown, Menu, message, Pagination } from 'antd';
+import { StarOutlined, MoreOutlined, CheckOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { UserPlaylistWrapper, LeftContent, RightContent } from './style';
 import { type IPlaylist } from '../../types/playlist/IPlaylist';
 import { type IVideo } from '../../types/video/IVideo';
 import {
+  cancelSubPlaylist,
   deletePlaylistVideo,
   getPlaylistDetail,
   getPlaylistVideo,
@@ -15,9 +16,13 @@ import {
 import { type IResponseType } from '../../types/responseType';
 import { type IPage } from '../../types/IPage';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { type ILogin } from '../../types/login/ILogin';
+import { useSubPlaylist } from '../../hook/useSubPlaylist';
+
+import { type Dispatch } from 'redux';
+import { changeUserDetailAction } from '../login/store/actionCreators';
 interface IProps {
   id?: string;
 }
@@ -32,6 +37,10 @@ const UserPlaylist: FC<IProps> = (props) => {
   const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
     return state.getIn(['loginReducer', 'login']) as ILogin;
   });
+
+  const dispatch = useDispatch<Dispatch<any>>();
+  const isSubPlaylist = useSubPlaylist(id);
+
   const navigate = useNavigate();
   useEffect(() => {
     getPlaylistDetail<IResponseType<IPlaylist>>(id).then((data) => {
@@ -57,8 +66,18 @@ const UserPlaylist: FC<IProps> = (props) => {
       }
     });
   };
-  const subHandler = () => {
-    subUserPlaylist(id).then((res) => {
+  const subPlaylistHandler = async () => {
+    if (isSubPlaylist) {
+      const res = await cancelSubPlaylist(login.userMsg.userId, id);
+      if (res) {
+        notification.info({
+          message: `已取消收藏`,
+          description: ``,
+          placement: 'bottomLeft'
+        });
+      }
+    } else {
+      const res = await subUserPlaylist(id);
       if (res.status === 200) {
         notification.info({
           message: `${res.message}`,
@@ -66,7 +85,10 @@ const UserPlaylist: FC<IProps> = (props) => {
           placement: 'bottomLeft'
         });
       }
-    });
+    }
+    if (login && login.userMsg && login.userMsg.userId) {
+      dispatch(changeUserDetailAction(login.userMsg.userId, false));
+    }
   };
   const openChangeHandle = (e: any, item: IVideo) => {
     if (e.key === 'delete') {
@@ -85,7 +107,7 @@ const UserPlaylist: FC<IProps> = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageChange = (e: number) => {
     setCurrentPage(e);
-    getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, (e-1)*10, 10).then((data) => {
+    getPlaylistVideo<IResponseType<IPage<IVideo[]>>>(id, (e - 1) * 10, 10).then((data) => {
       if (data.status === 200) {
         setVideo(data.data.list);
         setCount(data.data.count);
@@ -93,6 +115,7 @@ const UserPlaylist: FC<IProps> = (props) => {
       }
     });
   };
+
   return (
     <Spin size="large" spinning={loading}>
       <UserPlaylistWrapper>
@@ -118,14 +141,17 @@ const UserPlaylist: FC<IProps> = (props) => {
             </div>
 
             {playlist && playlist.user.userId !== login.userMsg.userId && (
-              <div
-                className="sub"
-                onClick={(e) => {
-                  subHandler();
-                }}
-              >
-                <StarOutlined />
-                <span className="label">收藏</span>
+              <div className="sub">
+                <div
+                  className="inner"
+                  onClick={() => {
+                    subPlaylistHandler();
+                  }}
+                >
+                  {isSubPlaylist && <CheckOutlined />}
+                  {!isSubPlaylist && <StarOutlined />}
+                  <span className="label">{isSubPlaylist ? '已收藏' : '收藏'}</span>
+                </div>
               </div>
             )}
             <div className="mask"></div>
@@ -184,18 +210,18 @@ const UserPlaylist: FC<IProps> = (props) => {
               })}
           </ul>
           {count > 10 && (
-          <div className="page">
-            <Pagination
-              defaultCurrent={1}
-              total={count}
-              pageSize={10}
-              current={currentPage}
-              onChange={(e) => {
-                pageChange(e);
-              }}
-            />
-          </div>
-        )}
+            <div className="page">
+              <Pagination
+                defaultCurrent={1}
+                total={count}
+                pageSize={10}
+                current={currentPage}
+                onChange={(e) => {
+                  pageChange(e);
+                }}
+              />
+            </div>
+          )}
         </RightContent>
       </UserPlaylistWrapper>
     </Spin>

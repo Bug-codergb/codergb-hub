@@ -60,7 +60,12 @@ class UserService{
 \t\t\t          json_object("id",t.mId)
                     ) from thumb as t where t.userId = u.userId and t.mId is not null and tread = 1
                  )
-			 ) AS tread
+			 ) AS tread,
+			 (
+			   select JSON_ARRAYAGG(playlistId)
+from sub_playlist as sp
+where sp.userId=u.userId
+			 ) as subPlaylist
        from user as u
        LEFT JOIN subscriber as sub on u.userId = sub.userId
        where u.userId=?

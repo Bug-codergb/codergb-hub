@@ -10,6 +10,7 @@ interface IUserDetail extends IUserMsg {
   subscriber: IUserMsg[];
   thumb: IUserOperator;
   tread: IUserOperator;
+  subPlaylist?: string[];
   createTime: string;
 }
 export type { IUserDetail };

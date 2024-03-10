@@ -67,17 +67,21 @@ export const LeftContent: any = styled.div`
   .sub {
     display: inline-flex;
     align-items: center;
-    border: 1px solid #fff;
-    color: #fff;
-    width: ${100 / 40}rem;
-    justify-content: center;
-    padding: ${8 / 40}rem 0;
-    margin: ${20 / 40}rem 0 0 0;
-    border-radius: 18px;
-    cursor: pointer;
-    text-shadow: 0 0 2px rgba(0, 0, 0, 1);
+
+    width: auto;
+    justify-content: flex-start;
+
     position: relative;
     z-index: 999999;
+    .inner {
+      border: 1px solid #fff;
+      color: #fff;
+      padding: ${8 / 40}rem ${20 / 40}rem;
+      margin: ${20 / 40}rem 0 0 0;
+      border-radius: 18px;
+      cursor: pointer;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 1);
+    }
     .label {
       margin: 0 0 0 10px;
       svg {
