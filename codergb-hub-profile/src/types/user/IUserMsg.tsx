@@ -5,5 +5,6 @@ interface IUserMsg {
   avatarUrl: string;
   history: number;
   isExplore: number;
+  manage?: number;
 }
 export type { IUserMsg };

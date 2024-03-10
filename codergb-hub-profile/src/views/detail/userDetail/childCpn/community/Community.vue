@@ -4,16 +4,19 @@
   </div>
 </template>
 <script setup lang="tsx">
-import { reactive } from 'vue';
+import { reactive, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import { IMoment } from '@/types/moment';
 import { MOMENT_DETAIL_PATH, VIDEO_DETAIL_PATH } from '@/router/constant';
-
+interface IProps {
+  userId: string;
+}
+const props = defineProps<IProps>();
 const router = useRouter();
 const tableData = reactive({
-  url: `/moment/channel/1000000000001`,
+  url: `/moment/channel/${props.userId}`,
   method: 'post',
   params: {
     offset: 0,

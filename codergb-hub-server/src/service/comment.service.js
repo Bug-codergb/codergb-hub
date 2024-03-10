@@ -47,6 +47,7 @@ class CommentService{
        from comment as c
        LEFT JOIN user as u on u.userId = c.userId
        where replyId is null and ${alias}=?
+       order by c.createTime desc
        limit ?,?`;
       const result = await connection.execute(sql,[id,offset,limit]);
       const count = await new CommentService().allCommentCountService(ctx,alias,id);

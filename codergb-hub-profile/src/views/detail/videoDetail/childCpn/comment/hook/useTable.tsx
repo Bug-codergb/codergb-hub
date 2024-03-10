@@ -63,35 +63,15 @@ const useTable = (id: string, alias: string, notifyRef: any, gbTable: any, detai
           {
             text: '删除',
             type: 'danger',
-            onClick: (row) => {
-              ElMessageBox.confirm('要通知用户吗?', '提示', {
-                type: 'warning',
-                confirmButtonText: '通知',
-                cancelButtonText: '取消'
-              })
-                .then(() => {
-                  if (notifyRef.value)
-                    notifyRef.value.showDialog(row, async () => {
-                      const result = await deletComment(row.id);
-                      if (result.status === 200) {
-                        if (gbTable.value) gbTable.value.search();
-                        ElMessage({
-                          type: 'success',
-                          message: '删除成功'
-                        });
-                      }
-                    });
-                })
-                .catch(async () => {
-                  const result = await deletComment(row.id);
-                  if (result.status === 200) {
-                    if (gbTable.value) gbTable.value.search();
-                    ElMessage({
-                      type: 'success',
-                      message: '删除成功'
-                    });
-                  }
+            onClick: async (row) => {
+              const result = await deletComment(row.id);
+              if (result.status === 200) {
+                if (gbTable.value) gbTable.value.search();
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功'
                 });
+              }
             }
           }
         ]

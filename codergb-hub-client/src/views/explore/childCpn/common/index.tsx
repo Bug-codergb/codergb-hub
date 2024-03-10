@@ -75,6 +75,11 @@ const Common: FC<IProps> = (props) => {
     if (loginState && loginState.userMsg) {
       dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
     }
+    getUserFans<IResponseType<IPage<IUserMsg[]>>>(userId, 0, 1).then((res) => {
+      if (res.status === 200) {
+        setFans(res.data.count);
+      }
+    });
   };
   return (
     <CommonWrapper>

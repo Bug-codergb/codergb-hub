@@ -39,6 +39,7 @@ class NotifyService{
       left join moment as m on m.id = n.aliaId
       where if( n.type!='upload',(v.userId = ? or c.userId=? or n.userId=? or m.userId=?) ${isRead!==undefined?` and isRead = ?`:''},
                 n.userId = ?${isRead!==undefined?` and isRead = ?` : ''})
+      order by n.createTime desc          
       limit ?,?`;
       let execArr=[id,id,id,id,id,offset,limit];
       if(isRead!==undefined){

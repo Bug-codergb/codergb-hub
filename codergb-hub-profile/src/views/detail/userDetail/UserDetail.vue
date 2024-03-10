@@ -59,7 +59,9 @@
           <SubUser :user-id="id" @user-detail="changeUserDetail" />
         </el-tab-pane>
         <el-tab-pane label="Ta的社区">
-          <Community />
+          <template v-if="channel">
+            <Community :user-id="channel.id" />
+          </template>
         </el-tab-pane>
         <el-tab-pane label="Ta的收藏">
           <SubPlaylist :user-id="id" />
@@ -81,12 +83,14 @@ import moment from 'moment';
 import { useRoute, useRouter } from 'vue-router';
 import { getUserLibrary, getUserMsg } from '@/network/user';
 import { IResponseType } from '@/types/responseType';
+import { IChannel } from '@/types/channel';
 import { IUserDetail } from '@/types/user/IUserDetail';
 import UserVideo from '@/views/detail/userDetail/childCpn/userVideo/UserVideo.vue';
 import UserPlaylist from '@/views/detail/userDetail/childCpn/userPlaylist/UserPlaylist.vue';
 import SubUser from '@/views/detail/userDetail/childCpn/subUser/SubUser.vue';
 import Community from '@/views/detail/userDetail/childCpn/community/Community.vue';
 import SubPlaylist from '@/views/detail/userDetail/childCpn/subPlaylist/SubPlaylist.vue';
+import { getUserChannel } from '@/network/channel';
 const route = useRoute();
 const router = useRouter();
 const { id } = route.params;
@@ -98,6 +102,12 @@ const changeUserDetail = (userId: string) => {
 };
 initData(id as string);
 
+const channel = ref<IChannel | null>(null);
+getUserChannel(id as string).then((res) => {
+  if (res.status === 200) {
+    channel.value = res.data;
+  }
+});
 const userDetail = ref<IUserDetail | null>(null);
 const userLibrary = ref<ILibrary>({ subCount: 0, uploadCount: 0, thumbCount: 0 });
 function initData(id: string) {

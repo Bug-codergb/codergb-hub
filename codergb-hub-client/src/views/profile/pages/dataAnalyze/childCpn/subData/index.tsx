@@ -59,7 +59,7 @@ const SubData: FC = () => {
                 data: value,
                 type: 'line',
                 smooth: true,
-                name: '播放量',
+                name: '粉丝',
                 lineStyle: {
                   color: '#479fd1'
                 },

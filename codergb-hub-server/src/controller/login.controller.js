@@ -29,6 +29,7 @@ class LoginController{
       dest:result[0].dest,
       filename:result[0].filename,
       size:result[0].size,
+      manage:result[0].manage
     })
   }
   async loginLog(ctx,next){
