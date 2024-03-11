@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" @refresh="refresh" />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCate ref="createCateRef" @refresh="refresh" />
   </div>

@@ -1,7 +1,12 @@
 <template>
   <el-card class="g-inner-card">
     <div class="comment">
-      <GbHeader :header="header" :is-show-create="false" :is-show-refresh="false" />
+      <GbHeader
+        :header="header"
+        :is-show-create="false"
+        :is-show-refresh="true"
+        @refresh="refresh"
+      />
       <GbTable :table-data="tableData" ref="gbTable" />
       <Notify ref="notifyRef" />
       <Detail ref="detailRef" />
@@ -34,6 +39,9 @@ const header = reactive([
     }
   }
 ]);
+const refresh = () => {
+  gbTable.value.search();
+};
 </script>
 <style lang="less">
 .comment-from {

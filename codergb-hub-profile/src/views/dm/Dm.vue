@@ -1,7 +1,7 @@
 <template>
   <el-card class="g-inner-card">
     <div class="dm">
-      <GbHeader :header="header" :is-show-create="false" />
+      <GbHeader :header="header" :is-show-create="false" @refresh="refreshHandler" />
       <GbTable :table-data="tableData" ref="gbTable" />
     </div>
     <Edit ref="editRef" @refresh="refreshHandler" />
@@ -43,8 +43,7 @@ const tableData = reactive({
     {
       label: '弹幕内容',
       prop: 'text',
-      'min-width': 180,
-      
+      'min-width': 180
     },
     {
       label: '视频时间',
@@ -143,5 +142,4 @@ const refreshHandler = () => {
   cursor: pointer;
   color: #5a9cf8 !important;
 }
-
 </style>

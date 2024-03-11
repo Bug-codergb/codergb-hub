@@ -1,6 +1,11 @@
 <template>
   <el-card class="g-inner-card">
-    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
+    <GbHeader
+      :header="header"
+      :isShowRefresh="true"
+      @create="createHandle"
+      @refresh="refreshHandler"
+    />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCol ref="createColRef" @refresh="refresh" />
     <AddVideo ref="addVideo" @refresh="refreshHandler" />

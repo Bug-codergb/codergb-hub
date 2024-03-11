@@ -5,6 +5,7 @@
       :isShowRefresh="isShowRefresh"
       @create="createHandle"
       :is-show-create="isShowCreate"
+      @refresh="search"
     />
     <GbTable
       :tableData="tableData"

@@ -1,7 +1,7 @@
 <template>
   <el-card class="g-inner-card">
     <div class="user-list">
-      <GbHeader :header="header" @create="createHandler" />
+      <GbHeader :header="header" @create="createHandler" @refresh="search" />
       <CreateUser ref="createUserRef" @refresh="search" />
       <GbTable :tableData="tableData" ref="gbTable" />
     </div>

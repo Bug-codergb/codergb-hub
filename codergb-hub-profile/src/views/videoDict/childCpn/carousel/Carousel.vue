@@ -1,16 +1,13 @@
 <script setup lang="tsx">
 import { reactive, ref } from 'vue';
-import { useRouter } from "vue-router"
+import { useRouter } from 'vue-router';
 import moment from 'moment';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import CreateCarousel from '@/views/videoDict/childCpn/carousel/childCpn/CreateCarousel.vue';
 import { deleteCarousel } from '@/network/video';
 import { ElMessage } from 'element-plus';
-import {
- 
-  VIDEO_DETAIL_PATH
-} from '@/router/constant';
+import { VIDEO_DETAIL_PATH } from '@/router/constant';
 const createHandle = () => {
   createCarouselRef.value.showDrawer();
 };
@@ -21,8 +18,12 @@ const tableData = reactive({
     {
       label: '名称',
       prop: 'title',
-      formatter:(row:any)=>{
-        return <span class="carousel-content" onClick={()=>videoRouter(row)}>{row.title}</span>  
+      formatter: (row: any) => {
+        return (
+          <span class="carousel-content" onClick={() => videoRouter(row)}>
+            {row.title}
+          </span>
+        );
       }
     },
     {
@@ -69,11 +70,11 @@ const tableData = reactive({
 const header = reactive([]);
 const createCarouselRef = ref();
 const router = useRouter();
-const videoRouter=(video:any)=>{
+const videoRouter = (video: any) => {
   router.push({
     path: VIDEO_DETAIL_PATH + '/' + video.videoId
-  })
-}
+  });
+};
 const gbTable = ref();
 const refreshHandler = () => {
   if (gbTable.value) {
@@ -84,15 +85,20 @@ const refreshHandler = () => {
 
 <template>
   <div class="carousel-container">
-    <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" />
+    <GbHeader
+      :header="header"
+      :isShowRefresh="true"
+      @create="createHandle"
+      @refresh="refreshHandler"
+    />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCarousel ref="createCarouselRef" @refresh="refreshHandler" />
   </div>
 </template>
 
 <style lang="less">
-.carousel-content{
-  cursor:pointer;
-  color:#5a9cf8
+.carousel-content {
+  cursor: pointer;
+  color: #5a9cf8;
 }
 </style>

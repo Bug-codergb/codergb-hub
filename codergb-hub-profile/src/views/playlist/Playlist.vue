@@ -1,7 +1,7 @@
 <template>
   <el-card class="g-inner-card">
     <div class="playlist">
-      <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" />
+      <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" @refresh="refresh" />
       <GbTable :tableData="tableData" ref="gbTable" />
       <CreatePlaylist ref="createPlaylist" @refresh="refresh" :key="keyIndex" />
     </div>

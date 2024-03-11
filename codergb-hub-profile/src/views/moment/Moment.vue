@@ -1,7 +1,7 @@
 <template>
   <el-card class="g-inner-card">
     <div class="moment">
-      <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" />
+      <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" @refresh="search" />
       <GbTable :table-data="tableData" ref="gbTable" />
       <CreateMoment ref="createMomentRef" @refresh="search" />
     </div>

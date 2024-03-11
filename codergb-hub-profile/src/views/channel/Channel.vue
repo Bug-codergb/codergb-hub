@@ -1,7 +1,7 @@
 <template>
   <el-card class="g-inner-card">
     <div class="channel-container">
-      <GbHeader :header="header" :is-show-create="false" />
+      <GbHeader :header="header" :is-show-create="false" @refresh="refreshHandler" />
       <GbTable :table-data="tableData" ref="gbTable" />
     </div>
     <EditChannel ref="editChannelRef" @refresh="refreshHandler" />

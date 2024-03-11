@@ -1,7 +1,7 @@
 <template>
   <el-card class="g-inner-card">
     <div class="video-source">
-      <GbHeader :header="header" :isShowRefresh="true" :is-show-create="false">
+      <GbHeader :header="header" :isShowRefresh="true" :is-show-create="false" @refresh="refresh">
         <template #btnContent> </template>
       </GbHeader>
       <GbTable :table-data="tableData" ref="gbTableRef" />
@@ -120,6 +120,10 @@ const tableData = reactive<ITableData<IVideoSource>>({
 });
 const gbTableRef = ref();
 const { header } = useHeader(tableData, gbTableRef);
+
+const refresh = () => {
+  gbTableRef.value && gbTableRef.value.search();
+};
 </script>
 <style lang="less">
 .chunk-name {
