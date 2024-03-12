@@ -184,7 +184,7 @@ const CommentItem: FC<IProps> = (props) => {
             </div>
             {loginState.userMsg && loginState.userMsg.userId === comment.user.userId && (
               <Popconfirm
-                title="删除评论将删除该评论下的所有恢复"
+                title="删除评论将删除该评论下的所有回复"
                 onConfirm={() => {
                   delCommentHandler(index);
                 }}
