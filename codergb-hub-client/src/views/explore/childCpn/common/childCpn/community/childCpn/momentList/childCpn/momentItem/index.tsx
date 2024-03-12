@@ -89,25 +89,27 @@ const MomentItem: FC<IProps> = (props): ReactElement => {
         <img src={moment.user.avatarUrl} />
       </div>
       <div className="right-container">
-        <div className="operation">
-          <Dropdown
-            trigger={['click']}
-            overlay={
-              <Menu
-                onClick={(e) => {
-                  drodownHandler(e, moment);
-                }}
-              >
-                <Menu.Item key="del">
-                  <div>删除</div>
-                </Menu.Item>
-              </Menu>
-            }
-            placement="bottom"
-          >
-            <MoreOutlined className="more-icon" />
-          </Dropdown>
-        </div>
+        {moment.user.userId === loginState.userMsg.userId && (
+          <div className="operation">
+            <Dropdown
+              trigger={['click']}
+              overlay={
+                <Menu
+                  onClick={(e) => {
+                    drodownHandler(e, moment);
+                  }}
+                >
+                  <Menu.Item key="del">
+                    <div>删除</div>
+                  </Menu.Item>
+                </Menu>
+              }
+              placement="bottom"
+            >
+              <MoreOutlined className="more-icon" />
+            </Dropdown>
+          </div>
+        )}
         <div className="g-user-info">
           <p className="user-name">{moment.user.userName}</p>
           <p className="create-time">{timeMoment(moment.createTime).fromNow()}</p>

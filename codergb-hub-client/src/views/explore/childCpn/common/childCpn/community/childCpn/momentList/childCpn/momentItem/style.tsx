@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 export const MomentItemWrapper = styled.div`
   width: 100%;
+  display: flex;
   .avatar-container {
     width: ${50 / 40}rem;
     height: ${50 / 40}rem;

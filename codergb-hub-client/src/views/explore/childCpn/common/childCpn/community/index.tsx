@@ -97,6 +97,8 @@ const Community: FC<IProps> = (props) => {
         onOk={handleOk}
         onCancel={handleCancel}
         destroyOnClose={true}
+        okText={'确定'}
+        cancelText={'取消'}
       >
         <Form
           ref={formRef}
@@ -154,6 +156,8 @@ const Community: FC<IProps> = (props) => {
         onCancel={selectCancel}
         destroyOnClose={true}
         width={'60%'}
+        okText={'确定'}
+        cancelText={'取消'}
       >
         <VideoList ref={videoListRef} />
       </Modal>
