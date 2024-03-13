@@ -73,10 +73,11 @@ const VideoInfo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef)
         playlist: playlistParam,
         tag: tagParam,
         cate: cateParam,
-        file: null
+        file: null,
+        imgURL
       };
     },
-    [imgID, title, desc, playlistParam, cateParam, tagParam.length]
+    [imgID, title, imgURL, desc, playlistParam, cateParam, tagParam.length]
   );
   useEffect(() => {
     getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(login.userMsg.userId, 0, 10).then((data) => {

@@ -47,6 +47,7 @@ async function chunkHandle(
       let videoId = '';
       const params = `?dest=${dest}&hash=${HASH}&originalname=${name}&type=${type}&total=${total}&dt=${dt}`;
       const websocket = new WebSocket(`${WEBSOCKET_HOST_NAME}/video/merge${params}`);
+      window.videoWebsocket = websocket;
       await socketOpen(websocket);
       videoId = await getSocketMsg(websocket, handle);
       return await socketClose(websocket, videoId);

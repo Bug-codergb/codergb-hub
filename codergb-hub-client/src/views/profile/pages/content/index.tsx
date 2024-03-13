@@ -16,6 +16,11 @@ const Content: FC = () => {
             label: `视频`,
             key: '1',
             children: <VideoPage />
+          },
+          {
+            label: '正在上传',
+            key: '2',
+            children: <LiveStream />
           }
         ]}
       />

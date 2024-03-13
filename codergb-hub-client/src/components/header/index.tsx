@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { type Map } from 'immutable';
-import { Dropdown, Modal, Badge } from 'antd';
+import { Dropdown, Modal, Badge, Button, message } from 'antd';
 import { SearchOutlined, VideoCameraOutlined, MailOutlined } from '@ant-design/icons';
 import { HeaderWrapper, LeftContent, RightContent, CenterContent } from './style';
 import logo from '../../assets/img/new-logo.png';
@@ -41,6 +41,8 @@ const Header: FC = (): ReactElement => {
   const location = useLocation();
   const videoRef = useRef<IUploadVideo>(null);
   const showDialogHandle = () => {
+    window.videoInfo = undefined;
+    window.videoWebsocket = undefined;
     setIsModelOpen(true);
   };
   useEffect(() => {
@@ -50,16 +52,45 @@ const Header: FC = (): ReactElement => {
         try {
           getVideoDuration(file).then((data) => {
             createVideo(videoId, title, desc, imgId, playlist, tag, cate, data).then((data) => {
-              if (data.status == 200) {
-                console.log(data.data);
+              if (data.status === 200) {
                 setIsModelOpen(false);
               }
             });
           });
         } catch (e) {}
+      } else {
+        message.warning('请完善视频信息');
       }
     }
   }, [keyIndex]);
+  const backUpload = () => {
+    const { title, desc, playlist, tag, cate, imgId, file, imgURL } = videoRef.current;
+    if (
+      title.trim().length === 0 ||
+      desc.trim().length === 0 ||
+      playlist.trim().length === 0 ||
+      !imgId ||
+      imgURL.trim().length === 0 ||
+      !cate ||
+      tag.length === 0
+    ) {
+      window.videoInfo = undefined;
+      message.destroy();
+      message.warning('请完善视频信息');
+    } else {
+      getVideoDuration(file)
+        .then((data) => {
+          window.videoInfo = {
+            ...videoRef.current,
+            dt: data
+          };
+          setIsModelOpen(false);
+        })
+        .catch(() => {
+          message.warning('文件异常');
+        });
+    }
+  };
 
   const handleOk = async (): void => {
     setKeyIndex(keyIndex + 1);
@@ -183,6 +214,26 @@ const Header: FC = (): ReactElement => {
           destroyOnClose={true}
           width={'74%'}
           onCancel={handleCancel}
+          closable={false}
+          footer={
+            <div>
+              <Button type="default" onClick={handleCancel}>
+                取消
+              </Button>
+              <Button
+                className="g-upload-backgrounds"
+                style={{ background: '#7ec050', color: '#ffffff' }}
+                onClick={() => {
+                  backUpload();
+                }}
+              >
+                后台上传
+              </Button>
+              <Button type="primary" onClick={handleOk}>
+                确定
+              </Button>
+            </div>
+          }
         >
           {isModalOpen && <UploadVideo keyIndex={keyIndex} ref={videoRef} />}
         </Modal>

@@ -37,7 +37,8 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
     cate: '',
     imgId: '',
     videoId: '',
-    file: null
+    file: null,
+    imgURL: ''
   });
 
   useImperativeHandle<IUploadVideo, IUploadVideo>(
@@ -46,6 +47,7 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
       return {
         videoId,
         title: videoInfoRef.current.title,
+        imgURL: videoInfoRef.current.imgURL,
         desc: videoInfoRef.current.desc,
         playlist: videoInfoRef.current.playlist,
         tag: videoInfoRef.current.tag,
@@ -86,6 +88,12 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
         setPercent(100);
         setIsShowLoading(false);
       }
+    }
+  };
+
+  window.onbeforeunload = function () {
+    if (percent !== 0 && percent !== 100) {
+      return '离开页面前请先确认保存案件信息！';
     }
   };
 

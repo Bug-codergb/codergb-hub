@@ -185,3 +185,9 @@ button {
 .mask .ant-progress-text{
   color: #fff;
 }
+.g-upload-backgrounds:focus{
+  border-color:#7ec050 ;
+}
+.g-upload-backgrounds:hover{
+  border-color:#7ec050 ;
+}

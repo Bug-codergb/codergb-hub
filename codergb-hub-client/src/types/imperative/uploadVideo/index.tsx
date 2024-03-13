@@ -7,5 +7,8 @@ interface IUploadVideo {
   cate: string;
   videoId: string;
   file: File | null;
+  imgURL: string;
+  dt?: number;
+  id?: string;
 }
 export type { IUploadVideo };
