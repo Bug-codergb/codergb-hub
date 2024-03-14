@@ -1,4 +1,4 @@
-import React, { memo, type FC, type ReactElement, useEffect, useState } from 'react';
+import { memo, type FC, type ReactElement, useEffect, useState } from 'react';
 import { Progress, Space, Table, Tag, message } from 'antd';
 import type { TableProps } from 'antd';
 import { LiveStreamWrapper } from './style';
@@ -8,7 +8,7 @@ import { type IUploadVideo } from '../../../../../../types/imperative/uploadVide
 const LiveStream: FC = (): ReactElement => {
   const [percent, setPercent] = useState<number>(0);
   useEffect(() => {
-    if (window.videoWebsocket) {
+    if (window.videoWebsocket && window.videoInfo) {
       window.videoWebsocket.onmessage = async function (e) {
         const value = JSON.parse(e.data as string);
         if (value) {

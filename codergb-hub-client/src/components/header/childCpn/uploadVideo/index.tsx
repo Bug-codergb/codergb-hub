@@ -18,9 +18,10 @@ import { type IUploadVideo } from '../../../../types/imperative/uploadVideo';
 interface IProps {
   keyIndex: number;
   ref: Ref<IUploadVideo>;
+  fileChange: (isShow: boolean) => void;
 }
 const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRef) => {
-  const { keyIndex } = props;
+  const { keyIndex, fileChange } = props;
   const [file, setFile] = useState<File | null>(null);
   // const [childKeyIndex,setChildKeyIndex] = useState<number>(keyIndex);
   const [videoURL, setVideoURL] = useState<string>('');
@@ -71,12 +72,16 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
       setFile(file);
       setPercent(0);
       setIsShowUpload(false);
+
+      let executing = true;
       const result = await shardUtils(
         file,
         (e) => {
           setPercent((e / file.size) * 100);
         },
         (e) => {
+          executing && fileChange(true);
+          executing = false;
           setPercent(e);
           if (!isShowLoading) {
             setIsShowLoading(true);
@@ -87,15 +92,21 @@ const UploadVideo: FC<IProps> = forwardRef<IUploadVideo, IProps>((props, propsRe
         setVideoId(result.data.id);
         setPercent(100);
         setIsShowLoading(false);
+        fileChange(false);
       }
     }
   };
 
-  window.onbeforeunload = function () {
-    if (percent !== 0 && percent !== 100) {
-      return '离开页面前请先确认保存案件信息！';
-    }
-  };
+  useEffect(() => {
+    window.onbeforeunload = function () {
+      if (percent !== 0 && percent !== 100) {
+        return '离开页面前请先确认保存案件信息！';
+      }
+    };
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [percent]);
 
   return (
     <UploadVideoWrapper>

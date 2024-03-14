@@ -67,7 +67,7 @@ class VideoController {
               isProgress: true,
               percent: progress.percent
             }
-  
+
             ctx.websocket.send(JSON.stringify(res));
           });
           if (result) {

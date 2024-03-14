@@ -1,5 +1,5 @@
 import React, { memo, type FC, ReactElement, useState, useEffect } from 'react';
-import { Pagination } from "antd"
+import { Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { type Map } from 'immutable';
 import { ThumbWrapper } from './style';
@@ -39,12 +39,14 @@ const Thumb: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageChange = (e: number) => {
     setCurrentPage(e);
-    getThumbUserVideo<IResponseType<IPage<IThumb[]>>>(login.userMsg.userId, (e-1)*10, 10).then((data) => {
-      if (data.status === 200) {
-        setCount(data.data.count);
-        setVideoThumb(data.data.list);
+    getThumbUserVideo<IResponseType<IPage<IThumb[]>>>(login.userMsg.userId, (e - 1) * 10, 10).then(
+      (data) => {
+        if (data.status === 200) {
+          setCount(data.data.count);
+          setVideoThumb(data.data.list);
+        }
       }
-    });
+    );
   };
   return (
     <ThumbWrapper>
@@ -84,7 +86,7 @@ const Thumb: FC = () => {
         </LeftContent>
       )}
       <RightContent>
-        <ul className="vio-list">
+        <ul className="g-vio-list">
           {videoThumb &&
             videoThumb.length !== 0 &&
             videoThumb.map((item) => {

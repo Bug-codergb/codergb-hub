@@ -41,9 +41,8 @@ const Header: FC = (): ReactElement => {
   const location = useLocation();
   const videoRef = useRef<IUploadVideo>(null);
   const showDialogHandle = () => {
-    window.videoInfo = undefined;
-    window.videoWebsocket = undefined;
     setIsModelOpen(true);
+    setShowBack(false);
   };
   useEffect(() => {
     if (videoRef.current && videoRef.current.videoId && videoRef.current.imgId) {
@@ -97,6 +96,7 @@ const Header: FC = (): ReactElement => {
   };
   const handleCancel = (): void => {
     setIsModelOpen(false);
+    setShowBack(false);
   };
   const login = (): void => {
     navigate('/login', {
@@ -150,6 +150,16 @@ const Header: FC = (): ReactElement => {
     navigate('/studio/message', {
       replace: false
     });
+  };
+
+  const [isShowBack, setShowBack] = useState(false);
+
+  const fileChange = (isShow: boolean) => {
+    if (isModalOpen) {
+      setShowBack(isShow);
+    } else {
+      setShowBack(false);
+    }
   };
   return (
     <HeaderWrapper>
@@ -220,22 +230,32 @@ const Header: FC = (): ReactElement => {
               <Button type="default" onClick={handleCancel}>
                 取消
               </Button>
-              <Button
-                className="g-upload-backgrounds"
-                style={{ background: '#7ec050', color: '#ffffff' }}
-                onClick={() => {
-                  backUpload();
-                }}
-              >
-                后台上传
-              </Button>
+              {isShowBack && (
+                <Button
+                  className="g-upload-backgrounds"
+                  style={{ background: '#7ec050', color: '#ffffff' }}
+                  onClick={() => {
+                    backUpload();
+                  }}
+                >
+                  后台上传
+                </Button>
+              )}
               <Button type="primary" onClick={handleOk}>
                 确定
               </Button>
             </div>
           }
         >
-          {isModalOpen && <UploadVideo keyIndex={keyIndex} ref={videoRef} />}
+          {isModalOpen && (
+            <UploadVideo
+              fileChange={(val: boolean) => {
+                fileChange(val);
+              }}
+              keyIndex={keyIndex}
+              ref={videoRef}
+            />
+          )}
         </Modal>
         <div className="user">
           {loginState && loginState.loginType === 0 && (
