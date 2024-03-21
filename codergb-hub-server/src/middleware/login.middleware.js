@@ -31,7 +31,6 @@ async function loginVerify(ctx,next){
       const err = new Error("用户名或者密码不能为空",401);
       return ctx.app.emit("error",err,ctx);
     }else{
-      console.log(userName,password)
       const user = await getUserByUserIdService(ctx,userName,password);
       if(user.length === 0){
         setResponse(ctx,"用户名或者密码错误",401);
