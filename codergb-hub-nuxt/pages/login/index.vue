@@ -30,7 +30,8 @@ const handleLogin = async () => {
       password:account.password
     }  
   });
-  console.log(res.value)
+
+  cache.setCache("userMsg",res.data.value.data);
   if (res.data.value.status === 200) {
     router.push({
       path:"/home"

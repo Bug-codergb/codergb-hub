@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <div class="left-container">
-      <div class="left">
+      <div class="left" @click="homeRouter">
         <img src="~/assets/img/new-logo.png"/>
       </div>
       <div class="right">
@@ -11,7 +11,22 @@
     <div class="right-container"></div>
   </div>
 </template>
-<script>
-const keyword = ref("")
+<script setup>
+const keyword = ref("");
+const router = useRouter();
+const homeRouter = () => {
+  router.push({
+    path:"/home"
+  })
+}
 </script>
-<style lang="less"></style>
+<style lang="less">
+.top-bar{
+  display: flex;
+  border-bottom: 1px solid pink;
+  .left-container{
+    display: flex;
+    align-items: center;
+  }
+}
+</style>

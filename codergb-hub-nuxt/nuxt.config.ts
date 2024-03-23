@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   app: {
-    baseURL:"/gb"
+    baseURL:"/"
   },
   devServer: {
     port:7877
