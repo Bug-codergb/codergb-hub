@@ -8,7 +8,13 @@ import Hls from "hls.js";
 const route = useRoute();
 const { id } = route.params;
 const videoRef = ref();
-
+definePageMeta({
+  validate: async (route) => {
+    console.log(/^\d+$/.test(route.params.id))
+    // 检查id是否由数字组成
+    return /^\d+$/.test(route.params.id)
+  }
+})
 $fetch(`/api/video/url/${id}`, {
   headers: {
     'Authorization':cache.getCache("userMsg").token
