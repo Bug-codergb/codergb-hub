@@ -10,6 +10,16 @@
   </div>
 </template>
 <script setup>
+const router = useRouter();
+
+definePageMeta({
+  needLogin: 'auth',
+  middleware: 'route-middleware'
+})
+
+router.push({
+  path:"/home/recommend"
+})
 </script>
 <style lang="less">
   .body-content{

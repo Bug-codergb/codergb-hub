@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "element-plus": "^2.6.1",
+    "hls.js": "^1.5.7",
     "less": "^4.2.0",
     "moment": "^2.30.1",
     "nuxt": "^3.11.1",
