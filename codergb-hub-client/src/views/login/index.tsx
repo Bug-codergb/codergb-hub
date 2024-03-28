@@ -11,7 +11,7 @@ import { RightOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { LoginWrappers } from './style';
 import { useDispatch } from 'react-redux';
-import { loginAction } from './store/actionCreators';
+import { loginAction } from './store/asyncThunk';
 import { type Dispatch } from 'redux';
 const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Login: FC = (): ReactElement => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const onFinish = () => {
-    dispatch(loginAction(username, password, navigate));
+    dispatch(loginAction({ username, password, navigate }));
   };
   const register = () => {
     console.log(1);

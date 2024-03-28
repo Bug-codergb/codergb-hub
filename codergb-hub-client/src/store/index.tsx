@@ -1,13 +1,10 @@
-import { applyMiddleware, compose, legacy_createStore as createStore } from 'redux';
-import thunk from 'redux-thunk';
-import reducer from './reducer';
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
-
-const composeEnhancers = window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+import { configureStore } from '@reduxjs/toolkit';
+import { reducer as loginReducer } from '../views/login/store/index';
+const store = configureStore({
+  reducer: {
+    login: loginReducer
+  },
+  devTools: true
+});
 
 export default store;

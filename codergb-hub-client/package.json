@@ -13,6 +13,7 @@
     "@babel/preset-env": "^7.23.7",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@reduxjs/toolkit": "^2.2.2",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@types/react-router-dom": "5.3.3",

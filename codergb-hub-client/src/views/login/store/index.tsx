@@ -1,2 +1,1 @@
-import reducer from './reducer';
-export { reducer };
+export { changeUserMsg, changeUserDetail, changeLoginType, reducer, loginSlice } from './slice';
