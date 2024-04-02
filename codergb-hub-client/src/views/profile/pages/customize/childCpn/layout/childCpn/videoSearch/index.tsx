@@ -15,6 +15,7 @@ import { IChannel } from '../../../../../../../../types/channel/IChannel';
 import { Dispatch } from 'redux';
 import { changeChannelAction } from '../../../../store/actionCreators';
 import { log } from 'util';
+import { useLoginMsg } from '../../../../../../../../hook/useLoginMsg';
 
 const { Search } = Input;
 interface IProps {
@@ -29,9 +30,7 @@ const VideoSearch: FC<IProps> = (props): ReactElement => {
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const getUserVideoHandle = async (keyword: string, offset: number, limit: number) => {
     const result = await getUserVideo<IResponseType<IPage<IVideo[]>>>(
       login.userMsg.userId,

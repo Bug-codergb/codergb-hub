@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type Map } from 'immutable';
 import { type ILogin } from '../../../../../../../types/login/ILogin';
 import { type Dispatch } from 'redux';
+import { useLoginMsg } from '../../../../../../../hook/useLoginMsg';
 interface IProps {
   reply: IComment;
   id: string;
@@ -36,9 +37,7 @@ const ReplyItem: FC<IProps> = (props) => {
     thubmHandler: propThumbHandler,
     delComment
   } = props;
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
   const isThumb = useThumb('comment', reply.id);
   const isTread = useTread('comment', reply.id);
   const dispatch = useDispatch<Dispatch<any>>();

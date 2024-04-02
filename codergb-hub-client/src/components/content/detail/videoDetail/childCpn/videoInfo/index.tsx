@@ -30,6 +30,7 @@ import { type IUserMsg } from '../../../../../../types/user/IUserMsg';
 import { type IResponseType } from '../../../../../../types/responseType';
 import { type IAddType, ADD_PLAYLIST } from '../../../../../../constant/addList';
 import videoDetail from '../..';
+import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 interface IAdd {
   liClick: (item: IAddType) => void;
 }
@@ -40,9 +41,7 @@ interface IProps {
 }
 const VideoInfo: FC<IProps> = (props) => {
   const { videoInfo, id: videoId, playCount } = props;
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
   const isSub = useSub(videoInfo?.user.userId);
   const isThumb = useThumb('video', videoInfo?.id);
   const isTread = useTread('video', videoInfo?.id);

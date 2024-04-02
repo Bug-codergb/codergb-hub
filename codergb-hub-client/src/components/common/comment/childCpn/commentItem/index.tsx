@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type Dispatch } from 'redux';
 import { type Map } from 'immutable';
 import { type ILogin } from '../../../../../types/login/ILogin';
+import { useLoginMsg } from '../../../../../hook/useLoginMsg';
 interface IProps {
   comment: IComment;
   comIndex: number;
@@ -52,9 +53,7 @@ const CommentItem: FC<IProps> = (props) => {
   const [tempReplyCount, setReplyCount] = useState<number>(0);
 
   const navigate = useNavigate();
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
   const isThumb = useThumb('comment', comment.id);
   const isTread = useTread('comment', comment.id);
   const dispatch = useDispatch<Dispatch<any>>();

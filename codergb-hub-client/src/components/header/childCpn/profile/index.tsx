@@ -6,12 +6,11 @@ import { useSelector } from 'react-redux';
 import { type ILogin } from '../../../../types/login/ILogin';
 import { profileMenu } from '../../../../constant/profileMenu';
 import UserIcon from '../../../../assets/html/user/userIcon';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
 
 const Profile: FC = () => {
   const navigate = useNavigate();
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const profileMenuHandle = (item: { name: string; path: string }) => {
     console.log(item);
     navigate(item.path, {

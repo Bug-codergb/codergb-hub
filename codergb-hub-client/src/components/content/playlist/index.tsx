@@ -10,6 +10,7 @@ import { type ILogin } from '../../../types/login/ILogin';
 import { getUserPlaylist } from '../../../network/playlist';
 import { type IResponseType } from '../../../types/responseType';
 import { type IPage } from '../../../types/IPage';
+import { useLoginMsg } from '../../../hook/useLoginMsg';
 interface IProps {
   select: (checked: boolean, item: IPlaylist) => void;
 }
@@ -17,9 +18,7 @@ const Playlist: FC<IProps> = (props) => {
   const { select } = props;
   const [playlist, setPlaylist] = useState<IPlaylist[]>([]);
   const [count, setCount] = useState<number>(0);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   useEffect(() => {
     getUserPlaylist<IResponseType<IPage<IPlaylist[]>>>(login.userMsg.userId, 0, 10).then((data) => {
       if (data.status === 200) {

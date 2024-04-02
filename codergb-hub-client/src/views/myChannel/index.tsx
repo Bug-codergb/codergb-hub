@@ -6,15 +6,14 @@ import { useSelector } from 'react-redux';
 import { type IChannel } from '../../types/channel/IChannel';
 import { type ILogin } from '../../types/login/ILogin';
 import TabContent from './childCpn/TabContent';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 const MyChannel: FC = () => {
   const location = useLocation();
   const { id } = location.state; // userId
   const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
     return state.getIn(['channelReducer', 'channel']) as IChannel;
   });
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   return (
     <MyChannelWrapper>
       <div className="banner">
