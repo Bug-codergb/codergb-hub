@@ -30,13 +30,12 @@ import { getAllNotify } from '../../network/notify';
 import { type IResponseType } from '../../types/responseType';
 import { type IPage } from '../../types/IPage';
 import { type INotify } from '../../types/message';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 const Header: FC = (): ReactElement => {
   const [isModalOpen, setIsModelOpen] = useState<boolean>(false);
   const [searchContent, setSearchContent] = useState<string>('');
   const [keyIndex, setKeyIndex] = useState<number>(0);
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
   const navigate = useNavigate();
   const location = useLocation();
   const videoRef = useRef<IUploadVideo>(null);

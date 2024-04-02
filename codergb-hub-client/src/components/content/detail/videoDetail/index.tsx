@@ -52,6 +52,7 @@ import CollectionVideo from './childCpn/collectionVideo';
 import { generateAnimation } from '../../../../utils/dom';
 import lodash from 'lodash';
 import { changeQueueAction } from '../../add/store/actionCreators';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
@@ -66,9 +67,7 @@ const VideoDetail: FC = (): ReactElement => {
     useState<Array<IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }>>();
   const [dmTotal, setDmTotal] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
 
   const queue = useSelector<Map<string, IVideo[]>, IVideo[]>((state) => {
     return state.getIn(['queueReducer', 'queue']) as IVideo[];

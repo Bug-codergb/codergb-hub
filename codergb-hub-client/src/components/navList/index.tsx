@@ -35,6 +35,7 @@ import UserPlaylist from '../../views/user-playlist';
 import { message } from 'antd';
 import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../../views/login/store/actionCreators';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 
 interface IProps {
   isHome: boolean;
@@ -47,9 +48,7 @@ const NavList: FC<IProps> = (props): ReactElement => {
   // const [progress,setProgress]=useState<number>(0);
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
