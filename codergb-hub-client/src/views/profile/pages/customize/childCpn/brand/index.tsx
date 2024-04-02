@@ -18,15 +18,14 @@ import { type IChannel } from '../../../../../../types/channel/IChannel';
 import { changeChannelAction } from '../../store/actionCreators';
 import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../../../../../login/store/actionCreators';
+import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const Brand: FC = (): ReactElement => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
   const [isShowCover, setIsShowCover] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
-  const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
-    return state.getIn(['channelReducer', 'channel']) as IChannel;
+  const login = useLoginMsg();
+  const channel = useSelector<{ channelReducer: { channel: IChannel } }, IChannel>((state) => {
+    return state.channelReducer.channel as IChannel;
   });
   const dispatch = useDispatch<Dispatch<any>>();
   const avatarUpload = useRef<any>(null);

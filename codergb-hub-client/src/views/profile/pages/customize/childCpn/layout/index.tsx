@@ -11,15 +11,14 @@ import { updateChannel } from '../../../../../../network/channel';
 import { changeChannelAction } from '../../store/actionCreators';
 import { type Dispatch } from 'redux';
 import { type ILogin } from '../../../../../../types/login/ILogin';
+import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const Layout: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isTrailer, setTrailer] = useState<boolean>(true);
   const [videoInfo, setVideoInfo] = useState<Object>({});
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
-  const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
-    return state.getIn(['channelReducer', 'channel']) as IChannel;
+  const login = useLoginMsg();
+  const channel = useSelector<{ channelReducer: { channel: IChannel } }, IChannel>((state) => {
+    return state.channelReducer.channel as IChannel;
   });
   const dispatch = useDispatch<Dispatch<any>>();
   console.log(channel);

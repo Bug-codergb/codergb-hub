@@ -12,14 +12,13 @@ import { getUserComment } from '../../../../network/comment';
 import { type IPage } from '../../../../types/IPage';
 import { type IResponseType } from '../../../../types/responseType';
 import { columns } from './config';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
 
 const Comment: FC = (): ReactElement => {
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   const [comment, setComment] = useState<IComment[]>([]);
   const [count, setCount] = useState<number>(0);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
 
   const navigate = useNavigate();
   useEffect(() => {

@@ -11,12 +11,11 @@ import { type IPage } from '../../types/IPage';
 import { useSelector } from 'react-redux';
 import { type ILogin } from '../../types/login/ILogin';
 import { type IVideo } from '../../types/video/IVideo';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 const Playlist: FC = (): ReactElement => {
   const [userLater, setUserLater] = useState<ILater[]>([]);
   const [count, setCount] = useState<number>(0);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const navigate = useNavigate();
   const getUserLaterReq = async (userId: string, offset: number, limit: number) => {
     const result = await getUserLater<IResponseType<IPage<ILater[]>>>(userId, offset, limit);

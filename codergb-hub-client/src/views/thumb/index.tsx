@@ -12,12 +12,11 @@ import { type IPage } from '../../types/IPage';
 import { LeftContent, RightContent } from '../user-playlist/style';
 import moment from 'moment';
 import { type IVideo } from '../../types/video/IVideo';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 const Thumb: FC = () => {
   const [count, setCount] = useState<number>(0);
   const [videoThumb, setVideoThumb] = useState<IThumb[]>([]);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const navigate = useNavigate();
   useEffect(() => {
     getThumbUserVideo<IResponseType<IPage<IThumb[]>>>(login.userMsg.userId, 0, 10).then((data) => {

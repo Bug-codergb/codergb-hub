@@ -12,6 +12,7 @@ import VideoItem from '../../components/videoItem';
 import HolderCpn from '../../components/holder';
 import Hls from 'hls.js';
 import MoreVideo from './childCpn/more';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 
 const Subscriptions: FC = (): ReactElement => {
   const navigate = useNavigate();
@@ -19,9 +20,7 @@ const Subscriptions: FC = (): ReactElement => {
   const [videoURL, setVideoURL] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const vioRef = useRef<HTMLVideoElement>(null);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   useEffect(() => {
     getSubUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId, 0, 10, 1).then((data) => {
       if (data.status === 200) {

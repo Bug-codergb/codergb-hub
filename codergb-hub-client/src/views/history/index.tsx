@@ -22,6 +22,7 @@ import VideoItem from '../../components/videoItem';
 import { updateUserHistory } from '../../network/user';
 import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../login/store/actionCreators';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 
 const History: FC = (): ReactElement => {
   const [video, setVideo] = useState<IVideo[]>([]);
@@ -29,9 +30,7 @@ const History: FC = (): ReactElement => {
   const [isShowDelHisModal, setIsShowDelHisModal] = useState<boolean>(false);
   const [isBolderBorder, setIsBolderBorder] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>('');
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
   useEffect(() => {

@@ -10,15 +10,14 @@ import { type IPage } from '../../../../types/IPage';
 import Hls from 'hls.js';
 import { useNavigate } from 'react-router-dom';
 import VideoItem from '../../../../components/videoItem';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
 const MoreVideo: FC = () => {
   const navigate = useNavigate();
   const [weekVideo, setWeekVideo] = useState<IVideo[]>([]);
   const [videoURL, setVideoURL] = useState<string>('');
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const vioRef = useRef<HTMLVideoElement>(null);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   useEffect(() => {
     getSubUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId, 0, 10, 0).then((data) => {
       if (data.status === 200) {

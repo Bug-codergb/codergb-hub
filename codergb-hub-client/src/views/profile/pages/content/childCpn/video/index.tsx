@@ -12,14 +12,13 @@ import { type IVideo } from '../../../../../../types/video/IVideo';
 import { columns } from './config';
 import { useSelector } from 'react-redux';
 import { type ILogin } from '../../../../../../types/login/ILogin';
+import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const VideoPage: FC = (): ReactElement => {
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   const [video, setVideo] = useState<IVideo[]>([]);
   const [count, setCount] = useState<number>(0);
   const navigate = useNavigate();
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   useEffect(() => {
     getUserVideo<IResponseType<IPage<IVideo[]>>>(login.userMsg.userId, '', 0, 4).then((data) => {
       if (data.status === 200) {

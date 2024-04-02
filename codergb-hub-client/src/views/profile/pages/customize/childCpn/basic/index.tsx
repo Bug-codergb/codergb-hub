@@ -8,14 +8,13 @@ import { updateChannel } from '../../../../../../network/channel';
 import { type Dispatch } from 'redux';
 import { changeChannelAction } from '../../store/actionCreators';
 import { type ILogin } from '../../../../../../types/login/ILogin';
+import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const { TextArea } = Input;
 const Basic: FC = (): ReactElement => {
-  const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
-    return state.getIn(['channelReducer', 'channel']) as IChannel;
+  const channel = useSelector<{ channelReducer: { channel: IChannel } }, IChannel>((state) => {
+    return state.channelReducer.channel as IChannel;
   });
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const [name, setName] = useState<string>(channel.name);
   const [desc, setDesc] = useState<string>(channel.description);
   const dispatch = useDispatch<Dispatch<any>>();

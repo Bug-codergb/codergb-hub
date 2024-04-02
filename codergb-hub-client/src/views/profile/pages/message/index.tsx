@@ -11,14 +11,13 @@ import { getAllNotify } from '../../../../network/notify';
 import { type IResponseType } from '../../../../types/responseType';
 import { type IPage } from '../../../../types/IPage';
 import { columns } from './config';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
 const Message: FC = () => {
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   const [nofity, setNotify] = useState<INotify[]>([]);
   const [count, setCount] = useState<number>(0);
   const navigate = useNavigate();
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   const pageSize = 7;
   useEffect(() => {
     getAllNotify<IResponseType<IPage<INotify[]>>>(login.userMsg.userId, 0, pageSize).then(

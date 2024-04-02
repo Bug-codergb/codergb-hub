@@ -13,6 +13,7 @@ import { getUserLater } from '../../network/later';
 import { type ILater } from '../../types/later/ILater';
 import { getUserBlock } from '../../network/block';
 import { getUserLibrary } from '../../network/user';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 interface IUserLib {
   subCount: number;
   uploadCount: number;
@@ -21,9 +22,7 @@ interface IUserLib {
 const Library: FC = () => {
   const [history, setHistory] = useState<IVideo[]>([]);
   const [later, setLater] = useState<IVideo[]>([]);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
 
   const navigate = useNavigate();
   useEffect(() => {

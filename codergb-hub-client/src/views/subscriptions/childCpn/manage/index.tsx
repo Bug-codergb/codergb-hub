@@ -11,13 +11,12 @@ import { type IPage } from '../../../../types/IPage';
 import { useSub } from '../../../../hook/useSub';
 import SubBtn from '../../../../components/common/subBtn';
 import { type IUserMsg } from '../../../../types/user/IUserMsg';
+import { useLoginMsg } from '../../../../hook/useLoginMsg';
 const SubManage = () => {
   const [up, setUp] = useState<ISubscriber[]>([]);
   const [count, setCount] = useState<number>(0);
   const navigate = useNavigate();
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
   useEffect(() => {
     getUserSub<IResponseType<IPage<ISubscriber[]>>>(login.userMsg.userId, 0, 10).then((data) => {
       setUp(data.data.list);

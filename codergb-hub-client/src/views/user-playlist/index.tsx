@@ -23,6 +23,7 @@ import { useSubPlaylist } from '../../hook/useSubPlaylist';
 
 import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../login/store/actionCreators';
+import { useLoginMsg } from '../../hook/useLoginMsg';
 interface IProps {
   id?: string;
 }
@@ -34,9 +35,7 @@ const UserPlaylist: FC<IProps> = (props) => {
 
   const [video, setVideo] = useState<IVideo[]>([]);
   const [count, setCount] = useState<number>(0);
-  const login = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const login = useLoginMsg();
 
   const dispatch = useDispatch<Dispatch<any>>();
   const isSubPlaylist = useSubPlaylist(id);
