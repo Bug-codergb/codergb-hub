@@ -1,11 +1,10 @@
 import { useSelector } from 'react-redux';
 import { type Map } from 'immutable';
 import { type ILogin } from '../../types/login/ILogin';
+import { useLoginMsg } from '../useLoginMsg';
 
 export const useThumb = (alias: 'video' | 'comment' | 'moment', id?: string): boolean => {
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
   let isExists = -1;
   if (loginState) {
     const { userDetail } = loginState;
@@ -18,9 +17,7 @@ export const useThumb = (alias: 'video' | 'comment' | 'moment', id?: string): bo
   return isExists !== -1;
 };
 export const useTread = (alias: 'video' | 'comment' | 'moment', id?: string): boolean => {
-  const loginState = useSelector<Map<string, ILogin>, ILogin>((state) => {
-    return state.getIn(['loginReducer', 'login']) as ILogin;
-  });
+  const loginState = useLoginMsg();
   let isExists = -1;
   if (loginState) {
     const { userDetail } = loginState;
