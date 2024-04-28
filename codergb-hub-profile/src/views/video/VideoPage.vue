@@ -1,5 +1,5 @@
 <template>
-  <el-card class="g-inner-card">
+  <div class="g-inner-card video-page">
     <GbDrawer v-model="drawer" :title="title" @confirm="confirmHandle" @cancel="cancelHandle">
       <Create
         ref="createRef"
@@ -13,7 +13,7 @@
       />
     </GbDrawer>
     <VideoTable url="/video/all" @create="createHandle" ref="videoTableRef" @edit="editHandle" />
-  </el-card>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -108,4 +108,10 @@ const cancelHandle = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.video-page {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+</style>

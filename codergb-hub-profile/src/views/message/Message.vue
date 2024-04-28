@@ -1,9 +1,7 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="message">
-      <GbTable :table-data="tableData" />
-    </div>
-  </el-card>
+  <div class="g-inner-card table-box">
+    <GbTable :table-data="tableData" />
+  </div>
 </template>
 <script setup lang="tsx">
 import { reactive, getCurrentInstance } from 'vue';

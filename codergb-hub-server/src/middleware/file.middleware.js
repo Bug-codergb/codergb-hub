@@ -89,6 +89,7 @@ function chunkHandle(relativePath,uploadName,method){
     const upload = Multer({
       storage:fileStorageChunk(relativePath),
     })
+
     return upload[method](uploadName)
   }catch (e) {
     console.log(e)

@@ -49,9 +49,13 @@ onMounted(() => {
 }
 .home-inner {
   height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .g-container {
-  height: 100%;
+  width: 100%;
+  height: calc(100% - 60px);
 }
 .codergb-header {
   border-bottom: 1px solid var(--line-color);
@@ -62,7 +66,8 @@ onMounted(() => {
 }
 .codergb-main {
   height: 100%;
-  overflow-y: scroll;
+  width: 100%;
+
   background-color: #fff;
   padding: 15px;
 }

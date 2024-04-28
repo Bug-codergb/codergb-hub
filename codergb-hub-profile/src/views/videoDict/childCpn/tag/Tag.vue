@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table-box">
     <GbHeader :header="header" :isShowRefresh="true" @create="createHandle" @refresh="refresh" />
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateTag ref="createTagRef" @refresh="refresh" />

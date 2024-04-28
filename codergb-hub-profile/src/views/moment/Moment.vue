@@ -1,11 +1,9 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="moment">
-      <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" @refresh="search" />
-      <GbTable :table-data="tableData" ref="gbTable" />
-      <CreateMoment ref="createMomentRef" @refresh="search" />
-    </div>
-  </el-card>
+  <div class="g-inner-card table-box">
+    <GbHeader :header="header" :isShowRefresh="true" @create="createHandler" @refresh="search" />
+    <GbTable :table-data="tableData" ref="gbTable" />
+    <CreateMoment ref="createMomentRef" @refresh="search" />
+  </div>
 </template>
 <script setup lang="tsx">
 import { getCurrentInstance } from 'vue';

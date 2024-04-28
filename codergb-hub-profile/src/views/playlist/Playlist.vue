@@ -1,11 +1,9 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="playlist">
-      <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" @refresh="refresh" />
-      <GbTable :tableData="tableData" ref="gbTable" />
-      <CreatePlaylist ref="createPlaylist" @refresh="refresh" :key="keyIndex" />
-    </div>
-  </el-card>
+  <div class="g-inner-card playlist table-box">
+    <GbHeader :header="header" :isShowRefresh="true" @create="newPlaylist" @refresh="refresh" />
+    <GbTable :tableData="tableData" ref="gbTable" />
+    <CreatePlaylist ref="createPlaylist" @refresh="refresh" :key="keyIndex" />
+  </div>
 </template>
 
 <script lang="tsx" setup>

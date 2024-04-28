@@ -369,6 +369,15 @@ defineExpose({
 }
 </style>
 <style lang="less" scope>
+.video-table {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .el-table {
+    height: 100%;
+  }
+}
 .cate-name {
   cursor: pointer;
   color: #5a9cf8;

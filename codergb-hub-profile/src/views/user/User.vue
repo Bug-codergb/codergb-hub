@@ -1,11 +1,9 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="user-list">
-      <GbHeader :header="header" @create="createHandler" @refresh="search" />
-      <CreateUser ref="createUserRef" @refresh="search" />
-      <GbTable :tableData="tableData" ref="gbTable" />
-    </div>
-  </el-card>
+  <div class="g-inner-card table-box">
+    <GbHeader :header="header" @create="createHandler" @refresh="search" />
+    <CreateUser ref="createUserRef" @refresh="search" />
+    <GbTable :tableData="tableData" ref="gbTable" />
+  </div>
 </template>
 
 <script lang="tsx" setup>
@@ -47,7 +45,6 @@ const tableData = reactive({
           <el-avatar
             key={row.avatarUrl}
             shape="square"
-            size={50}
             fit="contain"
             src={`${row.avatarUrl}?t=${Math.random()}`}
           />

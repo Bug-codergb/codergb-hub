@@ -1,11 +1,9 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="channel-container">
-      <GbHeader :header="header" :is-show-create="false" @refresh="refreshHandler" />
-      <GbTable :table-data="tableData" ref="gbTable" />
-    </div>
+  <div class="g-inner-card table-box">
+    <GbHeader :header="header" :is-show-create="false" @refresh="refreshHandler" />
+    <GbTable :table-data="tableData" ref="gbTable" />
     <EditChannel ref="editChannelRef" @refresh="refreshHandler" />
-  </el-card>
+  </div>
 </template>
 <script setup lang="tsx">
 import GbTable from '@/components/common/gbTable/GbTable.vue';

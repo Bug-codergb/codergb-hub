@@ -1,5 +1,5 @@
 <template>
-  <el-card class="g-inner-card">
+  <div class="g-inner-card table-box">
     <GbHeader
       :header="header"
       :isShowRefresh="true"
@@ -9,7 +9,7 @@
     <GbTable :tableData="tableData" ref="gbTable" />
     <CreateCol ref="createColRef" @refresh="refresh" />
     <AddVideo ref="addVideo" @refresh="refreshHandler" />
-  </el-card>
+  </div>
 </template>
 
 <script lang="tsx" setup>

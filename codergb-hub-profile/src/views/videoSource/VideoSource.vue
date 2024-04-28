@@ -1,14 +1,12 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="video-source">
-      <GbHeader :header="header" :isShowRefresh="true" :is-show-create="false" @refresh="refresh">
-        <template #btnContent> </template>
-      </GbHeader>
-      <GbTable :table-data="tableData" ref="gbTableRef" />
-      <AssociateVideo ref="associateVideo" />
-      <Chunk ref="chunkRef" />
-    </div>
-  </el-card>
+  <div class="g-inner-card table-box">
+    <GbHeader :header="header" :isShowRefresh="true" :is-show-create="false" @refresh="refresh">
+      <template #btnContent> </template>
+    </GbHeader>
+    <GbTable :table-data="tableData" ref="gbTableRef" />
+    <AssociateVideo ref="associateVideo" />
+    <Chunk ref="chunkRef" />
+  </div>
 </template>
 <script setup lang="tsx">
 import GbTable from '@/components/common/gbTable/GbTable.vue';

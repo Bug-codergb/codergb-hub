@@ -1,17 +1,10 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="comment">
-      <GbHeader
-        :header="header"
-        :is-show-create="false"
-        :is-show-refresh="true"
-        @refresh="refresh"
-      />
-      <GbTable :table-data="tableData" ref="gbTable" />
-      <Notify ref="notifyRef" />
-      <Detail ref="detailRef" />
-    </div>
-  </el-card>
+  <div class="g-inner-card table-box">
+    <GbHeader :header="header" :is-show-create="false" :is-show-refresh="true" @refresh="refresh" />
+    <GbTable :table-data="tableData" ref="gbTable" />
+    <Notify ref="notifyRef" />
+    <Detail ref="detailRef" />
+  </div>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue';

@@ -84,7 +84,7 @@ const refreshHandler = () => {
 </script>
 
 <template>
-  <div class="carousel-container">
+  <div class="table-box carousel-container">
     <GbHeader
       :header="header"
       :isShowRefresh="true"

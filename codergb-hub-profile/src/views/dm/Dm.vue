@@ -1,11 +1,9 @@
 <template>
-  <el-card class="g-inner-card">
-    <div class="dm">
-      <GbHeader :header="header" :is-show-create="false" @refresh="refreshHandler" />
-      <GbTable :table-data="tableData" ref="gbTable" />
-    </div>
+  <div class="g-inner-card table-box">
+    <GbHeader :header="header" :is-show-create="false" @refresh="refreshHandler" />
+    <GbTable :table-data="tableData" ref="gbTable" />
     <Edit ref="editRef" @refresh="refreshHandler" />
-  </el-card>
+  </div>
 </template>
 
 <script lang="tsx" setup>
@@ -43,7 +41,8 @@ const tableData = reactive({
     {
       label: '弹幕内容',
       prop: 'text',
-      'min-width': 180
+      'min-width': 180,
+      'show-overflow-tooltip': true
     },
     {
       label: '视频时间',

@@ -4,6 +4,7 @@ html {
 }
 body{
   height: 100%;
+  width: 100%;
 }
 #app{
   width: 100%;
@@ -60,4 +61,47 @@ p {
 }
 .g-inner-card {
   height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+  background-color: var(--el-bg-color);
+  border: 1px solid var(--el-border-color-light);
+  padding: 20px;
 }
+.table-box{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.table-main{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.table-main,.table-box .el-table{
+  flex:1
+}
+
+.table-main .el-table table{
+  width: 100%;
+}
+
+.el-table .el-table__header th {
+  height: 45px;
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--el-text-color-primary);
+  background: var(--el-fill-color-light);
+}
+.el-table .el-table__row {
+  height: 63px;
+  font-size: 14px;
+}
+.el-table .el-table__header .el-table__cell > .cell {
+  white-space: nowrap;
+}
+
