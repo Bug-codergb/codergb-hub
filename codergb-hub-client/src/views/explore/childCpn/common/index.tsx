@@ -15,7 +15,7 @@ import { useLoginMsg } from '../../../../hook/useLoginMsg';
 import { cancelSub, sub } from '../../../../network/subscriber';
 import { type Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
-import { changeUserDetailAction } from '../../../login/store/actionCreators';
+import { changeUserDetailAction } from '../../../login/store/asyncThunk';
 import { getUserFans } from '../../../../network/user';
 import { IPlaylist } from '../../../../types/playlist/IPlaylist';
 import { type IPage } from '../../../../types/IPage';
@@ -73,7 +73,7 @@ const Common: FC<IProps> = (props) => {
       }
     }
     if (loginState && loginState.userMsg) {
-      dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
     }
     getUserFans<IResponseType<IPage<IUserMsg[]>>>(userId, 0, 1).then((res) => {
       if (res.status === 200) {

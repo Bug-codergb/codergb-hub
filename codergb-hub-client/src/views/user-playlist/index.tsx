@@ -22,7 +22,7 @@ import { type ILogin } from '../../types/login/ILogin';
 import { useSubPlaylist } from '../../hook/useSubPlaylist';
 
 import { type Dispatch } from 'redux';
-import { changeUserDetailAction } from '../login/store/actionCreators';
+import { changeUserDetailAction } from '../login/store/asyncThunk';
 import { useLoginMsg } from '../../hook/useLoginMsg';
 interface IProps {
   id?: string;
@@ -86,7 +86,7 @@ const UserPlaylist: FC<IProps> = (props) => {
       }
     }
     if (login && login.userMsg && login.userMsg.userId) {
-      dispatch(changeUserDetailAction(login.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: login.userMsg.userId, setMsg: false }));
     }
   };
   const openChangeHandle = (e: any, item: IVideo) => {

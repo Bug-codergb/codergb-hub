@@ -18,7 +18,7 @@ import { type IComment } from '../../../../../types/comment/IComment';
 import { type IUserMsg } from '../../../../../types/user/IUserMsg';
 import { useThumb, useTread } from '../../../../../hook/useThumb';
 import { cancelThumb, cancelTread, thumb, tread } from '../../../../../network/thumb';
-import { changeUserDetailAction } from '../../../../../views/login/store/actionCreators';
+import { changeUserDetailAction } from '../../../../../views/login/store/asyncThunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { type Dispatch } from 'redux';
 import { type Map } from 'immutable';
@@ -85,7 +85,8 @@ const CommentItem: FC<IProps> = (props) => {
         }
       }
       if (comment && comment.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+        console.log(loginState.userMsg);
+        dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
       }
     }
   };
@@ -103,7 +104,7 @@ const CommentItem: FC<IProps> = (props) => {
         }
       }
       if (comment && comment.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+        dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
       }
     }
   };

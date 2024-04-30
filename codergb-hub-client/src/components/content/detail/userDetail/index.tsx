@@ -27,7 +27,7 @@ import CreatePlaylist from './childCpn/playlist';
 import Subscriber from './childCpn/subscriber';
 import { useSub } from '../../../../hook/useSub';
 import { type Dispatch } from 'redux';
-import { changeUserDetailAction } from '../../../../views/login/store/actionCreators';
+import { changeUserDetailAction } from '../../../../views/login/store/asyncThunk';
 import Short from './childCpn/short';
 import MulPlay from './childCpn/mulPlay';
 import SinglePlay from './childCpn/singlePlay';
@@ -166,7 +166,7 @@ const UserDetail: FC = (): ReactElement => {
       }
     }
     if (loginMsg && loginMsg.userMsg) {
-      dispatch(changeUserDetailAction(loginMsg.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginMsg.userMsg.userId, setMsg: false }));
     }
   };
   return (

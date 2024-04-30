@@ -21,7 +21,7 @@ import { type IVideo } from '../../types/video/IVideo';
 import VideoItem from '../../components/videoItem';
 import { updateUserHistory } from '../../network/user';
 import { type Dispatch } from 'redux';
-import { changeUserDetailAction } from '../login/store/actionCreators';
+import { changeUserDetailAction } from '../login/store/asyncThunk';
 import { useLoginMsg } from '../../hook/useLoginMsg';
 
 const History: FC = (): ReactElement => {
@@ -88,7 +88,7 @@ const History: FC = (): ReactElement => {
       const arg = history === 1 ? 0 : 1;
       updateUserHistory(userDetail.userId, arg).then((res) => {
         if (res.status === 200) {
-          dispatch(changeUserDetailAction(login.userMsg.userId, true));
+          dispatch(changeUserDetailAction({ userId: login.userMsg.userId, setMsg: true }));
         }
       });
     }

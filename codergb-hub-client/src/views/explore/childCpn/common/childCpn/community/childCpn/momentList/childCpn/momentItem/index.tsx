@@ -20,7 +20,7 @@ import {
 } from '@ant-design/icons';
 import { useThumb, useTread } from '../../../../../../../../../../hook/useThumb';
 import { useDispatch } from 'react-redux';
-import { changeUserDetailAction } from '../../../../../../../../../login/store/actionCreators';
+import { changeUserDetailAction } from '../../../../../../../../../login/store/asyncThunk';
 import { useLoginMsg } from '../../../../../../../../../../hook/useLoginMsg';
 
 interface IProps {
@@ -64,7 +64,7 @@ const MomentItem: FC<IProps> = (props): ReactElement => {
       }
     }
     if (loginState && loginState.userMsg) {
-      dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
     }
   };
   const treadHandler = async (item: IMoment) => {
@@ -80,7 +80,7 @@ const MomentItem: FC<IProps> = (props): ReactElement => {
       }
     }
     if (loginState && loginState.userMsg) {
-      dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
     }
   };
   return (

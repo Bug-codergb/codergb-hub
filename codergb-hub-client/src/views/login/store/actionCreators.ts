@@ -34,7 +34,7 @@ export function loginAction(userName: string, password: string, navigate: Naviga
         localCache.setCache('userMsg', data.data);
         localCache.setCache('loginType', 1);
         await dispatch(changeUserMsg(data.data));
-        await dispatch(changeUserDetailAction(data.data.userId, false));
+        await dispatch(changeUserDetailAction({ userId: data.data.userId, setMsg: false }));
         await dispatch(changeLoginType(1));
         await dispatch(changeChannelAction(data.data.userId));
 

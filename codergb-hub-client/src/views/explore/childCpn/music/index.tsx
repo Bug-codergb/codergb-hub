@@ -12,7 +12,7 @@ import { type Dispatch } from 'redux';
 import { useSub } from '../../../../hook/useSub';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
 import { cancelSub, sub } from '../../../../network/subscriber';
-import { changeUserDetailAction } from '../../../login/store/actionCreators';
+import { changeUserDetailAction } from '../../../login/store/asyncThunk';
 import { getUserFans } from '../../../../network/user';
 import { type IPage } from '../../../../types/IPage';
 import { type IUserMsg } from '../../../../types/user/IUserMsg';
@@ -63,7 +63,7 @@ const Music: FC<IProps> = (props) => {
       }
     }
     if (loginMsg && loginMsg.userMsg) {
-      dispatch(changeUserDetailAction(loginMsg.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginMsg.userMsg.userId, setMsg: false }));
     }
   };
   return (

@@ -19,9 +19,9 @@ const store = configureStore({
   },
   devTools: true
 });
-store.dispatch(changeUserMsg(localCache.getCache('userMsg')));
-store.dispatch(changeLoginType(localCache.getCache('loginType')));
-store.dispatch(changeUserDetail(localCache.getCache('userDetail')));
-store.dispatch(changeChannel(localCache.getCache('channel')));
-store.dispatch(changeQueueList(localCache.getCache('queue')));
+store.dispatch(changeUserMsg(localCache.getCache('userMsg') || {}));
+store.dispatch(changeLoginType(localCache.getCache('loginType') || 0));
+store.dispatch(changeUserDetail(localCache.getCache('userDetail') || {}));
+store.dispatch(changeChannel(localCache.getCache('channel') || {}));
+store.dispatch(changeQueueList(localCache.getCache('queue') || []));
 export default store;

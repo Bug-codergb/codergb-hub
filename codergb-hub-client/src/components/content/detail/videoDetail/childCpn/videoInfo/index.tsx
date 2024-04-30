@@ -23,7 +23,7 @@ import {
   tread
 } from '../../../../../../network/thumb';
 import { useSub } from '../../../../../../hook/useSub';
-import { changeUserDetailAction } from '../../../../../../views/login/store/actionCreators';
+import { changeUserDetailAction } from '../../../../../../views/login/store/asyncThunk';
 import { type Dispatch } from 'redux';
 import { useThumb, useTread } from '../../../../../../hook/useThumb';
 import { type IUserMsg } from '../../../../../../types/user/IUserMsg';
@@ -84,7 +84,7 @@ const VideoInfo: FC<IProps> = (props) => {
       }
     }
     if (videoInfo?.user && loginState && loginState.userMsg) {
-      dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
     }
     if (videoInfo) {
       getUserSubCount<IResponseType<number>>(videoInfo.user.userId).then((res) => {
@@ -109,7 +109,7 @@ const VideoInfo: FC<IProps> = (props) => {
         }
       }
       if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+        dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
       }
       if (videoInfo) {
         getVideoThumbReq(videoInfo);
@@ -130,7 +130,7 @@ const VideoInfo: FC<IProps> = (props) => {
         }
       }
       if (videoInfo && videoInfo.user && loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+        dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
       }
       if (videoInfo) {
         getVideoThumbReq(videoInfo);

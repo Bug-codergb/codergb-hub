@@ -6,7 +6,7 @@ import { useLoginMsg } from '../../../hook/useLoginMsg';
 import { type Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { sub, cancelSub } from '../../../network/subscriber';
-import { changeUserDetailAction } from '../../../views/login/store/actionCreators';
+import { changeUserDetailAction } from '../../../views/login/store/asyncThunk';
 interface IProps {
   userId: string;
 }
@@ -31,7 +31,7 @@ const SubBtn: FC<IProps> = (props): ReactElement => {
       }
     }
     if (loginMsg && loginMsg.userMsg) {
-      dispatch(changeUserDetailAction(loginMsg.userMsg.userId, false));
+      dispatch(changeUserDetailAction({ userId: loginMsg.userMsg.userId, setMsg: false }));
     }
   };
   return (

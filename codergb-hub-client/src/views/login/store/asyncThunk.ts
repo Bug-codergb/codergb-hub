@@ -30,6 +30,7 @@ const loginAsyncThunk = createAsyncThunk(
 const changeUserDetailAsyncThunk = createAsyncThunk(
   'changeUserDetailAction',
   async (extraInfo: { userId: string; setMsg: boolean }, { dispatch }) => {
+    
     const { userId, setMsg = false } = extraInfo;
     const data = await getUserMsg<IResponseType<IUserDetail>>(userId);
     if (data.status === 200) {
@@ -39,4 +40,4 @@ const changeUserDetailAsyncThunk = createAsyncThunk(
     }
   }
 );
-export { loginAsyncThunk as loginAction };
+export { loginAsyncThunk as loginAction, changeUserDetailAsyncThunk as changeUserDetailAction };

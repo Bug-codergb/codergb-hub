@@ -17,7 +17,7 @@ import { uploadImage } from '../../../../../../network/image';
 import { type IChannel } from '../../../../../../types/channel/IChannel';
 import { changeChannelAction } from '../../store/actionCreators';
 import { type Dispatch } from 'redux';
-import { changeUserDetailAction } from '../../../../../login/store/actionCreators';
+import { changeUserDetailAction } from '../../../../../login/store/asyncThunk';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const Brand: FC = (): ReactElement => {
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState<boolean>(false);
@@ -25,7 +25,7 @@ const Brand: FC = (): ReactElement => {
   const [progress, setProgress] = useState<number>(0);
   const login = useLoginMsg();
   const channel = useSelector<{ channelReducer: { channel: IChannel } }, IChannel>((state) => {
-    return state.channelReducer.channel as IChannel;
+    return state.channelReducer.channel;
   });
   const dispatch = useDispatch<Dispatch<any>>();
   const avatarUpload = useRef<any>(null);
@@ -55,7 +55,7 @@ const Brand: FC = (): ReactElement => {
       );
     }
     if (result.status === 200) {
-      dispatch(changeUserDetailAction(login.userMsg.userId, true));
+      dispatch(changeUserDetailAction({ userId: login.userMsg.userId, setMsg: true }));
       setIsAvatarModalOpen(false);
     }
   };

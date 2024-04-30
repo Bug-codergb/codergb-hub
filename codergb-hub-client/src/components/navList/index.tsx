@@ -34,7 +34,7 @@ import { routes } from '../../router';
 import UserPlaylist from '../../views/user-playlist';
 import { message } from 'antd';
 import { type Dispatch } from 'redux';
-import { changeUserDetailAction } from '../../views/login/store/actionCreators';
+import { changeUserDetailAction } from '../../views/login/store/asyncThunk';
 import { useLoginMsg } from '../../hook/useLoginMsg';
 
 interface IProps {
@@ -112,7 +112,8 @@ const NavList: FC<IProps> = (props): ReactElement => {
   };
   const handleAvatarOk = (f?: File) => {
     setIsAvatarModalOpen(false);
-    login.userMsg && dispatch(changeUserDetailAction(login.userMsg.userId, true));
+    login.userMsg &&
+      dispatch(changeUserDetailAction({ userId: login.userMsg.userId, setMsg: true }));
   };
   const handleAvatarCancel = () => {};
   return (

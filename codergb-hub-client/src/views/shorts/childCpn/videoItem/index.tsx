@@ -21,7 +21,7 @@ import {
   MessageFilled,
   CloseOutlined
 } from '@ant-design/icons';
-import { changeUserDetailAction } from '../../../login/store/actionCreators';
+import { changeUserDetailAction } from '../../../login/store/asyncThunk';
 import Comment from '../../../../components/common/comment';
 import { type IVideo } from '../../../../types/video/IVideo';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
@@ -73,7 +73,7 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
         }
       }
       if (loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+        dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
       }
     }
   };
@@ -91,7 +91,7 @@ const VideItem: FC<IProps> = forwardRef<IVideoItem, IProps>((props, propsRef) =>
         }
       }
       if (loginState && loginState.userMsg) {
-        dispatch(changeUserDetailAction(loginState.userMsg.userId, false));
+        dispatch(changeUserDetailAction({ userId: loginState.userMsg.userId, setMsg: false }));
       }
     }
   };
