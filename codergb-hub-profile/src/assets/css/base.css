@@ -104,4 +104,22 @@ p {
 .el-table .el-table__header .el-table__cell > .cell {
   white-space: nowrap;
 }
-
+.el-tabs{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.el-tabs__content{
+  flex: 1;
+}
+.el-tab-pane{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+.el-card__body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

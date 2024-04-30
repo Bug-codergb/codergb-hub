@@ -470,7 +470,7 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
       console.log(e)
     }
   }
-  async cateVideoService(ctx,cateId,offset,limit){
+  async cateVideoService(ctx,cateId,offset,limit,keyword){
     try{
       const sql=`
             select v.id,v.name,(
@@ -491,6 +491,7 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
             LEFT JOIN video_file AS vf on vf.videoId = v.id
             left join file as f on f.id = vf.fileId
             where vf.mark="cover" and c.id=?
+             ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
             group by v.id
             limit ?,?`;
       const res = await connection.execute(sql,[cateId,offset,limit]);
@@ -502,6 +503,7 @@ vf.fileId as imgId,(SELECT vf.fileId from video_file as vf where vf.videoId = v.
               LEFT JOIN video_file AS vf on vf.videoId = v.id
               left join file as f on f.id = vf.fileId
               where vf.mark="cover" and c.id=?
+               ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
               `;
       const count = await connection.execute(countSQL,[cateId])
 

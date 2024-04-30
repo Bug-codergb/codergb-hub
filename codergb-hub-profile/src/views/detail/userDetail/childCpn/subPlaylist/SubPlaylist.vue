@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sub-playlist">
     <gb-table :table-data="tableData" />
   </div>
 </template>
@@ -88,4 +88,10 @@ const tableData = reactive({
 });
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.sub-playlist {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>

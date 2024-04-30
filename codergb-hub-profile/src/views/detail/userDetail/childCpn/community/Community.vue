@@ -85,6 +85,9 @@ const momentRouter = (item: IMoment) => {
 
 <style lang="less">
 .community-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .video-name {
     color: #47b1ff;
     cursor: pointer;

@@ -16,4 +16,9 @@ const { tableData } = useTable(props.id, gbTable);
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.dm-container {
+  height: 100%;
+  display: flex;
+}
+</style>

@@ -51,7 +51,7 @@ import HeaderTop from '../../../header';
 import CollectionVideo from './childCpn/collectionVideo';
 import { generateAnimation } from '../../../../utils/dom';
 import lodash from 'lodash';
-import { changeQueueAction } from '../../add/store/actionCreators';
+import { changeQueueList } from '../../add/store/index';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
@@ -69,8 +69,8 @@ const VideoDetail: FC = (): ReactElement => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const loginState = useLoginMsg();
 
-  const queue = useSelector<Map<string, IVideo[]>, IVideo[]>((state) => {
-    return state.getIn(['queueReducer', 'queue']) as IVideo[];
+  const queue = useSelector<{ queueReducer: { queue: IVideo[] } }, IVideo[]>((state) => {
+    return state.queueReducer.queue;
   });
   const dispatch = useDispatch();
 
@@ -346,7 +346,7 @@ const VideoDetail: FC = (): ReactElement => {
         const q = lodash.cloneDeep(queue);
         const value: IVideo = q.shift();
         q.push(value);
-        dispatch(changeQueueAction(q));
+        dispatch(changeQueueList(q));
         setIsShowQueue(false);
         setIsPlay(true);
       }
@@ -377,7 +377,7 @@ const VideoDetail: FC = (): ReactElement => {
       }
     }
     q.push(item);
-    dispatch(changeQueueAction(q));
+    dispatch(changeQueueList(q));
     setIsShowQueue(false);
     setIsPlay(true);
   };

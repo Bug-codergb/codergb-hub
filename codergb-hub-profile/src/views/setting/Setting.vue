@@ -56,7 +56,7 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-card>
+    <el-card class="user-active">
       <template #header>
         <div class="card-header">
           <span>当前用户活跃度</span>
@@ -69,7 +69,7 @@
 </template>
 <script setup lang="ts">
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router';
 import moment from 'moment';
 import useLoginStore from '@/views/login/store';
 import useChannelStore from '@/store/modules/channel';
@@ -89,15 +89,15 @@ const logOff = () => {
   })
     .then(async () => {
       const result = await deleteUser(loginMsg.userMsg.userId);
-      if(result.status === 200){
+      if (result.status === 200) {
         ElMessage({
-          type:"success",
-          message:"成功注销账号"
-        })
+          type: 'success',
+          message: '成功注销账号'
+        });
         router.push({
-          path:"/login"
-        })
-      }  
+          path: '/login'
+        });
+      }
     })
     .catch(() => {});
 };
@@ -121,8 +121,19 @@ const refreshHandler = async () => {
 <style scoped lang="less">
 .setting {
   font-size: (24/40rem);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .el-card {
-    margin: 0 0 15px 0;
+    &:nth-child(1) {
+      margin: 0 0 10px 0;
+    }
+    &:nth-child(2) {
+      flex: 1;
+    }
+  }
+  .user-active {
+    margin-bottom: 0;
   }
   .card-header {
     display: flex;

@@ -124,6 +124,19 @@ const detailHandle = (item: IVideo) => {
 </script>
 
 <style scoped lang="less">
+.collection-detail {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .detail-body {
+    flex: 1;
+    height: 100%;
+    display: flex;
+
+    overflow-x: hidden;
+  }
+}
 .img-container {
   margin: 0 (20/40rem) 0 0;
   .el-image {

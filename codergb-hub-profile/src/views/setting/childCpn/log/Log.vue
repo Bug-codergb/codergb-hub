@@ -36,7 +36,8 @@ onMounted(async () => {
           grid: {
             left: '2%',
             right: '4%',
-            bottom: '2%',
+            bottom: '18%',
+            top: '10%',
             containLabel: true
           },
           xAxis: {
@@ -70,6 +71,6 @@ onMounted(async () => {
 <style scoped lang="less">
 .login-log-chart-container {
   width: 100%;
-  height: 300px;
+  height: 100%;
 }
 </style>

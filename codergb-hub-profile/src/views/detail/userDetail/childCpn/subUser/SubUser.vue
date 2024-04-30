@@ -71,4 +71,10 @@ const tableData = reactive({
 });
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.sub-user-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>

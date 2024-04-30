@@ -50,7 +50,7 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-card>
+    <el-card class="content-body">
       <el-tabs v-if="videoDetail">
         <el-tab-pane label="评论">
           <Comment :id="videoDetail.id" alias="vId" />
@@ -104,6 +104,14 @@ const userRouter = (user?: IUserMsg) => {
 <style scoped lang="less">
 .video-detail-container {
   font-size: (20/40rem);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .content-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
   .img-container {
     margin: 0 20px 0 0;
   }
@@ -132,7 +140,9 @@ const userRouter = (user?: IUserMsg) => {
     }
   }
   .el-card {
-    margin: 0 0 10px 0;
+    &:nth-child(1) {
+      margin: 0 0 10px 0;
+    }
   }
 }
 </style>

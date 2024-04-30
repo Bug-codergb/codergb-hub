@@ -12,4 +12,8 @@ import VideoPage from '@/components/content/videoTable/VideoTable.vue';
 const props = withDefaults(defineProps<IProps>(), {});
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.video-page {
+  height: 100%;
+}
+</style>

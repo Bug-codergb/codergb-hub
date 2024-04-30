@@ -3,13 +3,13 @@
     <div class="cate-title">
       <el-tag class="ml-2" type="success" size="large">{{ name }}</el-tag>
     </div>
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" class="cate-tab">
       <el-tab-pane label="分类视频" name="first">
         <VideoTable
           :key="keyIndex"
           :url="url"
           :isOperate="false"
-          :exclude-header="['cate']"
+          :exclude-header="['cate', 'tag']"
           :is-show-create="false"
         >
           <template #video-end>
@@ -61,6 +61,16 @@ const delHandle = (item: IVideo) => {};
 </script>
 
 <style scoped lang="less">
+.cate-video {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.cate-tab {
+  height: 100%;
+  overflow-x: hidden;
+  flex: 1;
+}
 .cate-title {
   font-size: (24/40rem);
   margin: 0 0 (12/40rem) 0;

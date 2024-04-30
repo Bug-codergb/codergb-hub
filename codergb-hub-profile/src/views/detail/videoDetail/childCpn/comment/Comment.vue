@@ -24,4 +24,9 @@ const { tableData } = useTale(props.id, props.alias, notifyRef, gbTable, detailR
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.comment-container {
+  height: 100%;
+  display: flex;
+}
+</style>

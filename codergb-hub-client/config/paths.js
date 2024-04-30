@@ -15,5 +15,6 @@ module.exports = {
   appStatic: resolveApp(`src/${process.env.STATIC_PATH}`),
   appSrc: resolveApp('src'),
   appPackageJson: resolveApp('package.json'),
-  appWebpackCache: resolveApp('node_modules/.cache') //构建时缓存的位置
+  appWebpackCache: resolveApp('node_modules/.cache'), //构建时缓存的位置
+  appDirectory
 };

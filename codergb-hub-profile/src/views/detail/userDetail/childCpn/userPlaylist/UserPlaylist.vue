@@ -89,6 +89,8 @@ const tableData = reactive({
 
 <style lang="less">
 .user-playlist {
+  height: 100%;
+  display: flex;
   .playlist-status {
     display: flex;
     align-items: center;

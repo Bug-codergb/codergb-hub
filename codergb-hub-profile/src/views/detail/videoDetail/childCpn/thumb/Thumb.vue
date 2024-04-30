@@ -16,4 +16,9 @@ const { tableData } = useTable(props.id);
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.thumb-container {
+  height: 100%;
+  display: flex;
+}
+</style>

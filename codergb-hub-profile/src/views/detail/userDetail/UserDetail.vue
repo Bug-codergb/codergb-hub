@@ -49,7 +49,7 @@
         </el-row>
       </template>
     </el-card>
-    <el-card>
+    <el-card class="content-detail">
       <el-tabs>
         <el-tab-pane label="Ta的视频"> <UserVideo :url="`/user/video/${id}`" /> </el-tab-pane>
         <el-tab-pane label="Ta的播放列表">
@@ -126,11 +126,21 @@ function initData(id: string) {
 
 <style scoped lang="less">
 .user-detail-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .content-detail {
+    flex: 1;
+    height: 100%;
+    overflow-x: hidden;
+  }
   .el-avatar {
     box-shadow: 0 0 3px #c1c4cb;
   }
   .el-card {
-    margin: 0 0 15px 0;
+    &:nth-child(1) {
+      margin: 0 0 10px 0;
+    }
   }
   .header-container {
     .el-col {

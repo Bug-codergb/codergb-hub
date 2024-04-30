@@ -46,7 +46,7 @@ const loginSlice = createSlice({
   }
 });
 
-/*const reducer = (state = {}, action: any) => {
+/* const reducer = (state = {}, action: any) => {
   switch (action.type) {
     case 'changeUserMsg':
       return state.setIn(['login', 'userMsg'], action.userMsg);
@@ -57,7 +57,7 @@ const loginSlice = createSlice({
     default:
       return state;
   }
-};*/
+}; */
 const { changeUserMsg, changeUserDetail, changeLoginType } = loginSlice.actions;
 const reducer = loginSlice.reducer;
 export { changeUserMsg, changeUserDetail, changeLoginType, reducer, loginSlice };

@@ -75,25 +75,29 @@ const deleteHandler = (item: string, index: number) => {
 
 <template>
   <div class="video-info">
-    <el-row>
+    <el-row style="height: 100%">
       <el-col :span="8">
         <div class="video-container">
           <video class="vio" controls ref="videoRef" @canplay="canplayHandler" />
         </div>
       </el-col>
-      <el-col :span="14">
-        <el-alert
-          show-icon
-          :title="`该视频切片共有${chunks.length}片，删除切片可能会导致视频不完整，当切片不关联视频时即可删除！`"
-          type="warning"
-          :closable="false"
-        />
-        <ul class="chunk-list">
-          <li v-for="(item, index) in chunks" :key="item">
-            <span class="item">{{ item }}</span>
-            <el-button text type="danger" @click="deleteHandler(item, index)">删除</el-button>
-          </li>
-        </ul>
+
+      <el-col :span="14" style="height: 100%">
+        <el-scrollbar>
+          <el-alert
+            show-icon
+            :title="`该视频切片共有${chunks.length}片，删除切片可能会导致视频不完整，当切片不关联视频时即可删除！`"
+            type="warning"
+            :closable="false"
+          />
+
+          <ul class="chunk-list">
+            <li v-for="(item, index) in chunks" :key="item">
+              <span class="item">{{ item }}</span>
+              <el-button text type="danger" @click="deleteHandler(item, index)">删除</el-button>
+            </li>
+          </ul>
+        </el-scrollbar>
       </el-col>
     </el-row>
   </div>
@@ -102,7 +106,7 @@ const deleteHandler = (item: string, index: number) => {
 <style scoped lang="less">
 .video-info {
   width: 100%;
-
+  height: 100%;
   .video-container {
     width: 100%;
     aspect-ratio: 1.8;

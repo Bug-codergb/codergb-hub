@@ -25,7 +25,7 @@ import { addVideoPlaylist, createPlaylist } from '../../../network/playlist';
 import { type IPlaylist } from '../../../types/playlist/IPlaylist';
 import { addLater } from '../../../network/later';
 import { useDispatch } from 'react-redux';
-import { changeQueue } from './store/actionCreators';
+import { changeQueue } from './store/index';
 import { getVideoDetail } from '../../../network/video';
 import { type IResponseType } from '../../../types/responseType';
 import { type IVideo } from '../../../types/video/IVideo';

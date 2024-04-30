@@ -58,7 +58,10 @@ module.exports = function (webpackEnv) {
       }), new CssMinimizerPlugin()]
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.jsx', '.js']
+      extensions: ['.tsx', '.ts', '.jsx', '.js'],
+      alias: {
+        "@": paths.appSrc
+      }
     },
     module: {
       rules: [

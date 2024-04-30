@@ -401,8 +401,9 @@ class VideoController {
   async cateVideo(ctx,cateId){
     try{
       const {offset='0',limit='30'} = ctx.query;
+      const {keyword=""} = ctx.request.body
       const {id} = ctx.params;
-      const res = await cateVideoService(ctx,id,offset,limit);
+      const res = await cateVideoService(ctx,id,offset,limit,keyword);
       if(res){
         setResponse(ctx, "success", 200, res);
       }

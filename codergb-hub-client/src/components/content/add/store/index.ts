@@ -1,2 +1,2 @@
-import reducer from './reducer';
-export { reducer };
+import { changeQueue, changeQueueList, reducer } from './slice';
+export { changeQueue, changeQueueList, reducer };

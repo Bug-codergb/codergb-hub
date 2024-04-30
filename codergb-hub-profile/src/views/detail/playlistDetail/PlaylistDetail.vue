@@ -144,8 +144,16 @@ const userRouter = (user: IUserMsg) => {
 <style scoped lang="less">
 .playlist-detail {
   font-size: (20/40rem);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .detail-body {
+    height: 100%;
+  }
   .el-card {
-    margin: 0 0 15px 0;
+    &:nth-child(1) {
+      margin: 0 0 15px 0;
+    }
   }
   .el-row {
     margin: 0 0 15px 0;

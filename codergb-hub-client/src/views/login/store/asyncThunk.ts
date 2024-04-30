@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { login } from '../../../network/login';
 import localCache from '../../../utils/cache';
-import { IResponseType } from '../../../types/responseType';
-import { IUserMsg } from '../../../types/user/IUserMsg';
+import { type IResponseType } from '../../../types/responseType';
+import { type IUserMsg } from '../../../types/user/IUserMsg';
 import { changeUserMsg, changeUserDetail, changeLoginType } from './slice';
 import { getUserMsg } from '../../../network/user';
-import { IUserDetail } from '../../../types/user/IUserDetail';
+import { type IUserDetail } from '../../../types/user/IUserDetail';
 
 import { changeChannelAction } from '../../profile/pages/customize/store/asyncThunk';
 
@@ -24,7 +24,7 @@ const loginAsyncThunk = createAsyncThunk(
       await dispatch(changeChannelAction({ userId: result.data.userId }));
       navigate('/home');
     }
-    //或者通过return result.data
+    // 或者通过return result.data
   }
 );
 const changeUserDetailAsyncThunk = createAsyncThunk(
