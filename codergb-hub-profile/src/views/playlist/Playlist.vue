@@ -85,6 +85,10 @@ const tableData = reactive({
       }
     },
     {
+      prop: 'count',
+      label: '视频数量'
+    },
+    {
       prop: 'createTime',
       label: '创建时间',
       'min-width': 140,

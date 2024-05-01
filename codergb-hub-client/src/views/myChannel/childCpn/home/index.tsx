@@ -24,8 +24,8 @@ interface IProps {
   userId: string;
 }
 const Home: FC<IProps> = (props) => {
-  const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
-    return state.getIn(['channelReducer', 'channel']) as IChannel;
+  const channel = useSelector<{ channelReducer: { channel: IChannel } }, IChannel>((state) => {
+    return state.channelReducer.channel;
   });
   const navigate = useNavigate();
   const [vioURL, setVioURL] = useState<string>('');

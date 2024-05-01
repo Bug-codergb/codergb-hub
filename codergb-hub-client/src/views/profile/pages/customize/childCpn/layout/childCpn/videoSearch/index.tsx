@@ -13,8 +13,7 @@ import HolderCpn from '../../../../../../../../components/holder';
 import { updateChannel } from '../../../../../../../../network/channel';
 import { IChannel } from '../../../../../../../../types/channel/IChannel';
 import { Dispatch } from 'redux';
-import { changeChannelAction } from '../../../../store/actionCreators';
-import { log } from 'util';
+import { changeChannelAction } from '../../../../store/asyncThunk';
 import { useLoginMsg } from '../../../../../../../../hook/useLoginMsg';
 
 const { Search } = Input;

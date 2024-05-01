@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type IChannel } from '../../../../../../types/channel/IChannel';
 import { updateChannel } from '../../../../../../network/channel';
 import { type Dispatch } from 'redux';
-import { changeChannelAction } from '../../store/actionCreators';
+import { changeChannelAction } from '../../store/asyncThunk';
 import { type ILogin } from '../../../../../../types/login/ILogin';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
 const { TextArea } = Input;
@@ -30,7 +30,7 @@ const Basic: FC = (): ReactElement => {
       name
     });
     if (result.status === 200) {
-      dispatch(changeChannelAction(login.userMsg.userId));
+      dispatch(changeChannelAction({ userId: login.userMsg.userId }));
       notification.success({
         message: `通知`,
         description: '您的信息更新成功',

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getUserChannel } from '../../../../../network/channel';
-import { IResponseType } from '../../../../../types/responseType';
-import { IChannel } from '../../../../../types/channel/IChannel';
+import { type IResponseType } from '../../../../../types/responseType';
+import { type IChannel } from '../../../../../types/channel/IChannel';
 const changeChannelAction = createAsyncThunk(
   'changeChannelAction',
   async (extraInfo: { userId: string }, { dispatch }) => {

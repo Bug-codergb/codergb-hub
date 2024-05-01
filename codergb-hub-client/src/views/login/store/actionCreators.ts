@@ -36,7 +36,7 @@ export function loginAction(userName: string, password: string, navigate: Naviga
         await dispatch(changeUserMsg(data.data));
         await dispatch(changeUserDetailAction({ userId: data.data.userId, setMsg: false }));
         await dispatch(changeLoginType(1));
-        await dispatch(changeChannelAction(data.data.userId));
+        await dispatch(changeChannelAction({userId: data.data.userId }));
 
         navigate('/Home', {
           replace: true
@@ -57,7 +57,7 @@ export function changeUserDetailAction(userId: string, setMsg: boolean = false) 
         dispatch(changeUserDetail(data.data));
         localCache.deleteCache('userDetail');
         localCache.setCache('userDetail', data.data);
-        await dispatch(changeChannelAction(userId));
+        await dispatch(changeChannelAction({ userId }));
       }
 
       if (setMsg) {

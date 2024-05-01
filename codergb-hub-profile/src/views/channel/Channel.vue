@@ -142,7 +142,7 @@ const gbTable = ref<InstanceType<typeof GbHeader>>(null);
 const header = reactive([
   {
     type: 'input',
-    hint: '请输入播放频道名称',
+    hint: '请输入频道名称',
     id: 'name',
     bingParam: '',
     attr: {

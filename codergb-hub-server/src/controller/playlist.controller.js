@@ -118,7 +118,8 @@ class PlaylistController{
     try{
       const {id} = ctx.params;
       const {offset="0",limit="30"} = ctx.query;
-      const result = await playlistVideoService(ctx,id,offset,limit);
+      const { keyword="",cate="" } = ctx.request.body
+      const result = await playlistVideoService(ctx,id,offset,limit,keyword,cate);
       if(result){
         setResponse(ctx,"success",200,result);
       }else{
@@ -195,7 +196,7 @@ class PlaylistController{
           setResponse(ctx,"success",200,{})
         }
       }
-      
+
     }catch(e){
       console.log(e)
       setResponse(ctx,"error",500,{})

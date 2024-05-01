@@ -52,7 +52,7 @@ class TagService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async getTagVideoService(ctx,id,offset,limit){
+  async getTagVideoService(ctx,id,offset,limit,keyword,cate){
     try{
       const sql=`
                 select t.name,v.id,v.name,v.description,v.dt,v.updateTime,
@@ -69,6 +69,8 @@ class TagService{
           left join video_file as vf on vf.videoId = v.id
           left join file as f on f.id = vf.fileId
           where vf.mark="cover" and t.id=?
+          ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+          ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
           limit ?,?`;
       const result = await connection.execute(sql,[id,offset,limit]);
       const countSQL=`
@@ -78,7 +80,9 @@ class TagService{
           left join video v on v.id = tv.vId
           left join video_file as vf on vf.videoId = v.id
           left join file as f on f.id = vf.fileId
-          where vf.mark="cover" and t.id=?`;
+          where vf.mark="cover" and t.id=?
+          ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+          ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}`;
       const count = await connection.execute(countSQL,[id]);
       return {
         list:result[0],

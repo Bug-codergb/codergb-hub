@@ -20,7 +20,7 @@ const { tableData } = useTable(notifyRef, gbTable, detailRef);
 const header = reactive([
   {
     type: 'input',
-    hint: '请输入集合名称',
+    hint: '请输入评论内容',
     id: '23',
     bingParam: '',
     attr: {

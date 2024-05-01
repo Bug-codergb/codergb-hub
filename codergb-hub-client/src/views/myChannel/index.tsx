@@ -10,8 +10,15 @@ import { useLoginMsg } from '../../hook/useLoginMsg';
 const MyChannel: FC = () => {
   const location = useLocation();
   const { id } = location.state; // userId
-  const channel = useSelector<Map<string, IChannel>, IChannel>((state) => {
-    return state.getIn(['channelReducer', 'channel']) as IChannel;
+  const channel = useSelector<
+    {
+      channelReducer: {
+        channel: IChannel;
+      };
+    },
+    IChannel
+  >((state) => {
+    return state.channelReducer.channel;
   });
   const login = useLoginMsg();
   return (

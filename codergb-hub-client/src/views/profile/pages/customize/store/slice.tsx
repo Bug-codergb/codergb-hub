@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { changeChannelAction } from './asyncThunk';
-import { IChannel } from '../../../../../types/channel/IChannel';
+import { type IChannel } from '../../../../../types/channel/IChannel';
 import { IUserMsg } from '../../../../../types/user/IUserMsg';
 interface IChannelSlice {
   channel: IChannel;

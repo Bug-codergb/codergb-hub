@@ -123,3 +123,10 @@ p {
   display: flex;
   flex-direction: column;
 }
+.customize-card{
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+  background-color: var(--el-bg-color);
+  border: 1px solid var(--el-border-color-light);
+  padding: 20px;
+}

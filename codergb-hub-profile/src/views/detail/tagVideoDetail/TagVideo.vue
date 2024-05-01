@@ -1,32 +1,31 @@
 <template>
-  <div>
-    <div class="detail-body">
-      <el-tabs v-model="activeName" class="demo-tabs">
-        <el-tab-pane label="标签视频" name="first">
-          <VideoTable
-            :key="keyIndex"
-            :url="url"
-            :isOperate="false"
-            :is-show-create="false"
-            :height="tableHeight"
-          >
-            <template v-slot:video-end>
-              <el-table-column label="操作" fixed="right">
-                <template #default="scope">
-                  <el-button
-                    type="danger"
-                    style="font-size: 13px; padding: 5px"
-                    text
-                    @click="delHandle(scope.row)"
-                    >删除</el-button
-                  >
-                </template>
-              </el-table-column>
-            </template>
-          </VideoTable>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
+  <div class="detail-body table-box">
+    <el-tabs v-model="activeName" class="demo-tabs">
+      <el-tab-pane label="标签视频" name="first">
+        <VideoTable
+          :key="keyIndex"
+          :url="url"
+          :isOperate="false"
+          :is-show-create="false"
+          :height="tableHeight"
+          :exclude-header="['tag']"
+        >
+          <template v-slot:video-end>
+            <el-table-column label="操作" fixed="right">
+              <template #default="scope">
+                <el-button
+                  type="danger"
+                  style="font-size: 13px; padding: 5px"
+                  text
+                  @click="delHandle(scope.row)"
+                  >删除</el-button
+                >
+              </template>
+            </el-table-column>
+          </template>
+        </VideoTable>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script setup lang="ts">
@@ -43,4 +42,12 @@ const tableHeight = ref(window.innerHeight - 260);
 const delHandle = (item: IVideo) => {};
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.detail-body {
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+  background-color: var(--el-bg-color);
+  border: 1px solid var(--el-border-color-light);
+  padding: 20px;
+}
+</style>

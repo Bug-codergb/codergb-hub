@@ -4,7 +4,7 @@ import localCache from '../../../utils/cache';
 import { type IResponseType } from '../../../types/responseType';
 import { type IUserMsg } from '../../../types/user/IUserMsg';
 import { changeUserMsg, changeUserDetail, changeLoginType } from './slice';
-import { getUserMsg } from '../../../network/user';
+import { getLoginMsg, getUserMsg } from '../../../network/user';
 import { type IUserDetail } from '../../../types/user/IUserDetail';
 
 import { changeChannelAction } from '../../profile/pages/customize/store/asyncThunk';
@@ -29,14 +29,25 @@ const loginAsyncThunk = createAsyncThunk(
 );
 const changeUserDetailAsyncThunk = createAsyncThunk(
   'changeUserDetailAction',
-  async (extraInfo: { userId: string; setMsg: boolean }, { dispatch }) => {
-    
+  async (extraInfo: { userId: string; setMsg: boolean }, { getState, dispatch }) => {
     const { userId, setMsg = false } = extraInfo;
     const data = await getUserMsg<IResponseType<IUserDetail>>(userId);
     if (data.status === 200) {
       dispatch(changeUserDetail(data.data));
       localCache.deleteCache('userDetail');
       localCache.setCache('userDetail', data.data);
+      await dispatch(changeChannelAction({ userId }));
+    }
+
+    if (setMsg) {
+      const state = getState();
+      const userMsg = await getLoginMsg<IResponseType<IUserMsg>>(userId);
+      if (userMsg.status === 200) {
+        const msg = userMsg.data;
+        msg.token = state.loginReducer.userMsg.token ?? '';
+        localCache.setCache('userMsg', msg);
+        dispatch(changeUserMsg(msg));
+      }
     }
   }
 );

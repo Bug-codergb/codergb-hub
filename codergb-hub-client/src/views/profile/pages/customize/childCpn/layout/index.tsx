@@ -8,7 +8,7 @@ import BlockPage from './childCpn/block';
 import { useDispatch, useSelector } from 'react-redux';
 import { type IChannel } from '../../../../../../types/channel/IChannel';
 import { updateChannel } from '../../../../../../network/channel';
-import { changeChannelAction } from '../../store/actionCreators';
+import { changeChannelAction } from '../../store/asyncThunk';
 import { type Dispatch } from 'redux';
 import { type ILogin } from '../../../../../../types/login/ILogin';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
@@ -18,7 +18,7 @@ const Layout: FC = () => {
   const [videoInfo, setVideoInfo] = useState<Object>({});
   const login = useLoginMsg();
   const channel = useSelector<{ channelReducer: { channel: IChannel } }, IChannel>((state) => {
-    return state.channelReducer.channel as IChannel;
+    return state.channelReducer.channel;
   });
   const dispatch = useDispatch<Dispatch<any>>();
   console.log(channel);
@@ -36,7 +36,7 @@ const Layout: FC = () => {
     console.log(channel);
     await updateChannel(channel.id, videoInfo);
     if (login && login.userMsg && channel && Object.keys(videoInfo).length !== 0) {
-      dispatch(changeChannelAction(login.userMsg.userId));
+      dispatch(changeChannelAction({ userId: login.userMsg.userId }));
     }
     setIsModalOpen(false);
   };

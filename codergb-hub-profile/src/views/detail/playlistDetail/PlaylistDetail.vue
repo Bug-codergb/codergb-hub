@@ -40,7 +40,7 @@
     <el-card>
       <div class="detail-body">
         <el-tabs v-model="activeName" class="demo-tabs">
-          <el-tab-pane label="集合视频" name="first">
+          <el-tab-pane label="播放列表视频" name="first">
             <VideoTable
               :key="keyIndex"
               :url="url"
@@ -48,6 +48,7 @@
               :isOperate="false"
               :is-show-create="false"
               :height="tableHeight"
+              :exclude-header="['tag']"
             >
               <template v-slot:video-end>
                 <el-table-column label="操作" fixed="right">

@@ -10,5 +10,6 @@ interface IPlaylist {
   user: IUserMsg;
   video: number;
   picUrl?: string;
+  count?: number;
 }
 export type { IPlaylist };

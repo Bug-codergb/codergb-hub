@@ -15,7 +15,7 @@ import { type IResponseType } from '../../../../../../types/responseType';
 import ImgUpload from '../../../../../../components/common/imgUpload';
 import { uploadImage } from '../../../../../../network/image';
 import { type IChannel } from '../../../../../../types/channel/IChannel';
-import { changeChannelAction } from '../../store/actionCreators';
+import { changeChannelAction } from '../../store/asyncThunk';
 import { type Dispatch } from 'redux';
 import { changeUserDetailAction } from '../../../../../login/store/asyncThunk';
 import { useLoginMsg } from '../../../../../../hook/useLoginMsg';
@@ -67,7 +67,7 @@ const Brand: FC = (): ReactElement => {
     if (res?.data?.id) {
       await updateChannel(channel.id, { banner: `${res.data.id}` });
       if (login && login.userMsg && channel && Object.keys(res.data).length !== 0) {
-        dispatch(changeChannelAction(login.userMsg.userId));
+        dispatch(changeChannelAction({ userId: login.userMsg.userId }));
       }
     }
     setIsShowCover(false);

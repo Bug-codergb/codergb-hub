@@ -143,7 +143,7 @@ const tableData = reactive({
 const header = reactive([
   {
     type: 'input',
-    hint: '请输入播放列表名称',
+    hint: '请输入动态名称',
     id: 'name',
     bingParam: '',
     attr: {

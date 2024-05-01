@@ -55,13 +55,15 @@ class PlaylistService{
         pSQL = `where name like '%${keyword}%'`;
       }
       const sql=`select p.id,p.name,p.isPublic,p.description,p.createTime,p.updateTime,
-                 JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user
+                 JSON_OBJECT('userId',p.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user,
+                 count(pv.vId) as count
                  from playlist as p
                  left join user as u on u.userId = p.userId
+                 left join playlist_video as pv on pv.pId = p.id
                  ${pSQL}
+                 group by p.id
                  order by p.createTime desc
                  limit ?,?`;
-      console.log(sql)
       const result = await connection.execute(sql,execArr);
       const count = await new PlaylistService().getPlaylistCount(ctx,keyword,isPublic);
       return {
@@ -132,7 +134,7 @@ class PlaylistService{
       setResponse(ctx,e.message,500,{})
     }
   }
-  async playlistVideoCountService(ctx,id){
+  async playlistVideoCountService(ctx,id,keyword,cate){
     try{
       const sql=`
       select count(DISTINCT(v.id)) as count
@@ -144,14 +146,16 @@ class PlaylistService{
       LEFT JOIN tag on tag.id = tv.tId
       LEFT JOIN video_file as vf on vf.videoId =v.id
       LEFT JOIN file as f on f.id = vf.fileId
-      WHERE p.id = ?`;
+      WHERE p.id = ?
+       ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+          ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}`;
       const result = await connection.execute(sql,[id]);
       return result[0]
     }catch (e) {
       setResponse(ctx,e.message,500,{})
     }
   }
-  async playlistVideoService(ctx,id,offset,limit){
+  async playlistVideoService(ctx,id,offset,limit,keyword,cate){
     try{
       const sql=`
       select v.id,v.name,v.playCount,v.dt,v.description,v.createTime,v.updateTime,f.picUrl,
@@ -168,10 +172,12 @@ class PlaylistService{
        LEFT JOIN video_file as vf on vf.videoId =v.id
        LEFT JOIN file as f on f.id = vf.fileId
        WHERE p.id = ? and vf.mark="cover"
+        ${keyword.trim().length !== 0 ? `and v.name like '%${keyword}%'`:''}
+          ${cate.trim().length!==0?`and v.cateId = ${cate}`:''}
        GROUP BY v.id
        limit ?,?`;
       const result = await connection.execute(sql,[id,offset,limit]);
-      const count = await new PlaylistService().playlistVideoCountService(ctx,id);
+      const count = await new PlaylistService().playlistVideoCountService(ctx,id,keyword,cate);
       return {
         count:count[0].count,
         list:result[0]
