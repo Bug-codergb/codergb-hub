@@ -2,12 +2,13 @@ import styled from 'styled-components';
 export const PlaylistWrapper = styled.div`
   display: flex;
   align-items: flex-start;
+  width: 100%;
 `;
 export const LeftContainer: any = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  padding: ${30 / 40}rem ${30 / 40}rem;
+  padding: ${30 / 40}rem;
   height: 86vh;
   background-image: url(${(props) => (props as any).bgc});
   background-repeat: no-repeat;
@@ -15,6 +16,7 @@ export const LeftContainer: any = styled.div`
   background-position: center;
   border-radius: ${16 / 40}rem;
   overflow: hidden;
+  box-sizing: border-box;
   .mask {
     position: absolute;
     background-color: black;
@@ -25,11 +27,13 @@ export const LeftContainer: any = styled.div`
     background-color: rgba(0, 0, 0, 0.08);
   }
   .img-container {
-    width: ${450 / 40}rem;
+    width: ${430 / 40}rem;
+    height: ${220 / 40}rem;
     border-radius: ${16 / 40}rem;
     overflow: hidden;
     img {
       width: 100%;
+      border-radius: 4px;
     }
   }
   .later-label {
@@ -37,6 +41,7 @@ export const LeftContainer: any = styled.div`
     color: #fff;
     font-weight: bolder;
     margin: ${28 / 40}rem 0 0 0;
+    width: ${430 / 40}rem;
   }
   .user-name {
     font-size: ${18 / 40}rem;
@@ -59,7 +64,7 @@ export const LeftContainer: any = styled.div`
 `;
 export const RightContainer = styled.div`
   margin: 0 0 0 ${30 / 40}rem;
-  width: 70%;
+  flex: 1;
   height: 86vh;
   overflow-y: scroll;
   .vio-list {

@@ -11,6 +11,7 @@ import Hls from 'hls.js';
 import { useNavigate } from 'react-router-dom';
 import VideoItem from '../../../../components/videoItem';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
+import HolderCpn from '../../../../components/holder';
 const MoreVideo: FC = () => {
   const navigate = useNavigate();
   const [weekVideo, setWeekVideo] = useState<IVideo[]>([]);
@@ -118,6 +119,7 @@ const MoreVideo: FC = () => {
               </li>
             );
           })}
+        {HolderCpn(weekVideo.length, 5, 300)}
       </ul>
     </MoreVideoWrapper>
   );

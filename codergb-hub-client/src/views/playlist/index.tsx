@@ -43,10 +43,18 @@ const Playlist: FC = (): ReactElement => {
   };
   return (
     <PlaylistWrapper>
-      {userLater && userLater.length !== 0 && (
-        <LeftContainer bgc={userLater[0]?.video?.picUrl}>
+      {userLater && (
+        <LeftContainer
+          bgc={
+            userLater && userLater.length !== 0
+              ? userLater[0].video.picUrl
+              : login.userMsg.avatarUrl
+          }
+        >
           <div className="img-container">
-            {userLater && userLater[0] && <img src={userLater[0].video.picUrl} />}
+            {userLater && (
+              <img src={userLater[0] ? userLater[0].video.picUrl : login.userMsg.avatarUrl} />
+            )}
           </div>
           <p className="later-label">稍后观看</p>
           <p className="user-name">{login.userMsg.userName}</p>

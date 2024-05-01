@@ -40,7 +40,7 @@ export const LeftContent: any = styled.div`
     color: #fff;
     font-weight: bolder;
     margin: ${28 / 40}rem 0 0 0;
-    width: ${450 / 40}rem;
+    width: ${430 / 40}rem;
     text-shadow: 0 0 2px rgba(0, 0, 0, 1);
   }
   .user-name {
@@ -92,7 +92,7 @@ export const LeftContent: any = styled.div`
 `;
 export const RightContent = styled.div`
   margin: 0 0 0 ${30 / 40}rem;
-  width: 70%;
+  flex: 1;
   height: 86vh;
   overflow-y: scroll;
   .vio-list {
