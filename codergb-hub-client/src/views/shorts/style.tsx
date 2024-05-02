@@ -37,13 +37,14 @@ export const ShortsWrapper = styled.div`
 
       position: absolute;
       z-index: 99999999;
-      left: 0;
+      left: 100%;
+      background-color: pink;
       top: 0;
       overflow-y: scroll;
-      opacity: 0;
+      opacity: 1;
       .scroll-inner {
         width: 100%;
-        height: 130%;
+        height: 100%;
       }
     }
   }

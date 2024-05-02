@@ -93,7 +93,7 @@ const Shorts: FC = (): ReactElement => {
     }
     await getShortVideoReq(dataOffset.current, 3);
     setTimeout(() => {
-      if (dataOffset.current !== 0) listRef.current.scrollTop = itemRef.current.offsetHeight;
+      listRef.current.scrollTop = itemRef.current.offsetHeight;
     }, 0);
   };
 
@@ -118,15 +118,9 @@ const Shorts: FC = (): ReactElement => {
     const fn = () => {
       requestAnimationFrame(() => {
         if (listRef.current.scrollTop === 0) {
-          const scrollHeight = scrollRef.current!.scrollHeight;
-          const clientHeight = scrollRef.current!.clientHeight;
-          scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
           setDirection('');
           refreshDown();
           offset.current = 1;
-          setTimeout(() => {
-            scrollRef.current!.g_flag = true;
-          }, 500);
         } else if (
           listRef.current.scrollTop >
           itemRef.current.offsetHeight * (offset.current - 2)
@@ -142,14 +136,7 @@ const Shorts: FC = (): ReactElement => {
           } else {
             offset.current -= 1;
           }
-
-          const scrollHeight = scrollRef.current!.scrollHeight;
-          const clientHeight = scrollRef.current!.clientHeight;
-          scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
           setDirection('');
-          setTimeout(() => {
-            scrollRef.current!.g_flag = true;
-          }, 500);
         }
       });
     };
@@ -166,21 +153,14 @@ const Shorts: FC = (): ReactElement => {
 
           setURL('');
           videoItemRef.current.changeShow();
-          console.log(scrollTop, listRef.current.scrollTop, listRef.current.offsetHeight);
+
           if (scrollTop === listRef.current.scrollTop) {
-            debugger;
             // 到达最底部
             listRef.current.scrollTop = itemRef.current.offsetHeight * offset.current;
 
             offset.current = 2;
-            const scrollHeight = scrollRef.current!.scrollHeight;
-            const clientHeight = scrollRef.current!.offsetHeight;
-            scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
             refreshUp();
             setDirection('');
-            setTimeout(() => {
-              scrollRef.current!.g_flag = true;
-            }, 500);
           } else {
             fn();
           }
@@ -188,23 +168,16 @@ const Shorts: FC = (): ReactElement => {
           if (t) {
             cancelAnimationFrame(t);
           }
-          console.log('zheli');
           listRef.current.scrollTop = itemRef.current.offsetHeight * offset.current;
           if (offset.current < dataLimit.current) {
             offset.current += 1;
           }
-          const scrollHeight = scrollRef.current!.scrollHeight;
-          const clientHeight = scrollRef.current!.offsetHeight;
-          scrollRef.current!.scrollTop = (scrollHeight - clientHeight) / 2;
 
           setDirection('');
 
           if (dataOffset.current === 0) {
             setCurrentVideo(video[1]);
           }
-          setTimeout(() => {
-            scrollRef.current!.g_flag = true;
-          }, 500);
         }
       });
     };
@@ -218,30 +191,24 @@ const Shorts: FC = (): ReactElement => {
       moveSubScrollTop();
     }
   }, [direction]);
-
-  let lastScrollTopTime = 0;
   useEffect(() => {
     if (scrollRef.current) {
-      console.log('effect执行·------------------');
-      scrollRef.current.g_flag = true;
-      const handler = (e: any) => {
-        const time = new Date().getTime();
-
-        console.log(time - lastScrollTopTime);
-        if (time - lastScrollTopTime > 40) {
-          console.log('这里·', scrollRef.current?.g_flag);
-          if (scrollRef.current!.g_flag) {
-            scrollRef.current!.g_flag = false;
-
-            if (e.deltaY > 0) {
-              setDirection(UP);
-            } else {
-              setDirection(DOWN);
-            }
+      const handler = lodash.throttle(
+        (e: any) => {
+          if (e.deltaY > 0) {
+            console.log('向上');
+            setDirection(UP);
+          } else {
+            console.log('向下');
+            setDirection(DOWN);
           }
+        },
+        1500,
+        {
+          leading: true,
+          trailing: false
         }
-        lastScrollTopTime = time;
-      };
+      );
       scrollRef.current.onmouseover = function (e) {
         window.addEventListener('wheel', handler);
       };
@@ -255,7 +222,7 @@ const Shorts: FC = (): ReactElement => {
       <div className="box">
         <div className="box-inner">
           <div className="scroll-container" ref={scrollRef}>
-            <div className="scroll-inner"></div>
+            <div className="scroll-inner">{dataOffset.current}</div>
           </div>
           <div className="outer" ref={listRef}>
             <div className="inner">
@@ -267,7 +234,7 @@ const Shorts: FC = (): ReactElement => {
                       <li key={item.id} className="item" ref={index === 0 ? itemRef : null}>
                         <VideoItem video={item} ref={videoItemRef} />
                         <div className="g-video-container">
-                          {url && index === 0 && <video ref={videoRef} src={url} autoPlay />}
+                          {url && index === 0 && <video ref={videoRef} muted src={url} autoPlay />}
                         </div>
                       </li>
                     );
