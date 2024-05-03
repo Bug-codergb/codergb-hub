@@ -14,6 +14,7 @@ const VideoCollection = () => import('../views/collection/Collection.vue');
 const VideoSource = () => import('../views/videoSource/VideoSource.vue');
 
 const Channel = () => import('../views/channel/Channel.vue');
+const Role = () => import('@/views/role/Role.vue');
 import {
   HOME_PATH,
   LOGIN_PATH,
@@ -139,6 +140,14 @@ const routes: Array<RouteRecordRaw> = [
           title: '设置'
         },
         component: () => import('../views/setting/Setting.vue')
+      },
+      {
+        path: '/role',
+        name: 'sole',
+        meta: {
+          title: '角色'
+        },
+        component: Role
       },
       {
         path: OVERVIEW_PATH,

@@ -133,6 +133,11 @@ const menu = [
         index: '6-1',
         name: '设置',
         path: SETTING_PATH
+      },
+      {
+        index: '6-2',
+        name: '角色管理',
+        path: '/role'
       }
     ]
   }
