@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   app: {
     baseURL:"/"
   },
+  modules: [
+    '@element-plus/nuxt'
+  ],
   devServer: {
     port:7877
   },
