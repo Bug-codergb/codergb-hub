@@ -158,11 +158,13 @@ const VideoDetail: FC = (): ReactElement => {
           .play()
           .then(() => {
             setIsPlay(true);
+            console.log(123);
           })
           .catch((e) => {
+            console.log(e.message);
             setIsPlay(false);
-            message.destroy();
-            message.warn('受浏览器播放策略影响，自动播放失败');
+            // message.destroy();
+            // message.warn('受浏览器播放策略影响，自动播放失败');
           });
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         videoRef.current.src = vioURL;
