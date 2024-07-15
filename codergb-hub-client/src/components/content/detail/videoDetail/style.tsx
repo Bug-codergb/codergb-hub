@@ -149,6 +149,8 @@ export const LeftContentWrapper: any = styled.div`
       height: 100%;
       object-position: 50% 50%;
       object-fit: contain;
+      position: relative;
+      z-index: 10;
     }
     .controller-container {
       position: absolute;
@@ -159,6 +161,7 @@ export const LeftContentWrapper: any = styled.div`
       transform: translate(0, -100%);
       color: #fff;
       background: linear-gradient(to top, rgba(33, 33, 33, 0.9) 1%, rgba(0, 0, 0, 0) 99%);
+      z-index: 99999;
       .container {
         display: flex;
         align-items: center;

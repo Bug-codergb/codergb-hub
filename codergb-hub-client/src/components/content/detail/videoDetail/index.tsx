@@ -154,6 +154,9 @@ const VideoDetail: FC = (): ReactElement => {
         // hls.loadSource('http://localhost:8888/video/0718294d1c07ee39c7ebb9cb93b0f9580.ts');
         hls.attachMedia(videoRef.current);
         addHistory(vioId);
+        videoRef.current.play().catch((e) => {
+          setIsPlay(true);
+        });
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         videoRef.current.src = vioURL;
       }
@@ -226,6 +229,7 @@ const VideoDetail: FC = (): ReactElement => {
 
   const [playCount, setPlayCount] = useState<number | string>(0);
   const canPlayHandler = () => {
+    console.log(1);
     setPercent(100);
     setIsPlay(true);
     if (videoRef.current) {
@@ -424,7 +428,7 @@ const VideoDetail: FC = (): ReactElement => {
                         onTimeUpdate={(e) => {
                           videoPlayHandle(e);
                         }}
-                        autoPlay={true}
+                        autoPlay={false}
                         onEnded={() => {
                           endHandler();
                         }}
