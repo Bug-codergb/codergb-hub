@@ -17,7 +17,7 @@ import {
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import { Layout, Slider, Progress } from 'antd';
+import { Layout, Slider, Progress, message } from 'antd';
 import {
   VideoDetailWrapper,
   CenterContent,
@@ -154,9 +154,16 @@ const VideoDetail: FC = (): ReactElement => {
         // hls.loadSource('http://localhost:8888/video/0718294d1c07ee39c7ebb9cb93b0f9580.ts');
         hls.attachMedia(videoRef.current);
         addHistory(vioId);
-        videoRef.current.play().catch((e) => {
-          setIsPlay(true);
-        });
+        videoRef.current
+          .play()
+          .then(() => {
+            setIsPlay(true);
+          })
+          .catch((e) => {
+            setIsPlay(false);
+            message.destroy();
+            message.warn('受浏览器播放策略影响，自动播放失败');
+          });
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         videoRef.current.src = vioURL;
       }
@@ -231,7 +238,7 @@ const VideoDetail: FC = (): ReactElement => {
   const canPlayHandler = () => {
     console.log(1);
     setPercent(100);
-    setIsPlay(true);
+    // setIsPlay(true);
     if (videoRef.current) {
       videoRef.current.volume = 0.6;
       addPlayCount<IResponseType<{ playCount: number }>>(vioId).then((res) => {
