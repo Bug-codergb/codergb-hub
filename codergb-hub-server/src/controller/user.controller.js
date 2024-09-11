@@ -141,6 +141,11 @@ class UserController{
       const {keyword=""} = ctx.request.body;
       const result = await getAllUserService(ctx,offset,limit,isExplore,keyword);
       if(result){
+        if(result.list.length!==0){
+          for(let item of result.list){
+            item.role = item.role.filter((item)=>item);
+          }
+        }
         setResponse(ctx,"success",200,result)
       }
     }catch (e) {

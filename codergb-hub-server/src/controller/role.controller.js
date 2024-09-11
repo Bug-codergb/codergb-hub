@@ -2,7 +2,10 @@ const {
   createService ,
   createUserRoleService,
   selectUserRoleService,
-  getAllRoleService
+  getAllRoleService,
+  deleteUserRoleService,
+  setUserRoleService,
+  deleteRoleService
 } = require("../service/role.service")
 const { setResponse } = require("../utils/setResponse")
 const { isEmpty } = require("../utils/isEmpty")
@@ -46,6 +49,28 @@ class RoleController{
       setResponse(ctx,"success",200,result);
     }catch (e) {
 
+    }
+  }
+  async setUserRole(ctx,next){
+    try{
+      const {userId,roleList} = ctx.request.body;
+      if(!isEmpty(ctx,userId,"用户id不能为空") && !isEmpty(ctx,roleList,"角色不能为空")){
+        const ret = await deleteUserRoleService(ctx,userId);
+        await setUserRoleService(ctx,userId,roleList);
+        setResponse(ctx,"success",200,{});
+      }
+    }catch (e) {
+
+    }
+  }
+  async deleteRole(ctx,next){
+    try{
+      const {id} = ctx.params;
+      console.log(id)
+      const res = await deleteRoleService(ctx,id);
+      setResponse(ctx,"success",200,{});
+    }catch (e) {
+      setResponse(ctx,"error",500,{});
     }
   }
 }

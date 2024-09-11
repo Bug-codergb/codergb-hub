@@ -22,6 +22,11 @@ class UserService{
     try{
       const sql=`
       select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,u.history,u.isExplore,
+      (select JSON_ARRAYAGG(JSON_OBJECT('id',r.id,'name',r.name)) 
+        from role_user as ru
+        left join role as r on r.id=ru.roleId
+        where ru.userId = u.userId 
+        ) as role,
        JSON_ARRAYAGG(JSON_OBJECT(
 			   'userId',sub.upId,
 				 'userName',(select usr.userName from user as usr where usr.userId = sub.upId),
@@ -173,9 +178,14 @@ where sp.userId=u.userId
   async getAllUserService(ctx,offset,limit,isExplore,keyword){
     try{
       const sql =`select u.userId,u.userName,u.avatarUrl,u.createTime,u.updateTime,history,isExplore,
-                  u.originalname,u.mimetype,u.dest,u.filename,u.size
+                  u.originalname,u.mimetype,u.dest,u.filename,u.size,JSON_ARRAYAGG(
+            if(r.id,json_object('name',r.name,'id',r.id),null)
+           ) as role
                   from user as u
+                   left join role_user ru on u.userId = ru.userId
+        left join role as r on r.id=ru.roleId
                   ${isExplore!==-1 ? `where isExplore = ? ${keyword.trim().length!==0? ` and u.userName like '%${keyword}%'`:''}`:`${keyword.trim().length!==0?` where u.userName like '%${keyword}%'`:''}`}
+                  group by u.userId
                   order by u.createTime desc
                   limit ?,?`;
       let exeArr=[offset,limit];

@@ -6,12 +6,14 @@
   </div>
 </template>
 <script setup lang="tsx">
+import { ElMessage } from 'element-plus';
 import GbTable from '@/components/common/gbTable/GbTable.vue';
 import moment from 'moment';
 import { reactive, ref } from 'vue';
 import { IRole } from '@/types/role';
 import GbHeader from '@/components/common/gbHeader/GbHeader.vue';
 import CreateRole from '@/views/role/childCpn/createRole/CreateRole.vue';
+import { deleteRole } from '@/network/role';
 const gbTableRef = ref();
 const createRoleRef = ref();
 const tableData = reactive({
@@ -59,8 +61,12 @@ const tableData = reactive({
         {
           text: '删除',
           type: 'danger',
-          onClick: (scope: IRole) => {
-            console.log(scope);
+          onClick: async (scope: IRole) => {
+            const res = await deleteRole(scope.id);
+            if (res.status === 200) {
+              ElMessage.success('删除成功');
+              search();
+            }
           }
         }
       ]

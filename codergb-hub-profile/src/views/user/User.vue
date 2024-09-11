@@ -2,6 +2,7 @@
   <div class="g-inner-card table-box">
     <GbHeader :header="header" @create="createHandler" @refresh="search" />
     <CreateUser ref="createUserRef" @refresh="search" />
+    <UserRole ref="userRoleRef" />
     <GbTable :tableData="tableData" ref="gbTable" />
   </div>
 </template>
@@ -17,6 +18,7 @@ import moment from 'moment';
 import { IUserMsg } from '@/types/user/IUserMsg';
 import { deleteUser } from '@/network/user/index';
 import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
+import UserRole from '@/views/user/childCpn/userRole/UserRole.vue';
 import { USER_DETAIL_PATH } from '@/router/constant';
 const router = useRouter();
 const tableData = reactive({
@@ -34,12 +36,12 @@ const tableData = reactive({
     {
       prop: 'userName',
       label: '名称',
-      'min-width': 100
+      width: 100
     },
     {
       prop: 'avatarUrl',
       label: '用户头像',
-      'min-width': 90,
+      width: 90,
       formatter: (row: IUserMsg) => {
         return (
           <el-avatar
@@ -54,7 +56,7 @@ const tableData = reactive({
     {
       prop: 'createTime',
       label: '创建时间',
-      'min-width': 160,
+      width: 160,
       formatter: (row: IVideo) => {
         return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
@@ -62,7 +64,7 @@ const tableData = reactive({
     {
       prop: 'updateTime',
       label: '更新时间',
-      'min-width': 160,
+      width: 160,
       formatter: (row: IVideo) => {
         return moment(row.updateTime).format('yyyy-MM-DD HH:mm');
       }
@@ -70,7 +72,7 @@ const tableData = reactive({
     {
       prop: 'history',
       label: '是否存储历史记录',
-      'min-width': 120,
+      'min-width': 160,
       formatter: (row: IUserMsg) => {
         const { history } = row;
         return history === 1 ? '是' : '否';
@@ -79,7 +81,7 @@ const tableData = reactive({
     {
       prop: 'isExplore',
       label: '是否为探索模块',
-      'min-width': 120,
+      width: 160,
       formatter: (row: IUserMsg) => {
         const { isExplore } = row;
         return isExplore === 1 ? '是' : '否';
@@ -87,7 +89,7 @@ const tableData = reactive({
     },
     {
       label: '操作',
-      'min-width': 200,
+      'min-width': 240,
       fixed: 'right',
       btns: [
         {
@@ -97,6 +99,13 @@ const tableData = reactive({
             router.push({
               path: USER_DETAIL_PATH + '/' + row.userId
             });
+          }
+        },
+        {
+          text: '设置用户角色',
+          type: 'success',
+          onClick: (row: IUserMsg, index: number) => {
+            handleSetUserRole(row);
           }
         },
         {
@@ -152,6 +161,11 @@ const createHandler = () => {
 };
 const search = () => {
   if (gbTable.value) gbTable.value.search();
+};
+
+const userRoleRef = ref();
+const handleSetUserRole = (item: IUserMsg) => {
+  userRoleRef.value && userRoleRef.value.showDrawer(item);
 };
 </script>
 

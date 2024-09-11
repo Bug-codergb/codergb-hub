@@ -6,5 +6,6 @@ interface IUserMsg {
   history: number;
   isExplore: number;
   manage?: number;
+  role?: any[];
 }
 export type { IUserMsg };

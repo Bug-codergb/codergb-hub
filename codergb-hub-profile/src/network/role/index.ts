@@ -9,3 +9,25 @@ export function createRole<T = IResponseType<IRole>>(name: string) {
     }
   });
 }
+export function getAllRole<T = IResponseType<IRole>>() {
+  return gbRequest.get<T>({
+    url: '/role/all',
+    params: {
+      limit: 300000,
+      offset: 0
+    }
+  });
+}
+
+export function setUserRole<T = IResponseType<any>>(data: Record<string, any>) {
+  return gbRequest.post<T>({
+    url: '/role/user/set',
+    method: 'post',
+    data
+  });
+}
+export function deleteRole<T = IResponseType<any>>(id: string) {
+  return gbRequest.post<T>({
+    url: `/role/delete/${id}`
+  });
+}

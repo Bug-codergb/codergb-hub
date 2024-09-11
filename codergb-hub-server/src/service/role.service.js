@@ -59,5 +59,43 @@ class RoleService{
       console.log(e.message)
     }
   }
+  async deleteUserRoleService(ctx,userId){
+    try{
+      const sql=`delete from role_user where userId=?`;
+      const result = await connection.execute(sql,[userId]);
+      return result[0]
+    }catch(e){
+      setResponse(ctx,'error',200,{})
+    }
+  }
+  async setUserRoleService(ctx,userId,roleList){
+    try{
+      let prevSql='';
+      let exec = []
+      for(let item of roleList){
+        let temp =`(?,?),`;
+        prevSql+=temp;
+        exec.push(userId,item);
+      }
+      prevSql = prevSql.substring(0,prevSql.length-1);
+
+      const sql=`insert into role_user (userId,roleId) values ${prevSql}`;
+      console.log(sql)
+      console.log(exec)
+      const result = await connection.execute(sql,exec);
+      return result[0];
+    }catch (e) {
+
+    }
+  }
+  async deleteRoleService(ctx,id){
+    try{
+      const sql=`delete from role where id=?`;
+      const res = await connection.execute(sql,[id]);
+      return res[0]
+    }catch (e) {
+      setResponse(ctx,"error",500,{});
+    }
+  }
 }
 module.exports = new RoleService()

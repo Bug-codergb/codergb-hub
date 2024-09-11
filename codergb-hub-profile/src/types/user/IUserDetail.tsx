@@ -13,5 +13,6 @@ interface IUserDetail extends IUserMsg {
   createTime: string;
   history: number;
   isExplore: number;
+  role: any[];
 }
 export type { IUserDetail };

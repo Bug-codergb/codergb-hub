@@ -44,6 +44,12 @@
                 <span class="label">点赞数量</span>
                 <span class="value">{{ userLibrary.thumbCount }}</span>
               </el-col>
+              <el-col :span="12" v-if="userDetail && userDetail.role">
+                <span class="label">角色</span>
+                <el-tag v-for="it in userDetail.role" :key="it.id" style="margin: 0 5px 0 0">{{
+                  it.name
+                }}</el-tag>
+              </el-col>
             </el-row>
           </el-col>
         </el-row>
