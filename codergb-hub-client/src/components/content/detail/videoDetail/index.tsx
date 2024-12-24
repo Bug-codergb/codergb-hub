@@ -34,6 +34,9 @@ import {
 import { type IResponseType } from '../../../../types/responseType';
 import { type IPage } from '../../../../types/IPage';
 import Hls from 'hls.js';
+import Player, { Events } from 'xgplayer';
+import HlsPlugin from 'xgplayer-hls';
+import 'xgplayer/dist/index.min.css';
 import { type IVideo } from '../../../../types/video/IVideo';
 import VideoInfo from './childCpn/videoInfo';
 import Comment from '../../../common/comment';
@@ -53,18 +56,19 @@ import { generateAnimation } from '../../../../utils/dom';
 import lodash from 'lodash';
 import { changeQueueList } from '../../add/store/index';
 import { useLoginMsg } from '../../../../hook/useLoginMsg';
+import Danmu from 'xgplayer/es/plugins/danmu';
+import 'xgplayer/es/plugins/danmu/index.css';
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
   const { id, type = 'source', cId } = location.state;
 
   const [videoSourceType, setVideoSourceType] = useState<string>(type);
-  const [currentTime, setCurrentTime] = useState('');
+  const [currentTime, setCurrentTime] = useState(0);
   const [vioURL, setVioURL] = useState<string>('');
   const [vioId, setVioId] = useState<string>(id);
   const [videoDetail, setVideoDetail] = useState<IVideo>();
-  const [videoDm, setVideoDm] =
-    useState<Array<IDm & { contentRef: MutableRefObject<HTMLLIElement | null> }>>();
+  const [videoDm, setVideoDm] = useState<any[]>([]);
   const [dmTotal, setDmTotal] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const loginState = useLoginMsg();
@@ -110,17 +114,7 @@ const VideoDetail: FC = (): ReactElement => {
       getVideoDm<IResponseType<IPage<IDm[]>>>(vioId).then((res) => {
         if (res.data.list.length !== 0) {
           setDmTotal(res.data.count);
-          const list: Array<
-            IDm & {
-              contentRef: MutableRefObject<HTMLLIElement | null>;
-            }
-          > = res.data.list.map((item, index) => {
-            return {
-              ...item,
-              contentRef: createRef<HTMLLIElement>()
-            };
-          });
-          setVideoDm(list);
+          setVideoDm(res.data.list);
         } else {
           setVideoDm([]);
         }
@@ -146,29 +140,56 @@ const VideoDetail: FC = (): ReactElement => {
       });
     }
   }, [vioId]);
+  const [playerInstace, setPlayerInstance] = useState<Player | null>(null);
   useEffect(() => {
     if (videoRef.current !== null) {
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(vioURL);
-        // hls.loadSource('http://localhost:8888/video/0718294d1c07ee39c7ebb9cb93b0f9580.ts');
-        hls.attachMedia(videoRef.current);
-        addHistory(vioId);
-        videoRef.current
-          .play()
-          .then(() => {
-            setIsPlay(true);
-            console.log(123);
-          })
-          .catch((e) => {
-            console.log(e.message);
-            setIsPlay(false);
-            // message.destroy();
-            // message.warn('受浏览器播放策略影响，自动播放失败');
-          });
-      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-        videoRef.current.src = vioURL;
+      const player = new Player({
+        id: 'vs',
+        url: vioURL,
+        height: '100%',
+        width: '100%',
+        autoplay: true,
+        plugins: [HlsPlugin, Danmu],
+        danmu: {
+          comments: []
+        }
+      });
+
+      setPlayerInstance(player);
+      console.log(videoDm);
+      if (videoDm && videoDm.length !== 0) {
+        player.danmu.updateComments(
+          videoDm.map((item) => {
+            return {
+              txt: item.text,
+              duration: 20000,
+              id: item.id,
+              start: Number(item.time || 0),
+              style: {
+                color: '#ffffff',
+                fontSize: '18px',
+                padding: '4px 13px',
+                borderRadius: '50px',
+                backgroundColor: 'rgba(0,0,0,0.4)'
+              }
+            };
+          }),
+          false
+        );
       }
+      // player.danmu.sendComment({
+
+      // })
+
+      player.on(Events.TIME_UPDATE, (e: any) => {
+        
+        setCurrentTime(e.currentTime*1000);
+      });
+      addHistory(vioId);
+      setIsPlay(true);
+      addPlayCount<IResponseType<{ playCount: number }>>(vioId).then((res) => {
+        setPlayCount(res.data.playCount);
+      });
     }
   }, [videoRef.current, vioURL]);
   useEffect(() => {
@@ -177,17 +198,28 @@ const VideoDetail: FC = (): ReactElement => {
   const pubSuccess = () => {
     getVideoDm<IResponseType<IPage<IDm[]>>>(vioId).then((res) => {
       if (res.data.list.length !== 0) {
-        const list: Array<
-          IDm & {
-            contentRef: MutableRefObject<HTMLLIElement | null>;
-          }
-        > = res.data.list.map((item, index) => {
-          return {
-            ...item,
-            contentRef: createRef<HTMLLIElement>()
-          };
-        });
-        setVideoDm(list);
+        setVideoDm(res.data.list);
+
+        if (playerInstace) {
+          playerInstace.danmu.updateComments(
+            res.data.list.map((item) => {
+              return {
+                txt: item.text,
+                duration: 20000,
+                id: item.id,
+                start: Number(item.time || 0),
+                style: {
+                  color: '#ffffff',
+                  fontSize: '18px',
+                  padding: '4px 13px',
+                  borderRadius: '50px',
+                  backgroundColor: 'rgba(0,0,0,0.4)'
+                }
+              };
+            }),
+            false
+          );
+        }
       } else {
         setVideoDm([]);
       }
@@ -243,9 +275,6 @@ const VideoDetail: FC = (): ReactElement => {
     // setIsPlay(true);
     if (videoRef.current) {
       videoRef.current.volume = 0.6;
-      addPlayCount<IResponseType<{ playCount: number }>>(vioId).then((res) => {
-        setPlayCount(res.data.playCount);
-      });
     }
   };
 
@@ -404,149 +433,7 @@ const VideoDetail: FC = (): ReactElement => {
           <CenterContent>
             <LeftContentWrapper videoRef={videoRef}>
               <div className="video-dm-container" ref={dmInner}>
-                <div className="inner">
-                  <div className="start">
-                    <ul ref={contentRef}>
-                      {videoDm?.map((item, index) => {
-                        return (
-                          <li
-                            key={item.id}
-                            className="text"
-                            ref={item.contentRef}
-                            onMouseEnter={(e) => {
-                              pauseHandle(item);
-                            }}
-                            onMouseLeave={(e) => {
-                              playHandle(item);
-                            }}
-                          >
-                            {item.text}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                  <div className="video-container" ref={screenRef}>
-                    {vioURL && videoDetail && (
-                      <video
-                        ref={videoRef}
-                        poster={videoDetail.picUrl}
-                        controls={false}
-                        muted={false}
-                        onCanPlay={canPlayHandler}
-                        onTimeUpdate={(e) => {
-                          videoPlayHandle(e);
-                        }}
-                        autoPlay={false}
-                        onEnded={() => {
-                          endHandler();
-                        }}
-                        onClick={() => {
-                          playHandler();
-                        }}
-                      />
-                    )}
-                    {videoDetail && (
-                      <div className="controller-container">
-                        <Slider
-                          defaultValue={0}
-                          value={timestamp}
-                          step={0.1}
-                          tooltip={{ open: false }}
-                          onChange={(e) => {
-                            silderChange(e);
-                          }}
-                          onAfterChange={(e) => {
-                            onAfterChange(e);
-                          }}
-                        />
-                        <div className="container">
-                          <div className="left">
-                            <div
-                              className="play-pause"
-                              onClick={() => {
-                                playHandler();
-                              }}
-                            >
-                              {!isPlay && <PlayCircleOutlined style={{ color: '#ffffff' }} />}
-                              {isPlay && <PauseCircleOutlined style={{ color: '#ffffff' }} />}
-                            </div>
-                            <div className="dt">
-                              {currentTime} / {getDurationByTimestamp(videoDetail.dt)}
-                            </div>
-                          </div>
-                          <div className="right">
-                            <div className="volume">
-                              <Slider
-                                defaultValue={60}
-                                onChange={(e) => {
-                                  volumeChangeHandler(e);
-                                }}
-                              />
-                            </div>
-                            <div className="full" onClick={fullHandler}>
-                              {!isFull && <ExpandOutlined />}
-                              {isFull && <CompressOutlined />}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {queue.length !== 0 && isShowQueue && (
-                      <div
-                        className="mask"
-                        style={{ justifyContent: queue.length === 1 ? 'center' : 'space-between' }}
-                      >
-                        <div className="mask-left">
-                          <p className="be-going">即将播放</p>
-                          <div className="current-video">
-                            <img src={queue[0].picUrl} />
-                            <div className="mask"></div>
-                            <div className="per">
-                              <Progress
-                                strokeWidth={10}
-                                type="circle"
-                                width={80}
-                                strokeColor={{
-                                  '0%': '#d765d7',
-                                  '100%': '#ea3323'
-                                }}
-                                percent={percent}
-                                showInfo={false}
-                              />
-                            </div>
-                          </div>
-                          <div className="info text-nowrap-mul-line">{queue[0].name}</div>
-                        </div>
-                        <div className="mask-right">
-                          <ul className="vio-list">
-                            {queue &&
-                              queue.length !== 0 &&
-                              queue.slice(1).map((item, index) => {
-                                return (
-                                  <li
-                                    key={item.id}
-                                    className={`item ${index === 0 ? 'active' : ''}`}
-                                    onClick={() => {
-                                      queueVideoHandler(item);
-                                    }}
-                                  >
-                                    <div className="left">
-                                      <img src={item.picUrl} />
-                                    </div>
-                                    <div className="right">
-                                      <div className="name text-nowrap-mul-line">{item.name}</div>
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                          </ul>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="end"> </div>
-                </div>
+                <div id="vs" ref={videoRef}></div>
               </div>
               <Dm
                 id={vioId}

@@ -15,7 +15,7 @@ class DmController{
       const {userId} = ctx.user;
       if(!isEmpty(ctx,vId,"视频ID不能为空") && !isEmpty(ctx,text,"弹幕内容不能为空")
          &&!isEmpty(ctx,time,"时间不能为空")){
-        let newTime = addTime(time);
+        let newTime = time ? time + 1000 : 0;
         const result = await createService(ctx,vId,text,newTime,userId);
         if(result){
           setResponse(ctx,"success",200,result[0]);

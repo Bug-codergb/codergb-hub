@@ -20,6 +20,10 @@ export const LeftContentWrapper: any = styled.div`
     height: ${640 / 40}rem;
     position: relative;
     overflow: hidden;
+    #vs{
+      width: 100%;
+      height: 100%;
+    }
     .inner {
       display: flex;
       align-items: center;
