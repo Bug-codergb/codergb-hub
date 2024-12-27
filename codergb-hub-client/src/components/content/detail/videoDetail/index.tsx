@@ -15,7 +15,7 @@ import {
   ExpandOutlined,
   CompressOutlined
 } from '@ant-design/icons';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { Layout, Slider, Progress, message } from 'antd';
 import {
@@ -61,7 +61,10 @@ import 'xgplayer/es/plugins/danmu/index.css';
 const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
-  const { id, type = 'source', cId } = location.state;
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const state = location.state || { type: 'source', cId: '' };
+  const { type = 'source', cId } = state;
 
   const [videoSourceType, setVideoSourceType] = useState<string>(type);
   const [currentTime, setCurrentTime] = useState(0);
@@ -144,6 +147,7 @@ const VideoDetail: FC = (): ReactElement => {
   useEffect(() => {
     if (videoRef.current !== null) {
       const player = new Player({
+        lang: 'zh-cn',
         id: 'vs',
         url: vioURL,
         height: '100%',
@@ -182,8 +186,7 @@ const VideoDetail: FC = (): ReactElement => {
       // })
 
       player.on(Events.TIME_UPDATE, (e: any) => {
-        
-        setCurrentTime(e.currentTime*1000);
+        setCurrentTime(e.currentTime * 1000);
       });
       addHistory(vioId);
       setIsPlay(true);
@@ -264,8 +267,11 @@ const VideoDetail: FC = (): ReactElement => {
   const changeVideoType = (id: string) => {
     setVideoSourceType('source');
     playVideo(id);
-    location.state.id = id;
     setVioId(id);
+    navigate(`/videoDetail/${id}`, {
+      replace: true,
+      state: {}
+    });
   };
 
   const [playCount, setPlayCount] = useState<number | string>(0);
@@ -464,7 +470,8 @@ const VideoDetail: FC = (): ReactElement => {
                   }}
                 />
               )}
-              {videoDetail?.user && (
+              {videoDetail?.user.userName}
+              {videoDetail && videoDetail.user && (
                 <Similar
                   id={videoDetail?.category.id}
                   key={vioId}

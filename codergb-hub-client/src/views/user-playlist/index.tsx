@@ -58,11 +58,9 @@ const UserPlaylist: FC<IProps> = (props) => {
     });
   }, [id]);
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   const subPlaylistHandler = async () => {

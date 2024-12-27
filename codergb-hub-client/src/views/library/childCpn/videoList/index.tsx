@@ -21,11 +21,9 @@ const VideoList: FC<IProp> = (props) => {
   const navigate = useNavigate();
   const vioRef = useRef<HTMLVideoElement>(null);
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   useEffect(() => {

@@ -39,11 +39,9 @@ const Video: FC<IProps> = (props) => {
     }
   }, [vioRef.current]);
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   const mouseImgHandle = async (item: IVideo, index: number) => {

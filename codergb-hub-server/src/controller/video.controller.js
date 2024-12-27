@@ -170,6 +170,9 @@ class VideoController {
       const {id} = ctx.params;
       const result = await getVideoDetailService(ctx, id);
       if (result) {
+        if(result[0] && result[0].user===null){
+          result[0].user = {};
+        }
         setResponse(ctx, "success", 200, result[0]);
       }
     } catch (e) {

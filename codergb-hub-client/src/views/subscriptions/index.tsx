@@ -46,11 +46,9 @@ const Subscriptions: FC = (): ReactElement => {
   };
 
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   const mouseImgHandle = async (item: IVideo, index: number) => {

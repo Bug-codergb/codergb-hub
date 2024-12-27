@@ -29,7 +29,7 @@ const Playlist: FC = (): ReactElement => {
   }, []);
 
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
       state: {
         id: item.id

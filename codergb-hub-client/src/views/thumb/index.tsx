@@ -28,11 +28,9 @@ const Thumb: FC = () => {
   }, []);
 
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   const [currentPage, setCurrentPage] = useState(1);

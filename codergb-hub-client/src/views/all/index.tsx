@@ -24,11 +24,9 @@ const AllVideo: FC = (): ReactElement => {
     });
   }, []);
   const videoRouter = (item: ICarousel) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.videoId}`, {
       replace: true,
-      state: {
-        id: item.videoId
-      }
+      state: {}
     });
   };
 
@@ -41,11 +39,9 @@ const AllVideo: FC = (): ReactElement => {
     });
   };
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   return (

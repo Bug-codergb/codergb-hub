@@ -27,11 +27,9 @@ const HotVideo: FC<IProps> = (props) => {
     getUserVideoReq(userId, '', 0, 10);
   }, [userId]);
   const videoRouter = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   return (

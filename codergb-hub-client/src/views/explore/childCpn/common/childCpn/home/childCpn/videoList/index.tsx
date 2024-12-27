@@ -39,11 +39,9 @@ const VideoList: FC<IProps> = (props) => {
   };
   const navigate = useNavigate();
   const videoRouter = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   return (

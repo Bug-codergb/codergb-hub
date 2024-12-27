@@ -67,11 +67,9 @@ const History: FC = (): ReactElement => {
     await getAllUserHistory(login.userMsg.userId, 0, 10, keyword);
   };
   const videoRouterHandle = (item: IVideo) => {
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.id}`, {
       replace: true,
-      state: {
-        id: item.id
-      }
+      state: {}
     });
   };
   const [currentPage, setCurrentPage] = useState<number>(1);

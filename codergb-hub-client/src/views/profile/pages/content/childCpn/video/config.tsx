@@ -10,11 +10,9 @@ import { type NavigateFunction } from 'react-router-dom';
 import { deleteVideo } from '../../../../../../network/video';
 
 const videoRouter = (item: IVideo, navigate: NavigateFunction) => {
-  navigate(`/videoDetail`, {
+  navigate(`/videoDetail/${item.id}`, {
     replace: false,
-    state: {
-      id: item.id
-    }
+    state: {}
   });
 };
 const deleteVideoHandler = (item: IVideo, fn: () => void) => {

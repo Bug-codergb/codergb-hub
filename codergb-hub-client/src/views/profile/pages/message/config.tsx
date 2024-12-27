@@ -12,7 +12,7 @@ const videoRouter = (item: INotify, navigate: NavigateFunction) => {
   console.log(item);
   if (item.video) {
     updateNotify(item.id).then(() => {});
-    navigate('/videoDetail', {
+    navigate(`/videoDetail/${item.video.id}`, {
       state: {
         id: item.video.id
       }
