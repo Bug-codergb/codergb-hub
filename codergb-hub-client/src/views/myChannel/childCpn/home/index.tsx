@@ -67,7 +67,7 @@ const Home: FC<IProps> = (props) => {
   };
   const videoRouter = (trailer?: IVideo) => {
     if (trailer) {
-      navigate(`/videoDetail/${trailer.id}`, {
+      navigate(`/videoDetail/${trailer.id}/source`, {
         replace: true,
         state: {}
       });

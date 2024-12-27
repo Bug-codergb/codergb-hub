@@ -168,7 +168,9 @@ class VideoController {
   async getVideoDetail(ctx, next) {
     try {
       const {id} = ctx.params;
+      console.log(id);
       const result = await getVideoDetailService(ctx, id);
+      console.log(result)
       if (result) {
         if(result[0] && result[0].user===null){
           result[0].user = {};

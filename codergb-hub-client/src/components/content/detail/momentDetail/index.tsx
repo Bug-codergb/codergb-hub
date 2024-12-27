@@ -1,5 +1,5 @@
 import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { MomentDetailWrapper } from './style';
 import { getMomentDetail } from '../../../../network/moment';
 import { IMoment } from '../../../../types/moment';
@@ -16,6 +16,10 @@ const MomentDetail: FC = (): ReactElement => {
       }
     });
   }, [id]);
+  const navigate = useNavigate();
+  const handleVideoRoute = (moment: IMoment) => {
+    moment.video && navigate('/videoDetail/' + moment.video.id + '/source', {});
+  };
   return (
     <MomentDetailWrapper>
       <div className="moment-header">
@@ -29,7 +33,7 @@ const MomentDetail: FC = (): ReactElement => {
             <p className="user-name">{moment.user.userName}</p>
             <p className="title">{moment.title}</p>
             <p className="content">{moment.content}</p>
-            <div className="img-container">
+            <div className="img-container" onClick={() => handleVideoRoute(moment)}>
               <img src={moment.video.picUrl} />
             </div>
           </div>

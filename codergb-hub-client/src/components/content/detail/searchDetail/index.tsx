@@ -28,7 +28,7 @@ const SearchDetail: FC = () => {
   }, [keyword]);
 
   const videoRouter = (item: IVideo) => {
-    navigate(`/videoDetail/${item.id}`, {
+    navigate(`/videoDetail/${item.id}/source`, {
       replace: true,
       state: {}
     });

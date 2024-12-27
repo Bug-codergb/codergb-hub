@@ -39,7 +39,7 @@ const Video: FC<IProps> = (props) => {
     }
   }, [vioRef.current]);
   const videoRouterHandle = (item: IVideo) => {
-    navigate(`/videoDetail/${item.id}`, {
+    navigate(`/videoDetail/${item.id}/source`, {
       replace: true,
       state: {}
     });

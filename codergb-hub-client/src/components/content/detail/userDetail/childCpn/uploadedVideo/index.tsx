@@ -27,7 +27,7 @@ const UploadedVideo: FC<IProps> = (props) => {
     getUserVideoReq(userId, '', 0, 10);
   }, [userId]);
   const videoRouter = (item: IVideo) => {
-    navigate(`/videoDetail/${item.id}`, {
+    navigate(`/videoDetail/${item.id}/source`, {
       replace: true,
       state: {}
     });

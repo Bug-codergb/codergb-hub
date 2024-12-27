@@ -34,7 +34,7 @@ const Home: FC<IProps> = (props) => {
   };
   const videoRouter = (item: ICollection) => {
     console.log(item);
-    navigate(`/videoDetail/${item.id}`, {
+    navigate(`/videoDetail/${item.id}/collection`, {
       replace: true,
       state: {
         cId: item.id,

@@ -44,7 +44,7 @@ const MoreVideo: FC = () => {
   };
 
   const videoRouterHandle = (item: IVideo) => {
-    navigate(`/videoDetail/${item.id}`, {
+    navigate(`/videoDetail/${item.id}/source`, {
       replace: true,
       state: {}
     });

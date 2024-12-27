@@ -63,14 +63,27 @@ const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
-  const { id } = params;
-  const state = location.state || { type: 'source', cId: '' };
-  const { type = 'source', cId } = state;
+  const { id, type } = params;
+  const state = location.state || { cId: '' };
+
+  const [cId, setCId] = useState('');
+  useEffect(() => {
+    if (type === 'collection') {
+      id && setCId(id);
+    }
+  }, [type, id]);
 
   const [videoSourceType, setVideoSourceType] = useState<string>(type);
   const [currentTime, setCurrentTime] = useState(0);
   const [vioURL, setVioURL] = useState<string>('');
-  const [vioId, setVioId] = useState<string>(id);
+  const [vioId, setVioId] = useState<string>('');
+
+  useEffect(() => {
+    if (type === 'source') {
+      id && setVioId(id);
+    }
+  }, [type, id]);
+
   const [videoDetail, setVideoDetail] = useState<IVideo>();
   const [videoDm, setVideoDm] = useState<any[]>([]);
   const [dmTotal, setDmTotal] = useState<number>(0);
@@ -87,8 +100,8 @@ const VideoDetail: FC = (): ReactElement => {
 
   const [collectionVideo, setCollectionVideo] = useState<IVideo[]>([]);
   useEffect(() => {
-    if (type === 'collection' && cId) {
-      getCollectionVideo<IResponseType<IPage<IVideo[]>>>(cId, 0, 10000).then((res) => {
+    if (type === 'collection' && id) {
+      getCollectionVideo<IResponseType<IPage<IVideo[]>>>(id, 0, 10000).then((res) => {
         if (res.status === 200) {
           if (res.data.list && res.data.list.length !== 0) {
             setCollectionVideo(res.data.list);
@@ -97,7 +110,7 @@ const VideoDetail: FC = (): ReactElement => {
         }
       });
     }
-  }, [type, cId]);
+  }, [type, id]);
 
   useEffect(() => {
     if (screenRef.current) {
@@ -271,7 +284,7 @@ const VideoDetail: FC = (): ReactElement => {
     setVideoSourceType('source');
     playVideo(id);
     setVioId(id);
-    navigate(`/videoDetail/${id}`, {
+    navigate(`/videoDetail/${id}/source`, {
       replace: true,
       state: {}
     });
@@ -464,7 +477,7 @@ const VideoDetail: FC = (): ReactElement => {
               </div>
             </LeftContentWrapper>
             <RightContentWrapper>
-              {videoSourceType === 'collection' && (
+              {videoSourceType === 'collection' && cId && (
                 <CollectionVideo
                   videoList={collectionVideo}
                   cId={cId}

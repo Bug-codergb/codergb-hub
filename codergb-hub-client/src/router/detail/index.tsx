@@ -17,7 +17,7 @@ const MomentDetail = lazy(
 );
 
 const videoDetailRoute: RouteObject = {
-  path: '/videoDetail/:id',
+  path: '/videoDetail/:id/:type',
   element: (
     <Suspense>
       <VideoDetail />

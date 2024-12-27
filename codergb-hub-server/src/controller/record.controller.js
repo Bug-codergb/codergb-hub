@@ -14,7 +14,6 @@ class RecordController{
     try{
       const { vId } = ctx.params;
       const {userId} = ctx.user;
-      console.log(vId,userId)
       const time = moment(new Date()).format("yyyy-MM-DD");
       const count = await getVideoService(vId,userId,time);
       let num = 0;
