@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require('path');
 const { toSecond } = require("../utils/addTime");
 function videoToM3u8(sourcePath,destPath,videoName,dt,progressHandle){
-  console.log(sourcePath)
   return new Promise((resolve,reject)=>{
     fs.access(sourcePath,(err)=>{
       if(err){
