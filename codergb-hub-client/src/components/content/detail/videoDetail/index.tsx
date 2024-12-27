@@ -470,7 +470,6 @@ const VideoDetail: FC = (): ReactElement => {
                   }}
                 />
               )}
-              {videoDetail?.user.userName}
               {videoDetail && videoDetail.user && (
                 <Similar
                   id={videoDetail?.category.id}
