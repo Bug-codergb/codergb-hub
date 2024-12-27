@@ -62,7 +62,8 @@ const { Header, Footer, Sider, Content } = Layout;
 const VideoDetail: FC = (): ReactElement => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const params = useParams();
+  const { id } = params;
   const state = location.state || { type: 'source', cId: '' };
   const { type = 'source', cId } = state;
 
@@ -86,7 +87,7 @@ const VideoDetail: FC = (): ReactElement => {
 
   const [collectionVideo, setCollectionVideo] = useState<IVideo[]>([]);
   useEffect(() => {
-    if (type === 'collection') {
+    if (type === 'collection' && cId) {
       getCollectionVideo<IResponseType<IPage<IVideo[]>>>(cId, 0, 10000).then((res) => {
         if (res.status === 200) {
           if (res.data.list && res.data.list.length !== 0) {
@@ -113,6 +114,7 @@ const VideoDetail: FC = (): ReactElement => {
   }, [vioId]);
 
   useEffect(() => {
+    console.log(vioId, 'vioId');
     if (vioId) {
       getVideoDm<IResponseType<IPage<IDm[]>>>(vioId).then((res) => {
         if (res.data.list.length !== 0) {
@@ -145,7 +147,7 @@ const VideoDetail: FC = (): ReactElement => {
   }, [vioId]);
   const [playerInstace, setPlayerInstance] = useState<Player | null>(null);
   useEffect(() => {
-    if (videoRef.current !== null) {
+    if (videoRef.current !== null && vioURL) {
       const player = new Player({
         lang: 'zh-cn',
         id: 'vs',
@@ -160,7 +162,7 @@ const VideoDetail: FC = (): ReactElement => {
       });
 
       setPlayerInstance(player);
-      console.log(videoDm);
+
       if (videoDm && videoDm.length !== 0) {
         player.danmu.updateComments(
           videoDm.map((item) => {
@@ -189,6 +191,7 @@ const VideoDetail: FC = (): ReactElement => {
         setCurrentTime(e.currentTime * 1000);
       });
       addHistory(vioId);
+      console.log('history');
       setIsPlay(true);
       addPlayCount<IResponseType<{ playCount: number }>>(vioId).then((res) => {
         setPlayCount(res.data.playCount);
@@ -450,7 +453,7 @@ const VideoDetail: FC = (): ReactElement => {
                 }}
               />
               <div className="video-info">
-                {videoDetail?.user && (
+                {videoDetail && videoDetail.user && (
                   <VideoInfo videoInfo={videoDetail} id={vioId} playCount={playCount} />
                 )}
               </div>

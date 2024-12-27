@@ -37,6 +37,7 @@ const Home: FC<IProps> = (props) => {
     navigate(`/videoDetail/${item.id}`, {
       replace: true,
       state: {
+        cId: item.id,
         type: 'collection'
       }
     });

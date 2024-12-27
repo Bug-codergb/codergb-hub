@@ -14,6 +14,7 @@ class RecordController{
     try{
       const { vId } = ctx.params;
       const {userId} = ctx.user;
+      console.log(vId,userId)
       const time = moment(new Date()).format("yyyy-MM-DD");
       const count = await getVideoService(vId,userId,time);
       let num = 0;
@@ -24,7 +25,7 @@ class RecordController{
         if(result){
           setResponse(ctx,"success",200,result);
         }else{
-          setResponse(ctx,"error",500,{})
+          setResponse(ctx,"error",200,{})
         }
       }else {
         num = count[0].count ?? 0;
@@ -35,9 +36,9 @@ class RecordController{
           setResponse(ctx,"error",500,{})
         }
       }
-
     }catch (e) {
-      setResponse(ctx,e.message,500,{})
+      console.log(e);
+      setResponse(ctx,e.message,200,{})
     }
   }
   async getUserVideoRecord(ctx,next){

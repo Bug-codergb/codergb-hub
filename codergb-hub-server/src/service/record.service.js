@@ -7,7 +7,7 @@ class RecordService{
       const result = await connection.execute(sql,[vId,userId,count,time]);
       return result[0]
     }catch (e) {
-
+      console.log(e);
       setResponse(ctx,e.message,500,{})
     }
   }

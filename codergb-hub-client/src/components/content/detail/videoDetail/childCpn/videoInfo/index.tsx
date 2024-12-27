@@ -49,7 +49,7 @@ const VideoInfo: FC<IProps> = (props) => {
   const addRef = useRef<IAdd | null>(null);
   const [subCount, setSubCount] = useState<number>(0);
   useEffect(() => {
-    if (videoInfo) {
+    if (videoInfo && videoInfo.user && videoInfo.user.userId) {
       getUserSubCount<IResponseType<number>>(videoInfo.user.userId).then((res) => {
         if (res.status === 200) {
           setSubCount(res.data);
