@@ -141,6 +141,7 @@ const History: FC = (): ReactElement => {
                 pageSize={10}
                 total={count}
                 onChange={pageChange}
+                showSizeChanger={false}
               />
             </div>
           </Fragment>
