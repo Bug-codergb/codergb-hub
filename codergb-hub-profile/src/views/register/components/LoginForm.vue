@@ -20,7 +20,7 @@
     </el-form-item>
   </el-form>
   <div class="login-btn">
-    <el-button :icon="Back" round size="large" @click="resetForm(loginFormRef)"> 返回登陆 </el-button>
+    <el-button :icon="Back" round size="large" @click="resetForm(loginFormRef)"> 返回登录 </el-button>
     <el-button :icon="UserFilled" round size="large" type="primary" :loading="loading" @click="login(loginFormRef)">
       注册
     </el-button>
