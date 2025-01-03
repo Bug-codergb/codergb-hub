@@ -47,7 +47,6 @@
               ref="videoTableRef"
               :isOperate="false"
               :is-show-create="false"
-              :height="tableHeight"
               :exclude-header="['tag']"
             >
               <template v-slot:video-end>

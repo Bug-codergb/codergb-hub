@@ -1,13 +1,12 @@
 <template>
   <div class="detail-body table-box">
-    <el-tabs v-model="activeName" class="demo-tabs">
+    <el-tabs v-model="activeName" class="tag-tabs">
       <el-tab-pane label="标签视频" name="first">
         <VideoTable
           :key="keyIndex"
           :url="url"
           :isOperate="false"
           :is-show-create="false"
-          :height="tableHeight"
           :exclude-header="['tag']"
         >
           <template v-slot:video-end>
@@ -49,5 +48,10 @@ const delHandle = (item: IVideo) => {};
   background-color: var(--el-bg-color);
   border: 1px solid var(--el-border-color-light);
   padding: 20px;
+}
+.tag-tabs {
+  height: 100%;
+  overflow-x: hidden;
+  flex: 1;
 }
 </style>
