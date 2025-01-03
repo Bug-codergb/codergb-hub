@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import { ITableData } from '@/types/tableData/tableData';
 import { IDm } from '@/types/dm/IDm';
-
+import { getDurationByTimestamp } from "@/utils/time"
 import moment from 'moment';
 import { deleteDm } from '@/network/dm';
 import { ElMessage } from 'element-plus';
@@ -23,7 +23,10 @@ const useTable = (id: string, gbTable: any) => {
       },
       {
         label: '视频时间',
-        prop: 'time'
+        prop: 'time',
+        formatter:(scope)=>{
+          return getDurationByTimestamp(scope.time);
+        }
       },
       {
         label: '用户',

@@ -121,10 +121,7 @@ const tableData = reactive({
           text: '查看',
           type: 'primary',
           onClick: (row: IChannel) => {
-            console.log(row);
-            router.push({
-              path: `${CHANNEL_DETAIL_PATH}/${row.user.userId}`
-            });
+            handleCheck(row)
           }
         },
         {
@@ -157,6 +154,11 @@ const header = reactive([
 const refreshHandler = () => {
   if (gbTable.value) gbTable.value.search();
 };
+const handleCheck=(row:IChannel)=>{
+  router.push({
+    path: `${CHANNEL_DETAIL_PATH}/${row.user.userId}`
+  });
+}
 </script>
 <style lang="less">
 .g-trailer,

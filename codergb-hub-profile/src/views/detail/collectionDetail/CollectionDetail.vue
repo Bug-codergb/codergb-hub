@@ -124,6 +124,9 @@ const detailHandle = (item: IVideo) => {
 </script>
 
 <style scoped lang="less">
+.detail-header{
+  width: 100%;
+}
 .collection-detail {
   height: 100%;
   display: flex;
