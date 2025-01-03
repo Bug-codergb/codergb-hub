@@ -34,9 +34,6 @@ const tableData = reactive<ITableData<IVideoSource>>({
   },
   columns: [
     {
-      type: 'selection'
-    },
-    {
       prop: 'name',
       label: '文件名称',
       minWidth: 150,
