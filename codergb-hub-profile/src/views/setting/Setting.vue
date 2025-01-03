@@ -50,7 +50,7 @@
           <el-row>
             <el-col :span="24">
               <span class="label">频道</span>
-              <span class="value channel">{{ channel.channel.name }}</span>
+              <span class="value channel" @click="handleToChannel(channel.channel)">{{ channel.channel.name }}</span>
             </el-col>
           </el-row>
         </el-col>
@@ -77,6 +77,8 @@ import Log from '@/views/setting/childCpn/log/Log.vue';
 import CreateUser from '@/views/user/childCpn/createUser/CreateUser.vue';
 import { ref } from 'vue';
 import { deleteUser } from '@/network/user';
+import { IChannel } from '@/types/channel/IChannel';
+import { CHANNEL_DETAIL_PATH } from '@/router/constant';
 const loginMsg = useLoginStore();
 const channel = useChannelStore();
 
@@ -110,6 +112,11 @@ const editUserHandler = async () => {
 const refreshHandler = async () => {
   await loginMsg.changeMsgAction(loginMsg.userMsg.userId);
 };
+const handleToChannel=(channel:any)=>{
+  channel.user && router.push({
+    path: `${CHANNEL_DETAIL_PATH}/${channel.user.userId}`
+  });
+}
 </script>
 <style lang="less">
 .setting {

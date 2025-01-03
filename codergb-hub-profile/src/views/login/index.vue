@@ -7,7 +7,7 @@
       <div class="login-form">
         <div class="login-logo">
           <img class="login-icon" src="@/assets/logo.svg" alt="" />
-          <h2 class="logo-text">Admin-System</h2>
+          <h2 class="logo-text">{{title}}</h2>
         </div>
         <LoginForm />
       </div>
@@ -23,6 +23,7 @@ const router = useRouter();
 const login = async () => {
 
 };
+const title = import.meta.env.VITE_APP_NAME;
 </script>
 <style scoped lang="less">
 @import "./index";

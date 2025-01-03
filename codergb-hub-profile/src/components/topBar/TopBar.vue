@@ -32,6 +32,8 @@ import { LOGIN_PATH, USER_DETAIL_PATH } from '@/router/constant';
 const loginMsg = useLoginStore();
 const router = useRouter();
 const route = useRoute();
+
+const title = import.meta.env.VITE_APP_NAME
 const handleCommand = (e: string) => {
   switch (e) {
     case 'exit':
