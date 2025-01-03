@@ -1,7 +1,8 @@
 <template>
   <div class="top-bar">
     <div class="left-container">
-      <div>codergb-hub</div>
+      <img src="@/assets/logo.svg" alt="admin"/>
+      <div class="logo-text">Admin</div>
     </div>
     <div class="right-container">
       <el-dropdown @command="handleCommand">
@@ -16,7 +17,7 @@
             <el-dropdown-item command="exit">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown> 
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -75,7 +76,13 @@ const breadCrumb = computed(() => {
     display: flex;
     align-items: center;
     font-size: (40/40rem);
-    color: #ff0000;
+    font-weight: bold;
+    color: #112133;
+
+    img{
+      width: 40px;
+      margin: 0 10px 0 0;
+    }
   }
 }
 </style>

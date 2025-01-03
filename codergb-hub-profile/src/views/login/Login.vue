@@ -1,7 +1,10 @@
 <template>
   <div class="login-outer">
     <div class="login">
-      <p class="title-label">codergb-hub</p>
+      <div class="logo-container">
+        <img src="@/assets/logo.svg" alt="">
+        <p class="title-label">Admin</p>
+      </div>
       <div class="login-account">
         <span class="label">账号</span>
         <input v-model="account.userName" placeholder="请输入您的用户名" :maxlength="60" />
@@ -61,6 +64,16 @@ const login = async () => {
 </script>
 
 <style scoped lang="less">
+.logo-container{
+  display: flex;
+  img{
+    width: 45px;
+    margin: 0 15px 0 0;
+  }
+  .title-label{
+    font-size: 30px;
+  }
+}
 .login-outer {
   position: relative;
   height: 100%;

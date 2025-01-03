@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import NProgress from '@/config/nprogress';
-import Login from '../views/login/Login.vue';
+import Login from '../views/login/index.vue';
 import Home from '../views/home/Home.vue';
 
 import VideoPage from '../views/video/VideoPage.vue';
@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/register',
-    component: () => import('../views/register/Register.vue')
+    component: () => import('../views/register/index.vue')
   },
   {
     path: HOME_PATH,

@@ -23,7 +23,7 @@ const gbRequest = new GBRequest({
       ElMessage.closeAll();
       ElMessage({
         type: 'warning',
-        message: err.response.data.message
+        message: err.response.data.message,
       });
       return err;
     }
