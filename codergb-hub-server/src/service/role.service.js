@@ -12,6 +12,15 @@ class RoleService{
       setResponse(ctx,msg.includes('Duplicate') ? "角色名称重复" :'',200,{})
     }
   }
+  async updateRoleService(ctx,id,name){
+    try{
+      const sql=`update role set name = ? where id=?`;
+      const result = await connection.execute(sql,[name,id]);
+      return result[0];
+    }catch(e){
+      setResponse(ctx,"server error",500,{})
+    }
+  }
   async selectUserRoleService(ctx,userId,roleId){
     try{
       const sql=`select userId from role_user where userId= ? and roleId=?`;

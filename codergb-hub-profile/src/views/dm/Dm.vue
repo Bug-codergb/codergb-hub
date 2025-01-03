@@ -19,6 +19,7 @@ import { deleteDm } from '@/network/dm';
 import { ElMessage } from 'element-plus';
 import { IVideo } from '@/types/video/IVideo';
 import { USER_DETAIL_PATH, VIDEO_DETAIL_PATH } from '@/router/constant';
+import {getDurationByTimestamp} from "@/utils/time"
 const router = useRouter();
 
 const videoRouter = (video: IVideo) => {
@@ -46,7 +47,10 @@ const tableData = reactive({
     },
     {
       label: '视频时间',
-      prop: 'time'
+      prop: 'time',
+      formatter:(row:any)=>{
+        return getDurationByTimestamp(row.time);
+      }
     },
     {
       label: '用户',

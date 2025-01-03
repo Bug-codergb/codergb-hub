@@ -5,7 +5,8 @@ const {
   getAllRoleService,
   deleteUserRoleService,
   setUserRoleService,
-  deleteRoleService
+  deleteRoleService,
+  updateRoleService
 } = require("../service/role.service")
 const { setResponse } = require("../utils/setResponse")
 const { isEmpty } = require("../utils/isEmpty")
@@ -20,6 +21,20 @@ class RoleController{
         }
       }
     }catch (e) {
+
+    }
+  }
+  async updateRole(ctx,next){
+    try {
+      const {id} = ctx.params;
+      const {name} = ctx.request.body;
+      if(!isEmpty(ctx,name,"角色名称不能为空")){
+        const ret = await updateRoleService(ctx,id,name);
+        if(ret){
+          setResponse(ctx,"success",200);
+        }
+      }
+    } catch (e) {
 
     }
   }

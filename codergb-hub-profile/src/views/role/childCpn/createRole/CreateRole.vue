@@ -11,7 +11,7 @@
 import { ref, defineProps, defineExpose, defineEmits, reactive } from 'vue';
 import GbDrawer from '@/components/common/gbDrawer/GbDrawer.vue';
 import { ElMessage } from 'element-plus';
-import { createRole } from '@/network/role';
+import { createRole, updateRole } from '@/network/role';
 
 const emit = defineEmits<{
   (e: 'refresh'): void;
@@ -32,6 +32,8 @@ const showDrawer = (data: any) => {
   isUpdate.value = Boolean(data);
   drawer.value = true;
   if (isUpdate.value) {
+    formData.name = data.name;
+    formData.id = data.id;
   } else {
     formData.name = '';
     formData.id = undefined;
@@ -41,10 +43,10 @@ const confirmHandle = () => {
   formRef.value &&
     formRef.value.validate(async (e: boolean) => {
       if (e) {
-        const result = await createRole(formData.name);
+        const result = isUpdate.value ? await updateRole(formData.id,formData.name):await createRole(formData.name);
         if (result.status === 200) {
           ElMessage({
-            message: '角色创建成功',
+            message: `角色${isUpdate.value ? '更新':'创建'}成功`,
             type: 'success'
           });
           emit('refresh');

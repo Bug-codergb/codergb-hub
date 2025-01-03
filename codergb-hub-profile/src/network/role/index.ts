@@ -31,3 +31,11 @@ export function deleteRole<T = IResponseType<any>>(id: string) {
     url: `/role/delete/${id}`
   });
 }
+export function updateRole<T = IResponseType<any>>(id: string, name: string){
+  return gbRequest.post<T>({
+    url: `/role/update/${id}`,
+    data: {
+      name
+    }
+  });
+}

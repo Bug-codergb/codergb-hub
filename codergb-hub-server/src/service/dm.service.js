@@ -38,10 +38,10 @@ class DmService{
              JSON_OBJECT('userId',d.userId,'userName',u.userName,'avatarUrl',u.avatarUrl) as user,
              d.createTime,d.updateTime
       from dm as d
-      left join video v on d.vId = v.id 
+      left join video v on d.vId = v.id
       left join user u on d.userId = u.userId
       ${keyword.trim().length!==0?`where d.text like '%${keyword}%'`:''}
-      order by v.id,d.createTime desc 
+      order by d.createTime desc
       limit ?,?`;
       const countSQL=`
               select COUNT(d.id) as count
@@ -49,7 +49,7 @@ class DmService{
         left join video v on d.vId = v.id
         left join user u on d.userId = u.userId
         ${keyword.trim().length!==0?`where d.text like '%${keyword}%'`:''}
-        order by v.id,d.createTime asc`;
+        order by d.createTime desc`;
 
       const res = await connection.execute(sql,[offset,limit]);
       const count = await connection.execute(countSQL);

@@ -55,7 +55,7 @@ const tableData = reactive({
           text: '编辑',
           type: 'primary',
           onClick: (scope: IRole) => {
-            console.log(scope);
+            handleEditRole(scope);
           }
         },
         {
@@ -94,6 +94,9 @@ const header = reactive([
 const search = () => {
   if (gbTableRef.value) gbTableRef.value.search();
 };
+const handleEditRole = (row: IRole) => {
+  createRoleRef.value && createRoleRef.value.showDrawer(row);
+}
 </script>
 
 <style scoped lang="less"></style>
